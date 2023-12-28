@@ -221,6 +221,15 @@ const routeLinks = [
             displayText: "Profiles",
             icon: <AssignmentIndIcon />
           },
+        },
+        {
+          path: "/games",
+          element: <Profile />,
+          state: "SuperAdmin.Games",
+          sidebarProps: {
+            displayText: "Games",
+            icon: <AssignmentIndIcon />
+          },
         }
       ]
     },
@@ -440,6 +449,15 @@ const routeLinks = [
           state: "Reporting.UserActivityReport",
           sidebarProps: {
             displayText: "User Activity Report",
+            icon: <AcUnitOutlinedIcon />
+          },
+        },
+        {
+          path: "/activity/report",
+          element: (userRole === "Admin") ? <Admin/> : <AgentUserActivities/>,
+          state: "Reporting.UserGrowth",
+          sidebarProps: {
+            displayText: "User Growth",
             icon: <AcUnitOutlinedIcon />
           },
         }

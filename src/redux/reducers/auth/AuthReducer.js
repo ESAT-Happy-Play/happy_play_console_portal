@@ -18,13 +18,14 @@ const AuthReducer = createSlice({
         commissionBalance: null,
         commissionPercentage: null,
         agentCount: null,
-        playerCount: null
+        playerCount: null,
+        userProfile: null
     },
     reducers: {
         setCredentials: (state, action) => {
             const { sessionToken, userCode, userId, featureId, companyId, branchCode, displayName ,
             email, mobileNumber, referralCode, creditBalance, commissionBalance, commissionPercentage,
-            agentCount, playerCount } = action.payload;
+            agentCount, playerCount, userProfile } = action.payload;
 
             state.sessionToken = sessionToken;
             state.userCode = userCode;
@@ -41,6 +42,7 @@ const AuthReducer = createSlice({
             state.commissionPercentage = commissionPercentage;
             state.agentCount = agentCount;
             state.playerCount = playerCount;
+            state.userProfile = userProfile;
 
             const authdata = CryptoJS.AES.encrypt(JSON.stringify(action.payload), process.env.REACT_APP_SECRET_PASS).toString();
             localStorage.setItem("auth", authdata)
@@ -61,6 +63,7 @@ const AuthReducer = createSlice({
             state.commissionPercentage = null;
             state.agentCount = null;
             state.playerCount = null;
+            state.userProfile = null;
 
             localStorage.removeItem("auth")
         }

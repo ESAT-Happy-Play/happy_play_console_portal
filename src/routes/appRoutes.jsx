@@ -1,6 +1,6 @@
 import routeLinks from "./routeLinks";
-import { GetStoreObject, GetJWTStoreObject } from "../helper/Helpers";
-import { AgentMenus, AdminMenus } from "../helper/Enums";
+import { GetStoreObject } from "../helper/Helpers";
+import { AgentMenus, AdminMenus, GetUserAccess } from "../helper/Enums";
 
 let authdata = GetStoreObject("auth");
 let user_role = GetStoreObject("role");
@@ -12,6 +12,15 @@ if(user_role != null) {
     menus = AgentMenus();
   } else {
     menus = AdminMenus();
+
+    // remove some links
+    if(authdata !== null) {
+      let excludeUserAccess = GetUserAccess(authdata.userProfile);
+      menus = menus.filter((menu) => !excludeUserAccess.includes(menu));
+      console.log(menus);
+    }
+
+    console.log(menus);
   }
 }
 
