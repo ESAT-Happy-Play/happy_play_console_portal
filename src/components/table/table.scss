@@ -1,0 +1,19 @@
+table {
+    thead > tr > th {
+        font-weight: 600 !important;
+    }
+
+    tbody > tr {
+        cursor: pointer;
+    }
+
+    tbody> tr:hover {
+        background-color: #dde5e5;
+    }
+    
+    .btnShow {
+        background: #fec30e !important;
+        color: black;
+        text-transform: capitalize;
+    }
+}

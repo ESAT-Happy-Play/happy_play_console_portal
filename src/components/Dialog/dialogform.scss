@@ -1,0 +1,529 @@
+$defaultPad: 5px;
+.selected {
+    background: #fec30e !important;
+}
+.showUserDetails {
+    .MuiPaper-root {
+        min-width: 768px;
+        
+        .dialogHeader {
+            display: flex;
+    
+            .st {
+                flex: 1;
+                background-color: #ee264a;
+            }
+    
+            .nd {
+                flex: 1;
+                background-color: #fec30e;
+            }
+    
+            .rd {
+                flex: 5;
+                background-color: #13dbdb;
+                padding: 15px;
+                font-weight: 700;
+                color: white;
+    
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+    
+                span {
+                    font-size: 25px;
+                }
+    
+                svg {
+                    font-size: 35px;
+                    position: absolute;
+                    color: #7b7d7e;
+                }
+            }
+        }
+
+        .div-card {
+            background: #212121;
+            border-radius: 10px;
+            width: 230px;
+            display: inline-table;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            .card-head {
+                display: flex;
+                span {
+                    width: 45px;
+                    text-align: center;
+                    color: white;
+                    font-size: 25px;
+                }
+            }
+
+            .div-card-num {
+                display: flex;
+                gap: 9px;
+                margin-bottom: 8px;
+                button {
+                    min-width: 37px;
+                    background: white;
+                    color: black;
+                    font-size: 14px;
+                    font-weight: 700;
+                    padding: 0px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
+
+.postResults {
+    .MuiPaper-root {
+        min-width: 768px;
+
+        .dialogHeader {
+            display: flex;
+
+            .st {
+                flex: 1;
+                background-color: #ee264a;
+            }
+
+            .nd {
+                flex: 1;
+                background-color: #fec30e;
+            }
+
+            .rd {
+                flex: 5;
+                background-color: #13dbdb;
+                padding: 15px;
+                font-weight: 700;
+                color: white;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    font-size: 25px;
+                }
+
+                svg {
+                    font-size: 35px;
+                    position: absolute;
+                    color: #7b7d7e;
+                }
+            }
+        }
+
+        .div-selectNumber {
+            justify-content: space-between;
+            text-align: center;
+            display: flex;
+            border-bottom: 2px solid #9E9E9E;
+            padding-bottom: 5px;
+            .spanSelected {
+                padding: 2px 10px 2px 10px;
+                background: #FDD835;
+                border-radius: 10px;
+            }
+        }
+
+        .div-bingo-numbers {
+            gap: 5px;
+            display: flex;
+        }
+
+        .row-ov {
+            margin-bottom: 5px;
+            background: #EEEEEE;
+            border-radius: 5px;
+        }
+
+        .div-m-footer {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            text-transform: capitalize;
+        }
+
+        button {
+            min-width: 40.5px;
+            background-color: white;
+            color: black;
+            font-weight: 700;
+            font-size: 16px;
+        }
+    }
+}
+
+.divDialogForm {
+    // .MuiDialog-container {
+    //     position: absolute;
+    //     top: auto;
+    // }
+
+    .MuiPaper-root {
+        width: 750px;
+        text-transform: capitalize;
+
+        .dialogHeader {
+            display: flex;
+            .st {
+                flex: 1;
+                background-color: #ee264a;
+            } 
+            .nd {
+                flex: 1;
+                background-color: #fec30e;
+            }
+            .rd {
+                flex: 5;
+                background-color: #13dbdb;
+                padding: 15px;
+                font-weight: 700;
+                color: white;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    font-size: 25px;
+                }
+
+                svg {
+                    font-size: 35px;
+                    position: absolute;
+                    color: #7b7d7e;
+                }
+            }
+        }
+
+        .divStep {
+            text-align: center;
+            h3 {
+                margin: 5px;
+                font-size: 15px;
+            }
+
+            .divContent {
+                display: flex;
+                margin-bottom: 10px;
+                .left { 
+                    flex: 1 1;
+                    padding: 8px;
+                    font-size: 14px;
+                    text-align: right;
+                    margin-right: 10px;
+                }
+                .right { 
+                    flex: 2;
+                    text-align: left;
+                }
+                .divFoot {
+                    text-align: right;
+                    button {
+                        padding: 10px;
+                        margin: 5px;
+                    }
+                }
+
+                .aligncenter {
+                    flex: 2;
+                    text-align: center !important;
+                }
+            }
+
+            .inputContent {
+                border: 1px solid #bdbdbd;
+                border-radius: 5px;
+                padding: 22px 30px 15px 30px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    ul {
+        background: white;
+        padding: 0;
+        list-style-type: none;
+        margin: 0;
+
+        li {
+            text-decoration: none;
+            border-bottom: 2px solid #e5ecf1;
+            padding: 10px;
+            text-align: center;
+            background: aliceblue;
+            cursor: pointer;
+
+            svg {
+                float: right;
+            }
+        }
+
+        li.active {
+            background: #ffea7c !important;
+        }
+    }
+
+    .show {
+        display: block !important;
+    }
+
+    .hide {
+        display: none !important;
+    }
+}
+
+.row {
+    display: flex;
+    margin-bottom: 15px;
+
+    .col-1 {
+        padding: $defaultPad;
+        width: 8.33%;
+    }
+
+    .col-2 {
+        padding: $defaultPad;
+        width: 16.66%;
+    }
+
+    .col-3 {
+        padding: $defaultPad;
+        width: 24.99%;
+    }
+
+    .col-4 {
+        padding: $defaultPad;
+        width: 33.32%;
+    }
+
+    .col-5 {
+        padding: $defaultPad;
+        width: 41.65%;
+    }
+
+    .col-6 {
+        padding: $defaultPad;
+        width: 49.98%;
+    }
+
+    .col-7 {
+        padding: $defaultPad;
+        width: 58.31%;
+    }
+
+    .col-8 {
+        padding: $defaultPad;
+        width: 66.64%;
+    }
+
+    .col-9 {
+        padding: $defaultPad;
+        width: 74.97%;
+    }
+
+    .col-10 {
+        padding: $defaultPad;
+        width: 83.3%;
+    }
+
+    .col-11 {
+        padding: $defaultPad;
+        width: 91.63%;
+    }
+
+    .col-12 {
+        padding: $defaultPad;
+        width: 100%;
+    }
+
+    .labelTitle {
+        text-align: right;
+        padding-top: 15px;
+    }
+
+    .txtright {
+        text-align: right;
+    }
+
+}
+
+.center {
+    text-align: center;
+}
+
+.elemShow {
+    display: block;
+}
+
+.elemHide {
+    display: none;
+}
+
+.otpTitle {
+    border-bottom: 1px solid #b8b4b4;
+    color: #1976d2;
+    font-weight: 600 !important;
+}
+
+.inputfield {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+
+    input {
+        font-size: 45px;
+        padding: 0;
+        width: 1.3em !important;
+        border: none;
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgb(147 147 147 / 47%)
+    }
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+}
+
+.proceedContainer {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+
+    .divcontent {
+        margin-top: 15px;
+        width: 178px;
+        height: 145px;
+        border: 1px solid #13dbdb;
+        border-radius: 15px;
+        text-align: center;
+        cursor: pointer;
+
+        label {
+            color: white;
+            font-size: 17px;
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+            line-height: 0.4;
+        }
+        span {
+            color: white;
+            font-size: 7px;
+            text-align: center;
+        }
+
+        .green {
+            background: rgb(57, 151, 101);
+            background: linear-gradient(180deg, rgba(57, 151, 101, 1) 0%, rgba(65, 74, 69, 1) 65%);
+            height: inherit;
+            border-radius: 15px;
+            padding: 10px;
+            .circleGreen {
+                background: #12b85e;
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                margin: auto;
+            }
+        }
+        .blue {
+            background: rgb(51, 123, 191);
+            background: linear-gradient(180deg, rgba(51, 123, 191, 1) 0%, rgba(65, 74, 69, 1) 100%);
+            height: inherit;
+            border-radius: 15px;
+            padding: 10px;
+            .circleBlue {
+                background: #0970d1;
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                margin: auto;
+            }
+        }
+    }
+}
+
+.registrationInfo {
+    .MuiPaper-root {
+        min-width: 600px;
+        .MuiDialogContent-root {
+            padding: 0px !important;
+        }
+        // height: inherit;
+        .container {
+            // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            // box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            // min-width: 620px;
+            // left: 50%;
+            // top: 50%;
+            // position: absolute;
+            // transform: translate(-50%, -50%);
+            // border-radius: 10px;
+            // overflow: hidden;
+            display: flex;
+
+            .lfContent {
+                width: 160px;
+                background: rgb(72, 69, 210);
+                background: linear-gradient(180deg, rgba(72, 69, 210, 1) 0%, rgba(253, 29, 172, 1) 65%, rgba(252, 176, 69, 1) 100%);
+            }
+
+            .content {
+                flex: 2;
+                padding: 15px;
+                text-align: center;
+                form {
+                    padding-top: 15px;
+                    .divCollaps {
+                        border: 1px solid #242269;
+                        border-radius: 10px;
+                        overflow: hidden;
+                    }
+                }
+                .divContent {
+                    display: flex;
+                    margin-bottom: 10px;
+                    .left {
+                        width: 135px;
+                        text-align: left;
+                        padding-top: 8px;
+                        label {
+                            text-transform: capitalize;
+                        }
+                    }
+                    .right {
+                        flex: 2;
+                        max-width: 100%;
+                    }
+                }
+
+                .divfooter {
+                    padding: 15px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+.divImg {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid #d2d6d9;
+}

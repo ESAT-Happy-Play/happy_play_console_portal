@@ -1,0 +1,14 @@
+.divGameBets {
+    padding: 15px;
+    .divSearch {
+        display: flex;
+        margin-top: 15px;
+        .searchContent {
+            margin-left: 15px;
+
+            .divSpan {
+                width: 350px;
+            }
+        }
+    }
+}

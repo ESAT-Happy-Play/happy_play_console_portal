@@ -1,0 +1,106 @@
+.registration {
+    display: flex;
+    color: #4845d2;
+
+    .divhead {
+        width: 100%;
+        background: #4845d2;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .divIam {
+        border-radius: 5px;
+        border: 1px solid;
+        text-align: left;
+        padding-left: 8%;
+    }
+
+    .divTerms {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .divIam, .divTerms {
+        span {
+            color: black;
+            font-size: 14px;
+        }
+        .hasError {
+            // color: #ee2525;
+            // border: 1px solid;
+            // margin-top: 10px;
+            // border-radius: 5px;
+            .checkRequired {
+                color:red;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .container {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        min-width: 620px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+
+        .lfContent {
+            flex: 1;
+            background: rgb(72, 69, 210);
+            background: linear-gradient(180deg, rgba(72, 69, 210, 1) 0%, rgba(253, 29, 172, 1) 65%, rgba(252, 176, 69, 1) 100%);
+        }
+
+        .content {
+            flex: 2;
+            padding: 15px;
+            text-align: center;
+
+            .divContent {
+                display: flex;
+                margin-bottom: 10px;
+
+                .referralCode {
+                    font-size: 25px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                }
+        
+                .left {
+                    width: 125px;
+                    padding: 8px;
+                    font-size: 14px;
+                    text-align: left;
+                    margin-right: 10px;
+                }
+        
+                .right {
+                    flex: 2.5;
+                    text-align: left;
+                }
+        
+                .divFoot {
+                    text-align: right;
+        
+                    button {
+                        padding: 10px;
+                        margin: 5px;
+                    }
+                }
+            }
+        }
+
+        .show {
+            display: block !important;
+        }
+        .hide {
+            display: none !important;
+        }
+    }
+}

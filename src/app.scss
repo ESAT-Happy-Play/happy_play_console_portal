@@ -1,0 +1,38 @@
+$defaultPad: 5px;
+
+.App {
+    .p-15 {
+        padding: 15px;
+    }
+    .c-green { color: #08f553;}
+    .c-red { color: #9d0404;}
+    .row {
+        display: flex;
+        margin-bottom: 15px;
+        .col-1 {  padding: $defaultPad; width: 8.33%; }
+        .col-2 {  padding: $defaultPad; width: 16.66%; }
+        .col-3 {  padding: $defaultPad; width: 24.99%; }
+        .col-4 {  padding: $defaultPad; width: 33.32%; }
+        .col-5 {  padding: $defaultPad; width: 41.65%; }
+        .col-6 {  padding: $defaultPad; width: 49.98%; }
+        .col-7 {  padding: $defaultPad; width: 58.31%; }
+        .col-8 {  padding: $defaultPad; width: 66.64%; }
+        .col-9 {  padding: $defaultPad; width: 74.97%; }
+        .col-10 { padding: $defaultPad;  width: 83.3%; }
+        .col-11 { padding: $defaultPad;  width: 91.63%; }
+        .col-12 { padding: $defaultPad;  width: 100%; }
+        .labelTitle {
+            text-align: right;
+            padding-top: 15px;
+        }
+        .txtright {
+            text-align: right;
+        }
+
+    }
+    .center { text-align: center; }
+    .elemShow { display: block; }
+    .elemHide { display: none; }
+
+    .title { text-transform: uppercase; }
+}

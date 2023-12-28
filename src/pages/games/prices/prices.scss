@@ -1,0 +1,53 @@
+.divPrices {
+    padding: 15px;
+
+    .divContent {
+        display: flex;
+
+        .left,
+        .center {
+            flex: 1;
+        }
+
+        .center {
+            margin-left: 30px;
+        }
+
+        .ulContent {
+            padding: 30px;
+
+            .contentDiv {
+                display: flex;
+                margin-bottom: 5px;
+                .divLabel {
+                    width: 150px;
+                }
+
+                input{
+                    width: 260px;
+                }
+            }
+
+            .divBtnCenter {
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            .displayPrice {
+                color: #484747;
+
+                b{ font-size:  25px };
+                h2{
+                    font-size: -webkit-xxx-large;
+                    font-size: 65px;
+                    margin: 33px 0 33px 0px;
+                }
+                span{
+                    display: block;
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}
