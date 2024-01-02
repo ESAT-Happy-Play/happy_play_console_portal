@@ -68,20 +68,23 @@ const AgentLogin = () => {
   }
 
   useEffect(() => {
-    // set role for Agent and Master agent.
-    if(useRole === null) {
-      dispatch(setRoleState({ role: "Agent"}));
-      window.location.reload(false);
-    }
-
-    if(useRole !== null && useRole.role !== "Agent") {
-      dispatch(setRoleState({ role: "Agent"}));
-      window.location.reload(false);
-    }
-
     // redirect to dashboard if already login
     if (loginObj !== null) {
       navigate('/');
+    } else {
+      // set user role
+      if (useRole !== null) {
+        if (useRole.role !== "Agent") {
+          if(useRole !== null && useRole.role !== "Agent") {
+            dispatch(setRoleState({ role: "Agent"}));
+            window.location.reload(false);
+          }
+        }
+      } else {
+        // set role for Super Admin and Operator.
+        dispatch(setRoleState({ role: "Agent"}));
+        window.location.reload(false);
+      }
     }
   }, [useRole]);
 

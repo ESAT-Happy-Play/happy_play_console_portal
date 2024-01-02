@@ -2,39 +2,45 @@ import BranchTableData from "./BranchTableData";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 
 const BranchList = ({ 
-  BranchSearchResults,
-  BranchChangePage,
-  BranchRowsPerPage,
+  searchResults,
+  EditProfile,
+  ChangePage,
+  RowsPerPage,
   pageNumber, 
   pageSize, 
-  totalCount}) => {
+  totalCount,
+  isLoading}) => {
 
-    const results = BranchSearchResults.map(Branch => <BranchTableData 
-      key={Branch.branchId} 
-      branch={Branch} 
+    const results = searchResults.map(branch => <BranchTableData 
+      key={branch.branchCode} 
+      branch={branch} 
+      handleEditProfile={ EditProfile }
     />)
+    
 
-    const content = results?.length ? results : 
+    const content = isLoading ? 
     <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-        <TableCell component="th" scope="row" colSpan={6}> No Branch records found! </TableCell>
+        <TableCell component="th" scope="row" align="center" colSpan={5}> Loading... Please wait! </TableCell>
+    </TableRow> : results?.length ? results : 
+    <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+        <TableCell component="th" scope="row" align="center" colSpan={5}> No records found! </TableCell>
     </TableRow>;
 
     const handleChangePage = (event, newpage) => {
-      BranchChangePage(event, newpage);
+      ChangePage(event, newpage);
     }
 
     return ( 
-    <div className="BranchList">
+    <div className="branchList">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>Branch Name</TableCell>
-                {/* <TableCell align="center">No. Of Branches</TableCell> */}
-                <TableCell>Company Name</TableCell>
-                <TableCell>Branch Operator</TableCell>
-                <TableCell>Branch Contact</TableCell>
-                <TableCell></TableCell>
+                <TableCell>COMPANY NAME</TableCell>
+                <TableCell>BRANCH NAME</TableCell>
+                <TableCell align="center">OPERATORS</TableCell>
+                <TableCell>REGISRATION DATE</TableCell>
+                <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -42,20 +48,16 @@ const BranchList = ({
             </TableBody>
           </Table>
         </TableContainer>
-        {
-          (totalCount !== 0) ? <TablePagination 
-            rowsPerPageOptions={[5,10,25,50]}
-            rowsPerPage={ pageSize }
-            page={!totalCount || totalCount <= 0 ? 0 : pageNumber}
-            count={ totalCount }
-            component="div"
-            onPageChange={ handleChangePage }
-            onRowsPerPageChange={ BranchRowsPerPage }
-          >
-          </TablePagination> :
-          ""
-        }
-        
+        <TablePagination 
+          rowsPerPageOptions={[5,10,25,50]}
+          rowsPerPage={ pageSize }
+          page={!totalCount || totalCount <= 0 ? 0 : pageNumber}
+          count={ totalCount }
+          component="div"
+          onPageChange={ handleChangePage }
+          onRowsPerPageChange={ RowsPerPage }
+        >
+        </TablePagination>
       </div>    
     )
 }

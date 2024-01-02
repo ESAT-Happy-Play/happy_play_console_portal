@@ -16,11 +16,12 @@ if(user_role != null) {
     // remove some links
     if(authdata !== null) {
       let excludeUserAccess = GetUserAccess(authdata.userProfile);
-      menus = menus.filter((menu) => !excludeUserAccess.includes(menu));
-      console.log(menus);
-    }
+      menus = menus.filter((menu) => excludeUserAccess.includes(menu));
 
-    console.log(menus);
+      // manually add profile links
+      menus.push("Profile.ProfileInformation");
+      menus.push("Profile.ResetPassword");
+    }
   }
 }
 

@@ -2,19 +2,18 @@ export const CompanyModel = {
     CompanyForm: {
         companyName: "",
         branchName: "",
-        region: "",
-        province: "",
-        municipality: "",
-        barangay: "",
-        streetOrPurok: "",
+        branchRegion: "",
+        branchProvince: "",
+        branchMunicipality: "",
+        branchBarangay: "",
+        branchSitio: "",
         // Step 2
-        firstName: "",
-        lastName: "",
-        middleName: "",
-        email: "", //
-        gender: "",
-        martialStatus: "",
-        birthDate: "",
-        contactNumber: ""
+        operatorFirstname: "",
+        operatorLastname: "",
+        operatorMiddlename: "",
+        operatorSex: "",
+        operatorCivilStatus: "",
+        operatorBirthday: "",
+        operatorMobileNumber: ""
     }
 }

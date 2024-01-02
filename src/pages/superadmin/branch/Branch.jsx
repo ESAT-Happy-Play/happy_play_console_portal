@@ -1,99 +1,185 @@
-import "./branch.scss"
+import "./branch.scss";
 
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { Button } from "@mui/material";
-
-import AddBranch from "../../../components/Dialog/forms/AddBranch";
-import BranchSearchBar from "../../../components/table/branchList/BranchSearchBar";
-import BranchList from "../../../components/table/branchList/BranchList";
-import PageLoader from "../../../components/widget/PageLoader";
+import { TextField, MenuItem, Button  } from "@mui/material"
 import { toast } from 'react-toastify';
 
+import BranchSearchBar from "../../../components/table/branchList/BranchSearchBar";
+import BranchList from "../../../components/table/branchList/BranchList";
+
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+import AddBranch from "../../../components/Dialog/forms/branch/AddBranch";
+import EditBranch from "../../../components/Dialog/forms/branch/EditBranch";
+
+import { GetStoreObject } from "../../../helper/Helpers";
+
 const Branch = () => {
+  let loginObj = GetStoreObject("auth");
 
+  /**
+   * Branch table list constants and functions
+   */
   let _PAGESIZE = 5;
-  const [pageLoader, setPageLoader] = useState(true);
+  let _CompanyCode = loginObj.companyId;
+  const [pageLoader, setPageLoader] = useState(false);
 
-  // Branch table state
-  const [BranchSearchValue, setBranchSearchValue] = useState('');
-  const [BranchPageNumber, setBranchPageNumber] = useState(0);
-  const [totalBranchRows, setTotalBranchRows] = useState(0);
-  const [BranchPageSize, setBranchPageSize] = useState(_PAGESIZE);
-  const [branches, setBraches] = useState([]);
+  // company table state
+  const [branchSearchValue, setbranchSearchValue] = useState('');
+  const [companyCode, setcompanyCode] = useState(_CompanyCode);
+  const [pageNumber, setpageNumber] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
+  const [pageSize, setpageSize] = useState(_PAGESIZE);
+  const [braches, setbraches] = useState([]);
+  const [allCompanies, setallCompanies] = useState([]);
 
-  // On click search Branch
-  const handleBranchSearch = (event, value) => { 
-    setBranchSearchValue(value);
-    setBranchPageNumber(0);
-    setBranchPageSize(_PAGESIZE);
+  const handleBranchData = async () => {
     setPageLoader(true);
-  }
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchsearch=${branchSearchValue}`);
+    setPageLoader(false);
 
-  // Trigger on search Branch empty
-  const handleBranchSearchEmpty = (event, value) => {
-    if (value === "") {
-      setBranchSearchValue("");
-      setBranchPageNumber(0);
-      setBranchPageSize(_PAGESIZE);
-      setPageLoader(true);
+    if(response.status) {
+      console.log(response.data.branches);
+      setbraches(response.data.branches);
+
+      setTotalRows(response.data.totalRows);
+      setpageNumber(response.data.currentPage);
+      setpageSize(response.data.rowsPerPage);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
     }
   }
 
-  // handle Branch table next page
+  const handleComapanyAll = async () => {
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/companies/all`);
+    if(response.status) {
+      setallCompanies(response.data.companies);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  // trigger call API endpoint if state change
+  useEffect(() => {
+    handleBranchData();
+    handleComapanyAll();
+  }, [pageNumber, branchSearchValue, pageSize, totalRows, companyCode]);
+
+  // On click search company
+  const handleBranchSearch = (event, value) => { 
+    setbranchSearchValue(value);
+    setpageNumber(1);
+    setpageSize(_PAGESIZE);
+  }
+
+  // Trigger on search company empty
+  const handleBranchSearchEmpty = (event, value) => {
+    if (value === "") {
+      setbranchSearchValue("");
+      setpageNumber(1);
+      setpageSize(_PAGESIZE);
+    }
+  }
+
+  // handle company table next page
   const handleBranchChangePage = (event, newPage) => {
-    setBranchPageNumber(newPage + 1);
+    setpageNumber(newPage + 1);
     setPageLoader(true);
   }
 
-  // handle Branch table change page size
+  // handle company table change page size
   const handleBranchRowsPerPage = (event) => {
-    setBranchPageSize(+event.target.value);
-    setBranchPageNumber(0);
+    setpageSize(+event.target.value);
+    setpageNumber(1);
     setPageLoader(true);
   }
 
-    // Add branch dialog
+  const handleSelect = (e, value) => {
+    setcompanyCode(value);
+  }
+
+  // Add company dialog
   const [openAddBranch, setAddBranch] = React.useState(false);
   const handleAddBranchOpen = () => { setAddBranch(true); };
   const handleAddBranchClose = () => { setAddBranch(false); };
-  const handleAddCallback = () => {
+
+  const handleBranchCallback = () => {
     setPageLoader(true);
-    setTotalBranchRows(totalBranchRows + 1);
+    setTotalRows(totalRows + 1);
+  }
+
+  // trigger to edit company
+  const handleEditBranchProfile = ( event, objData) => {
+    setbranchObj(objData);
+    handleEditBranchOpen();
+  };
+
+  // Edit company dialog
+  const [branchObj, setbranchObj] = React.useState(null);
+  const [openEditBranch, setEditBranch] = React.useState(false);
+  const handleEditBranchOpen = () => { setEditBranch(true); };
+  const handleEditBrachClose = () => { setEditBranch(false); };
+
+  const handleEditBranchCallback = () => {
+    setPageLoader(true);
+    setTotalRows(totalRows + 1);
+    handleEditBrachClose();
   }
 
   return (
     <div className="branch">
       <div className="container">
         <div className="top">
-          <h2 className="title">LIST OF ALL BRANCH</h2>
+          <h2 className="title">LIST OF BRANCHES</h2>
           <Button variant="contained" size="large" onClick={ handleAddBranchOpen }>
-            New Branch <AddIcon />
+            Register New Branch <AddIcon />
           </Button>
         </div>
-
-        <div className="content">
-          <br/>
-          <div className="right">
-              <div className="search">
-                  <BranchSearchBar handleBranchSearch={ handleBranchSearch } handleBranchSearchEmpty={ handleBranchSearchEmpty } />
-              </div>
-              <br/>
-              <BranchList BranchSearchResults={ branches }
-                  totalCount={ totalBranchRows }
-                  BranchRowsPerPage={ handleBranchRowsPerPage }
-                  pageNumber = { (BranchPageNumber === 0) ? BranchPageNumber : (BranchPageNumber - 1) }
-                  pageSize = { BranchPageSize }
-                  BranchChangePage={ handleBranchChangePage } 
-              />
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+          <div className="bottom">
+            <TextField 
+                onChange={e => handleSelect(e, e.target.value) }
+                label="Select Company" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                <MenuItem value=''><em>Select Company</em></MenuItem>
+                { 
+                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
+                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
+                        {item.companyName}
+                    </MenuItem>
+                    )) 
+                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                    : <MenuItem value=''>No records found!</MenuItem>
+                }
+              </TextField>
+          </div>
+          <div className="bottom" style={{width:'50%'}}>
+            <div className="search">
+              <BranchSearchBar handleSearch={ handleBranchSearch } handleSearchEmpty={ handleBranchSearchEmpty } />
+            </div>
           </div>
         </div>
-
+        <BranchList 
+          searchResults={ braches }
+          totalCount={ totalRows }
+          EditProfile={ handleEditBranchProfile }
+          RowsPerPage={ handleBranchRowsPerPage }
+          pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
+          pageSize = { pageSize }
+          ChangePage={ handleBranchChangePage }
+          isLoading = { pageLoader }
+        />
       </div>
 
-      <AddBranch isOpenAddBranch={ openAddBranch } handleCloseAddBranch={ handleAddBranchClose }
-      handleCallback={handleAddCallback} />
-      <PageLoader isLoadingPage={ pageLoader } />
+      <AddBranch isOpenAdd={ openAddBranch } handleCloseAdd={ handleAddBranchClose } handleCallback={ handleBranchCallback } />
+      <EditBranch 
+        isOpenEdit={ openEditBranch } 
+        handleCloseEdit={ handleEditBrachClose } 
+        handleEditCallback={ handleEditBranchCallback }
+        objData={ branchObj } />
     </div>
   )
 }

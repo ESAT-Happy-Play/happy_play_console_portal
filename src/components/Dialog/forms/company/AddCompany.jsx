@@ -1,5 +1,5 @@
 import React from 'react';
-import "../dialogform.scss";
+import "./../../dialogform.scss";
 import { toast } from 'react-toastify';
 
 import { useForm } from 'react-hook-form'
@@ -10,17 +10,21 @@ import DialogContent from '@mui/material/DialogContent';
 import { TextField, MenuItem, Button  } from "@mui/material"
 
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
-import MessageDialog from "../MessageDialog";
-import AddressWidget from '../../widget/AddressWidget';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
+import MessageDialog from "../../MessageDialog";
+
 // Models
-import { CompanyModel } from "../../../model/CompanyModel";
+import { CompanyModel } from "../../../../model/CompanyModel";
+import DefaultAddressWidget from '../../../widget/address/DefaultAddressWidget';
+
+import { POSTFetch } from "../../../../api/ApiFetchBuilder";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
     '& .MuiDialogActions-root': { padding: theme.spacing(1), },
 }));
   
-const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback }) => {
+const AddCompany = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
 
   const formCompany = useForm({ defaultValues: CompanyModel.CompanyForm });
   const { register, handleSubmit, formState, reset } = formCompany;
@@ -45,7 +49,7 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
   // final step submit handler
   const finalStepHandler = async (data) => {
     setFormData(data);
-    handleCompanySubmitOpen();
+    handleSubmitOpen();
   };
 
   const resetForm = () => {
@@ -54,26 +58,38 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
       setSlidePrev(true);
 
       // close all popup modal
-      handleCompanySubmitClose();
-      handleCloseAddCompany();
+      handleSubmitClose();
+      handleCloseAdd();
 
       // reset form inputs
       reset(CompanyModel.CompanyForm);
       setSubmitLoading(false);
+
+      handleCallback();
   }
 
   // Confiration dialog message for add company
-  const [openConfirmCompanySubmit, setConfirmCompanySubmit] = React.useState(false);
-  const handleCompanySubmitOpen = () => { setConfirmCompanySubmit(true); };
-  const handleCompanySubmitClose = () => { setConfirmCompanySubmit(false); };
+  const [openConfirmSubmit, setConfirmSubmit] = React.useState(false);
+  const handleSubmitOpen = () => { setConfirmSubmit(true); };
+  const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleCompanyOkay = async () => {
-    console.log("Submit Company Object");
+    setSubmitLoading(true);
+    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/companies`, formData);
+    if(response.status) {
+      toast.success(response.data.message);
+      resetForm();
+    }
+
+    if(!response.status) {
+      setSubmitLoading(false);
+      toast.error(response.data.errorMessage);
+    }
   };
 
   return (
     <>
       <BootstrapDialog className="divDialogForm"
-        open={ isOpenAddCompany }
+        open={ isOpenAdd }
         disableEscapeKeyDown
       >
         <div className="dialogHeader">
@@ -120,7 +136,7 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
 
               <br />
 
-              <AddressWidget register={register} errors={errors} />
+              <DefaultAddressWidget register={register} errors={errors} />
 
               <div className="divContent">
                 <div className="left">
@@ -130,10 +146,10 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter street/purok"
                     { 
-                      ...register("streetOrPurok", { required: true } ) 
+                      ...register("branchSitio", { required: true } ) 
                     }
-                    error={ !!errors.streetOrPurok }
-                    helperText={ errors.streetOrPurok?.message }
+                    error={ !!errors.branchSitio }
+                    helperText={ errors.branchSitio?.message }
                     label="Enter street/purok" variant="outlined" size="small" fullWidth />
                 </div>
               </div>
@@ -143,9 +159,9 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
               <div className="divContent">
                 <div className="left"></div>
                 <div className="right divFoot">
-                <Button onClick={ handleCloseAddCompany } variant="outlined">Cancel</Button>
+                <Button onClick={ handleCloseAdd } variant="outlined">Cancel</Button>
                 <Button type="submit" sx={{ backgroundColor: "#38a169" }} variant="contained" color="success">
-                  Proceed <ArrowForwardOutlinedIcon/>
+                  Proceed &nbsp; <ArrowForwardOutlinedIcon/>
                 </Button>
                 </div>
               </div>
@@ -164,10 +180,10 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter firstname"
                     { 
-                      ...register("firstName", ((!slidePrev)) ? { required: true } : { required: false } ) 
+                      ...register("operatorFirstname", ((!slidePrev)) ? { required: true } : { required: false } ) 
                     }
-                    error={ !!errors.firstName }
-                    helperText={ errors.firstName?.message }
+                    error={ !!errors.operatorFirstname }
+                    helperText={ errors.operatorFirstname?.message }
                     label="Enter firstname" variant="outlined" size="small" fullWidth />
                 </div>
               </div>
@@ -180,10 +196,10 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter lastname"
                     { 
-                      ...register("lastName", ((!slidePrev)) ? { required: true } : { required: false } ) 
+                      ...register("operatorLastname", ((!slidePrev)) ? { required: true } : { required: false } ) 
                     }
-                    error={ !!errors.lastName }
-                    helperText={ errors.lastName?.message }
+                    error={ !!errors.operatorLastname }
+                    helperText={ errors.operatorLastname?.message }
                     label="Enter lastname" variant="outlined" size="small" fullWidth />
                 </div>
               </div>
@@ -196,34 +212,11 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter middlename"
                     { 
-                      ...register("middleName", { required: false } ) 
+                      ...register("operatorMiddlename", { required: false } ) 
                     }
-                    error={ !!errors.middleName }
-                    helperText={ errors.middleName?.message }
+                    error={ !!errors.operatorMiddlename }
+                    helperText={ errors.operatorMiddlename?.message }
                     label="Enter middlename" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
-
-              <div className="divContent">
-                <div className="left">
-                  <label>EMAIL</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter email"
-                    { 
-                      ...register("email", ((!slidePrev)) ? 
-                      { 
-                        required: false,
-                        pattern: {
-                          value: /\S+@\S+\.\S+/,
-                          message: "Entered value does not match email format"
-                        } 
-                      } : { required: false } ) 
-                    }
-                    error={ !!errors.email }
-                    helperText={ errors.email?.message }
-                    label="Enter email" variant="outlined" size="small" fullWidth />
                 </div>
               </div>
 
@@ -235,14 +228,14 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter gender"
                     { 
-                      ...register("gender", ((!slidePrev)) ? { required: true } : { required: false } ) 
+                      ...register("operatorSex", ((!slidePrev)) ? { required: true } : { required: false } ) 
                     }
-                    error={ !!errors.gender }
-                    helperText={ errors.gender?.message }
+                    error={ !!errors.operatorSex }
+                    helperText={ errors.operatorSex?.message }
                     label="Select gender" sx={{ width: "70%" }} defaultValue="" variant="outlined" size="small" select>
                     <MenuItem value=''><em>Select gender</em></MenuItem>
-                    <MenuItem value="Male">Male</MenuItem>
-                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="0">Male</MenuItem>
+                    <MenuItem value="1">Female</MenuItem>
                   </TextField>
                 </div>
               </div>
@@ -255,14 +248,14 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField 
                     placeholder="Enter marital status"
                     { 
-                      ...register("martialStatus", ((!slidePrev)) ? { required: true } : { required: false } ) 
+                      ...register("operatorCivilStatus", ((!slidePrev)) ? { required: true } : { required: false } ) 
                     }
-                    error={ !!errors.martialStatus }
-                    helperText={ errors.martialStatus?.message }
+                    error={ !!errors.operatorCivilStatus }
+                    helperText={ errors.operatorCivilStatus?.message }
                     label="Select marital status" sx={{ width: "70%" }} defaultValue="" variant="outlined" size="small" select>
                     <MenuItem value=''><em>Select status</em></MenuItem>
-                    <MenuItem value="Single">Single</MenuItem>
-                    <MenuItem value="Married">Married</MenuItem>
+                    <MenuItem value="0">Single</MenuItem>
+                    <MenuItem value="1">Married</MenuItem>
                   </TextField>
                 </div>
               </div>
@@ -275,10 +268,10 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                   <TextField
                     type="date"
                     { 
-                      ...register("birthDate", ((!slidePrev)) ? { required: true } : { required: false } ) 
+                      ...register("operatorBirthday", ((!slidePrev)) ? { required: true } : { required: false } ) 
                     }
-                    error={ !!errors.birthDate }
-                    helperText={ errors.birthDate?.message }
+                    error={ !!errors.operatorBirthday }
+                    helperText={ errors.operatorBirthday?.message }
                     variant="outlined" size="small" fullWidth />
                 </div>
               </div>
@@ -292,7 +285,7 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                     type='number'
                     placeholder="Enter contact number"
                     { 
-                      ...register("contactNumber", ((!slidePrev)) ? 
+                      ...register("operatorMobileNumber", ((!slidePrev)) ? 
                       { 
                         required: true,
                         minLength: {
@@ -304,8 +297,8 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                         // },
                       } : { required: false } ) 
                     }
-                    error={ !!errors.contactNumber }
-                    helperText={ errors.contactNumber?.message }
+                    error={ !!errors.operatorMobileNumber }
+                    helperText={ errors.operatorMobileNumber?.message }
                     label="Enter contact number" variant="outlined" size="small" fullWidth />
                 </div>
               </div>
@@ -317,7 +310,7 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
                 <div className="right divFoot">
                 <Button onClick={ handleSlideBack } variant="outlined">Back</Button>
                 <Button type="submit" sx={{ backgroundColor: "#38a169" }} variant="contained" color="success">
-                  Proceed <ArrowForwardOutlinedIcon/>
+                  Submit &nbsp; <SaveAsIcon/>
                 </Button>
                 </div>
               </div>
@@ -328,8 +321,8 @@ const AddCompany = ({ isOpenAddCompany, handleCloseAddCompany, handleCallback })
       </BootstrapDialog>
 
       <MessageDialog
-        isOpenMessage={ openConfirmCompanySubmit } 
-        handleCloseMessage={ handleCompanySubmitClose } 
+        isOpenMessage={ openConfirmSubmit } 
+        handleCloseMessage={ handleSubmitClose } 
         handleOkay={ handleCompanyOkay } 
         title={ "Confirmation" } 
         content={ "Are you sure you want to add new company?" }

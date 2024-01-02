@@ -1,20 +1,19 @@
 export const BranchModel = {
     BranchForm: {
-        companyId: "",
+        companyid: "",
         branchName: "",
-        region: "",
-        province: "",
-        municipality: "",
-        barangay: "",
-        streetOrPurok: "",
-        // Step 2
-        firstName: "",
-        lastName: "",
-        middleName: "",
-        email: "", //
-        gender: "",
-        martialStatus: "",
-        birthDate: "",
-        contactNumber: ""
+        branchRegion: "",
+        branchProvince: "",
+        branchMunicipality: "",
+        branchBarangay: "",
+        branchSitio: ""
+    },
+    UpdateBranchForm: {
+        branchName: "",
+        branchRegion: "",
+        branchProvince: "",
+        branchMunicipality: "",
+        branchBarangay: "",
+        branchSitio: ""
     }
 }

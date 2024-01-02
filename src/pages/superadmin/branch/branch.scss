@@ -1,6 +1,11 @@
 .branch {
     margin: 30px 15px 0 15px;
-
+    .show {
+        display: block !important;
+    }
+    .hide {
+        display: none !important;
+    }
     .container {
         -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
         box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
@@ -12,19 +17,21 @@
             align-items: center;
             justify-content: space-between;
             color: #444444;
-            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            // box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
             border-radius: 10px;
             padding: 15px;
-            background-color: #f7fafc;
-
+            // background-color: #f7fafc;
+            
             .title {
-                font-weight: 800;
+                font-weight: 700;
                 margin: 0;
+                text-transform: capitalize;
             }
 
             button {
                 background-color: #38a169;
+                text-transform: capitalize;
             }
         }
 
@@ -38,10 +45,8 @@
 
             .search {
                 width: 100%;
-
                 .MuiInputBase-root {
                     padding: 0;
-
                     .MuiInputAdornment-root {
                         background: #edf2f7;
                         padding: 20px;
@@ -49,25 +54,115 @@
                     }
                 }
             }
+        }
 
-            .companyList {
-                background-color: #e9f0f3;
-                border-radius: 10px;
-                padding: 10px;
-                width: 100%;
+        .branchList {
+            // background-color: #e9f0f3;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
 
-                table {
-                    thead>tr>th {
-                        font-weight: 600 !important;
-                    }
+            table {
+                thead>tr>th {
+                    font-weight: 600 !important;
+                }
 
-                    .btnShow {
-                        background: #fec30e !important;
-                        color: black;
-                        text-transform: capitalize;
-                    }
+                .btnEdit {
+                    background: #dd6b20 !important;
+                    color: white;
+                    text-transform: capitalize;
+                }
+
+                .btnShow {
+                    background: #fec30e !important;
+                    color: black;
+                    text-transform: capitalize;
                 }
             }
         }
+
+        .bottomProfile {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            .divInfo {
+                display: flex;
+                span {
+                    width: 140px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .left {
+                flex: 1;
+
+                h2 {
+                    margin: 0;
+                    text-transform: uppercase;
+                }
+
+                .widget1 {
+                    display: flex;
+                    margin: 30px 0 15px 0;
+
+                    .left,
+                    .right { 
+                        flex: 1; 
+                        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+                        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                        border-radius: 10px;
+                        padding: 10px;
+                        margin: 5px;
+                        text-align: center;
+
+                        label {
+                            font-size: 25px;
+                        }
+                        h3 {
+                            font-size: 65px;
+                            font-weight: 500;
+                            margin: 0px;
+                        }
+                    }
+                }
+
+                .widget2 {
+                    flex: 1; 
+                    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+                    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                    border-radius: 10px;
+                    padding: 10px;
+                }
+            }
+
+            .right {
+                flex: 2;
+                .search {
+                    width: 100%;
+                    .MuiInputBase-root {
+                        padding: 0;
+                        .MuiInputAdornment-root {
+                            background: #edf2f7;
+                            padding: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+    
+                .companyList {
+                    background-color: #e9f0f3;
+                    border-radius: 10px;
+                    padding: 10px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .BranchList {
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        border-radius: 10px;
+        padding: 20px;
     }
 }

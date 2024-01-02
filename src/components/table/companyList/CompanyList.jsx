@@ -2,23 +2,28 @@ import CompanyTableData from "./CompanyTableData";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 
 const CompanyList = ({ 
-  companySearchResults, 
-  showCompanyProfile, 
+  companySearchResults,
+  editCompanyProfile,
   companyChangePage,
   companyRowsPerPage,
   pageNumber, 
   pageSize, 
-  totalCount}) => {
+  totalCount,
+  isLoading}) => {
 
     const results = companySearchResults.map(company => <CompanyTableData 
       key={company.companyId} 
       company={company} 
-      handleShowCompanyProfile={ showCompanyProfile } 
+      handleEditCompanyProfile={ editCompanyProfile }
     />)
+    
 
-    const content = results?.length ? results : 
+    const content = isLoading ? 
     <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-        <TableCell component="th" scope="row" colSpan={6}> No company records found! </TableCell>
+        <TableCell component="th" scope="row" align="center" colSpan={5}> Loading... Please wait! </TableCell>
+    </TableRow> : results?.length ? results : 
+    <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+        <TableCell component="th" scope="row" align="center" colSpan={5}> No records found! </TableCell>
     </TableRow>;
 
     const handleChangePage = (event, newpage) => {
@@ -32,11 +37,10 @@ const CompanyList = ({
             <TableHead>
               <TableRow>
                 <TableCell>COMPANY NAME</TableCell>
-                <TableCell align="center">No. Of Branches</TableCell>
-                <TableCell>Main Branch</TableCell>
-                <TableCell>Branch Operator</TableCell>
-                <TableCell>Branch Contact</TableCell>
-                <TableCell></TableCell>
+                <TableCell align="center">BRANCHES</TableCell>
+                <TableCell align="center">OPERATORS</TableCell>
+                <TableCell>REGISRATION DATE</TableCell>
+                <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

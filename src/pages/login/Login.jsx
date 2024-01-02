@@ -68,20 +68,24 @@ const Login = () => {
   }
 
   useEffect(() => {
-    // set role for Super Admin and Operator.
-    if(useRole === null) {
-      dispatch(setRoleState({ role: "Dashboard"}));
-      window.location.reload(false);
-    }
-
-    if(useRole !== null && useRole.role !== "Dashboard") {
-      dispatch(setRoleState({ role: "Dashboard"}));
-      window.location.reload(false);
-    }
-
     // redirect to dashboard if already login
-    if (loginObj !== null && useRole.role === "Dashboard") {
+    if (loginObj !== null) {
       navigate('/');
+    } else {
+
+      // set user role
+      if (useRole !== null) {
+        if (useRole.role !== "Dashboard") {
+          if(useRole !== null && useRole.role !== "Dashboard") {
+            dispatch(setRoleState({ role: "Dashboard"}));
+            window.location.reload(false);
+          }
+        }
+      } else {
+        // set role for Super Admin and Operator.
+        dispatch(setRoleState({ role: "Dashboard"}));
+        window.location.reload(false);
+      }
     }
   }, [loginObj, useRole]);
 

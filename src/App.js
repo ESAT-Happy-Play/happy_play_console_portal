@@ -8,8 +8,13 @@ import NotFound from "./pages/404/NotFound";
 
 import AgentLogin from "./pages/console/login/AgentLogin";
 
+import CompanyDetails from "./pages/superadmin/company/CompanyDetails";
+import BranchDetails from "./pages/superadmin/branch/BranchDetails";
+
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import PageLayout from "./components/layout/PageLayout";
+import LayoutWrapper from "./components/layout/LayoutWrapper";
 
 function App() {
   return (
@@ -24,6 +29,12 @@ function App() {
           {/* protected routes */}
           <Route path="/" element={<Layout />}>
             {routes}
+
+            {/* Start Details routes */}
+            <Route exact path="/company/:id" element={<LayoutWrapper state="SuperAdmin.Company"><CompanyDetails /></LayoutWrapper>} />
+            <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
+            {/* End Details routes */}
+            
           </Route>
           <Route path='*' element={<NotFound />}/>
         </Routes>

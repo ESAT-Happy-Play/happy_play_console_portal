@@ -7,7 +7,6 @@ const PageLayout = () => {
   const location = useLocation()
   let authdata = GetStoreObject("auth");
   let userRole = GetStoreObject("role");
-  console.log(userRole);
 
   return (
     <>

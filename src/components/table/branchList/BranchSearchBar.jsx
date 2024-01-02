@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useState } from 'react';
 
-const BranchSearchBar = ({ handleBranchSearch, handleBranchSearchEmpty }) => {
+const BranchSearchBar = ({ handleSearch, handleSearchEmpty }) => {
     //declarations
     const [searchVal, setSearchVal] = useState('');
 
@@ -11,19 +11,19 @@ const BranchSearchBar = ({ handleBranchSearch, handleBranchSearchEmpty }) => {
     const handleSubmit = (e) => e.preventDefault();
 
     // onchange trigger
-    const handleBranchSearchChange = (e) => {
+    const handleSearchChange = (e) => {
         setSearchVal(e.target.value);
-        handleBranchSearchEmpty(e, e.target.value);
+        handleSearchEmpty(e, e.target.value);
     }
 
     // on search icon trigger
     const handleSearchSubmit = (e) => {
-        handleBranchSearch(e, searchVal);
+        handleSearch(e, searchVal);
     }
 
     const handleKeyDown = (e) => {
       if(e.keyCode === 13){
-         handleBranchSearch(e, searchVal);
+         handleSearch(e, searchVal);
       }
     }
 
@@ -35,7 +35,7 @@ const BranchSearchBar = ({ handleBranchSearch, handleBranchSearchEmpty }) => {
                 label="Search Branch Name"
                 variant="outlined"
                 fullWidth
-                onChange={ handleBranchSearchChange }
+                onChange={ handleSearchChange }
                 onKeyDown={ handleKeyDown }
                 InputProps={{
                     endAdornment: (
