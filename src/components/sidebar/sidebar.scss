@@ -1,15 +1,19 @@
 .sidebar {
     flex: 1.5;
-    border-right: 0.5px solid rgb(230, 227, 227);
+    // border-right: 0.5px solid rgb(230, 227, 227);
     min-height: 100vh;
     background-color: white;
+    color: #4845d2;
+    svg {
+        color: #4845d2;
+    }
 
     .top {
-        height: 50px;
+        height: 54px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #ee264a;
+        background: #4845d2;
 
         .logo {
             font-size: 20px;
@@ -32,7 +36,7 @@
 
     .profile {
         display: flex;
-        background-color: #fec30e;
+        background-color: white;
         padding: 7px;
         cursor: pointer;
 

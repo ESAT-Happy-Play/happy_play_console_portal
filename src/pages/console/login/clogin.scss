@@ -31,7 +31,8 @@
 
         .left {
             flex: 1;
-            background-color: #fec30e;
+            // background-color: #fec30e;
+            background: linear-gradient(180deg, rgb(72, 69, 210) 0%, rgb(253, 29, 172) 65%, rgb(252, 176, 69) 100%);
 
             .leftHead {
                 background-color: #ee264a;
@@ -44,10 +45,10 @@
 
             .rightHead {
                 display: flex;
-                background-color: #13dbdb;
+                background-color: white;
                 height: 50px;
                 align-items: center;
-                color: white;
+                color: #4845d2;
                 padding-left: 20px;
 
                 h2 {

@@ -135,7 +135,7 @@ const Branch = () => {
       <div className="container">
         <div className="top">
           <h2 className="title">LIST OF BRANCHES</h2>
-          <Button variant="contained" size="large" onClick={ handleAddBranchOpen }>
+          <Button className="btn-success" variant="outlined" size="large" onClick={ handleAddBranchOpen }>
             Register New Branch <AddIcon />
           </Button>
         </div>

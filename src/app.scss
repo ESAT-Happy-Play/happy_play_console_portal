@@ -35,4 +35,10 @@ $defaultPad: 5px;
     .elemHide { display: none; }
 
     .title { text-transform: uppercase; }
+
+    .btn-success {
+        border: 1px solid #38a169;
+        text-transform: capitalize;
+        color: green;
+    }
 }

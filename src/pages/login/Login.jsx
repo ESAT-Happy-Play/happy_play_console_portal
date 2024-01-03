@@ -93,7 +93,7 @@ const Login = () => {
     <div className="login">
       <div className='loginContainer'>
         <div className="left">
-          <div className="leftHead"></div>
+          {/* <div className="leftHead"></div> */}
         </div>
         <div className="right">
         <div className="rightHead">
@@ -103,11 +103,11 @@ const Login = () => {
         <form onSubmit={ handleSubmit(loginHandler) } noValidate>
             <Stack spacing={1} direction="row" m={2}>
               <TextField 
-                label="Mobile Number / Email"
+                label="Mobile Number"
                 variant="outlined" 
-                placeholder="Enter mobile number/email"
+                placeholder="Enter mobile number"
                 { 
-                  ...register("username", { required: "Mobile number/email is required" } ) 
+                  ...register("username", { required: "Mobile number is required" } ) 
                 }
                 error={ !!errors.username }
                 helperText={ errors.username?.message }
@@ -151,7 +151,7 @@ const Login = () => {
                 justifyContent: "end",
                 marginRight: "15px" 
               }}>
-              <LoadingButton type="submit" loading={ isLoading } sx={{ backgroundColor: "#319795" }} variant="contained" color="success" size="medium"
+              <LoadingButton type="submit" loading={ isLoading } className="btn-success" variant="outlined" color="success" size="medium"
                 loadingPosition='end'
                 endIcon={ <LoginRoundedIcon/> }>
                 Login

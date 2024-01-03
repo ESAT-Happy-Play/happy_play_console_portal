@@ -113,7 +113,7 @@ const Company = () => {
       <div className="container">
         <div className="top">
           <h2 className="title">LIST OF COMPANIES</h2>
-          <Button variant="contained" size="large" onClick={ handleAddCompanyOpen }>
+          <Button className="btn-success" variant="outlined" size="large" onClick={ handleAddCompanyOpen }>
             Register New Company <AddIcon />
           </Button>
         </div>

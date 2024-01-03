@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <span className="logo">Happy Play</span>
+        {/* <span className="logo">Happy Play</span> */}
       </div>
       <div className="profile" onClick={event =>  window.location.href='/'}>
           {

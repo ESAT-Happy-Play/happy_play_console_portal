@@ -11,6 +11,7 @@
         box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
         border-radius: 10px;
         margin-bottom: 20px;
+        background: white;
 
         .top {
             display: flex;
@@ -26,11 +27,7 @@
             .title {
                 font-weight: 700;
                 margin: 0;
-            }
-
-            button {
-                background-color: #38a169;
-                text-transform: capitalize;
+                color: #4845d2;
             }
         }
 
@@ -64,6 +61,7 @@
             table {
                 thead>tr>th {
                     font-weight: 600 !important;
+                    color: #4845d2;
                 }
 
                 .btnEdit {

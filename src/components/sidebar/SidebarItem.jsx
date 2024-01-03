@@ -11,8 +11,8 @@ const SidebarItem = ({ item }) => {
       item.sidebarProps && item.path ? (
       <ListItemButton sx={
         { 
-          padding: "7px 0 7px 20px", 
-          "borderBottom": "0.5px solid rgb(19 219 219)", 
+          padding: "12px 0 12px 20px", 
+          // "borderBottom": "0.5px solid rgb(19 219 219)", 
           background: (isSelected) ? "#e9e6e6" : "white" 
         }} component={Link} to={item.path} >
           

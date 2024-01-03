@@ -25,10 +25,10 @@ const SidebarItemCollapse = ({ item }) => {
           onClick={() => setOpen(!open)}
           sx={{
             "&: hover": {
-              backgroundColor: "#067c7c"
+              backgroundColor: "#e9e6e6"
             },
-            backgroundColor: "#13dbdb",
-            border: "0.5px solid rgb(230, 227, 227)"
+            backgroundColor: "#ffff",
+            // border: "0.5px solid rgb(230, 227, 227)"
           }}
         >
         <ListItemText disableTypography

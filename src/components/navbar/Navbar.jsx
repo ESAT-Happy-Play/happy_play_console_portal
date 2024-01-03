@@ -58,6 +58,7 @@ const Navbar = () => {
             <div className="counter">1</div>
           </div>
           <div className="item itemLogout" onClick={ handleLogoutSubmitOpen }>
+            <span style={{fontSize:'16px',marginRight:'10px',color:'white'}}>Logout</span> 
             <ExitToAppIcon className='icon' />
           </div>
         </div>
