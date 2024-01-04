@@ -75,7 +75,6 @@ const AddBranch = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
   const handleSubmitOpen = () => { setConfirmSubmit(true); };
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleBranchOkay = async () => {
-    console.log(formData);
     setSubmitLoading(true);
     let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/branches`, formData);
     if(response.status) {

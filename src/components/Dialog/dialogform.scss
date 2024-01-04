@@ -160,6 +160,71 @@ $defaultPad: 5px;
     }
 }
 
+.largeDivDialogForm {
+    .MuiPaper-root {
+        min-width: 968px;
+
+        .dialogHeader {
+            display: flex;
+
+            .st {
+                flex: 1;
+                background-color: #4845d2;
+            }
+
+            .nd {
+                flex: 1;
+                background-color: #4845d2;
+            }
+
+            .rd {
+                flex: 5;
+                background-color: #4845d2;
+                padding: 15px;
+                font-weight: 700;
+                color: white;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    font-size: 25px;
+                }
+
+                svg {
+                    font-size: 35px;
+                    position: absolute;
+                    color: #7b7d7e;
+                }
+            }
+        }
+
+        .div-content-wrapper {
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+
+            .div-content {
+                width: 100%;
+
+                h4 {
+                    margin: 0;
+                    color: #4845d2;
+                }
+            }
+        }
+
+        .div-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+        }
+    }
+}
+
 .divDialogForm {
     // .MuiDialog-container {
     //     position: absolute;

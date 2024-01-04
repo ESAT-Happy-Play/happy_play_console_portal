@@ -41,4 +41,29 @@ $defaultPad: 5px;
         text-transform: capitalize;
         color: green;
     }
+
+    .btn-error {
+        border: #e53e3e;
+        text-transform: capitalize;
+        color: white;
+        background: #e53e3e;
+        &:hover {
+            color: black;
+        }
+    }
+
+    .btn-warning {
+        border: 1px solid #dd6b20;
+        text-transform: capitalize;
+        background: #dd6b20;
+        color: white;
+        &:hover {
+            color: black;
+        }
+    }
+
+    .active-b {
+        background: rgba(25, 118, 210, 0.2);
+        border-radius: 5px;
+    }
 }

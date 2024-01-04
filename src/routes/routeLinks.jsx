@@ -74,6 +74,7 @@ import AgentUserActivities from '../pages/console/reports/user_activities/AgentU
 import { GetStoreObject } from "../helper/Helpers";
 import AdminGameBets from '../pages/games/adminGameBets/AdminGameBets';
 import GameSimulator from '../pages/games/gameSimulator/GameSimulator';
+import Game from '../pages/superadmin/games/Game';
 
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
@@ -224,11 +225,11 @@ const routeLinks = [
         },
         {
           path: "/games",
-          element: <Profile />,
+          element: <Game />,
           state: "SuperAdmin.Games",
           sidebarProps: {
             displayText: "Games",
-            icon: <AssignmentIndIcon />
+            icon: <DashboardOutlinedIcon />
           },
         }
       ]

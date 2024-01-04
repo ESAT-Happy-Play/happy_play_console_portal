@@ -101,7 +101,7 @@ const ProfileInfo = () => {
   return (
     <div className='content'>
       <div className="container">
-        <div className="top">
+        <div className="top" style={{borderBottom:'2px solid rgb(239, 239, 239)'}}>
           <h2 className="title">PROFILE INFORMATION</h2>
           <div>
             <b>Edit</b>

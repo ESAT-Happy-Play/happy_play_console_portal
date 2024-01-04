@@ -58,6 +58,8 @@ const NavIcon = ({ sideBarSate }) => {
         return <HomeWorkOutlinedIcon />
     case "SuperAdmin.Profiles":
         return <AssignmentIndIcon />
+    case "SuperAdmin.Games":
+        return <DashboardOutlinedIcon />
 
     case "UserAccount.SystemUsers":
         return <Diversity3OutlinedIcon />

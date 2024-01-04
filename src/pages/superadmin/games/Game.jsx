@@ -2,7 +2,7 @@ import "./game.scss"
 
 function Game() {
   return (
-    <div>
+    <div style={{padding:'40px'}}>
       Admin games page!!!
     </div>
   )

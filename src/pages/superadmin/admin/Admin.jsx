@@ -9,7 +9,7 @@ const Admin = () => {
     <div className="content">
       <div className="container">
         <div className="divadmin">
-          <h1 className="title">GOOD MORNING, { authState.userName }</h1>
+          <h1 className="title">Hi! { authState.displayName }</h1>
         </div>
       </div>
     </div>

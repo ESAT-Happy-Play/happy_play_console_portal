@@ -1,166 +1,166 @@
-import "./operator.scss"
+import "./operator.scss";
 
 import React, { useState, useEffect } from 'react';
-import OperatorSearchBar from "../../../components/table/operator/OperatorSearchBar";
-import OperatorList from "../../../components/table/operator/OperatorList";
-import PageLoader from "../../../components/widget/PageLoader";
+import AddIcon from '@mui/icons-material/Add';
+import { TextField, MenuItem, Button  } from "@mui/material"
 import { toast } from 'react-toastify';
 
-import { TextField, MenuItem, Button } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import AddOperator from "../../../components/Dialog/forms/AddOperator";
+import OperatorSearchBar from "../../../components/table/operator/OperatorSearchBar";
+import OperatorList from "../../../components/table/operator/OperatorList";
 
-import { GetStoreObject, GetJWTStoreObject } from "../../../helper/Helpers";
-import { Roles } from "../../../helper/Objects";
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+
+import { GetStoreObject } from "../../../helper/Helpers";
 
 const Operator = () => {
-  // Enum roles
-  let roles = Roles();
-  // auth api response object
   let loginObj = GetStoreObject("auth");
-  // token object
-  let tokenObj = GetJWTStoreObject(loginObj.token);
-  // loginObj.companyObjId
-  // loginObj.branchId
-  // loginObj.isMain
-  // loginObj.accountObjectId
-  // loginObj.branchName
 
+  /**
+   * constants and functions
+   */
   let _PAGESIZE = 5;
-  const [pageLoader, setPageLoader] = useState(true);
+  let _CompanyCode = loginObj.companyId;
+  const [pageLoader, setPageLoader] = useState(false);
 
-  // table state
-  const [CompanyId, setCompanyId] = useState((tokenObj.RoleId !== roles.Admin) ? loginObj.companyObjId : null);
-  const [BrachId, setBrachId] = useState((tokenObj.RoleId !== roles.Admin) ? loginObj.branchId : null);
-  const [BranchName, setBranchName] = useState((tokenObj.RoleId !== roles.Admin) ? loginObj.branchName : null);
-  
-  const [SearchValue, setSearchValue] = useState('');
-  const [PageNumber, setPageNumber] = useState(0);
+  const [operatorSearchValue, setoperatorSearchValue] = useState('');
+  const [companyCode, setcompanyCode] = useState(_CompanyCode);
+  const [branchCode, setbranchCode] = useState(_CompanyCode);
+  const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
-  const [PageSize, setPageSize] = useState(_PAGESIZE);
-  
-  const [operatorList, setoperatorList] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  
-  const handleSelect = (e, value) => {
+  const [pageSize, setpageSize] = useState(_PAGESIZE);
+  const [operators, setoperators] = useState([]);
+  const [allCompanies, setallCompanies] = useState([]);
+
+  const handleOperatorData = async () => {
     setPageLoader(true);
-    setCompanyId(value);
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchcode=${branchCode}&operatorsearch=${operatorSearchValue}`);
+    setPageLoader(false);
+
+    if(response.status) {
+      setoperators(response.data.operators);
+
+      setTotalRows(response.data.totalRows);
+      setpageNumber(response.data.currentPage);
+      setpageSize(response.data.rowsPerPage);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   }
 
-  // On click search Operator
+  const handleComapanyAll = async () => {
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/companies/all`);
+    if(response.status) {
+      setallCompanies(response.data.companies);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  // trigger call API endpoint if state change
+  useEffect(() => {
+    handleOperatorData();
+    handleComapanyAll();
+  }, [pageNumber, operatorSearchValue, pageSize, totalRows, companyCode]);
+
+  // On click search
   const handleOperatorSearch = (event, value) => { 
-    setSearchValue(value);
-    setPageNumber(0);
-    setPageSize(_PAGESIZE);
-    setPageLoader(true);
+    setoperatorSearchValue(value);
+    setpageNumber(1);
+    setpageSize(_PAGESIZE);
   }
 
-  // Trigger on search Operator empty
+  // Trigger on search empty
   const handleOperatorSearchEmpty = (event, value) => {
     if (value === "") {
-      setSearchValue("");
-      setPageNumber(0);
-      setPageSize(_PAGESIZE);
-      setPageLoader(true);
+      setoperatorSearchValue("");
+      setpageNumber(1);
+      setpageSize(_PAGESIZE);
     }
   }
 
   // handle table next page
   const handleOperatorChangePage = (event, newPage) => {
-    setPageNumber(newPage + 1);
+    setpageNumber(newPage + 1);
     setPageLoader(true);
   }
 
   // handle table change page size
   const handleOperatorRowsPerPage = (event) => {
-    setPageSize(+event.target.value);
-    setPageNumber(0);
+    setpageSize(+event.target.value);
+    setpageNumber(1);
     setPageLoader(true);
   }
 
-  const handleNewOperator = () => {
-    if(CompanyId !== null) {
-      handleAddOperatorOpen();
-    } else {
-      toast.error("Please select company");
-    }
-  }
-
-  // Add dialog
-  const [openAddOperator, setAddOperator] = React.useState(false);
-  const handleAddOperatorOpen = () => { setAddOperator(true); };
-  const handleAddOperatorClose = () => { setAddOperator(false); };
-
-  const handleOperatorCallback = () => {
-    setPageLoader(true);
-    setTotalRows(totalRows + 1);
+  const handleSelect = (e, value) => {
+    setcompanyCode(value);
   }
 
   return (
-    <div className="content">
-      <div  className="container">
+    <div className="operator">
+      <div className="container">
         <div className="top">
           <h2 className="title">LIST OF OPERATORS</h2>
-          {
-            (tokenObj.RoleId === roles.Admin || (tokenObj.RoleId === roles.Operator && loginObj.isMain)) ?
-              <Button variant="contained" onClick={ handleNewOperator } size="large">
-                New Operator <AddIcon />
-              </Button>
-            : ""
-          }
-          
+          <Button className="btn-success" variant="outlined" size="large">
+            Add New Operator <AddIcon />
+          </Button>
         </div>
-        <div className="row p-15">
-          {
-            (tokenObj.RoleId === roles.Admin) ?
-              <div className="col-4">
-                <TextField
-                  placeholder="Select Company"
-                  onChange={e => handleSelect(e, e.target.value) }
-                  label="Select Company" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select Company</em></MenuItem>
-                  { 
-                      (companies.length !== 0) ? companies.map((item) => (
-                      <MenuItem key={item.companyId} value={item.companyId}>
-                          {item.companyName}
-                      </MenuItem>
-                      )) :
-                      <MenuItem value=''>Loading options...</MenuItem>
-                  }
-                </TextField>
-              </div>
-            : ""
-          }
-          
-          <div className={ (tokenObj.RoleId === roles.Admin) ? 'col-8' : 'col-12'}>
-            <OperatorSearchBar handleSearch={ handleOperatorSearch } handleSearchEmpty={ handleOperatorSearchEmpty } />
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+          <div className="bottom">
+            <span>Company</span>
+            <TextField 
+                onChange={e => handleSelect(e, e.target.value) }
+                label="Select Company" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                <MenuItem value=''><em>Select Company</em></MenuItem>
+                { 
+                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
+                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
+                        {item.companyName}
+                    </MenuItem>
+                    )) 
+                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                    : <MenuItem value=''>No records found!</MenuItem>
+                }
+              </TextField>
+          </div>
+          <div className="bottom">
+            <span>Branch</span>
+            <TextField 
+                onChange={e => handleSelect(e, e.target.value) }
+                label="Select Branch" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                <MenuItem value=''><em>Select Branch</em></MenuItem>
+                { 
+                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
+                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
+                        {item.companyName}
+                    </MenuItem>
+                    )) 
+                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                    : <MenuItem value=''>No records found!</MenuItem>
+                }
+              </TextField>
+          </div>
+          <div className="bottom" style={{ minWidth: "450px" }}>
+            <div className="search">
+              <OperatorSearchBar handleSearch={ handleOperatorSearch } handleSearchEmpty={ handleOperatorSearchEmpty } />
+            </div>
           </div>
         </div>
-
-        <div className="row p-15">
-          <div className="col-12">
-            <OperatorList 
-            SearchResults={ operatorList }
-            ChangePage = { handleOperatorChangePage }
-            RowsPerPage = { handleOperatorRowsPerPage }
-            pageNumber = { (PageNumber === 0) ? PageNumber : (PageNumber - 1) }
-            pageSize = { PageSize } 
-            totalCount = { totalRows } />
-          </div>
-        </div>
-
+        <OperatorList 
+          searchResults={ operators }
+          totalCount={ totalRows }
+          RowsPerPage={ handleOperatorRowsPerPage }
+          pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
+          pageSize = { pageSize }
+          ChangePage={ handleOperatorChangePage }
+          isLoading = { pageLoader }
+        />
       </div>
-      <AddOperator 
-        isOpen={ openAddOperator } 
-        handleClose={ handleAddOperatorClose }
-        handleBack={ handleOperatorCallback }
-        companyId= { CompanyId }
-        branchId= { BrachId }
-        branchName= { BranchName } />
-
-      <PageLoader isLoadingPage={ pageLoader } />
     </div>
-  );
+  )
 }
 
 export default Operator

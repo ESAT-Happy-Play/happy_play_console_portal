@@ -2,7 +2,7 @@
     display: flex;
     .layoutContainer {
         flex: 6;
-        background: #f4f3fc;
+        background: white;
 
         .widgets {
             display: flex;
@@ -37,14 +37,14 @@
                     align-items: center;
                     justify-content: space-between;
                     color: #444444;
-                    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-                    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                    // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+                    // box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
                     border-radius: 10px;
                     padding: 15px;
-                    background-color: #f7fafc;
+                    background-color: white;
             
                     .title {
-                        font-weight: 800;
+                        font-weight: 700;
                         margin: 0;
                     }
             

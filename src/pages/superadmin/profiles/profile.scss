@@ -34,134 +34,54 @@
             }
         }
 
-        .bottom {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
+        .div-left {
+            border-right: 2px solid #efefef;
+            padding: 15px;
+            min-width: 200px;
 
-            .search {
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    padding: 10px;
+                    cursor: pointer;
+                    &:hover {
+                        background: rgba(25, 118, 210, 0.2);
+                        border-radius: 5px;
+                    }
+                    &:focus {
+                        background: rgba(25, 118, 210, 0.2);
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+
+        .div-right {
+            form {
+                padding: 15px;
+                display: flex;
+                gap: 10px;
                 width: 100%;
-
-                .MuiInputBase-root {
-                    padding: 0;
-
-                    .MuiInputAdornment-root {
-                        background: #edf2f7;
-                        padding: 20px;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-
-        .companyList {
-            // background-color: #e9f0f3;
-            border-radius: 10px;
-            padding: 20px;
-            width: 100%;
-
-            table {
-                thead>tr>th {
-                    font-weight: 600 !important;
-                    color: #4845d2;
-                }
-
-                .btnEdit {
-                    background: #dd6b20 !important;
-                    color: white;
-                    text-transform: capitalize;
-                }
-
-                .btnShow {
-                    background: #fec30e !important;
-                    color: black;
-                    text-transform: capitalize;
-                }
-            }
-        }
-
-        .bottomProfile {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-
-            .left {
-                flex: 1;
-
-                h2 {
-                    margin: 0;
-                    text-transform: uppercase;
-                }
-
-                .widget1 {
-                    display: flex;
-                    margin: 30px 0 15px 0;
-
-                    .left,
-                    .right {
-                        flex: 1;
-                        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-                        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-                        border-radius: 10px;
-                        padding: 10px;
-                        margin: 5px;
-                        text-align: center;
-
-                        label {
-                            font-size: 25px;
-                        }
-
-                        h3 {
-                            font-size: 65px;
-                            font-weight: 500;
-                            margin: 0px;
-                        }
-                    }
-                }
-
-                .widget2 {
-                    flex: 1;
-                    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-                    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-                    border-radius: 10px;
-                    padding: 10px;
-                }
-            }
-
-            .right {
-                flex: 2;
-
-                .search {
+        
+                .div-content {
                     width: 100%;
-
-                    .MuiInputBase-root {
-                        padding: 0;
-
-                        .MuiInputAdornment-root {
-                            background: #edf2f7;
-                            padding: 20px;
-                            cursor: pointer;
-                        }
+        
+                    h4 {
+                        margin: 0;
+                        color: #4845d2;
                     }
                 }
+            }
 
-                .companyList {
-                    background-color: #e9f0f3;
-                    border-radius: 10px;
-                    padding: 10px;
-                    width: 100%;
-                }
+            .div-bottom {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                padding: 15px;
             }
         }
-    }
-
-    .BranchList {
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-        border-radius: 10px;
-        padding: 20px;
     }
 }
