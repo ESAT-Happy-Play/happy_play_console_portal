@@ -79,21 +79,40 @@ const Registration = () => {
   return (
     <div className="registration">
       <div className="divhead">
-        <h2>BINGO BLACKOUT REGISTRATION</h2>
+        <h2>HAPPY PLAY REGISTRATION</h2>
       </div>
       <div className='container'>
         <div className="lfContent"></div>
         <div className="content">
             <div id="firstStep" className="show">
               <form onSubmit={ handleSubmit(registrationHandler) } noValidate>
-                <div className="divContent">
-                  <div className="left">
-                    <label>Referral Code</label>
-                  </div>
-                  <div className="right">
-                    <span className="referralCode">{ code }</span>
-                  </div>
-                </div>
+
+                {
+                  (code !== undefined) ? 
+                    <div className="divContent">
+                      <div className="left">
+                        <label>Referral Code</label>
+                      </div>
+                      <div className="right">
+                        <span className="referralCode">{ code }</span>
+                      </div>
+                    </div>
+                  :
+                    <div className="divContent">
+                      <div className="left">
+                        <label>Referral Code</label>
+                      </div>
+                      <div className="right">
+                        <TextField
+                          { 
+                            ...register("referralCode", { required: true } ) 
+                          }
+                          error={ !!errors.referralCode }
+                          helperText={ errors.referralCode?.message }
+                          variant="outlined" size="small" fullWidth />
+                      </div>
+                    </div>
+                }
 
                 <div className="divContent">
                   <div className="left">

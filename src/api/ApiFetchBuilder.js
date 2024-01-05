@@ -99,3 +99,31 @@ export async function PATCHFetch (url, dataBody) {
         
     return objdata;
 }
+
+export async function DELETEFetch (url) {
+    let objdata = { status: true, data: null };
+    await fetch(url, {
+        method: 'DELETE',
+        headers: headersParams
+    })
+    .then(async response => {
+        const data = await response.json();
+
+        // check for error response
+        if (!response.ok) {
+            // get error message from body or default to response statusText
+            const error = (data && data.message) || response.statusText;
+            // return Promise.reject(error);
+            objdata.status = false;
+        }
+
+        objdata.data = data;
+    })
+    .catch(error => {
+        objdata.status = false;
+        objdata.data = { errorMessage: error.toString() };
+        console.error('There was an error!', error);
+    });
+        
+    return objdata;
+}

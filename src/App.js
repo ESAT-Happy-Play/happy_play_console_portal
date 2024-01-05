@@ -24,7 +24,7 @@ function App() {
           {/* public routes */}
           <Route path="dashboard/login" element={<Login />} />
           <Route path="agent/login" element={<AgentLogin />} />
-          <Route path="register/:code" element={<Registration />} />
+          <Route path="register/:code?" element={<Registration />} />
 
           {/* protected routes */}
           <Route path="/" element={<Layout />}>

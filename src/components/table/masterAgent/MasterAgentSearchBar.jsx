@@ -32,7 +32,7 @@ const MasterAgentSearchBar = ({ handleSearch, handleSearchEmpty }) => {
         <form className="search" onSubmit={ handleSubmit }>
             <TextField
                 size="small"
-                label="Search operator name"
+                label="Search master agent name"
                 variant="outlined"
                 fullWidth
                 onChange={ handleSearchChange }

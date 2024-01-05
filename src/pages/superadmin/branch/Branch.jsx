@@ -39,7 +39,6 @@ const Branch = () => {
     setPageLoader(false);
 
     if(response.status) {
-      console.log(response.data.branches);
       setbraches(response.data.branches);
 
       setTotalRows(response.data.totalRows);
