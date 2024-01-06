@@ -10,30 +10,34 @@ import OperatorList from "../../../components/table/operator/OperatorList";
 
 import { GETFetch } from "../../../api/ApiFetchBuilder";
 
-import { GetStoreObject } from "../../../helper/Helpers";
+import AddOperator from "../../../components/Dialog/forms/operator/AddOperator";
 
 const Operator = () => {
-  let loginObj = GetStoreObject("auth");
 
   /**
    * constants and functions
    */
   let _PAGESIZE = 5;
-  let _CompanyCode = loginObj.companyId;
   const [pageLoader, setPageLoader] = useState(false);
 
   const [operatorSearchValue, setoperatorSearchValue] = useState('');
-  const [companyCode, setcompanyCode] = useState(_CompanyCode);
-  const [branchCode, setbranchCode] = useState(_CompanyCode);
+  const [companyCode, setcompanyCode] = useState(null);
+  const [branchCode, setbranchCode] = useState(null);
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
   const [operators, setoperators] = useState([]);
   const [allCompanies, setallCompanies] = useState([]);
+  const [branches, setbranches] = useState([]);
 
   const handleOperatorData = async () => {
     setPageLoader(true);
-    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchcode=${branchCode}&operatorsearch=${operatorSearchValue}`);
+    let url = (companyCode === null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&operatorsearch=${operatorSearchValue}`
+      : (companyCode !== null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&operatorsearch=${operatorSearchValue}`
+      : (companyCode !== null && branchCode !== null) ? `${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchcode=${branchCode}&operatorsearch=${operatorSearchValue}` 
+      : `${process.env.REACT_APP_API_URL}/operators?rowsperpage=${pageSize}&pagenumber=${pageNumber}&operatorsearch=${operatorSearchValue}`;
+    
+      let response = await GETFetch(url);
     setPageLoader(false);
 
     if(response.status) {
@@ -60,11 +64,22 @@ const Operator = () => {
     }
   }
 
+  const handleBranchByCompany = async (code) => {
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/branches?rowsperpage=100&pagenumber=1&companyid=${code}`);
+    if(response.status) {
+      setbranches(response.data.branches);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
   // trigger call API endpoint if state change
   useEffect(() => {
     handleOperatorData();
     handleComapanyAll();
-  }, [pageNumber, operatorSearchValue, pageSize, totalRows, companyCode]);
+  }, [pageNumber, operatorSearchValue, pageSize, totalRows, companyCode, branchCode]);
 
   // On click search
   const handleOperatorSearch = (event, value) => { 
@@ -95,8 +110,23 @@ const Operator = () => {
     setPageLoader(true);
   }
 
-  const handleSelect = (e, value) => {
+  const handleSelect = async (e, value) => {
     setcompanyCode(value);
+    setbranchCode(null);
+    await handleBranchByCompany(value);
+  }
+
+  const handleSelectBranch = async (e, value) => {
+    setbranchCode(value);
+  }
+
+  // Add dialog
+  const [openAddOperator, setAddOperator] = React.useState(false);
+  const handleAddOperatorOpen = () => { setAddOperator(true); };
+  const handleAddOperatorClose = () => { setAddOperator(false); };
+
+  const handleOperatorCallback = () => {
+    setTotalRows(totalRows + 1);
   }
 
   return (
@@ -104,7 +134,7 @@ const Operator = () => {
       <div className="container">
         <div className="top">
           <h2 className="title">LIST OF OPERATORS</h2>
-          <Button className="btn-success" variant="outlined" size="large">
+          <Button className="btn-success" variant="outlined" onClick={ handleAddOperatorOpen } size="large">
             Add New Operator <AddIcon />
           </Button>
         </div>
@@ -129,13 +159,13 @@ const Operator = () => {
           <div className="bottom">
             <span>Branch</span>
             <TextField 
-                onChange={e => handleSelect(e, e.target.value) }
+                onChange={e => handleSelectBranch(e, e.target.value) }
                 label="Select Branch" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select Branch</em></MenuItem>
                 { 
-                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
-                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
-                        {item.companyName}
+                    (branches.length !== 0) ? branches.map((item) => (
+                    <MenuItem data-province-code={item.branchCode} key={item.branchCode} value={item.branchCode}>
+                        {item.branchName}
                     </MenuItem>
                     )) 
                     : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
@@ -149,6 +179,8 @@ const Operator = () => {
             </div>
           </div>
         </div>
+
+        <AddOperator isOpenAdd={openAddOperator} handleCloseAdd={handleAddOperatorClose} handleCallback={handleOperatorCallback} />
         <OperatorList 
           searchResults={ operators }
           totalCount={ totalRows }

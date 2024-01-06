@@ -12,7 +12,7 @@ const VerificationList = ({
 
     const results = searchResults.map(verfication => <VerificationTableData 
       key={verfication.userId} 
-      verfication={verfication}
+      objct={verfication}
     />)
     
 

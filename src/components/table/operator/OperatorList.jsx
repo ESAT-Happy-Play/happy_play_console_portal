@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 const OperatorList = ({ 
   searchResults,
-  EditProfile,
+  // EditProfile,
   ChangePage,
   RowsPerPage,
   pageNumber, 
@@ -13,6 +13,7 @@ const OperatorList = ({
 
     const results = searchResults.map(operator => <OperatorTableData 
       key={operator.userid}
+      objct={operator}
     />)
     
 

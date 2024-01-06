@@ -12,6 +12,7 @@ const MasterAgentList = ({
 
     const results = searchResults.map(magent => <MasterAgentTableData 
       key={magent.userId}
+      objct={magent}
     />)
     
 
