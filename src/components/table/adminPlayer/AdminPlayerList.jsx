@@ -1,80 +1,64 @@
-import React from 'react';
-
-import AddWallet from "../../Dialog/forms/AddWallet";
 import AdminPlayerTableData from "./AdminPlayerTableData";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 
 const AdminPlayerList = ({ 
-  SearchResults,
+  searchResults,
   ChangePage,
   RowsPerPage,
   pageNumber, 
   pageSize, 
   totalCount,
-  pageLoad }) => {
+  isLoading}) => {
 
-    const [AccountObjectID, setAccountObjectID] = React.useState(null);
-    const [openAddWallet, setAddWallet] = React.useState(false);
-    const handleWalletOpen = () => { setAddWallet(true); };
-    const handleAddWalletClose = () => { setAddWallet(false); };
-
-    const handleAddWallet = (e, accountObjId) => {
-      setAccountObjectID(accountObjId);
-      handleWalletOpen();
-    }
-
-    const results = SearchResults.map((obj, index ) => <AdminPlayerTableData 
-      key={ index } 
-      objct={obj}
-      addWallet={ handleAddWallet }
+    const results = searchResults.map(player => <AdminPlayerTableData 
+      key={player.userId}
+      objct={player}
     />)
+    
 
-    const content = (pageLoad) 
-    ? <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-          <TableCell component="th" align="center" scope="row" colSpan={5}> Loading... Please wait. </TableCell>
-      </TableRow>
-    : results?.length ? results : 
+    const content = isLoading ? 
     <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-        <TableCell component="th" align="center" scope="row" colSpan={5}> No records found!</TableCell>
+        <TableCell component="th" scope="row" align="center" colSpan={6}> Loading... Please wait! </TableCell>
+    </TableRow> : results?.length ? results : 
+    <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+        <TableCell component="th" scope="row" align="center" colSpan={6}> No records found! </TableCell>
     </TableRow>;
 
-  const handleChangePage = (event, newpage) => {
-    ChangePage(event, newpage);
-  }
-  
-  return (
-    <div className="userList">
+    const handleChangePage = (event, newpage) => {
+      ChangePage(event, newpage);
+    }
+
+    return ( 
+    <div className="adminPlayerList">
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} stickyHeader>
+          <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>
-                    <TableRow>
-                    <TableCell>COMPANY NAME</TableCell>
-                    <TableCell>BRANCH NAME</TableCell>
-                    {/* <TableCell>MASTER AGENT</TableCell> */}
-                    <TableCell>AGENT</TableCell>
-                    <TableCell>PLAYER</TableCell>
-                    <TableCell></TableCell>
-                    </TableRow>
-                </TableHead>
+              <TableRow>
+                <TableCell>COMPANY</TableCell>
+                <TableCell>BRANCH</TableCell>
+                <TableCell>PLAYER NAME</TableCell>
+                <TableCell>CONTACT NUMBER</TableCell>
+                <TableCell>RECRUITER</TableCell>
+                <TableCell>REGISRATION DATE</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
-                {content}
+              {content}
             </TableBody>
-            </Table>
+          </Table>
         </TableContainer>
         <TablePagination 
-            rowsPerPageOptions={[5,10,25,50]}
-            rowsPerPage={ pageSize }
-            page={!totalCount || totalCount <= 0 ? 0 : pageNumber}
-            count={ totalCount }
-            component="div"
-            onPageChange={ handleChangePage }
-            onRowsPerPageChange={ RowsPerPage }
+          rowsPerPageOptions={[5,10,25,50]}
+          rowsPerPage={ pageSize }
+          page={!totalCount || totalCount <= 0 ? 0 : pageNumber}
+          count={ totalCount }
+          component="div"
+          onPageChange={ handleChangePage }
+          onRowsPerPageChange={ RowsPerPage }
         >
         </TablePagination>
-
-        <AddWallet isOpenModal={openAddWallet} acctObjID={AccountObjectID} handleCloseModal={handleAddWalletClose} />
-    </div>
-  )
+      </div>    
+    )
 }
 
 export default AdminPlayerList

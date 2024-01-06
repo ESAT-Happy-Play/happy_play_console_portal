@@ -9,15 +9,15 @@ import MasterAgentSearchBar from "../../../components/table/masterAgent/MasterAg
 
 import { GETFetch } from "../../../api/ApiFetchBuilder";
 
-import AddOperator from "../../../components/Dialog/forms/operator/AddOperator";
 import MasterAgentList from "../../../components/table/masterAgent/MasterAgentList";
+import AddMasterAgent from "../../../components/Dialog/forms/masterAgent/AddMasterAgent";
 
 const MasterAgent = () => {
 
   /**
    * constants and functions
    */
-  let _PAGESIZE = 5;
+  let _PAGESIZE = 10;
   const [pageLoader, setPageLoader] = useState(false);
 
   const [masterAgentSearchValue, setmasterAgentSearchValue] = useState('');
@@ -30,7 +30,7 @@ const MasterAgent = () => {
   const [allCompanies, setallCompanies] = useState([]);
   const [branches, setbranches] = useState([]);
 
-  const handleOperatorData = async () => {
+  const handleMasterAgentData = async () => {
     setPageLoader(true);
     let url = (companyCode === null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/masteragents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&agentsearch=${masterAgentSearchValue}`
       : (companyCode !== null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/masteragents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&agentsearch=${masterAgentSearchValue}`
@@ -77,7 +77,7 @@ const MasterAgent = () => {
 
   // trigger call API endpoint if state change
   useEffect(() => {
-    handleOperatorData();
+    handleMasterAgentData();
     handleComapanyAll();
   }, [pageNumber, masterAgentSearchValue, pageSize, totalRows, companyCode, branchCode]);
 
@@ -121,11 +121,11 @@ const MasterAgent = () => {
   }
 
   // Add dialog
-  const [openAddOperator, setAddOperator] = React.useState(false);
-  const handleAddOperatorOpen = () => { setAddOperator(true); };
-  const handleAddOperatorClose = () => { setAddOperator(false); };
+  const [openAddMasterAgent, setAddMasterAgent] = React.useState(false);
+  const handleAddMasterAgentOpen = () => { setAddMasterAgent(true); };
+  const handleAddMasterAgentClose = () => { setAddMasterAgent(false); };
 
-  const handleOperatorCallback = () => {
+  const handleMasterAgentCallback = () => {
     setTotalRows(totalRows + 1);
   }
 
@@ -134,7 +134,7 @@ const MasterAgent = () => {
       <div className="container">
         <div className="top">
           <h2 className="title">LIST OF MASTER AGENTS</h2>
-          <Button className="btn-success" variant="outlined" onClick={ handleAddOperatorOpen } size="large">
+          <Button className="btn-success" variant="outlined" onClick={ handleAddMasterAgentOpen } size="large">
             Add New Master Agent <AddIcon />
           </Button>
         </div>
@@ -190,7 +190,7 @@ const MasterAgent = () => {
           isLoading = { pageLoader }
         />
 
-        <AddOperator isOpenAdd={openAddOperator} handleCloseAdd={handleAddOperatorClose} handleCallback={handleOperatorCallback} />
+        <AddMasterAgent isOpenAdd={openAddMasterAgent} handleCloseAdd={handleAddMasterAgentClose} handleCallback={handleMasterAgentCallback} />
       </div>
     </div>
   )

@@ -17,7 +17,7 @@ const Operator = () => {
   /**
    * constants and functions
    */
-  let _PAGESIZE = 5;
+  let _PAGESIZE = 10;
   const [pageLoader, setPageLoader] = useState(false);
 
   const [operatorSearchValue, setoperatorSearchValue] = useState('');

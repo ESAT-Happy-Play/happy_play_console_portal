@@ -1,0 +1,181 @@
+.playerPage {
+    margin: 30px 15px 0 15px;
+
+    .show {
+        display: block !important;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .container {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        background: white;
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #444444;
+            // -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            // box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            border-radius: 10px;
+            padding: 15px;
+
+            .title {
+                font-weight: 700;
+                margin: 0;
+                text-transform: capitalize;
+                color: #4845d2;
+            }
+
+            // button {
+            //     background-color: #38a169;
+            //     text-transform: capitalize;
+            // }
+        }
+
+        .bottom {
+            padding: 20px;
+            display: flex;
+            // flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            .search {
+                width: 100%;
+
+                .MuiInputBase-root {
+                    padding: 0;
+
+                    .MuiInputAdornment-root {
+                        background: #edf2f7;
+                        padding: 20px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .adminPlayerList {
+            // background-color: #e9f0f3;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+
+            table {
+                thead>tr>th {
+                    font-weight: 600 !important;
+                    color: #4845d2;
+                }
+
+                .btnEdit {
+                    background: #dd6b20 !important;
+                    color: white;
+                    text-transform: capitalize;
+                }
+
+                .btnShow {
+                    background: #fec30e !important;
+                    color: black;
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        .bottomProfile {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+
+            .divInfo {
+                display: flex;
+
+                span {
+                    width: 140px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .left {
+                flex: 1;
+
+                h2 {
+                    margin: 0;
+                    text-transform: uppercase;
+                }
+
+                .widget1 {
+                    display: flex;
+                    margin: 30px 0 15px 0;
+
+                    .left,
+                    .right {
+                        flex: 1;
+                        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+                        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                        border-radius: 10px;
+                        padding: 10px;
+                        margin: 5px;
+                        text-align: center;
+
+                        label {
+                            font-size: 25px;
+                        }
+
+                        h3 {
+                            font-size: 65px;
+                            font-weight: 500;
+                            margin: 0px;
+                        }
+                    }
+                }
+
+                .widget2 {
+                    flex: 1;
+                    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+                    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                    border-radius: 10px;
+                    padding: 10px;
+                }
+            }
+
+            .right {
+                flex: 2;
+
+                .search {
+                    width: 100%;
+
+                    .MuiInputBase-root {
+                        padding: 0;
+
+                        .MuiInputAdornment-root {
+                            background: #edf2f7;
+                            padding: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .companyList {
+                    background-color: #e9f0f3;
+                    border-radius: 10px;
+                    padding: 10px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .adminPlayerList {
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        border-radius: 10px;
+        padding: 20px;
+    }
+}

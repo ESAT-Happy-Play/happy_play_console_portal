@@ -292,7 +292,7 @@ const routeLinks = [
 
         {
           path: "/account/agents",
-          element: (userRole === "Admin") ? <AdminAgents /> : <AccountAgent />,
+          element: (userRole === "Dashboard") ? <AdminAgents /> : <AccountAgent />,
           state: "UserAccount.Agents",
           sidebarProps: {
             displayText: "Agents",
@@ -301,7 +301,7 @@ const routeLinks = [
         },
         {
           path: "/account/players",
-          element: (userRole === "Admin") ? <AdminPlayers /> : <AccountPlayer />,
+          element: (userRole === "Dashboard") ? <AdminPlayers /> : <AccountPlayer />,
           state: "UserAccount.Players",
           sidebarProps: {
             displayText: "Players",
@@ -350,7 +350,7 @@ const routeLinks = [
         },
         {
           path: "/game/gamebets",
-          element: (userRole === "Admin") ? <AdminGameBets /> : <GameBets />,
+          element: (userRole === "Dashboard") ? <AdminGameBets /> : <GameBets />,
           state: "Game.GameBets",
           sidebarProps: {
             displayText: "Game Bets",
@@ -359,7 +359,7 @@ const routeLinks = [
         },
         {
           path: "/game/gameresult",
-          element: (userRole === "Admin") ? <AdminGameResult /> : <GameResults />,
+          element: (userRole === "Dashboard") ? <AdminGameResult /> : <GameResults />,
           state: "Game.GameResult",
           sidebarProps: {
             displayText: "Game Result",
@@ -428,7 +428,7 @@ const routeLinks = [
       child: [
         {
           path: "/sales/report",
-          element: (userRole === "Admin") ?  <SalesReport /> : <AgentSales />,
+          element: (userRole === "Dashboard") ?  <SalesReport /> : <AgentSales />,
           state: "Reporting.SalesReport",
           sidebarProps: {
             displayText: "Sales Report",
@@ -437,7 +437,7 @@ const routeLinks = [
         },
         {
           path: "/transactions/report",
-          element: (userRole === "Admin") ? <TransactionReport /> : <AgentTransactions />,
+          element: (userRole === "Dashboard") ? <TransactionReport /> : <AgentTransactions />,
           state: "Reporting.TransactionReport",
           sidebarProps: {
             displayText: "Transaction Report",
@@ -455,7 +455,7 @@ const routeLinks = [
         },
         {
           path: "/activity/report",
-          element: (userRole === "Admin") ? <Admin/> : <AgentUserActivities/>,
+          element: (userRole === "Dashboard") ? <Admin/> : <AgentUserActivities/>,
           state: "Reporting.UserGrowth",
           sidebarProps: {
             displayText: "User Growth",
