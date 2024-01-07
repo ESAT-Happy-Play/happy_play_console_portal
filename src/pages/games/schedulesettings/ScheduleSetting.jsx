@@ -22,6 +22,8 @@ import AddEditGameDrawType from "../../../components/Dialog/forms/AddEditGameDra
 
 import { GetStoreObject } from "../../../helper/Helpers";
 
+import CustomTab from "../../../components/tab/CustomTab"
+
 const ScheduleSetting = () => {
   let authdata = GetStoreObject("auth");
   const token = (authdata !== null) ? authdata.token : "";
@@ -50,6 +52,27 @@ const ScheduleSetting = () => {
   const [schedGameDrawTypeList, setSchedGameDrawTypeList] = React.useState([]);
   const [gameDrawTypeList, setGameDrawTypeList] = React.useState([]);
   const [gameDrawTypeObj, setGameDrawTypeObj] = React.useState(null);
+
+  
+  const tabs = [
+    {
+      label: "Tab 1",
+      Component: <div>Hello, I am tab 1</div>
+    },
+    {
+      label: "Tab 2",
+      Component: <div>Hello, I am tab 2</div>
+    },
+    {
+      label: "Tab 3",
+      Component: (
+        <div>
+          <h1>Tab with heading</h1>
+          <p>Hello I am a tab with a heading</p>
+        </div>
+      )
+    }
+  ];
 
   const handleSelectGameType = (e, val) => {
     if(prevElem !== undefined) {
@@ -121,7 +144,9 @@ const ScheduleSetting = () => {
   return (
     <div className="content">
       <div className="container">
+          <CustomTab tabList={tabs}/>
         <div className="divSchedule">
+          <CustomTab tabList={tabs}/>
           <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
