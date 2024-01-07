@@ -21,7 +21,7 @@ import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab"
 import CustomVerticalTab from "../../../components/tab/CustomVerticalTab";
 
-import { verticalTab } from "./verticalTab";
+import { drawVerticalTab, closeVerticalTab } from "./verticalTab";
 
 const ScheduleSetting = () => {
   let authdata = GetStoreObject("auth");
@@ -66,7 +66,7 @@ const ScheduleSetting = () => {
           </Box>
           
         </div>
-        <CustomVerticalTab tabList={verticalTab}/>
+        <CustomVerticalTab tabList={closeVerticalTab}/>
       </div>
     },
     {
@@ -76,7 +76,7 @@ const ScheduleSetting = () => {
       <div className="tab-header">
         <h1>Draw Types</h1>
       </div>
-      <CustomVerticalTab tabList={verticalTab}/>
+      <CustomVerticalTab tabList={drawVerticalTab}/>
     </div>
     },
   ];
