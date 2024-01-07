@@ -2,10 +2,6 @@ import "./schedulesetting.scss";
 
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import { toast } from 'react-toastify';
 
 import { TextField, MenuItem, Button  } from "@mui/material";
@@ -23,6 +19,9 @@ import AddEditGameDrawType from "../../../components/Dialog/forms/AddEditGameDra
 import { GetStoreObject } from "../../../helper/Helpers";
 
 import CustomTab from "../../../components/tab/CustomTab"
+import CustomVerticalTab from "../../../components/tab/CustomVerticalTab";
+
+import { verticalTab } from "./verticalTab";
 
 const ScheduleSetting = () => {
   let authdata = GetStoreObject("auth");
@@ -53,26 +52,35 @@ const ScheduleSetting = () => {
   const [gameDrawTypeList, setGameDrawTypeList] = React.useState([]);
   const [gameDrawTypeObj, setGameDrawTypeObj] = React.useState(null);
 
-  
   const tabs = [
     {
-      label: "Tab 1",
-      Component: <div>Hello, I am tab 1</div>
-    },
-    {
-      label: "Tab 2",
-      Component: <div>Hello, I am tab 2</div>
-    },
-    {
-      label: "Tab 3",
-      Component: (
-        <div>
-          <h1>Tab with heading</h1>
-          <p>Hello I am a tab with a heading</p>
+      label: "Closing Schedule",
+      Component:
+      <div className="tab-container">
+        <div className="tab-header">
+          <h1>Closing Dates</h1>
+          <Box alignItems={"center"} display={"flex"}>
+            <Button variant="outline" className="tab-button">
+              Add Closing Date <AddIcon/>
+            </Button>
+          </Box>
+          
         </div>
-      )
-    }
+        <CustomVerticalTab tabList={verticalTab}/>
+      </div>
+    },
+    {
+      label: "Draw Types",
+      Component:         
+      <div className="tab-container">
+      <div className="tab-header">
+        <h1>Draw Types</h1>
+      </div>
+      <CustomVerticalTab tabList={verticalTab}/>
+    </div>
+    },
   ];
+
 
   const handleSelectGameType = (e, val) => {
     if(prevElem !== undefined) {
@@ -143,165 +151,8 @@ const ScheduleSetting = () => {
 
   return (
     <div className="content">
-      <div className="container">
+      <div>
           <CustomTab tabList={tabs}/>
-        <div className="divSchedule">
-          <CustomTab tabList={tabs}/>
-          <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange}>
-                    <Tab label="Closing Schedules" value="1" />
-                    <Tab label="Draw Types" value="2" />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">
-                  <div className="searchContent">
-                    <div className="left">
-                      <label>Select Game Type</label>
-                    </div>
-                    <div className="center">
-                      <TextField 
-                        placeholder="Select game type"
-                        onChange={ e => handleSelectGameType(e,e.target.value) }
-                        label="Select game type" sx={{ width: "200px" }}  defaultValue="" variant="outlined" size="small" select>
-                        <MenuItem value=''><em>Select game type</em></MenuItem>
-                        { 
-                            <MenuItem value=''>Loading options...</MenuItem>
-                        }
-                        </TextField>
-                    </div>
-                  </div>
-
-                  <div className="divContent">
-                    <div className="left">
-                      <div className="container">
-                        <div className="top">
-                          <h2 className="title">BY DATE</h2>
-                          {/* <Button variant="contained" size="large" onClick={ handleAddScheduleOpen }>
-                            Add <AddIcon />
-                          </Button> */}
-                        </div>
-
-                        <br/>
-                        <div className="ulContent">
-                          <ul>
-                            <li style={{ background: "#bec9c9" }}>Closing Date</li>
-                            { 
-                                (gameSheduleDatesList.length !== 0) ? gameSheduleDatesList.map((item, index) => (
-                                  <li key={index} onClick={ e => handleSelectDate(e, item) }>
-                                    {(new Date(item.date)).toDateString()}
-                                    {/* {(new Date(item)).toDateString()} <CloseOutlinedIcon sx={{ color:"red "}} /> */}
-                                  </li>
-                                ))
-                                :
-                                <li>No records found. Please select game type.</li>
-                            }
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="center">
-                      <div className="container">
-                        <div className="top">
-                          <h2 className="title">BY DRAW SCHEDULE</h2>
-                          <Button variant="contained" size="large" onClick={ handleAddScheduleOpen }>
-                            Add <AddIcon />
-                          </Button>
-                        </div>
-
-                        <br/>
-                        <div className="ulContent">
-                          <ul>
-                            <li style={{ background: "#bec9c9" }}>Draw Type</li>
-                            { 
-                                (gameDateDraws.length !== 0) ? gameDateDraws.map((item, index) => (
-                                  <li key={index}>
-                                    {item}
-                                  </li>
-                                ))
-                                :
-                                <li>No records found. Please select closing date.</li>
-                            }
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabPanel>
-                <TabPanel value="2">
-                  <div className="searchContent">
-                    <div className="left">
-                      <label>Select Game Type</label>
-                    </div>
-                    <div className="center">
-                      <TextField 
-                        placeholder="Select game type"
-                        onChange={ e => handleSelectGameTypeDraw(e,e.target.value) }
-                        label="Select game type" sx={{ width: "200px" }}  defaultValue="" variant="outlined" size="small" select>
-                        <MenuItem value=''><em>Select game type</em></MenuItem>
-                        { 
-                            (gameTypeList.length !== 0) ? gameTypeList.map((item) => (
-                            <MenuItem key={item.gameTypeId} value={item.gameTypeId}>
-                                {item.gameTypeName}
-                            </MenuItem>
-                            )) :
-                            <MenuItem value=''>Loading options...</MenuItem>
-                        }
-                        </TextField>
-                    </div>
-                  </div>
-
-                  <div className="container">
-                    <div className="top">
-                      <h2 className="title">DRAW TYPES</h2>
-
-                      <Button onClick={handleAddDrawType} sx={{ backgroundColor: "#38a169" }} variant="contained" color="success">
-                        Add <AddIcon />
-                      </Button>
-                    </div>
-
-                    <br/>
-                    <div className="ulContent">
-                      <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }}>
-                          <TableHead>
-                            <TableRow>
-                              <TableCell align="center">DRAW TYPE</TableCell>
-                              <TableCell align="center">START CUTOFF</TableCell>
-                              <TableCell align="center">END CUTOFF</TableCell>
-                              <TableCell align="center"></TableCell>
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {
-                                (gameDrawTypeList.length > 0) ?
-                                gameDrawTypeList.map((drawType, index) => (
-                                  <TableRow key={index} x={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                    <TableCell align="center" component="th" scope="row"> {drawType.drawTypeName}</TableCell>
-                                    <TableCell align="center">{FormatTime(drawType.startCutOff)}</TableCell>
-                                    <TableCell align="center">{FormatTime(drawType.endCutOff)}</TableCell>
-                                    <TableCell align="center">
-                                      <Button onClick={e => handleEditDrawType(e, drawType)} variant="contained" size="small" color="info">
-                                        Edit <EditOutlinedIcon />
-                                      </Button>
-                                    </TableCell>
-                                </TableRow>
-                                ))
-                                : <TableRow key={ 1 } sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                      <TableCell align="center" component="th" scope="row" colSpan={3}> No records found! Please select game type. </TableCell>
-                                  </TableRow>
-                              }
-                          </TableBody>
-                        </Table>
-                      </TableContainer>
-                    </div>
-                  </div>
-
-                </TabPanel>
-              </TabContext>
-            </Box>
-        </div>
       </div>
 
       <AddSchedule 
