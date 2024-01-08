@@ -26,7 +26,7 @@ const Sidebar = () => {
       </div>
       <div className="profile" onClick={event =>  window.location.href='/'}>
           {
-            <img src={`${process.env.PUBLIC_URL}/noimage.png`} alt="img" className='avatar' />
+            <img src={`${process.env.PUBLIC_URL}/default-profile.jpg`} alt="img" className='avatar' />
           }
           
           <div className="profInfo">
