@@ -22,17 +22,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        {/* <span className="logo">Happy Play</span> */}
-      </div>
-      <div className="profile" onClick={event =>  window.location.href='/'}>
-          {
-            <img src={`${process.env.PUBLIC_URL}/noimage.png`} alt="img" className='avatar' />
-          }
-          
-          <div className="profInfo">
-            <p style={{ overflow:"hidden" }}><b>{ authState.displayName }</b></p>
-            <p>{ authState.userId }</p>
-          </div>
+        <img src={require('../../assets/esat-mock-logo.png')} className="logo" title="Esat Logo"/>
       </div>
       {
         appRoutes.map((route, index) => (
@@ -45,6 +35,9 @@ const Sidebar = () => {
           ) : null
         ))
       }
+      <div className="foot">
+        <img src={require('../../assets/esat-sidebar-foot.png')} className="foot-logo" title="esat foot"/>
+      </div>
     </div>
   );
 };
