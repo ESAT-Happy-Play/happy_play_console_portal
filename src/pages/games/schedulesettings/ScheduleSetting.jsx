@@ -9,7 +9,8 @@ import { TextField, MenuItem, Button  } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, tableCellClasses } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import AddSchedule from "../../../components/Dialog/forms/AddSchedule";
 
 import PageLoader from "../../../components/widget/PageLoader";
@@ -21,36 +22,94 @@ import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab"
 import CustomVerticalTab from "../../../components/tab/CustomVerticalTab";
 
-import { drawVerticalTab, closeVerticalTab } from "./verticalTab";
+import { ClosingTable, DrawTypesTable } from "./scheduleTables";
 
 const ScheduleSetting = () => {
-  let authdata = GetStoreObject("auth");
-  const token = (authdata !== null) ? authdata.token : "";
-
-  let _PAGESIZE = 10;
-  const [SearchValue, setSearchValue] = useState('');
-  const [PageNumber, setPageNumber] = useState(0);
-  const [totalRows, setTotalRows] = useState(0);
-  const [PageSize, setPageSize] = useState(_PAGESIZE);
-
   const [pageLoader, setPageLoader] = useState(false);
-  const [skipScheduleDate, setSkipScheduleDate] = useState(true);
-  const [skipScheduleDrawId, setSkipScheduleDrawId] = useState(true);
-  const [skipDrawTypeList, setSkipDrawTypeList] = useState(true);
-  const [skipDrawType, setSkipDrawType] = useState(true);
-  const [prevElem, setPrevEmel] = useState();
+  //MOCK DATA
+  const tabHeaders = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
+  
+  const rows = ["Date 1",
+  "Date 2", 
+  "Date 3", 
+  "Date 4", 
+  "Date 5", 
+  "Date 6", 
+  "Date 7", 
+  "Date 8", 
+  "Date 9", 
+  ];
+  
+  const rows2 = ["Jack Date 1",
+  "Jack Date 2", 
+  "Jack Date 3", 
+  "Jack Date 4", 
+  "Jack Date 5", 
+  "Date 6", 
+  "Jack Date 7", 
+  "Date 8", 
+  "Jack Date 9", 
+  ];
+  
+  const rows3 = ["Jack 3.4 Date 1",
+  "Jack 3.4 Date 2", 
+  "Jack 3.4 Date 3", 
+  "Jack 3.4 Date 4", 
+  "Jack 3.4 Date 5", 
+  "Date 6", 
+  "Jack 3.4 Date 7", 
+  "Date 8", 
+  "Jack 3.4 Date 9", 
+  ];
 
-  // const [schedGameTypeId, setSchedGameTypeId] = React.useState(0);
-  const [gameTypeId, setGameTypeId] = React.useState(0);
-  const [gameTypeIdDraw, setGameTypeIdDraw] = React.useState(0);
-  const [closingDate, setClosingDate] = React.useState('');
-  const [gameTypeList, setGameTypeList] = React.useState([]);
-  const [gameSheduleDatesList, setGameSheduleDatesList] = React.useState([]);
-  const [gameDateDraws, setGameDateDraws] = React.useState([]);
+  
+  
+  const drawTypesData = [
+    {drawTime: "1PM", startCutoff: "12:30", endCutoff: "12:55"},
+    {drawTime: "2PM", startCutoff: "1:30", endCutoff: "1:55"},
+    {drawTime: "3PM", startCutoff: "2:30", endCutoff: "2:55"},
+    {drawTime: "4PM", startCutoff: "3:30", endCutoff: "3:55"},
+  ];
 
-  const [schedGameDrawTypeList, setSchedGameDrawTypeList] = React.useState([]);
-  const [gameDrawTypeList, setGameDrawTypeList] = React.useState([]);
-  const [gameDrawTypeObj, setGameDrawTypeObj] = React.useState(null);
+  const drawTypesData2 = [
+    {drawTime: "5PM", startCutoff: "4:30", endCutoff: "4:55"},
+    {drawTime: "6PM", startCutoff: "5:30", endCutoff: "5:55"},
+    {drawTime: "8PM", startCutoff: "7:30", endCutoff: "7:55"},
+    {drawTime: "11PM", startCutoff: "10:30", endCutoff: "10:55"},
+  ];
+
+  const drawTypesData3 = [
+    {drawTime: "1PM", startCutoff: "12:30", endCutoff: "12:55"},
+    {drawTime: "2PM", startCutoff: "1:30", endCutoff: "1:55"},
+    {drawTime: "6PM", startCutoff: "5:30", endCutoff: "5:55"},
+    {drawTime: "8PM", startCutoff: "7:30", endCutoff: "7:55"},
+    {drawTime: "11PM", startCutoff: "10:30", endCutoff: "10:55"},
+  ];
+  
+  const [closingDates, setClosingDates]= useState(rows);
+  const [drawTypes, setDrawTypes]= useState(drawTypesData);
+
+  const fetchClosingData = (newValue) => {
+    if(newValue == 0){
+      setClosingDates(rows);
+    }
+    else if(newValue == 1)
+      setClosingDates(rows2);
+    else
+      setClosingDates(rows3);
+  }
+
+  
+  const fetchDrawTypesData = (newValue) => {
+    if(newValue == 0){
+      setDrawTypes(drawTypesData);
+    }
+    else if(newValue == 1)
+      setDrawTypes(drawTypesData2);
+    else
+      setDrawTypes(drawTypesData3);
+  }
+
 
   const tabs = [
     {
@@ -66,110 +125,35 @@ const ScheduleSetting = () => {
           </Box>
           
         </div>
-        <CustomVerticalTab tabList={closeVerticalTab}/>
+        <CustomVerticalTab
+          changeEvent={fetchClosingData}
+          tabList={
+            tabHeaders?.map((label) => ({label:label, Component: <ClosingTable data={closingDates} />}))
+          }/>
       </div>
     },
     {
       label: "Draw Types",
-      Component:         
-      <div className="tab-container">
-      <div className="tab-header">
-        <h1>Draw Types</h1>
-      </div>
-      <CustomVerticalTab tabList={drawVerticalTab}/>
-    </div>
+      Component:
+        <div className="tab-container">
+          <div className="tab-header">
+            <h1>DrawTypes</h1>
+          </div>
+          <CustomVerticalTab
+            changeEvent={fetchDrawTypesData}
+            tabList={
+              tabHeaders?.map((label) => ({label:label, Component: <DrawTypesTable data={drawTypes} />}))
+            }/>
+        </div>
     },
   ];
 
 
-  const handleSelectGameType = (e, val) => {
-    if(prevElem !== undefined) {
-      prevElem.classList.remove('active');
-    }
-
-    setGameTypeId(val);
-    setSkipScheduleDate(false);
-    setSkipDrawTypeList(false);
-    setPageLoader(true);
-  }
-
-  const [value, setValue] = React.useState('1');
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  // Add Schedule dialog
-  const [openAddSchedule, setAddSchedule] = React.useState(false);
-  const handleAddScheduleOpen = () => { (gameTypeId !== 0) ? setAddSchedule(true) : toast.error("Please select game type.") };
-  const handleAddScheduleClose = () => { 
-    setSchedGameDrawTypeList([]);
-    setAddSchedule(false); 
-  };
-
-  const handleSelectDate = (e, value) => {
-    if(prevElem !== undefined) {
-      prevElem.classList.remove('active');
-    }
-    e.currentTarget.classList.add("active");
-
-    if(value !== closingDate) {
-      setPrevEmel(e.currentTarget);
-      setClosingDate(value.date);
-      setPageLoader(true);
-      setSkipDrawType(false);
-    }
-  }
-
-  const handleSelectGameTypeDraw = (e, value) => {
-    setGameTypeIdDraw(value);
-    setSkipScheduleDrawId(false);
-    setPageLoader(true);
-  }
-
-  // Add Draw Type dialog
-  const [openAddDrawType, setAddDrawType] = React.useState(false);
-  const handleAddDrawTypeOpen = () => { (gameTypeIdDraw !== 0) ? setAddDrawType(true) : toast.error("Please select game type.") };
-  const handleAddDrawTypeClose = () => { setAddDrawType(false); };
-
-  const handleAddDrawType = () => {
-    setGameDrawTypeObj(null);
-    handleAddDrawTypeOpen();
-  }
-
-  const handleEditDrawType = (e, valuObj) => {
-    setGameDrawTypeObj(valuObj);
-    handleAddDrawTypeOpen();
-  }
-
-  const handleScheduleCallback = () => {
-    console.log("Schedule Callback");
-  }
-
-  const handleAddDrawTypeCallBack = (gameTypeId) => {
-    console.log("Draw Type Callback");
-  }
-
   return (
     <div className="content">
-      <div>
+      <div >
           <CustomTab tabList={tabs}/>
       </div>
-
-      <AddSchedule 
-        isOpenAddSchedule={ openAddSchedule } 
-        handleCloseAddSchedule={ handleAddScheduleClose } 
-        handleCallback={ handleScheduleCallback }
-        gameType={ (gameTypeList.filter(m => m.gameTypeId === gameTypeId)) }
-        currentDate={ closingDate }
-        listDrawTypes = {[]}/>
-
-      <AddEditGameDrawType 
-        isOpenModal={ openAddDrawType } 
-        handleCloseModal={ handleAddDrawTypeClose }
-        gameId = { gameTypeIdDraw } 
-        Obj = { gameDrawTypeObj }
-        CallBackFunc = { handleAddDrawTypeCallBack }/>
-
       <PageLoader isLoadingPage={ pageLoader } />
     </div>
   )

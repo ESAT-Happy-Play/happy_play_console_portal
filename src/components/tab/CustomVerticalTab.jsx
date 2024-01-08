@@ -5,12 +5,13 @@ import { Tabs as BaseTabs, TabPanel as BaseTabPanel, TabsList as BaseTabsList, T
 import { buttonClasses } from '@mui/base/Button';
 import {COLORS} from '../../helper/colors';
 
-const CustomVerticalTab = ({tabList}) => {
+const CustomVerticalTab = ({tabList, changeEvent = ()=>{}}) => {
 
     const [value, setValue] = React.useState(0);
   
     const handleChange = (event, newValue) => {
       setValue(newValue);
+      changeEvent(newValue);
     };
     console.log(tabList);
 
