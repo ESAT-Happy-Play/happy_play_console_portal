@@ -7,6 +7,8 @@ import GameBetsSearchBar from "../../../components/table/gameBets/GameBetsSearch
 import GameBetsList from "../../../components/table/gameBets/GameBetsList";
 
 import { GetStoreObject } from "../../../helper/Helpers";
+import { BetsTable } from "./BetTable";
+import CustomTab from "../../../components/tab/CustomTab";
 
 const GameBets = () => {
 
@@ -28,7 +30,6 @@ const GameBets = () => {
 
   // const [getBetsHistory] = useGetBetsHistoryMutation();
 
-  const [betsList, setBetsList] = React.useState([]);
   const [branchId, setbranchId] = React.useState(storeObj.branchId);
 
   // On click search
@@ -62,100 +63,93 @@ const GameBets = () => {
     setPageLoader(true);
   }
 
+  const tabHeaders = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
+
+  const betReg = [
+    {accntNo: 123123, accntName:"Super Admin", transactionNo:1, noBet:2, betAmount: 20, date: "Dec 25, 2023", gameTime: "5PM", recruiter:12312},
+    {accntNo: 123124, accntName:"Super Admin2", transactionNo:5, noBet:6, betAmount: 50, date: "Dec 25, 2023", gameTime: "5PM", recruiter:12312},
+  ];
+  const jackpot3 = [];
+  const jackpot4 = [];
+
+  const [betsList, setBetsList] = React.useState(betReg);
+
+  const fetchBets = (newValue) => {
+    if (newValue == 0)
+      setBetsList(betReg);
+
+    else if (newValue == 1)
+      setBetsList(jackpot3);
+
+    else
+      setBetsList(jackpot4);
+  }
+
   return (
     <div className="content">
-      <div  className="container">
-        <div className="row p-15">
-          <div className="col-5">
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Game Type</span>
-              </div>
-              <div className="col-8">
-                <TextField 
-                  sx={{ width: "200px" }}  defaultValue="Regular" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select game type</em></MenuItem>
-                  <MenuItem value='Regular'>Regular</MenuItem>
-                  <MenuItem value='Jackpot 4-6'>Jackpot 4-6</MenuItem>
+      <CustomTab
+                  changeEvent={fetchBets}
+                  tabList={
+                    tabHeaders?.map((label) => (
+                      {label:label, 
+                        Component: 
+                        <div className="tab-container">
+                          <div className="tab-header">
+                            <h1>Bets</h1>
+                          </div>
+                          
+                          <div className="header-actions">
+                            <div className="col-8">
 
-                  </TextField>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Draw Schedule</span>
-              </div>
-              <div className="col-8">
-                <TextField 
-                  sx={{ width: "200px" }}  defaultValue="1PM" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select draw schedule</em></MenuItem>
-                  <MenuItem value='1PM'>1PM</MenuItem>
-                  <MenuItem value='2PM'>2PM</MenuItem>
-                  <MenuItem value='3PM'>3PM</MenuItem>
-                  </TextField>
-              </div>
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Date From</span>
-              </div>
-              <div className="col-8">
-                <TextField
-                  type="date"
-                  sx={{ width: "200px" }}  variant="outlined" size="small" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Date To</span>
-              </div>
-              <div className="col-8">
-                <TextField
-                  type="date"
-                  sx={{ width: "200px" }}  variant="outlined" size="small" />
-              </div>
-            </div>
-          </div>
-          <div className="col-2">
-            <div className="row">
-              <div className="col-12 txtright">
-                <Button variant="contained" color="success">
-                  Generate
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row p-15">
-          <div className="col-12">
-
-            <div className="row">
-              <div className="col-6">
-                <GameBetsSearchBar handleSearch={ handleGameBetsSearch } handleSearchEmpty={ handleGameBetsSearchEmpty } />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <GameBetsList 
-                  SearchResults={ betsList }
-                  ChangePage = { handleGameBetsChangePage }
-                  RowsPerPage = { handleGameBetsRowsPerPage }
-                  pageNumber = { (PageNumber === 0) ? PageNumber : (PageNumber - 1) }
-                  pageSize = { PageSize } 
-                  totalCount = { totalRows }
-                  loading = { pageLoader }/>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
+                              <div className="row">
+                                <div className="labelTitle">
+                                  <span>Game Time</span>
+                                </div>
+                                <div className="col-8">
+                                  <TextField 
+                                    sx={{ width: "200px" }}  defaultValue="1PM" variant="outlined" size="small" select>
+                                    <MenuItem value=''><em>Select draw schedule</em></MenuItem>
+                                    <MenuItem value='1PM'>1PM</MenuItem>
+                                    <MenuItem value='2PM'>2PM</MenuItem>
+                                    <MenuItem value='3PM'>3PM</MenuItem>
+                                    </TextField>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="dateSearch">
+                              <div className="row">
+                                <div className="row">
+                                  <div className="labelTitle">
+                                    <span>Date From</span>
+                                  </div>
+                                  <div className="col-8">
+                                    <TextField
+                                      type="date"
+                                      sx={{ width: "200px" }}  variant="outlined" size="small" />
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="col-4 labelTitle">
+                                    <span>Date To</span>
+                                  </div>
+                                  <div className="col-8">
+                                    <TextField
+                                      type="date"
+                                      sx={{ width: "200px" }}  variant="outlined" size="small" />
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="col-3">
+                                <GameBetsSearchBar handleSearch={ handleGameBetsSearch } handleSearchEmpty={ handleGameBetsSearchEmpty } />
+                              </div>
+                            </div>
+                          </div>
+                          <BetsTable data={betsList} />
+                        </div>
+                      }
+                      ))
+                  }/>
       {/* <PageLoader isLoadingPage={ pageLoader } /> */}
     </div>
   );

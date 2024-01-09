@@ -342,9 +342,9 @@ const routeLinks = [
         {
           path: "/game/prices",
           element: <Prices />,
-          state: "Game.Price&Prizes",
+          state: "Game.GameWinningSettings",
           sidebarProps: {
-            displayText: "Price & Prizes",
+            displayText: "Game Winning Settings",
             icon: <MoneyOutlinedIcon />
           },
         },
@@ -364,15 +364,6 @@ const routeLinks = [
           sidebarProps: {
             displayText: "Game Result",
             icon: <PostAddOutlinedIcon />
-          },
-        },
-        {
-          path: "/game/simulator",
-          element: <GameSimulator />,
-          state: "Game.GameSimulator",
-          sidebarProps: {
-            displayText: "Game Simulator",
-            icon: <PreviewOutlinedIcon />
           },
         },
       ]

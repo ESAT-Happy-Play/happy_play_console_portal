@@ -27,7 +27,7 @@ const SidebarItemCollapse = ({ item }) => {
             "&: hover": {
               backgroundColor: "#e9e6e6"
             },
-            backgroundColor: "#ffff",
+            zIndex:1
             // border: "0.5px solid rgb(230, 227, 227)"
           }}
         >

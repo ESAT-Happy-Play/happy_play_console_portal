@@ -95,7 +95,7 @@ export function AdminMenus() {
     "Game", // is parent true
     "Game.GameScheduleSettings", // is parent false
     "Game.GameMechanicsSettings", // is parent false
-    "Game.Price&Prizes", // is parent false
+    "Game.GameWinningSettings", // is parent false
     "Game.GameBets", // is parent false
     "Game.GameResult", // is parent false
     
@@ -133,7 +133,7 @@ export function GetUserAccess(data) {
 
   if(data.g3_gameScheduleSettings === 1) { excludeLinks.push("Game.GameScheduleSettings") }
   if(data.g3_gameMecahnicsSettings === 1) { excludeLinks.push("Game.MechanicsSettings") }
-  if(data.g3_gameWinningSettings === 1) { excludeLinks.push("Game.Price&Prizes") }
+  if(data.g3_gameWinningSettings === 1) { excludeLinks.push("Game.GameWinningSettings") }
   if(data.g3_bets === 1) { excludeLinks.push("Game.GameBets") }
   if(data.g3_gameResult === 1) { excludeLinks.push("Game.GameResult") }
 

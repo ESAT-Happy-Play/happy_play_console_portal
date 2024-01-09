@@ -3,8 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, MenuItem  } from "@mui/material";
 import { toast } from 'react-toastify';
 
-import GameResultsList from "../../../components/table/gameResults/GameResultsList";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { GetStoreObject } from "../../../helper/Helpers";
+import CustomTab from "../../../components/tab/CustomTab";
+import { Card } from "../../../components/card/Card";
+import { ResultsTable } from "./ResultTable";
 
 const GameResults = () => {
   // auth api response object
@@ -40,92 +43,89 @@ const GameResults = () => {
     setPageLoader(true);
   }
 
+  const results = ["1","2","6"];
+  const resultsJ3 = ["2","8","3",  "K", "J", "Q"];
+  const resultsJ4 = ["9",  "7", "6", "K", ,"A","J", "Q"];
+
+  const tabs = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
+
+  const [resultList, setResultList] = useState(results);
+
+  const fetchResults = (newValue) => {
+    if (newValue == 0)
+      setResultList(results);
+    else if (newValue == 1)
+      setResultList(resultsJ3);
+    else
+      setResultList(resultsJ4);
+  }
+
   return (
     <div className="content">
-      <div  className="container">
-        <div className="row p-15">
-          <div className="col-5">
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Game Type</span>
+      <CustomTab 
+        changeEvent={fetchResults}
+        tabList={
+          tabs.map((label) => ({
+            label: label,
+            Component: 
+              <div className="div-result">
+                <Card
+                  style={{flex:1.2}}
+                  header={"Latest Result"}
+                  actions={
+                    <Button onClick={() => {}} variant="outline" className="post-button" size="large">
+                      Post Result <EditOutlinedIcon />
+                    </Button>
+                  }
+                  body={
+                    <div className="result-div">
+                      <h1>{resultList.slice(0,3).join("-")}</h1>
+                      {resultList.length > 3 && 
+                        <h1>{resultList?.slice(3).join("-")}</h1>
+                      }
+                      <h2>October 8, 2023</h2>
+                      <h2>1PM</h2>
+                      <p>Posted by: Operator Name</p>
+                    </div>
+                  }
+                />
+                <Card
+                  style={{flex:2}}
+                  header={"RESULT HISTORY"}
+                  body={
+                    <div>
+                      <div className="dateSearch">
+                        <div className="row">
+                          <div className="row">
+                            <div className="labelTitle">
+                              <span>Date From</span>
+                            </div>
+                            <div className="col-8">
+                              <TextField
+                                type="date"
+                                sx={{ width: "200px" }}  variant="outlined" size="small" />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-4 labelTitle">
+                              <span>Date To</span>
+                            </div>
+                            <div className="col-8">
+                              <TextField
+                                type="date"
+                                sx={{ width: "200px" }}  variant="outlined" size="small" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <ResultsTable/>
+                    </div>
+                  }
+                />
               </div>
-              <div className="col-8">
-                <TextField 
-                  sx={{ width: "200px" }}  defaultValue="Regular" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select game type</em></MenuItem>
-                  <MenuItem value='Regular'>Regular</MenuItem>
-                  <MenuItem value='Jackpot 4-6'>Jackpot 4-6</MenuItem>
-
-                  </TextField>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Draw Schedule</span>
-              </div>
-              <div className="col-8">
-                <TextField 
-                  sx={{ width: "200px" }}  defaultValue="1PM" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select draw schedule</em></MenuItem>
-                  <MenuItem value='1PM'>1PM</MenuItem>
-                  <MenuItem value='2PM'>2PM</MenuItem>
-                  <MenuItem value='3PM'>3PM</MenuItem>
-                  </TextField>
-              </div>
-            </div>
-          </div>
-          <div className="col-5">
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Date From</span>
-              </div>
-              <div className="col-8">
-                <TextField
-                  type="date"
-                  sx={{ width: "200px" }}  variant="outlined" size="small" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-4 labelTitle">
-                <span>Date To</span>
-              </div>
-              <div className="col-8">
-                <TextField
-                  type="date"
-                  sx={{ width: "200px" }}  variant="outlined" size="small" />
-              </div>
-            </div>
-          </div>
-          <div className="col-2">
-            <div className="row">
-              <div className="col-12 txtright">
-                <Button variant="contained" color="success">
-                  Generate
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row p-15">
-          <div className="col-12">
-            <div className="row">
-              <div className="col-12">
-                <GameResultsList 
-                  SearchResults={ resultsList }
-                  ChangePage = { handleGameResultsChangePage }
-                  RowsPerPage = { handleGameResultsRowsPerPage }
-                  pageNumber = { (PageNumber === 0) ? PageNumber : (PageNumber - 1) }
-                  pageSize = { PageSize } 
-                  totalCount = { totalRows }
-                  loading ={ pageLoader }/>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+          }))
+        }
+      />
       {/* <PageLoader isLoadingPage={ pageLoader } /> */}
     </div>
   );
