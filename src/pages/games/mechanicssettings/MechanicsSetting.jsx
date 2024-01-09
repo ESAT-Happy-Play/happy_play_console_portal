@@ -16,7 +16,9 @@ const MechanicsSetting = () => {
   const [skipGamebyId, setSkipGamebyId] = React.useState(true);
   const [gameGuid, setGameGUid] = React.useState(null);
   const [gamelist, setGameList] = React.useState([]);
-  const [winMult, setWinMult] = React.useState(700);
+  const [entryLimit, setEntryLimit] = React.useState(5);
+  const [amountLimit, setAmountLimit] = React.useState(150000);
+  const [combinations, setCombinations] = React.useState(70);
     // Edit Setting dialog
   const [openEditSetting, setEditSetting] = React.useState(false);
   const handleEditSettingOpen = () => { setEditSetting(true); };
@@ -165,18 +167,43 @@ const MechanicsSetting = () => {
       Component: 
       <div className="div-multiplier">
         <Card
-          header={"Winning Multiplier"}
+          header={"Bet Entry Limit"}
           actions={
             <Button onClick={e => handleEditSettingOpen() } variant="outline" className="edit-button" size="large">
               Edit <EditOutlinedIcon />
             </Button>}
           body={
             <div className="mult-body">
-              <h1>{winMult}</h1>
-              <p>Winning equivalent per 1 peso bet</p>
+              <h1>{entryLimit}</h1>
+              <p>Number of bets in a batch</p>
             </div>
           }
-          
+        />
+        <Card
+          header={"Bet Amount Limit"}
+          actions={
+            <Button onClick={e => handleEditSettingOpen() } variant="outline" className="edit-button" size="large">
+              Edit <EditOutlinedIcon />
+            </Button>}
+          body={
+            <div className="mult-body">
+              <h1>{amountLimit}</h1>
+              <p>Current bet amount: 103, 500</p>
+            </div>
+          }
+        />
+        <Card
+          header={"Unique Combination"}
+          actions={
+            <Button onClick={e => handleEditSettingOpen() } variant="outline" className="edit-button" size="large">
+              Edit <EditOutlinedIcon />
+            </Button>}
+          body={
+            <div className="mult-body">
+              <h1>{combinations}%</h1>
+              <p>Current pool percentages: 63.74%</p>
+            </div>
+          }
         />
     </div>
     },

@@ -1,21 +1,17 @@
 import "./prices.scss";
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { toast } from 'react-toastify';
-
-import PriceAndPrizes from "../../../components/widget/PriceAndPrizes";
-
-import PageLoader from "../../../components/widget/PageLoader";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Card } from "../../../components/card/Card";
+import { Button } from "@mui/material";
+import CustomTab from "../../../components/tab/CustomTab";
 
 const Prices = () => {
   let _PAGESIZE = 10;
 
-  const [SearchValue, setSearchValue] = useState('');
-  const [PageNumber, setPageNumber] = useState(0);
+  const [multiplier, setMultiplier] = React.useState(700);
+  const [percentage, setPercentage] = React.useState(10);
+  const [prize, setPrize] = useState(3250800)
+  const [combinations, setCombinations] = React.useState(70);
   const [totalRows, setTotalRows] = useState(10);
   const [PageSize, setPageSize] = useState(_PAGESIZE);
 
@@ -27,6 +23,85 @@ const Prices = () => {
     setValue(newValue);
   };
 
+  const tabs = [
+    {
+      label: "Regular",
+      Component: 
+      <div className="div-multiplier">
+        <Card
+          header={"Winning Multiplier"}
+          actions={
+            <Button onClick={()=> {}} variant="outline" className="edit-button" size="large">
+              Edit <EditOutlinedIcon />
+            </Button>}
+          body={
+            <div className="mult-body">
+              <h1>{multiplier}</h1>
+              <p>Winning equivalent per 1 peso bet</p>
+            </div>
+          }
+        />
+    </div>
+    },
+    {
+      label: "Jackpot 3.3",
+      Component:
+      <div className="div-multiplier">
+        <Card
+          header={"Gross Percentage"}
+          actions={
+            <Button onClick={()=> {}} variant="outline" className="edit-button" size="large">
+              Change <EditOutlinedIcon />
+            </Button>}
+          body={
+            <div className="mult-body">
+              <h1>{percentage}%</h1>
+              <p>Gross percentage as prize increment</p>
+            </div>
+          }
+        />
+        <Card
+          style={{flex:2}}
+          header={"Current Prize"}
+          body={
+            <div className="mult-body">
+              <h1>{prize}</h1>
+              <p>May 08, 2023  <b>2PM</b></p>
+            </div>
+          }
+        />
+      </div>
+    },
+    {
+      label: "Jackpot 3.4",
+      Component: 
+      <div className="div-multiplier">
+        <Card
+          header={"Gross Percentage"}
+          actions={
+            <Button onClick={()=> {}} variant="outline" className="edit-button" size="large">
+              Change <EditOutlinedIcon />
+            </Button>}
+          body={
+            <div className="mult-body">
+              <h1>{percentage}%</h1>
+              <p>Gross percentage as prize increment</p>
+            </div>
+          }
+        />
+        <Card
+          style={{flex:2}}
+          header={"Current Prize"}
+          body={
+            <div className="mult-body">
+              <h1>{prize}</h1>
+              <p>May 08, 2023  <b>2PM</b></p>
+            </div>
+          }
+        />
+      </div>
+    }
+  ];
   const handleCallBackRefresh = () => {
     setPageLoader(true);
     setTotalRows(totalRows + 1);
@@ -34,37 +109,10 @@ const Prices = () => {
 
   return (
     <div className="content">
-      <div className="container">
-        <div className="divPrices">
-          {
-            (gameTypeList.length !== 0) ?
-              <Box sx={{ width: '100%', typography: 'body1' }}>
-                <TabContext value={value}>
-                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange}>
-                      {
-                        (gameTypeList.length !== 0) ? gameTypeList.map((item, index) => (
-                          <Tab key={index} label={item.gameTypeName} value={item.gameTypeId.toString()} />
-                        )) : ""
-                      }
-                    </TabList>
-                  </Box>
-                  { 
-                      (gameTypeList.length !== 0) ? gameTypeList.map((item, index) => (
-                        <TabPanel key={index} value={item.gameTypeId.toString()}>
-                          <PriceAndPrizes GameTypeObj={item} CallbackRefresh={ handleCallBackRefresh } />
-                        </TabPanel>
-                      )) : ""
-                  }
-                </TabContext>
-              </Box>
-            : (pageLoader) ? <>Loading... Please wait!</> : <>No Records Found!</>
-          }
-          
-        </div>
-      </div>
-
-      <PageLoader isLoadingPage={ pageLoader } />
+      <CustomTab 
+        tabList={tabs}
+      />
+      {/* <PageLoader isLoadingPage={ pageLoader } /> */}
     </div>
   )
 }

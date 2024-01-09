@@ -1,10 +1,11 @@
+import { Box } from "@mui/material";
 import "./card.scss"
 import React from 'react';
 
-export const Card = ({header, body, actions}) => {
+export const Card = ({header, body, actions, style}) => {
 
   return (
-    <div className="container">
+    <Box className="container" sx={style}>
         <div className="header">
             <h2>{header}</h2>
             {actions}
@@ -12,6 +13,6 @@ export const Card = ({header, body, actions}) => {
         <div className="body">
             {body}
         </div>
-    </div>
+    </Box>
   )
 }

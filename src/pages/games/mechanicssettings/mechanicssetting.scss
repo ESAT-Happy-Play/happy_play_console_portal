@@ -1,6 +1,15 @@
 .content {
     
     .div-multiplier {
+        display:flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        
+        .edit-button {
+            border: 1px solid rgba(221, 107, 32, 1);
+            color:rgba(221, 107, 32, 1);
+        }
+        
         .mult-body{
             align-items: center;
             justify-content: center;
