@@ -21,12 +21,12 @@ const Branch = () => {
    * Branch table list constants and functions
    */
   let _PAGESIZE = 5;
-  let _CompanyCode = loginObj.companyId;
+  // let _CompanyCode = loginObj.companyId;
   const [pageLoader, setPageLoader] = useState(false);
 
   // company table state
   const [branchSearchValue, setbranchSearchValue] = useState('');
-  const [companyCode, setcompanyCode] = useState(_CompanyCode);
+  const [companyCode, setcompanyCode] = useState(null);
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
@@ -35,7 +35,10 @@ const Branch = () => {
 
   const handleBranchData = async () => {
     setPageLoader(true);
-    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchsearch=${branchSearchValue}`);
+    let url = (companyCode === null) ? `${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&branchsearch=${branchSearchValue}`
+      : `${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchsearch=${branchSearchValue}`;
+
+    let response = await GETFetch(url);
     setPageLoader(false);
 
     if(response.status) {
@@ -140,6 +143,7 @@ const Branch = () => {
         </div>
         <div style={{display:'flex',justifyContent:'space-between'}}>
           <div className="bottom">
+            <span>Company</span>
             <TextField 
                 onChange={e => handleSelect(e, e.target.value) }
                 label="Select Company" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>

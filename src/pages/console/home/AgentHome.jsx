@@ -8,115 +8,58 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 const AgentHome = () => {
   const { authState } = useSelector((state) => state);
-  // const [pageLoader, setPageLoader] = useState(false);
 
   return (
     <div className="content">
       <div className="container">
-        <div className="divadmin">
-          <h1 style={{ marginLeft: "4%" }} className="title">GOOD MORNING, { authState.name }</h1>
+        <br />
+        <div style={{display:'flex', gap:'15px', margin:'auto',width:'50%'}}>
+          <h3 style={{padding:'0', marginTop:'12px'}}>Good Day,</h3>
+          <h1 style={{padding:'0', margin:'0'}}>{ authState.displayName }</h1>
         </div>
         <div className="agent-home-container">
           <div className="row">
-            <div className="col-6">
-              <div className="widget" style={{ background: "#fbd38d"}}>
+            <div>
+              <div className="widget" style={{ background: "#9ae6b4", marginLeft:'40px', width:'810px'}}>
                 <span className="w-title">YOUR REFERAL KEY:</span>
-                <span className="w-content">USYS8877</span>
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="widget" style={{ background: "#f56565"}}>
-                <span className="w-title">COMMISSION</span>
-                <span className="w-content">45.45</span>
+                <span className="w-content">{ authState.referralCode }</span>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-6">
-              <div className="widget" style={{ background: "#bb6bd9"}}>
+          <div className="row" style={{gap:'15px'}}>
+            <div>
+              <div className="widget" style={{ background: "#9ae6b4"}}>
+                <span className="w-title">CREDIT BALANCE:</span>
+                <span className="w-content">{ authState.creditBalance }</span>
+              </div>
+            </div>
+            <div>
+              <div className="widget" style={{ background: "#faf089"}}>
+                <span className="w-title">COMMISSION</span>
+                <span className="w-content">{ authState.commissionBalance }</span>
+              </div>
+            </div>
+          </div>
+          <div className="row" style={{gap:'15px'}}>
+            <div>
+              <div className="widget" style={{ background: "#feb2b2"}}>
                 <span className="w-title">AGENTS</span>
                 <span className="w-content">
-                  60
+                  { authState.agentCount }
                 </span>
               </div>
             </div>
-            <div className="col-6">
-              <div className="widget" style={{ background: "#4fd1c5"}}>
+            <div>
+              <div className="widget" style={{ background: "#fbb6ce"}}>
                 <span className="w-title">PLAYERS</span>
                 <span className="w-content">
-                  76
+                  { authState.playerCount }
                 </span>
               </div>
             </div>
           </div>
-
-          <div className="row">
-            <h2 style={{ color:"#4d4e50", marginLeft:"3%" }}>COMMISSION</h2>
-          </div>
-
-          <div className="row">
-              <div className="col-4">
-                <div className="row">
-                  <div className="col-4 labelTitle">
-                    <span>Date From</span>
-                  </div>
-                  <div className="col-8">
-                    <TextField
-                      type="date"
-                      sx={{ width: "200px" }}  variant="outlined" size="small" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="row">
-                  <div className="col-4 labelTitle">
-                    <span>Date To</span>
-                  </div>
-                  <div className="col-8">
-                    <TextField
-                      type="date"
-                      sx={{ width: "200px" }}  variant="outlined" size="small" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-4">
-                <div className="row">
-                  <div className="col-12 center">
-                    <Button variant="contained" color="success" size="medium">
-                      Generate
-                    </Button>
-                  </div>
-                </div>
-              </div>
-          </div>
-
-          <div className="row">
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Account Number</TableCell>
-                    <TableCell>Player Name</TableCell>
-                    <TableCell>Selected Date Commission</TableCell>
-                    <TableCell>Total Commission</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    key="TesId"
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell>000100045</TableCell>
-                    <TableCell>Wongki</TableCell>
-                    <TableCell>03/03/2023</TableCell>
-                    <TableCell>123.65</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-
         </div>
+        <br />
       </div>
     </div>
   )

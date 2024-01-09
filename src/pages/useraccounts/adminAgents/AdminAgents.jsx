@@ -1,126 +1,184 @@
+import "./agent.scss";
+
 import React, { useState, useEffect } from 'react';
-import PageLoader from "../../../components/widget/PageLoader";
+// import AddIcon from '@mui/icons-material/Add';
+import { TextField, MenuItem, Button  } from "@mui/material"
 import { toast } from 'react-toastify';
 
-import { TextField, MenuItem, Button } from "@mui/material";
-
 import AdminAgentSearchBar from "../../../components/table/adminAgent/AdminAgentSearchBar";
+
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+
 import AdminAgentList from "../../../components/table/adminAgent/AdminAgentList";
 
-import { GetStoreObject, GetJWTStoreObject } from "../../../helper/Helpers";
-import { Roles } from "../../../helper/Objects";
-
 const AdminAgents = () => {
-  // Enum roles
-  let roles = Roles();
-  // auth api response object
-  let loginObj = GetStoreObject("auth");
-  // token object
-  let tokenObj = GetJWTStoreObject(loginObj.token);
-  // loginObj.companyObjId
-  // loginObj.branchId
-  // loginObj.isMain
-  // loginObj.accountObjectId
-  // loginObj.branchName
 
-  let _PAGESIZE = 5;
-  const [pageLoader, setPageLoader] = useState(true);
+  /**
+   * constants and functions
+   */
+  let _PAGESIZE = 10;
+  const [pageLoader, setPageLoader] = useState(false);
 
-  // table state
-  const [CompanyId, setCompanyId] = useState((tokenObj.RoleId !== roles.Admin) ? loginObj.companyObjId : null);
-
-  const [SearchValue, setSearchValue] = useState('');
-  const [PageNumber, setPageNumber] = useState(0);
+  const [agentSearchValue, setagentSearchValue] = useState('');
+  const [companyCode, setcompanyCode] = useState(null);
+  const [branchCode, setbranchCode] = useState(null);
+  const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
-  const [PageSize, setPageSize] = useState(_PAGESIZE);
-  
-  const [agentList, setAgentList] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  
-  const handleSelect = (e, value) => {
-    setPageLoader(true);
-    setCompanyId(value);
-  }
+  const [pageSize, setpageSize] = useState(_PAGESIZE);
+  const [agents, setagents] = useState([]);
+  const [allCompanies, setallCompanies] = useState([]);
+  const [branches, setbranches] = useState([]);
 
-  // On click search AdminAgent
-  const handleAdminAgentSearch = (event, value) => { 
-    setSearchValue(value);
-    setPageNumber(0);
-    setPageSize(_PAGESIZE);
+  const handleAgentData = async () => {
     setPageLoader(true);
-  }
+    let url = (companyCode === null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/agents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&agentsearch=${agentSearchValue}`
+      : (companyCode !== null && branchCode === null) ? `${process.env.REACT_APP_API_URL}/agents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&agentsearch=${agentSearchValue}`
+      : (companyCode !== null && branchCode !== null) ? `${process.env.REACT_APP_API_URL}/agents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchcode=${branchCode}&agentsearch=${agentSearchValue}` 
+      : `${process.env.REACT_APP_API_URL}/agents?rowsperpage=${pageSize}&pagenumber=${pageNumber}&agentsearch=${agentSearchValue}`;
+    
+      let response = await GETFetch(url);
+    setPageLoader(false);
 
-  // Trigger on search AdminAgent empty
-  const handleAdminAgentSearchEmpty = (event, value) => {
-    if (value === "") {
-      setSearchValue("");
-      setPageNumber(0);
-      setPageSize(_PAGESIZE);
-      setPageLoader(true);
+    if(response.status) {
+      setagents(response.data.agents);
+
+      setTotalRows(response.data.totalRows);
+      setpageNumber(response.data.currentPage);
+      setpageSize(response.data.rowsPerPage);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
     }
   }
 
-    // handle company table next page
-  const handleAdminAgentChangePage = (event, newPage) => {
-    setPageNumber(newPage + 1);
+  const handleComapanyAll = async () => {
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/companies/all`);
+    if(response.status) {
+      setallCompanies(response.data.companies);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const handleBranchByCompany = async (code) => {
+    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/branches?rowsperpage=100&pagenumber=1&companyid=${code}`);
+    if(response.status) {
+      setbranches(response.data.branches);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  // trigger call API endpoint if state change
+  useEffect(() => {
+    handleAgentData();
+    handleComapanyAll();
+  }, [pageNumber, agentSearchValue, pageSize, totalRows, companyCode, branchCode]);
+
+  // On click search
+  const handleMasterAgentSearch = (event, value) => { 
+    setagentSearchValue(value);
+    setpageNumber(1);
+    setpageSize(_PAGESIZE);
+  }
+
+  // Trigger on search empty
+  const handleMasterAgentSearchEmpty = (event, value) => {
+    if (value === "") {
+      setagentSearchValue("");
+      setpageNumber(1);
+      setpageSize(_PAGESIZE);
+    }
+  }
+
+  // handle table next page
+  const handleAgentChangePage = (event, newPage) => {
+    setpageNumber(newPage + 1);
     setPageLoader(true);
   }
 
-  // handle company table change page size
-  const handleAdminAgentRowsPerPage = (event) => {
-    setPageSize(+event.target.value);
-    setPageNumber(0);
+  // handle table change page size
+  const handleAgentRowsPerPage = (event) => {
+    setpageSize(+event.target.value);
+    setpageNumber(1);
     setPageLoader(true);
+  }
+
+  const handleSelect = async (e, value) => {
+    setcompanyCode(value);
+    setbranchCode(null);
+    await handleBranchByCompany(value);
+  }
+
+  const handleSelectBranch = async (e, value) => {
+    setbranchCode(value);
   }
 
   return (
-    <div className="content">
-      <div  className="container">
+    <div className="agentPage">
+      <div className="container">
         <div className="top">
           <h2 className="title">LIST OF AGENTS</h2>
         </div>
-        <div className="row p-15">
-          {
-            (tokenObj.RoleId === roles.Admin) ?
-              <div className="col-4">
-                <TextField
-                  placeholder="Select Company"
-                  onChange={e => handleSelect(e, e.target.value) }
-                  label="Select Company" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
-                  <MenuItem value=''><em>Select Company</em></MenuItem>
-                  { 
-                      (companies.length !== 0) ? companies.map((item) => (
-                      <MenuItem key={item.companyId} value={item.companyId}>
-                          {item.companyName}
-                      </MenuItem>
-                      )) :
-                      <MenuItem value=''>Loading options...</MenuItem>
-                  }
-                </TextField>
-              </div>
-            : ""
-          }
-
-          <div className={ (tokenObj.RoleId === roles.Admin) ? 'col-8' : 'col-12'}>
-            <AdminAgentSearchBar handleSearch={ handleAdminAgentSearch } handleSearchEmpty={ handleAdminAgentSearchEmpty } />
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+          <div className="bottom">
+            <span>Company</span>
+            <TextField 
+                onChange={e => handleSelect(e, e.target.value) }
+                label="Select Company" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                <MenuItem value=''><em>Select Company</em></MenuItem>
+                { 
+                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
+                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
+                        {item.companyName}
+                    </MenuItem>
+                    )) 
+                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                    : <MenuItem value=''>No records found!</MenuItem>
+                }
+              </TextField>
+          </div>
+          <div className="bottom">
+            <span>Branch</span>
+            <TextField 
+                onChange={e => handleSelectBranch(e, e.target.value) }
+                label="Select Branch" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                <MenuItem value=''><em>Select Branch</em></MenuItem>
+                { 
+                    (branches.length !== 0) ? branches.map((item) => (
+                    <MenuItem data-province-code={item.branchCode} key={item.branchCode} value={item.branchCode}>
+                        {item.branchName}
+                    </MenuItem>
+                    )) 
+                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                    : <MenuItem value=''>No records found!</MenuItem>
+                }
+              </TextField>
+          </div>
+          <div className="bottom" style={{ minWidth: "450px" }}>
+            <div className="search">
+              <AdminAgentSearchBar handleSearch={ handleMasterAgentSearch } handleSearchEmpty={ handleMasterAgentSearchEmpty } />
+            </div>
           </div>
         </div>
 
-        <div className="row p-15">
-          <div className="col-12">
-            <AdminAgentList 
-            SearchResults={ agentList }
-            ChangePage = { handleAdminAgentChangePage }
-            RowsPerPage = { handleAdminAgentRowsPerPage }
-            pageNumber = { (PageNumber === 0) ? PageNumber : (PageNumber - 1) }
-            pageSize = { PageSize } 
-            totalCount = { totalRows } />
-          </div>
-        </div>
-
+        <AdminAgentList 
+          searchResults={ agents }
+          totalCount={ totalRows }
+          RowsPerPage={ handleAgentRowsPerPage }
+          pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
+          pageSize = { pageSize }
+          ChangePage={ handleAgentChangePage }
+          isLoading = { pageLoader }
+        />
       </div>
-      <PageLoader isLoadingPage={ pageLoader } />
     </div>
-  );
+  )
 }
-export default AdminAgents;
+
+export default AdminAgents
