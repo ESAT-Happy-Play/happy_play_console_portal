@@ -30,6 +30,10 @@ export const UserModel = {
         sourceOfIncome: "",
         validIdImage: "",
         signatureImage: "",
-        profilePictureImage: ""
+        profilePictureImage: "",
+
+        checkAge: "",
+        checkNationality: "",
+        checkTerm: ""
     }
 }

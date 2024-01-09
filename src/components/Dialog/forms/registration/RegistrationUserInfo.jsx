@@ -1,5 +1,5 @@
 import React from 'react';
-import "../dialogform.scss";
+import "./../../dialogform.scss";
 
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,10 +18,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 
-import AddressWidget from '../../widget/AddressWidget';
 // Models
-import { UserModel } from "../../../model/UserModel";
-import { IDTypes, BloodTypes } from "../../../helper/Enums";
+import { UserModel } from "../../../../model/UserModel";
+import { IDTypes, BloodTypes } from "../../../../helper/Enums";
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -29,9 +28,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import PermanentAddressWidget from '../../widget/PermanentAddressWidget';
-
-import { UploadFile } from "../../../api/request/UploadApiRequest";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
@@ -76,7 +72,9 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     streetpurok: null
   });
   const [addressObj, setAddressObj] = React.useState(null);
-  const [isPermanent, setIsPermanent] = React.useState(false);
+  const [isSameBirthPlace, setIsSameBirthPlace] = React.useState(false);
+  const [isSamePresent, setIsSamePresent] = React.useState(false);
+  
   const [slideNextFirst, setSlideNextFirst] = React.useState(true);
   const [slideNextSecond, setSlideNextSecond] = React.useState(false);
   const [slideNextThird, setSlideNextThird] = React.useState(false);
@@ -142,9 +140,26 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setAddressState({...addressState, streetpurok: value });
   }
 
-  const handleIsPermanet = (e , value) => {
-    setIsPermanent(!value);
-    if(!isPermanent) {
+  const handleIsSameBirthPlace = (e , value) => {
+    setIsSameBirthPlace(!value);
+    if(!isSameBirthPlace) {
+      handleResetAddress();
+    } else {
+      setAddressObj(null);
+      reset(formValues => ({
+        ...formValues,
+        permanentRegion: "",
+        permanentProvince: "",
+        permanentMunicipality: "",
+        permanentBarangay: "",
+        permanentStreetOrPurok: ""
+      }));
+    }
+  }
+
+  const handleIsSamePresent = (e , value) => {
+    setIsSamePresent(!value);
+    if(!isSamePresent) {
       handleResetAddress();
     } else {
       setAddressObj(null);
@@ -172,21 +187,27 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     }));
   }
 
-  const [presentAddressOpen, setPresentAddressOpen] = React.useState(true);
+  const [placeOfBirthOpen, setplaceOfBirthOpen] = React.useState(true);
+  const handlePlaceOfBirthClick = () => {
+    setplaceOfBirthOpen(!placeOfBirthOpen);
+  };
+  const [presentAddressOpen, setpresentAddressOpen] = React.useState(false);
   const handlePresentAddressClick = () => {
-    setPresentAddressOpen(!presentAddressOpen);
+    setpresentAddressOpen(!presentAddressOpen);
   };
   const [permanentAddressOpen, setpermanentAddressOpen] = React.useState(false);
   const handlePermanentAddressClick = () => {
     setpermanentAddressOpen(!permanentAddressOpen);
-    // if(!isPermanent) {
-    //   handleResetAddress();
-    // }
   };
 
   const [validIdOpen, setValidIdOpenOpen] = React.useState(false);
   const handleValidIdClick = () => {
     setValidIdOpenOpen(!validIdOpen);
+  };
+
+  const [selfieOpen, setSelfieOpen] = React.useState(false);
+  const handleSelfieClick = () => {
+    setSelfieOpen(!selfieOpen);
   };
 
   const [signatureOpen, setSignatureOpen] = React.useState(false);
@@ -197,7 +218,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const handleUploadFrontID = async (e, image) => {
     if(govId !== null) {
       setIsLoadingFront(true);
-      await UploadFile(accountObjectId, 2, image, govId);
+      // await UploadFile(accountObjectId, 2, image, govId);
       setIsLoadingFront(false);
       setDisplayFrontID(URL.createObjectURL(image));
     }
@@ -208,7 +229,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const handleUploadBackID = async (e, image) => {
     if(govId !== null) {
       setIsLoadingBack(true);
-      await UploadFile(accountObjectId, 3, image, govId);
+      // await UploadFile(accountObjectId, 3, image, govId);
       setIsLoadingBack(false);
       setDisplayBackId(URL.createObjectURL(image));
     }
@@ -218,7 +239,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
   const handleUploadSignature = async (e, image) => {
     setIsLoading(true);
-    await UploadFile(accountObjectId, 4, image, null);
+    // await UploadFile(accountObjectId, 4, image, null);
     setIsLoading(false);
     setDisplaySignature(URL.createObjectURL(image))
   }
@@ -299,7 +320,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       <label>Blood Type</label>
                     </div>
                     <div className="right">
-                      <TextField
+                      <TextField style={{textAlign:'left'}}
                         label="Select blood type"
                         { 
                           ...register("bloodType", ((slideNextFirst)) ? { required: true } : { required: false } ) 
@@ -346,7 +367,20 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         variant="outlined" size="small" fullWidth />
                     </div>
                   </div>
-                  {/* <AddressWidget register={register} errors={errors} /> */}
+                  <div className="divContent">
+                    <div className="left">
+                      <label>Nationality</label>
+                    </div>
+                    <div className="right">
+                      <TextField
+                        { 
+                          ...register("sourceOfIncome", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                        }
+                        error={ !!errors.sourceOfIncome }
+                        helperText={ errors.sourceOfIncome?.message }
+                        variant="outlined" size="small" fullWidth />
+                    </div>
+                  </div>
 
                   <div className='divfooter'>
                     <Button onClick={handleClose} style={{ marginRight: '15px'}} variant="outlined">Back</Button>
@@ -362,99 +396,77 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
                   <div className='divCollaps'>
                     <List
-                      sx={{ width: '100%', maxWidth: '95%', bgcolor: 'background.paper' }}
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
                       component="nav"
                     >
-                      <ListItemButton onClick={handlePresentAddressClick}>
-                        <ListItemText primary="Present Address" />
-                        {presentAddressOpen ? <ExpandLess /> : <ExpandMore />}
+                      <ListItemButton onClick={handlePlaceOfBirthClick}>
+                        <ListItemText primary="Place of Birth" />
+                        {placeOfBirthOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
-                      <Collapse in={presentAddressOpen} timeout="auto" unmountOnExit>
+                      <Collapse in={placeOfBirthOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
-                          <AddressWidget 
-                            register={register} 
-                            errors={errors} 
-                            nextrequired={slideNextSecond}
-                            callback={handleAddressCallback} />
-
-                          <div className="divContent">
-                            <div className="left">
-                              <label>Street/Purok</label>
-                            </div>
-                            <div className="right">
-                              <TextField
-                                placeholder="Enter street/purok"
-                                { 
-                                  ...register("streetOrPurok", ((slideNextSecond)) ? { required: true } : { required: false } ) 
-                                }
-                                error={ !!errors.streetOrPurok }
-                                helperText={ errors.streetOrPurok?.message }
-                                onChange={e => handleAddressCallback(e.target.value, 5)}
-                                label="Enter street/purok" variant="outlined" size="small" fullWidth />
-                            </div>
-                          </div>
+                          Place of Birth
                         </List>
                       </Collapse>
                     </List>
                   </div>
+
                   <div>
-                    <FormControlLabel
+                    <FormControlLabel style={{marginLeft:'-105px'}}
                       control={
-                        <Checkbox defaultValue={isPermanent} onChange={e => handleIsPermanet(e, isPermanent)} />
+                        <Checkbox defaultValue={isSameBirthPlace} onChange={e => handleIsSameBirthPlace(e, isSameBirthPlace)} />
                       } label={
-                        <div style={{fontSize:'14px'}}><span>Permanent Address Same with Present Address</span></div>
+                        <div style={{fontSize:'14px'}}><span>Present Address same with Place of Birth.</span></div>
                       } />
                   </div>
 
                   <div className='divCollaps'>
                     <List
-                      sx={{ width: '100%', maxWidth: '95%', bgcolor: 'background.paper' }}
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
+                      component="nav"
+                    >
+                      <ListItemButton onClick={handlePresentAddressClick}>
+                        <ListItemText primary="Present Address" />
+                        <span style={{color:'red', marginRight:'110px',fontSize:'12px'}}>required*</span>
+                        {presentAddressOpen ? <ExpandLess /> : <ExpandMore />}
+                      </ListItemButton>
+                      <Collapse in={presentAddressOpen} timeout="auto" unmountOnExit>
+                        <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
+
+                          Present Address
+                        </List>
+                      </Collapse>
+                    </List>
+                  </div>
+
+                  <div>
+                    <FormControlLabel style={{marginLeft:'-65px'}}
+                      control={
+                        <Checkbox defaultValue={isSamePresent} onChange={e => handleIsSamePresent(e, isSamePresent)} />
+                      } label={
+                        <div style={{fontSize:'14px'}}><span>Permanent Address same with Present Address.</span></div>
+                      } />
+                  </div>
+
+                  <div className='divCollaps'>
+                    <List
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
                       component="nav"
                     >
                       <ListItemButton onClick={handlePermanentAddressClick}>
-                        <ListItemText primary="Permanet Address" />
+                        <ListItemText primary="Permanent Address" />
                         <span style={{color:'red', marginRight:'110px',fontSize:'12px'}}>required*</span>
                         {permanentAddressOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={permanentAddressOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
 
-                          <PermanentAddressWidget 
-                          register={register} 
-                          errors={errors} 
-                          nextrequired={slideNextSecond}
-                          defaultData={addressObj} />
-
-                          <div className="divContent">
-                            <div className="left">
-                              <label>Street/Purok</label>
-                            </div>
-                            <div className="right">
-                              {
-                                (addressObj !== null) ?
-                                <TextField disabled
-                                placeholder="Enter street/purok"
-                                { ...register("permanentStreetOrPurok") }
-                                variant="outlined" size="small" fullWidth />
-
-                                :
-
-                                <TextField 
-                                placeholder="Enter street/purok"
-                                { 
-                                  ...register("permanentStreetOrPurok", ((slideNextSecond)) ? { required: true } : { required: false } ) 
-                                }
-                                error={ !!errors.streetOrPurok }
-                                helperText={ errors.streetOrPurok?.message }
-                                label="Enter street/purok" variant="outlined" size="small" fullWidth />
-                              }
-                            </div>
-                          </div>
+                          Present Address
                         </List>
                       </Collapse>
                     </List>
                   </div>
-
+                  <br />
                   <div className='divfooter'>
                     <Button onClick={handleBackToFirst} style={{ marginRight: '15px'}} variant="outlined">Back</Button>
                     <Button type="submit" variant="outlined" color="success">
@@ -469,7 +481,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
                   <div className='divCollaps' style={{ marginBottom: '15px'}}>
                     <List
-                      sx={{ width: '100%', maxWidth: '95%', bgcolor: 'background.paper' }}
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
                       component="nav"
                     >
                       <ListItemButton onClick={handleValidIdClick}>
@@ -529,10 +541,40 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </Collapse>
                     </List>
                   </div>
+
+                  <div className='divCollaps' style={{ marginBottom: '15px'}}>
+                    <List
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
+                      component="nav"
+                    >
+                      <ListItemButton onClick={handleSelfieClick}>
+                        <ListItemText primary="Selfie" />
+                        <span style={{color:'red', marginRight:'190px',fontSize:'12px'}}>required*</span>
+                        {selfieOpen ? <ExpandLess /> : <ExpandMore />}
+                      </ListItemButton>
+                      <Collapse in={selfieOpen} timeout="auto" unmountOnExit>
+                        <List component="div" style={{ paddingLeft: '15px'}}>
+                          <div>
+                            <LoadingButton loading={ isLoading } 
+                            style={{ width: '205px', marginBottom:'10px'}} 
+                            component="label" variant="contained" loadingPosition='end' startIcon={<FilterIcon />}>
+                              Upload Selfie
+                              <VisuallyHiddenInput type="file" name="file" accept="image/*" 
+                              onChange={(e) => handleUploadSignature(e, e.target.files[0])}/>
+                            </LoadingButton>
+                            <div className="divImg" style={{ marginLeft: '25%'}}>
+                              <img style={{ width: '180px', borderRadius:'10px'}}
+                              className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
+                            </div>
+                          </div>
+                        </List>
+                      </Collapse>
+                    </List>
+                  </div>
               
                   <div className='divCollaps'>
                     <List
-                      sx={{ width: '100%', maxWidth: '95%', bgcolor: 'background.paper' }}
+                      sx={{ width: '100%', maxWidth: '100%', paddingTop:'0px',paddingBottom:'0px', bgcolor: 'background.paper' }}
                       component="nav"
                     >
                       <ListItemButton onClick={handleSignatureClick}>
@@ -559,7 +601,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </Collapse>
                     </List>
                   </div>
-
+                  <br />
                   <div className='divfooter'>
                     <LoadingButton loading={ isLoadingFinal } onClick={handleBackToSecond} 
                     style={{ marginRight: '15px'}} variant="outlined" loadingPosition='end'>Back</LoadingButton>

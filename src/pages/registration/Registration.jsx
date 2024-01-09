@@ -14,8 +14,8 @@ import { toast } from 'react-toastify';
 import { UserModel } from "../../model/UserModel";
 import OtpVerification from "../../components/Dialog/forms/OtpVerification";
 import PageLoader from "../../components/widget/PageLoader";
-import ProceedRegistration from "../../components/Dialog/forms/ProceedRegistration";
-import RegistrationUserInfo from "../../components/Dialog/forms/RegistrationUserInfo";
+import ProceedRegistration from "../../components/Dialog/forms/registration/ProceedRegistration";
+import RegistrationUserInfo from "../../components/Dialog/forms/registration/RegistrationUserInfo";
 
 const Registration = () => {
   // get url parameter
@@ -52,23 +52,29 @@ const Registration = () => {
     
     setMobileNumber(data.mobileNumber);
     setFormData(data);
-    setPageLoader(true);
-    
+    // setPageLoader(true);
+    // setIsLoading(true);
+
+    handleOTPOpen();
     console.log("Request OTP");
   }
 
-  // OTP modal
+  //
   const handleOTPOpen = () => { setOpenOTP(true); }
   const handleOTPClose = () => { setOpenOTP(false); }
   const handleOkayOTP = async (otpNumber) => {
-    console.log("Verify OTP");
+    handleOTPClose();
+
+    handleProceedOpen();
+    console.log("Verify OTP : " + otpNumber);
   };
 
-  // OTP modal
+  //
   const handleProceedOpen = () => { setOpenProceedModal(true); }
   const handleProceedClose = () => { setOpenProceedModal(false); }
   const handleOkayProceed = () => {
-    console.log("Submit");
+    handleProceedClose();
+    window.location.reload(false);
   }
   const handleOkayVerify = () => { handleUserInfoOpen(); }
 
@@ -120,14 +126,12 @@ const Registration = () => {
                   </div>
                   <div className="right">
                     <TextField 
-                      // placeholder="Enter First name"
                       autoFocus
                       { 
-                        ...register("firstName", { required: true } ) 
+                        ...register("firstname", { required: true } ) 
                       }
-                      error={ !!errors.firstName }
-                      helperText={ errors.firstName?.message }
-                      // label="Enter first name" 
+                      error={ !!errors.firstname }
+                      helperText={ errors.firstname?.message }
                       variant="outlined" size="small" fullWidth />
                   </div>
                 </div>
@@ -137,14 +141,7 @@ const Registration = () => {
                     <label>Middle Name</label>
                   </div>
                   <div className="right">
-                    <TextField 
-                      // placeholder="Enter Middle Name"
-                      { 
-                        ...register("middleName", { required: true } ) 
-                      }
-                      error={ !!errors.middleName }
-                      helperText={ errors.middleName?.message }
-                      // label="Enter Middle name" 
+                    <TextField { ...register("middlename") }
                       variant="outlined" size="small" fullWidth />
                   </div>
                 </div>
@@ -155,13 +152,11 @@ const Registration = () => {
                   </div>
                   <div className="right">
                     <TextField 
-                      // placeholder="Enter Last Name"
                       { 
-                        ...register("lastName", { required: true } ) 
+                        ...register("lastname", { required: true } ) 
                       }
-                      error={ !!errors.lastName }
-                      helperText={ errors.lastName?.message }
-                      // label="Enter last name" 
+                      error={ !!errors.lastname }
+                      helperText={ errors.lastname?.message }
                       variant="outlined" size="small" fullWidth />
                   </div>
                 </div>
@@ -172,20 +167,18 @@ const Registration = () => {
                   </div>
                   <div className="right">
                     <TextField
-                    // placeholder="Enter Mobile Number"
                       type="number"
                       { 
                         ...register("mobileNumber", { 
                           required: true,
                           minLength: {
-                            value: 10,
-                            message: "Phone number must at least 10 digits"
+                            value: 11,
+                            message: "Phone number must at least 11 digits"
                           }
                         }) 
                       }
                       error={ !!errors.mobileNumber }
-                      helperText={ errors.mobileNumber?.message }
-                      // label="Enter Mobile Number" 
+                      helperText={ errors.mobileNumber?.message } 
                       variant="outlined" size="small" fullWidth />
                   </div>
                 </div>
@@ -232,7 +225,7 @@ const Registration = () => {
                       } defaultValue={checkTerm} onChange={e => setCheckTerm(!checkTerm)} />
                     } label={
                       <div>
-                          <span>I agree to Bingo Blackout </span>
+                          <span>I agree to Happy Play </span>
                           {
                             (!checkTerm) ? <span className="checkRequired">(required *)</span> : ''
                           }
