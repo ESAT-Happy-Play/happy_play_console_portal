@@ -1,41 +1,20 @@
-.divMechanics {
-    padding: 15px;
-
-    .searchContent {
-        margin: 25px 0 30px 0;
-        display: flex;
-
-        .left {
-            flex: 1;
-            text-align: right;
-            margin-right: 15px;
-        }
-
-        .center {
-            flex: 2;
-        }
-    }
-
-    .divSearch {
-        display: flex;
-
-        .searchContent {
-            flex: 1;
-        }
-    }
-
-    .divContent {
-        display: flex;
-        .left, .center {
-            width: 450px;
-        }
-        .center {
-            margin-left: 30px;
-        }
-
-        .ulContent {
-            padding: 30px;
-            text-align: center;
+.content {
+    
+    .div-multiplier {
+        .mult-body{
+            align-items: center;
+            justify-content: center;
+            h1{
+                color: #4845d2;
+                font-size:40px;
+                text-align: center;
+            }
+            p{
+                color: #4845d2;
+                text-align: center;
+                padding:0;
+                margin:0;
+            }
         }
     }
 }
