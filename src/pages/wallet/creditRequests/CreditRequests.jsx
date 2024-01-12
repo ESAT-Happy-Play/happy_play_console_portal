@@ -11,6 +11,7 @@ import AgentCreditRequestsSearchBar from "../../../components/table/AgentCreditR
 import { GETFetch } from "../../../api/ApiFetchBuilder";
 import { GetStoreObject } from "../../../helper/Helpers";
 import MasterAgentRequestCredit from "../../../components/Dialog/forms/wallet/MasterAgentRequestCredit";
+import AllRequestCredit from "../../../components/Dialog/forms/wallet/AllRequestCredit";
 
 const CreditRequests = () => {
 
@@ -171,9 +172,9 @@ const CreditRequests = () => {
       {
           // Super Admin : 0101 // Operator : 0102 // Master Agent: 0201 // Agent: 0202
         (loginObj.userCode === '0101') ? <></>
-        : (loginObj.userCode === '0102') ? <></>
+        : (loginObj.userCode === '0102') ? <AllRequestCredit isOpenAdd={ openRequestCredit } handleCloseAdd={ handleRequestCreditClose } handleCallback={ handleRequestCreditCallback } />
         : (loginObj.userCode === '0201') ? <MasterAgentRequestCredit isOpenAdd={ openRequestCredit } handleCloseAdd={ handleRequestCreditClose } handleCallback={ handleRequestCreditCallback } />
-        : <></>
+        : <AllRequestCredit isOpenAdd={ openRequestCredit } handleCloseAdd={ handleRequestCreditClose } handleCallback={ handleRequestCreditCallback } />
       }
     </div>
   )

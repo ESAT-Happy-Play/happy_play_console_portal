@@ -35,5 +35,10 @@ export const UserModel = {
         checkAge: "",
         checkNationality: "",
         checkTerm: ""
+    },
+    ApproveRejectForm: {
+        userType: "",
+        approved: "",
+        commissionPercentage: ""
     }
 }

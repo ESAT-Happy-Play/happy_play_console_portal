@@ -21,7 +21,7 @@ import MessageDialog from "../../MessageDialog";
 // Models
 import { WalletModel } from "../../../../model/WalletModel";
 
-import { FetchFormData } from "../../../../api/ApiFetchBuilder";
+import { FetchFormData, GETFetch } from "../../../../api/ApiFetchBuilder";
 
 import { GetStoreObject } from "../../../../helper/Helpers";
 
@@ -42,7 +42,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
   
-const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, dataObj }) => {
+const AllRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
 
   let loginObj = GetStoreObject("auth");
   const [pageLoader, setPageLoader] = useState(false);
@@ -52,19 +52,15 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
   const { errors } = formState;
   const [formData, setFormData] = React.useState({});
   const [submitLoading, setSubmitLoading] = React.useState(false);
-  const [walletBal, setwalletBal] = React.useState(0);
- 
+
   // trigger call API endpoint if state change
   useEffect(() => {
     reset(formValues => ({
       ...formValues,
-      mode: 0
+      modeofpayment: 0,
+      usercode: loginObj.userCode
     }));
-
-    if (dataObj !== null) {
-        setwalletBal(dataObj.creditBalance);
-    }
-  }, [dataObj]);
+  }, []);
 
   // final step submit handler
   const finalStepHandler = async (data) => {
@@ -84,7 +80,8 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
 
     reset(formValues => ({
       ...formValues,
-      mode: request,
+      modeofpayment: request,
+      usercode: loginObj.userCode
     }));
   }
 
@@ -94,17 +91,17 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleSendCreditOkay = async () => {
 
-    // var frmData = new FormData();
-    // frmData.append('amount', formData.amount);
-    // frmData.append('modeofpayment', formData.modeofpayment);
-    // frmData.append('usercode', formData.usercode);
-    // frmData.append('operatoruserid', formData.operatoruserid);
-    // if (formData.proofImage.length > 0) {
-    //   frmData.append('proofImage', formData.proofImage[0]);
-    // }
+    var frmData = new FormData();
+    frmData.append('amount', formData.amount);
+    frmData.append('modeofpayment', formData.modeofpayment);
+    frmData.append('usercode', formData.usercode);
+    frmData.append('operatoruserid', "");
+    if (formData.proofImage.length > 0) {
+      frmData.append('proofImage', formData.proofImage[0]);
+    }
 
     setSubmitLoading(true);
-    let response = await FetchFormData(`${process.env.REACT_APP_API_URL}/credits/withdraw/request?amount=${formData.amount}&wallettype=${formData.wallettype}&mode=${formData.mode}`, 'POST', {});
+    let response = await FetchFormData(`${process.env.REACT_APP_API_URL}/credits/request`, 'POST', frmData);
     setSubmitLoading(false);
     if(response.status) {
       handleSubmitClose();
@@ -117,22 +114,11 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
     }
   };
 
-  const clickSelectWalletEvent = event => {
-    let walletType = event.target.getAttribute('data-value');
-    if (walletType === "0") {
-        setwalletBal(dataObj.creditBalance);
-    } else if (walletType === "1") {
-        setwalletBal(dataObj.commissionBalance);
-    } else {
-        setwalletBal(0);
-    }
+  const [displayReceipt, setdisplayReceipt] = useState(null);
+  const handleUploadReceipt = async (e, image) => {
+    console.log(image);
+    setdisplayReceipt(URL.createObjectURL(image));
   }
-
-//   const [displayReceipt, setdisplayReceipt] = useState(null);
-//   const handleUploadReceipt = async (e, image) => {
-//     console.log(image);
-//     setdisplayReceipt(URL.createObjectURL(image));
-//   }
 
   return (
     <>
@@ -141,38 +127,12 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
         disableEscapeKeyDown
       >
         <div className="dialogHeader">
-          <div className="rd">WITHDRAW CREDIT</div>
+          <div className="rd">REQUEST CREDIT</div>
         </div>
         <DialogContent dividers>
           <div id="step1" className="divStep">
             <form onSubmit={ handleSubmit(finalStepHandler) } noValidate>
-            <br />
-              <div className="divContent">
-                <div className="left">
-                  <label>Wallet</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Select wallet"
-                    { 
-                        ...register("wallettype", { required: true }) 
-                    }
-                    error={ !!errors.wallettype }
-                    helperText={ errors.wallettype?.message }
-                    onClick={clickSelectWalletEvent}
-                    label="Select wallet" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
-                    <MenuItem value=''><em>Select wallet</em></MenuItem>
-                    <MenuItem value="0" data-value="0">Credit Wallet</MenuItem>
-                    <MenuItem value="1" data-value="1">Commission Wallet</MenuItem>
-                    <MenuItem value="2" data-value="2">Winning Wallet</MenuItem>
-                  </TextField>
-                  <br />
-                  <div style={{fontSize:'15px',marginTop:'15px'}}>
-                    <p style={{margin:'0'}}>Your balance <b>{walletBal}</b></p>
-                </div>
-                </div>
-              </div>
-            
+
               <div className="divContent">
                 <div className="left">
                   <label>Credit Amount</label>
@@ -210,7 +170,7 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
                 </div>
               </div>
 
-              {/* <div style={{display:'flex'}}>
+              <div style={{display:'flex'}}>
                 <div className="div-receipt">
                     <img className="imgFiles" src={(displayReceipt !== null) ? `${displayReceipt}` : `${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
                 </div>
@@ -222,7 +182,7 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
                         <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" onChange={(e) => handleUploadReceipt(e, e.target.files[0])} />
                     </LoadingButton>
                 </div>
-              </div> */}
+              </div>
               <br />
               <div className="divContent">
                 <div className="left"></div>
@@ -244,11 +204,11 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
         handleCloseMessage={ handleSubmitClose } 
         handleOkay={ handleSendCreditOkay } 
         title={ "Confirmation" } 
-        content={ "Are you sure you want to withdraw?" }
+        content={ "Are you sure you want to request credit?" }
         color={ "success" }
         isLoading={ submitLoading } />
     </>
   )
 }
 
-export default MasterAgentRequestCredit
+export default AllRequestCredit

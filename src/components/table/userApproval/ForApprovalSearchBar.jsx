@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useState } from 'react';
 
-const ForApprovalSearchBar = ({ handleForApprovalSearch, handleForApprovalSearchEmpty }) => {
+const ForApprovalSearchBar = ({ handleSearch, handleSearchEmpty }) => {
     //declarations
     const [searchVal, setSearchVal] = useState('');
 
@@ -11,19 +11,19 @@ const ForApprovalSearchBar = ({ handleForApprovalSearch, handleForApprovalSearch
     const handleSubmit = (e) => e.preventDefault();
 
     // onchange trigger
-    const handleForApprovalSearchChange = (e) => {
+    const handleSearchChange = (e) => {
         setSearchVal(e.target.value);
-        handleForApprovalSearchEmpty(e, e.target.value);
+        handleSearchEmpty(e, e.target.value);
     }
 
     // on search icon trigger
     const handleSearchSubmit = (e) => {
-        handleForApprovalSearch(e, searchVal);
+        handleSearch(e, searchVal);
     }
 
     const handleKeyDown = (e) => {
       if(e.keyCode === 13){
-         handleForApprovalSearch(e, searchVal);
+         handleSearch(e, searchVal);
       }
     }
 
@@ -32,10 +32,10 @@ const ForApprovalSearchBar = ({ handleForApprovalSearch, handleForApprovalSearch
         <form className="search" onSubmit={ handleSubmit }>
             <TextField
                 size="small"
-                label="Search Name"
+                label="Search"
                 variant="outlined"
                 fullWidth
-                onChange={ handleForApprovalSearchChange }
+                onChange={ handleSearchChange }
                 onKeyDown={ handleKeyDown }
                 InputProps={{
                     endAdornment: (

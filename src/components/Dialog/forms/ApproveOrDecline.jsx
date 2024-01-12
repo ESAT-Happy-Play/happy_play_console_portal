@@ -9,76 +9,84 @@ import DialogContent from '@mui/material/DialogContent';
 
 import { TextField, MenuItem, Button  } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
-
-// import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-// Models
 import { UserModel } from "../../../model/UserModel";
-import { GetStoreObject, GetJWTStoreObject } from "../../../helper/Helpers";
-import PageLoader from '../../widget/PageLoader';
+import MessageDialog from '../MessageDialog';
+
+import { POSTFetch } from "../../../api/ApiFetchBuilder";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
     '& .MuiDialogActions-root': { padding: theme.spacing(1), },
 }));
   
-const ApproveOrDecline = ({ isOpenApproveOrDecline, handleCloseApproveOrDecline, userObj }) => {
+const ApproveOrDecline = ({ isOpenAdd, handleCloseAdd, handleCallback, userObj }) => {
 
-  let authObj = GetStoreObject("auth");
-  let tokenObj = GetJWTStoreObject(authObj.token);
-
-  const [pageLoader, setPageLoader] = useState(false);
-  const [roleId, setRoleId] = useState(tokenObj.RoleId);
-  const formSetting = useForm({ defaultValues: UserModel.ApproveForm });
-  const { register, handleSubmit, formState, reset } = formSetting;
+  const [submitLoading, setSubmitLoading] = React.useState(false);
+  const [hasCommission, sethasCommission] = React.useState(true);
+  const formApprove = useForm({ defaultValues: UserModel.ApproveRejectForm });
+  const { register, handleSubmit, formState, reset } = formApprove;
   const { errors } = formState;
   const [formData, setFormData] = React.useState({});
-  const [submitLoading, setSubmitLoading] = React.useState(false);
 
-  // trigger if company Data state change
-  useEffect(() => {
-    if(userObj !== undefined) {
-      if(roleId === "3") {
-        reset(formValues => ({
-          ...formValues,
-          accountInfoId: userObj.accountInfoId,
-          userTypeId: 4 // 4 is agent
-        }));
-      } else {
-        reset(formValues => ({
-          ...formValues,
-          accountInfoId: userObj.accountInfoId
-        }));
-      }
-    }
-  }, [userObj]);
-
-  const resetForm = () => {
-      // close all popup modal
-      setSubmitLoading(false);
-  }
-
-  const handleApproveSubmit = async (data) => {
-    console.log("Submit Aprove");
+  const submitHandler = async (data) => {
+    setFormData(data);
+    handleOpenConfirm();
   };
 
-  const handleDecline = async () => {
-    console.log("Submit Decline");
+  const handleDecline = () => {
+    reset(formValues => ({
+      ...formValues,
+      approved: 0
+    }));
+  }
+
+  const handleAprove = () => {
+    reset(formValues => ({
+      ...formValues,
+      approved: 1
+    }));
+  }
+
+  // Confiration dialog
+  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const handleOpenConfirm = () => { setOpenConfirm(true); };
+  const handleConfirmClose = () => { setOpenConfirm(false); };
+  const handleConfirmOkay = async () => {
+    setSubmitLoading(true);
+    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/users/approvals/${userObj.userId}`, formData);
+    setSubmitLoading(false);
+    if(response.status) {
+      toast.success(response.data.message);
+      handleConfirmClose();
+      handleCallback();
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  };
+
+  const clickSelectUserEvent = event => {
+    let userType = event.target.getAttribute('data-value');
+    if (userType === "02") {
+        sethasCommission(true);
+    } else {
+        sethasCommission(false);
+    }
   }
 
   return (
     <>
-      <BootstrapDialog className="divDialogForm"
-        open={ isOpenApproveOrDecline }
+      <BootstrapDialog className="divDialogForm-small"
+        open={ isOpenAdd }
         disableEscapeKeyDown
       >
         <div className="dialogHeader">
-          <div className="st"></div>
-          <div className="nd"></div>
           <div className="rd">
             <span>APPROVE / DECLINE</span>
-            <IconButton onClick={ handleCloseApproveOrDecline } color="primary">
+            <IconButton style={{background:'white'}} onClick={ handleCloseAdd } color="primary">
               <CancelIcon />
             </IconButton>
           </div>
@@ -93,7 +101,7 @@ const ApproveOrDecline = ({ isOpenApproveOrDecline, handleCloseApproveOrDecline,
                 </div>
                 <div className="right">
                   <div>
-                    <TextField sx={{ width: "100%" }} defaultValue={ userObj.name } variant="outlined" size="small" />
+                    <TextField sx={{ width: "100%" }} disabled defaultValue={(userObj !== null) ? userObj.fullName : "..."} variant="outlined" size="small" />
                   </div>
                 </div>
               </div>
@@ -103,7 +111,7 @@ const ApproveOrDecline = ({ isOpenApproveOrDecline, handleCloseApproveOrDecline,
                 </div>
                 <div className="right">
                   <div>
-                    <TextField sx={{ width: "100%" }} defaultValue={ userObj.mobileNumber } variant="outlined" size="small" />
+                    <TextField sx={{ width: "100%" }} disabled defaultValue={(userObj !== null) ? userObj.mobileNumber : "..."} variant="outlined" size="small" />
                   </div>
                 </div>
               </div>
@@ -113,81 +121,54 @@ const ApproveOrDecline = ({ isOpenApproveOrDecline, handleCloseApproveOrDecline,
                 </div>
                 <div className="right">
                   <div>
-                    <TextField  sx={{ width: "100%" }} defaultValue={ userObj.email } variant="outlined" size="small" />
+                    <TextField  sx={{ width: "100%" }} disabled defaultValue={(userObj !== null) ? userObj.email : "..."} variant="outlined" size="small" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <form onSubmit={ handleSubmit(handleApproveSubmit) } noValidate>
-              <div className="inputContent">
+            <form onSubmit={ handleSubmit(submitHandler) } noValidate>
+              <div style={{display:'flex'}}>
                 <div className='elemHide'>
-                  <TextField
-                      { 
-                        ...register("accountInfoId", { required: "accountInfoId is required" } ) 
-                      }
-                      error={ !!errors.accountInfoId }
-                      helperText={ errors.accountInfoId?.message }
-                      variant="outlined" size="small" fullWidth />
+                  <TextField variant="outlined" size="small" fullWidth />
                 </div>
-                <div className="row">
-                    <div className="col-6" style={{ textAlign: 'left'}}>
-                      {
-                        (roleId === "3") ?
-                          <div className='elemHide'>
-                            <TextField 
-                            placeholder="User Type"
-                            { 
-                              ...register("userTypeId", { required: "User type is required" } ) 
-                            }
-                            error={ !!errors.userTypeId }
-                            helperText={ errors.userTypeId?.message }
-                            label="User Type" sx={{ width: "100%" }}
-                            defaultValue="" variant="outlined" size="small" />
-                          </div>
-                        :
-                        <TextField 
-                          placeholder="Select user type"
-                          { 
-                            ...register("userTypeId", { required: "User type is required" } ) 
-                          }
-                          error={ !!errors.userTypeId }
-                          helperText={ errors.userTypeId?.message }
-                          label="Select user type" sx={{ width: "100%" }} 
-                          // disabled={ (tokenObj.RoleId === 3) ? true : false }  
-                          // value={ (tokenObj.RoleId === 3) ? "4" : "" } 
-                          defaultValue="" variant="outlined" size="small" select>
-                          <MenuItem value=''><em>Select user type</em></MenuItem>
-                          <MenuItem value="4">Agent</MenuItem>
-                          <MenuItem value="5">Player</MenuItem>
-                        </TextField>
+                <div style={{marginBottom:'0px', display:'flex', width:'100%', gap:'5px'}}>
+                    <TextField 
+                      placeholder="Select user type"
+                      label="Select user type" sx={{ width: "100%", textAlign:'left' }}
+                      { 
+                        ...register("userType", { required: true } ) 
                       }
-                    </div>
-                    <div className="col-6">
-                      <TextField
+                      error={ !!errors.userType }
+                      helperText={ errors.userType?.message }
+                      onClick={clickSelectUserEvent}
+                      defaultValue="" variant="outlined" size="small" select>
+                      <MenuItem value='' data-value=""><em>Select user type</em></MenuItem>
+                      <MenuItem value="02" data-value="02">Agent</MenuItem>
+                      <MenuItem value="01" data-value="01">Player</MenuItem>
+                    </TextField>
+
+                    <TextField
                       type="number"
                       placeholder="Enter commission"
                       { 
-                        ...register("commission", { required: "Commission is required" } ) 
+                        ...register("commissionPercentage", { required: hasCommission } ) 
                       }
-                      error={ !!errors.commission }
-                      helperText={ errors.commission?.message }
+                      error={ !!errors.commissionPercentage }
+                      helperText={ errors.commissionPercentage?.message }
+                      disabled={!hasCommission}
+                      label="Enter commission"
                       variant="outlined" size="small" fullWidth />
-                    </div>
                 </div>
               </div>
-
-              <div className="row">
-                <div className="col-6">
-                  <Button onClick={ handleDecline } variant="contained" size='large' color="error">
-                    Decline
-                  </Button>
-                </div>
-                <div className="col-6">
-                  <Button type="submit" sx={{ backgroundColor: "#38a169" }} size='large' variant="contained" color="success">
-                    Approve
-                  </Button>
-                </div>
+              <br />
+              <div style={{display:'flex',justifyContent:'end', gap:'10px', margin:'20px 0 10px 0px'}}>
+                <Button type="submit" onClick={handleDecline} variant="contained" size='large' color="error">
+                  Decline
+                </Button>
+                <Button type="submit" onClick={handleAprove} sx={{ backgroundColor: "#38a169" }} size='large' variant="contained" color="success">
+                  Approve
+                </Button>
               </div>
             </form>
           </div>
@@ -195,7 +176,14 @@ const ApproveOrDecline = ({ isOpenApproveOrDecline, handleCloseApproveOrDecline,
         </DialogContent>
       </BootstrapDialog>
 
-      <PageLoader isLoadingPage={ pageLoader } />
+      <MessageDialog
+        isOpenMessage={ openConfirm } 
+        handleCloseMessage={ handleConfirmClose } 
+        handleOkay={ handleConfirmOkay } 
+        title={ "Confirmation" } 
+        content={ (`Are you sure you want Approve/Decline user?`) }
+        color={ "success" }
+        isLoading={ submitLoading } />
     </>
   )
 }
