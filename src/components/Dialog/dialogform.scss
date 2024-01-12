@@ -345,6 +345,183 @@ $defaultPad: 5px;
     }
 }
 
+.divDialogForm-small {
+    // .MuiDialog-container {
+    //     position: absolute;
+    //     top: auto;
+    // }
+
+    .MuiPaper-root {
+        width: 450px;
+        text-transform: capitalize;
+
+        .dialogHeader {
+            display: flex;
+
+            .st {
+                flex: 1;
+                background-color: #4845d2;
+            }
+
+            .nd {
+                flex: 1;
+                background-color: #4845d2;
+            }
+
+            .rd {
+                flex: 5;
+                background-color: #4845d2;
+                padding: 15px;
+                font-weight: 700;
+                color: white;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    font-size: 25px;
+                }
+
+                svg {
+                    font-size: 35px;
+                    position: absolute;
+                    color: #7b7d7e;
+                }
+            }
+        }
+
+        .divStep {
+            text-align: center;
+
+            h3 {
+                margin: 5px;
+                font-size: 15px;
+            }
+
+            .divContent {
+                display: flex;
+                margin-bottom: 10px;
+
+                .left {
+                    flex: 1 1;
+                    padding: 8px;
+                    font-size: 14px;
+                    text-align: right;
+                    margin-right: 10px;
+                }
+
+                .right {
+                    flex: 2;
+                    text-align: left;
+                }
+
+                .divFoot {
+                    text-align: right;
+
+                    button {
+                        padding: 10px;
+                        margin: 5px;
+                    }
+                }
+
+                .aligncenter {
+                    flex: 2;
+                    text-align: center !important;
+                }
+            }
+
+            .inputContent {
+                border: 1px solid #bdbdbd;
+                border-radius: 5px;
+                padding: 22px 30px 15px 30px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    ul {
+        background: white;
+        padding: 0;
+        list-style-type: none;
+        margin: 0;
+
+        li {
+            text-decoration: none;
+            border-bottom: 2px solid #e5ecf1;
+            padding: 10px;
+            text-align: center;
+            background: aliceblue;
+            cursor: pointer;
+
+            svg {
+                float: right;
+            }
+        }
+
+        li.active {
+            background: #ffea7c !important;
+        }
+    }
+
+    .show {
+        display: block !important;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    .rem-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin: 20px 0 20px 0;
+
+        .dv-rem-wrapper {
+            width: 100%;
+    
+            .div-remitance-ico {
+                display: block;
+                background: rgba(0, 0, 0, 0.26);
+                width: 60px;
+                border-radius: 50%;
+                height: 50px;
+                margin-left: 35px;
+                cursor: pointer;
+    
+                svg {
+                    font-size: 30px;
+                    margin-top: 10px;
+                }
+            }
+
+            .rem-active {
+                background: #1976d2;
+            }
+    
+            span {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .div-receipt {
+        width: 100%;
+        padding: 5px;
+        height: 150px;
+        border: 1px solid #1976d2;
+        margin: 5px;
+        border-radius: 5px;
+        img {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            height: 140px;
+        }
+    }
+}
+
 .row {
     display: flex;
     margin-bottom: 15px;

@@ -87,7 +87,7 @@ const Registration = () => {
       <div className="divhead">
         <h2>HAPPY PLAY REGISTRATION</h2>
       </div>
-      <div className='container'>
+      <div className='container' style={{minWidth:'450px'}}>
         <div className="lfContent"></div>
         <div className="content">
             <div id="firstStep" className="show">

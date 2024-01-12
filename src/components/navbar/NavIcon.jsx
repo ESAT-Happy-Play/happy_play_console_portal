@@ -42,7 +42,16 @@ const NavIcon = ({ sideBarSate }) => {
     case "History.GameResult":
         return <PostAddOutlinedIcon />
 
-    case "Wallet.Wallet":
+    case "Wallet.SendCredits":
+        return <WalletOutlinedIcon />
+
+    case "Wallet.CreditRequests":
+        return <WalletOutlinedIcon />
+
+    case "Wallet.Withdraw":
+        return <WalletOutlinedIcon />
+
+    case "Wallet.WithdrawalRequests":
         return <WalletOutlinedIcon />
 
     case "Profile.ProfileInformation":

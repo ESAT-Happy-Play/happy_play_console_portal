@@ -54,7 +54,7 @@ import PageLayout from '../components/layout/PageLayout';
 import Prices from '../pages/games/prices/Prices';
 import ProfileInfo from '../pages/profile/profileInfo/profileInfo';
 import Resetpassword from '../pages/profile/resetpassword/resetpassword';
-// import Wallet from '../pages/wallet/wallet/Wallet';
+
 // import UserApproval from '../pages/useraccounts/userApproval/UserApproval';
 import AdminGameResult from '../pages/games/adminGameResults/AdminGameResult';
 import UserVerification from '../pages/useraccounts/userverification/UserVerification';
@@ -63,7 +63,7 @@ import Home from '../pages/home/Home';
 import AgentHome from '../pages/console/home/AgentHome';
 import AgentGameBets from '../pages/console/history/game_bets/AgentGameBets';
 import AgentGameResults from '../pages/console/history/game_results/AgentGameResults';
-import AgentWallet from '../pages/console/wallet/AgentWallet';
+
 import AgentUserApproval from '../pages/console/user_accounts/user_approval/AgentUserApproval';
 import AccountAgent from '../pages/console/user_accounts/agent/AccountAgent';
 import AccountPlayer from '../pages/console/user_accounts/player/AccountPlayer';
@@ -73,8 +73,12 @@ import AgentUserActivities from '../pages/console/reports/user_activities/AgentU
 
 import { GetStoreObject } from "../helper/Helpers";
 import AdminGameBets from '../pages/games/adminGameBets/AdminGameBets';
-import GameSimulator from '../pages/games/gameSimulator/GameSimulator';
 import Game from '../pages/superadmin/games/Game';
+
+import SendCredits from '../pages/wallet/sendCredits/SendCredits';
+import CreditRequests from '../pages/wallet/creditRequests/CreditRequests';
+import WithdrawCredits from '../pages/wallet/withdraw/WithdrawCredits';
+import AgentWithdrawalRequests from '../pages/wallet/withdrawalRequests/AgentWithdrawalRequests';
 
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
@@ -137,11 +141,38 @@ const routeLinks = [
       },
       child: [
         {
-          path: "/agent/wallet",
-          element: <AgentWallet />,
-          state: "Wallet.Wallet",
+          path: "/wallet/sendcredits",
+          element: <SendCredits />,
+          state: "Wallet.SendCredits",
           sidebarProps: {
-            displayText: "Wallet",
+            displayText: "Send Credits",
+            icon: <WalletOutlinedIcon />
+          },
+        },
+        {
+          path: "/wallet/creditrequests",
+          element: <CreditRequests />,
+          state: "Wallet.CreditRequests",
+          sidebarProps: {
+            displayText: "Credit Requests",
+            icon: <WalletOutlinedIcon />
+          },
+        },
+        {
+          path: "/wallet/withdraw",
+          element: <WithdrawCredits />,
+          state: "Wallet.Withdraw",
+          sidebarProps: {
+            displayText: "Withdraw",
+            icon: <WalletOutlinedIcon />
+          },
+        },
+        {
+          path: "/wallet/withdrawalrequest",
+          element: <AgentWithdrawalRequests />,
+          state: "Wallet.WithdrawalRequests",
+          sidebarProps: {
+            displayText: "Withdrawal Requests",
             icon: <WalletOutlinedIcon />
           },
         }

@@ -20,7 +20,7 @@ import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 
 // Models
 import { UserModel } from "../../../../model/UserModel";
-import { IDTypes, BloodTypes } from "../../../../helper/Enums";
+import { IDTypes, BloodTypes, NatureOfWorkList, SourceOfIncomeList, NationalityList } from "../../../../helper/Enums";
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -28,6 +28,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import BirthAddrWidget from '../../../widget/address/BirthAddrWidget';
+import PermanentAddrWidget from '../../../widget/address/PermanentAddrWidget';
+import PresentAddrWidget from '../../../widget/address/PresentAddrWidget';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
@@ -267,14 +270,14 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                     </div>
                     <div className="right">
                       <RadioGroup style={{ display: 'table'}}>
-                        <FormControlLabel value="male" control={<Radio 
+                        <FormControlLabel value="0" control={<Radio 
                         { 
-                          ...register("gender", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                          ...register("sex", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
                         />} label="Male" />
-                        <FormControlLabel value="female" control={<Radio
+                        <FormControlLabel value="1" control={<Radio
                         { 
-                          ...register("gender", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                          ...register("sex", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
                         />} label="Female" />
                       </RadioGroup>
@@ -289,14 +292,14 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         style={{ textAlign: 'left'}}
                         placeholder="Enter civil status"
                         { 
-                          ...register("martialStatus", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                          ...register("civilStatus", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
-                        error={ !!errors.martialStatus }
-                        helperText={ errors.martialStatus?.message }
+                        error={ !!errors.civilStatus }
+                        helperText={ errors.civilStatus?.message }
                         label="Select civil status" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                         <MenuItem value=''><em>Select status</em></MenuItem>
-                        <MenuItem value="Single">Single</MenuItem>
-                        <MenuItem value="Married">Married</MenuItem>
+                        <MenuItem value="0">Single</MenuItem>
+                        <MenuItem value="1">Married</MenuItem>
                       </TextField>
                     </div>
                   </div>
@@ -308,10 +311,10 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       <TextField
                         type="date"
                         { 
-                          ...register("birthDate", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                          ...register("birthday", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
-                        error={ !!errors.birthDate }
-                        helperText={ errors.birthDate?.message }
+                        error={ !!errors.birthday }
+                        helperText={ errors.birthday?.message }
                         variant="outlined" size="small" fullWidth />
                     </div>
                   </div>
@@ -330,8 +333,8 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         variant="outlined" size="small" fullWidth select>
                         <MenuItem value=""><em>Select blood type</em></MenuItem>
                           { 
-                              BloodTypes().map((item) => (
-                              <MenuItem data-region-code={item} key={item} value={item}>
+                              BloodTypes().map((item, index) => (
+                              <MenuItem data-region-code={item} key={item} value={index}>
                                   {item}
                               </MenuItem>
                               ))
@@ -339,46 +342,79 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </TextField>
                     </div>
                   </div>
+
                   <div className="divContent">
                     <div className="left">
                       <label>Nature of Work</label>
                     </div>
                     <div className="right">
-                      <TextField
+                      <TextField style={{textAlign:'left'}}
+                        label="Select nature of work"
                         { 
                           ...register("natureOfWork", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
                         error={ !!errors.natureOfWork }
                         helperText={ errors.natureOfWork?.message }
-                        variant="outlined" size="small" fullWidth />
+                        variant="outlined" size="small" fullWidth select>
+                        <MenuItem value=""><em>Select nature of work</em></MenuItem>
+                          { 
+                              NatureOfWorkList().map((item, index) => (
+                              <MenuItem data-region-code={item} key={item} value={index}>
+                                  {item}
+                              </MenuItem>
+                              ))
+                          }
+                      </TextField>
                     </div>
                   </div>
+
                   <div className="divContent">
                     <div className="left">
                       <label>Source of Income</label>
                     </div>
                     <div className="right">
-                      <TextField
+                      <TextField style={{textAlign:'left'}}
+                        label="Select source of income"
                         { 
                           ...register("sourceOfIncome", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
                         error={ !!errors.sourceOfIncome }
                         helperText={ errors.sourceOfIncome?.message }
-                        variant="outlined" size="small" fullWidth />
+                        variant="outlined" size="small" fullWidth select>
+                        <MenuItem value=""><em>Select source of income</em></MenuItem>
+                          { 
+                              SourceOfIncomeList().map((item, index) => (
+                              <MenuItem data-region-code={item} key={item} value={index}>
+                                  {item}
+                              </MenuItem>
+                              ))
+                          }
+                      </TextField>
                     </div>
                   </div>
+
                   <div className="divContent">
                     <div className="left">
                       <label>Nationality</label>
                     </div>
                     <div className="right">
-                      <TextField
+                      <TextField style={{textAlign:'left'}}
+                        label="Select nationality"
                         { 
-                          ...register("sourceOfIncome", ((slideNextFirst)) ? { required: true } : { required: false } ) 
+                          ...register("nationality", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
-                        error={ !!errors.sourceOfIncome }
-                        helperText={ errors.sourceOfIncome?.message }
-                        variant="outlined" size="small" fullWidth />
+                        error={ !!errors.nationality }
+                        helperText={ errors.nationality?.message }
+                        variant="outlined" size="small" fullWidth select>
+                        <MenuItem value=""><em>Select nationality</em></MenuItem>
+                          { 
+                              NationalityList().map((item, index) => (
+                              <MenuItem data-region-code={item} key={item} value={index}>
+                                  {item}
+                              </MenuItem>
+                              ))
+                          }
+                      </TextField>
                     </div>
                   </div>
 
@@ -405,7 +441,9 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </ListItemButton>
                       <Collapse in={placeOfBirthOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
-                          Place of Birth
+                          
+                          <BirthAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
+
                         </List>
                       </Collapse>
                     </List>
@@ -432,8 +470,9 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </ListItemButton>
                       <Collapse in={presentAddressOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
+                    
+                          <PresentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
 
-                          Present Address
                         </List>
                       </Collapse>
                     </List>
@@ -461,7 +500,8 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       <Collapse in={permanentAddressOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
 
-                          Present Address
+                          <PermanentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
+
                         </List>
                       </Collapse>
                     </List>
@@ -511,31 +551,19 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                               </TextField>
                             </div>
                           </div>
-                          <div className='row'>
-                            <div className="col-6" style={{margin:'1px'}}>
-                              <LoadingButton loading={ isLoadingFront }  
-                              style={{ width: '195px', marginBottom:'10px'}} component="label" loadingPosition='end' variant="contained" startIcon={<FilterIcon />}>
-                                Upload Front ID
-                                <VisuallyHiddenInput type="file" name="file" accept="image/*" 
-                                onChange={(e) => handleUploadFrontID(e, e.target.files[0])} />
-                              </LoadingButton>
-                              <div className='divImg'>
-                                <img style={{ width: '180px', borderRadius:'10px'}}
-                                className="imgFiles" src={(displayFrontID !== null) ? `${displayFrontID}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
-                              </div>
+                          
+                          <div>
+                            <LoadingButton loading={ isLoading } 
+                            style={{ width: '240px', marginBottom:'10px'}} 
+                            component="label" variant="contained" loadingPosition='end' startIcon={<FilterIcon />}>
+                              Upload Goverment ID
+                              <VisuallyHiddenInput type="file" name="file" accept="image/*" 
+                              onChange={(e) => handleUploadSignature(e, e.target.files[0])}/>
+                            </LoadingButton>
+                            <div className="divImg" style={{ marginLeft: '25%'}}>
+                              <img style={{ width: '180px', borderRadius:'10px'}}
+                              className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
                             </div>
-                            <div className="col-6" style={{margin:'1px'}}>
-                              <LoadingButton loading={ isLoadingBack }  
-                              style={{ width: '195px', marginBottom:'10px'}} component="label" loadingPosition='end' variant="contained" startIcon={<FilterIcon />}>
-                                Upload Back ID
-                                <VisuallyHiddenInput type="file" name="file" accept="image/*" 
-                                onChange={(e) => handleUploadBackID(e, e.target.files[0])} />
-                              </LoadingButton>
-                              <div className='divImg'>
-                                <img style={{ width: '180px', borderRadius:'10px'}}
-                                className="imgFiles" src={(displayBackId !== null) ? `${displayBackId}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
-                              </div>
-                            </div> 
                           </div>
                         </List>
                       </Collapse>

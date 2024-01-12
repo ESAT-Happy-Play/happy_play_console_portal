@@ -30,15 +30,20 @@
 
     .div-balance {
         display: flex;
-        background: #4845d2;
+        background: white;
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
         border-radius: 5px;
         margin: 15px;
         overflow: hidden;
         .div1 {
             width: 100%;
-            color: white;
+            color: black;
             text-align: center;
             padding: 15px;
+            span {
+                color: #4845d2;
+            }
         }
         .div2 {
             width: 350px;

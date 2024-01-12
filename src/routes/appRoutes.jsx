@@ -21,6 +21,12 @@ if(user_role != null) {
       // manually add profile links
       menus.push("Profile.ProfileInformation");
       menus.push("Profile.ResetPassword");
+
+      // manually add wallet links
+      menus.push("Wallet.SendCredits");
+      menus.push("Wallet.CreditRequests");
+      menus.push("Wallet.Withdraw");
+      menus.push("Wallet.WithdrawalRequests");
     }
   }
 }

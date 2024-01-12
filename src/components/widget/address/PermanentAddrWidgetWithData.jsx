@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from "@mui/material";
 
-const BranchAddressWidget = ({register}) => {
+const PresentAddrWidgetWithData = ({register}) => {
 
   return (
     <>
@@ -11,7 +11,7 @@ const BranchAddressWidget = ({register}) => {
             </div>
             <div className="right">
                 <TextField disabled
-                { ...register("branchRegion") }
+                { ...register("permRegion") }
                 sx={{ width: "100%" }} variant="outlined" size="small" />
             </div>
         </div>
@@ -22,7 +22,7 @@ const BranchAddressWidget = ({register}) => {
             </div>
             <div className="right">
                 <TextField disabled
-                { ...register("branchProvince") }
+                { ...register("permProvince") }
                 sx={{ width: "100%" }} variant="outlined" size="small" />
             </div>
         </div>
@@ -33,7 +33,7 @@ const BranchAddressWidget = ({register}) => {
             </div>
             <div className="right">
                 <TextField disabled
-                { ...register("branchMunicipality") }
+                { ...register("permMunicipality") }
                 sx={{ width: "100%" }} variant="outlined" size="small" />
             </div>
         </div>
@@ -44,7 +44,7 @@ const BranchAddressWidget = ({register}) => {
             </div>
             <div className="right">
                 <TextField disabled
-                { ...register("branchBarangay") }
+                { ...register("permBarangay") }
                 sx={{ width: "100%" }} variant="outlined" size="small" />
             </div>
         </div>
@@ -55,7 +55,7 @@ const BranchAddressWidget = ({register}) => {
             </div>
             <div className="right">
                 <TextField disabled
-                { ...register("birthStreet") }
+                { ...register("permStreet") }
                 sx={{ width: "100%" }} variant="outlined" size="small" />
             </div>
         </div>
@@ -63,4 +63,4 @@ const BranchAddressWidget = ({register}) => {
   )
 }
 
-export default BranchAddressWidget
+export default PresentAddrWidgetWithData

@@ -11,7 +11,7 @@ const AgentHome = () => {
 
   return (
     <div className="content">
-      <div className="container">
+      <div className="container" style={{width:'100%'}}>
         <br />
         <div style={{display:'flex', gap:'15px', margin:'auto',width:'50%'}}>
           <h3 style={{padding:'0', marginTop:'12px'}}>Good Day,</h3>

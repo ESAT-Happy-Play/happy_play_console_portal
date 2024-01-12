@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { TextField, MenuItem  } from "@mui/material";
 
-const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
+const PermanentAddrWidget = ({register, errors, nextrequired, callback}) => {
 
   const [regionsData, setRegionData] = React.useState([]);
   const [provincesData, setProvincesData] = React.useState([]);
@@ -86,10 +86,10 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <TextField 
                 placeholder="Select region"
                 { 
-                    ...register("birthRegion", ((nextrequired)) ? { required: true } : { required: false } ) 
+                    ...register("permRegion", ((nextrequired)) ? { required: true } : { required: false } ) 
                 }
-                error={ !!errors.birthRegion }
-                helperText={ errors.birthRegion?.message }
+                error={ !!errors.permRegion }
+                helperText={ errors.permRegion?.message }
                 onClick={clickRegionEvent}
                 label="Select region" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select region</em></MenuItem>
@@ -113,10 +113,10 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <TextField 
                 placeholder="Select province"
                 { 
-                    ...register("birthProvince", ((nextrequired)) ? { required: true } : { required: false } ) 
+                    ...register("permProvince", ((nextrequired)) ? { required: true } : { required: false } ) 
                 }
-                error={ !!errors.birthProvince }
-                helperText={ errors.birthProvince?.message }
+                error={ !!errors.permProvince }
+                helperText={ errors.permProvince?.message }
                 onClick={handleProvinceCode}
                 label="Select province" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select province</em></MenuItem>
@@ -140,10 +140,10 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <TextField 
                     placeholder="Select municipality"
                     { 
-                    ...register("birthMunicipality", ((nextrequired)) ? { required: true } : { required: false }) 
+                    ...register("permMunicipality", ((nextrequired)) ? { required: true } : { required: false }) 
                     }
-                    error={ !!errors.birthMunicipality }
-                    helperText={ errors.birthMunicipality?.message }
+                    error={ !!errors.permMunicipality }
+                    helperText={ errors.permMunicipality?.message }
                     onClick={handleMunicipalityCode}
                     label="Select municipality" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select municipality</em></MenuItem>
@@ -167,10 +167,10 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <TextField 
                 placeholder="Select barangay"
                 { 
-                    ...register("birthBarangay", ((nextrequired)) ? { required: true } : { required: false } ) 
+                    ...register("permBarangay", ((nextrequired)) ? { required: true } : { required: false } ) 
                 }
-                error={ !!errors.birthBarangay }
-                helperText={ errors.birthBarangay?.message }
+                error={ !!errors.permBarangay }
+                helperText={ errors.permBarangay?.message }
                 onClick={handleBarangaySelect}
                 label="Select barangay" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select barangay</em></MenuItem>
@@ -194,10 +194,10 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <TextField 
                 placeholder="Street/Purok"
                 { 
-                    ...register("birthStreet", ((nextrequired)) ? { required: true } : { required: false } ) 
+                    ...register("permStreet", ((nextrequired)) ? { required: true } : { required: false } ) 
                 }
-                error={ !!errors.birthStreet }
-                helperText={ errors.birthStreet?.message }
+                error={ !!errors.permStreet }
+                helperText={ errors.permStreet?.message }
                 label="Street/Purok" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small"/>
             </div>
         </div>
@@ -205,4 +205,4 @@ const BirthAddrWidget = ({register, errors, nextrequired, callback}) => {
   )
 }
 
-export default BirthAddrWidget
+export default PermanentAddrWidget

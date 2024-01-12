@@ -6,11 +6,20 @@ var headersParams = {
     'Content-Type': 'application/json'
 };
 
+var headersParams1 = {
+    'Access-Control-Allow-Origin': '*'
+};
+
 if (authdata !== null) {
     headersParams = {
         'Access-Control-Allow-Origin': '*',
         'authorization': `Token ${authdata.sessionToken}`,
         'Content-Type': 'application/json'
+    }
+
+    headersParams1 = {
+        'Access-Control-Allow-Origin': '*',
+        'authorization': `Token ${authdata.sessionToken}`,
     }
 }
 
@@ -48,6 +57,35 @@ export async function POSTFetch (url, dataBody) {
         method: 'POST',
         headers: headersParams,
         body: JSON.stringify(dataBody)
+    })
+    .then(async response => {
+        const data = await response.json();
+
+        // check for error response
+        if (!response.ok) {
+            // get error message from body or default to response statusText
+            const error = (data && data.message) || response.statusText;
+            // return Promise.reject(error);
+            objdata.status = false;
+        }
+
+        objdata.data = data;
+    })
+    .catch(error => {
+        objdata.status = false;
+        objdata.data = { errorMessage: error.toString() };
+        console.error('There was an error!', error);
+    });
+        
+    return objdata;
+}
+
+export async function FetchFormData (url, method, formdata) {
+    let objdata = { status: true, data: null };
+    await fetch(url, {
+        method: method,
+        headers: headersParams1,
+        body: formdata
     })
     .then(async response => {
         const data = await response.json();
