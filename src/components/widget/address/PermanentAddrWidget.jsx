@@ -95,7 +95,7 @@ const PermanentAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <MenuItem value=''><em>Select region</em></MenuItem>
                 { 
                     (regionsData.length !== 0) ? regionsData.map((item) => (
-                    <MenuItem data-region-code={item.code} key={item.code} value="01">
+                    <MenuItem data-region-code={item.code} key={item.code} value={item.name}>
                         {item.name}
                     </MenuItem>
                     )) :
@@ -122,7 +122,7 @@ const PermanentAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <MenuItem value=''><em>Select province</em></MenuItem>
                 { 
                     (provincesData.length !== 0) ? provincesData.map((item) => (
-                    <MenuItem data-province-code={item.code} key={item.code} value="01">
+                    <MenuItem data-province-code={item.code} key={item.code} value={item.name}>
                         {item.name}
                     </MenuItem>
                     )) :
@@ -149,7 +149,7 @@ const PermanentAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <MenuItem value=''><em>Select municipality</em></MenuItem>
                 { 
                     (municipalitiesData.length !== 0) ? municipalitiesData.map((item) => (
-                    <MenuItem data-municipality-code={item.code} key={item.code} value="00001">
+                    <MenuItem data-municipality-code={item.code} key={item.code} value={item.name}>
                         {item.name}
                     </MenuItem>
                     )) :
@@ -176,7 +176,7 @@ const PermanentAddrWidget = ({register, errors, nextrequired, callback}) => {
                 <MenuItem value=''><em>Select barangay</em></MenuItem>
                 { 
                     (barangaysData.length !== 0) ? barangaysData.map((item) => (
-                    <MenuItem data-brangay-code={item.code} key={item.code} value="000000001">
+                    <MenuItem data-brangay-code={item.code} key={item.code} value={item.name}>
                         {item.name}
                     </MenuItem>
                     )) :

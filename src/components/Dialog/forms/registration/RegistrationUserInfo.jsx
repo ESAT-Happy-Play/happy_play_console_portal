@@ -28,9 +28,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+
 import BirthAddrWidget from '../../../widget/address/BirthAddrWidget';
 import PermanentAddrWidget from '../../../widget/address/PermanentAddrWidget';
 import PresentAddrWidget from '../../../widget/address/PresentAddrWidget';
+
+import PresentAddrWidgetWithData from '../../../widget/address/PresentAddrWidgetWithData';
+import PermanentAddrWidgetWithData from '../../../widget/address/PermanentAddrWidgetWithData';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
@@ -52,29 +56,19 @@ const VisuallyHiddenInput = styled('input')({
 const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObject }) => {
   
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isLoadingFront, setIsLoadingFront] = React.useState(false);
-  const [isLoadingBack, setIsLoadingBack] = React.useState(false);
   const [isLoadingFinal, setIsLoadingFinal] = React.useState(false);
 
   const formUpdateUser = useForm({ defaultValues: UserModel.UpdateAccountInfoForm });
   const { register, handleSubmit, formState, reset } = formUpdateUser;
   const { errors } = formState;
-  // const [formData, setFormData] = React.useState({});
+  const [formData, setFormData] = React.useState({});
 
   const [govId, setGovId] = React.useState(null);
   const [displayFrontID, setDisplayFrontID] = React.useState(null);
   const [displayBackId, setDisplayBackId] = React.useState(null);
   const [displaySignature, setDisplaySignature] = React.useState(null);
-  // const [submitFinal, setSubmitFinal] = React.useState(true);
 
-  const [addressState, setAddressState] = React.useState({
-    region: null,
-    province: null,
-    municipality: null,
-    barangay: null,
-    streetpurok: null
-  });
-  const [addressObj, setAddressObj] = React.useState(null);
+  const [isValidDOB, setisValidDOB] = React.useState(false);
   const [isSameBirthPlace, setIsSameBirthPlace] = React.useState(false);
   const [isSamePresent, setIsSamePresent] = React.useState(false);
   
@@ -97,9 +91,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
   // on form submit 1st step
   const firstStepHandler = async (data) => {
-    setSlideNextFirst(false);
-    setSlideNextSecond(true);
-    console.log(data);
+    if(isValidDOB) {
+      setSlideNextFirst(false);
+      setSlideNextSecond(true);
+      console.log(data);
+    }
   };
 
   const secondStepHandler = async (data) => {
@@ -111,17 +107,67 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
   const thirdStepHandler = async (data) => {
     if(displayFrontID !== null && displayBackId !== null && displaySignature !== null) {
-      setIsLoadingFront(true);
-      setIsLoadingBack(true);
       setIsLoading(true);
-      setIsLoadingFinal(true);
-      
+      setIsLoadingFinal(true);   
       
       console.log("Submit data");
     } else {
       toast.error("Please upload your valid id / signature.", { autoClose: false });
     }
   }
+
+  /**
+   * Start Address 
+   */
+
+  const [addressStatePOB, setAddressStatePOB] = React.useState({
+    region: null,
+    province: null,
+    municipality: null,
+    barangay: null,
+    streetpurok: null
+  });
+  
+  const handleAddressPOBCallback = (value, addressType) => {
+    (addressType === 1) ? setAddressStatePOB({...addressStatePOB, region: value }) :
+    (addressType === 2) ? setAddressStatePOB({...addressStatePOB, province: value }) :
+    (addressType === 3) ? setAddressStatePOB({...addressStatePOB, municipality: value }) :
+    (addressType === 4) ? setAddressStatePOB({...addressStatePOB, barangay: value }) :
+    setAddressStatePOB({...addressStatePOB, streetpurok: value });
+  }
+
+  const [addressStatePresent, setAddressStatePresent] = React.useState({
+    region: null,
+    province: null,
+    municipality: null,
+    barangay: null,
+    streetpurok: null
+  });
+  
+  const handleAddressPresentCallback = (value, addressType) => {
+    (addressType === 1) ? setAddressStatePresent({...addressStatePresent, region: value }) :
+    (addressType === 2) ? setAddressStatePresent({...addressStatePresent, province: value }) :
+    (addressType === 3) ? setAddressStatePresent({...addressStatePresent, municipality: value }) :
+    (addressType === 4) ? setAddressStatePresent({...addressStatePresent, barangay: value }) :
+    setAddressStatePresent({...addressStatePOB, streetpurok: value });
+  }
+
+  const [addressStatePermanent, setAddressStatePermanent] = React.useState({
+    region: null,
+    province: null,
+    municipality: null,
+    barangay: null,
+    streetpurok: null
+  });
+  
+  const handleAddressPermanentCallback = (value, addressType) => {
+    (addressType === 1) ? setAddressStatePermanent({...addressStatePermanent, region: value }) :
+    (addressType === 2) ? setAddressStatePermanent({...addressStatePermanent, province: value }) :
+    (addressType === 3) ? setAddressStatePermanent({...addressStatePermanent, municipality: value }) :
+    (addressType === 4) ? setAddressStatePermanent({...addressStatePermanent, barangay: value }) :
+    setAddressStatePermanent({...addressStatePOB, streetpurok: value });
+  }
+  // END Address
 
   const handleBackToFirst = async () => {
     setSlideNextFirst(true);
@@ -135,60 +181,74 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setSlideNextThird(false);
   }
 
-  const handleAddressCallback = (value, addressType) => {
-    (addressType === 1) ? setAddressState({...addressState, region: value }) :
-    (addressType === 2) ? setAddressState({...addressState, province: value }) :
-    (addressType === 3) ? setAddressState({...addressState, municipality: value }) :
-    (addressType === 4) ? setAddressState({...addressState, barangay: value }) :
-    setAddressState({...addressState, streetpurok: value });
-  }
+  const isNullPOB = Object.values(addressStatePOB).every(value => {
+    if (value === null) { return true; }
+    return false;
+  });
 
   const handleIsSameBirthPlace = (e , value) => {
-    setIsSameBirthPlace(!value);
-    if(!isSameBirthPlace) {
-      handleResetAddress();
+    if (!isNullPOB) {
+      setIsSameBirthPlace(!value);
+      if(!value) {
+        setAddressStatePresent({
+          ...addressStatePresent, 
+          region: addressStatePOB.region,
+          province: addressStatePOB.province,
+          municipality: addressStatePOB.municipality,
+          barangay: addressStatePOB.barangay,
+          streetpurok: addressStatePOB.streetpurok
+        });
+
+        reset(formValues => ({
+          ...formValues,
+          presRegion: addressStatePOB.region,
+          presProvince: addressStatePOB.province,
+          presMunicipality: addressStatePOB.municipality,
+          presBarangay: addressStatePOB.barangay,
+          presStreet: addressStatePOB.streetpurok
+        }));
+      }
+      setpresentAddressOpen(true);
+      setplaceOfBirthOpen(false);
+      setpermanentAddressOpen(false);
     } else {
-      setAddressObj(null);
-      reset(formValues => ({
-        ...formValues,
-        permanentRegion: "",
-        permanentProvince: "",
-        permanentMunicipality: "",
-        permanentBarangay: "",
-        permanentStreetOrPurok: ""
-      }));
+      toast.error("Please fillup place of birth."); 
+      return false;
     }
   }
 
   const handleIsSamePresent = (e , value) => {
     setIsSamePresent(!value);
-    if(!isSamePresent) {
-      handleResetAddress();
-    } else {
-      setAddressObj(null);
+    if(!value) {
+      setAddressStatePermanent({
+        ...addressStatePermanent, 
+        region: addressStatePresent.region,
+        province: addressStatePresent.province,
+        municipality: addressStatePresent.municipality,
+        barangay: addressStatePresent.barangay,
+        streetpurok: addressStatePresent.streetpurok
+      });
+
       reset(formValues => ({
         ...formValues,
-        permanentRegion: "",
-        permanentProvince: "",
-        permanentMunicipality: "",
-        permanentBarangay: "",
-        permanentStreetOrPurok: ""
+        permRegion: addressStatePresent.region,
+        permProvince: addressStatePresent.province,
+        permMunicipality: addressStatePresent.municipality,
+        permBarangay: addressStatePresent.barangay,
+        permStreet: addressStatePresent.streetpurok
       }));
     }
+
+    setpresentAddressOpen(false);
+    setplaceOfBirthOpen(false);
+    setpermanentAddressOpen(true);
   }
 
-  const handleResetAddress = () => {
-    setAddressObj(addressState);
-
-    reset(formValues => ({
-      ...formValues,
-      permanentRegion: addressState.region,
-      permanentProvince: addressState.province,
-      permanentMunicipality: addressState.municipality,
-      permanentBarangay: addressState.barangay,
-      permanentStreetOrPurok: addressState.streetpurok
-    }));
-  }
+  const validateDate = (value) => {
+    const selected = new Date(value).getFullYear();
+    const now = new Date().getFullYear();
+    setisValidDOB((now - selected) >= 18);
+  };
 
   const [placeOfBirthOpen, setplaceOfBirthOpen] = React.useState(true);
   const handlePlaceOfBirthClick = () => {
@@ -203,7 +263,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setpermanentAddressOpen(!permanentAddressOpen);
   };
 
-  const [validIdOpen, setValidIdOpenOpen] = React.useState(false);
+  const [validIdOpen, setValidIdOpenOpen] = React.useState(true);
   const handleValidIdClick = () => {
     setValidIdOpenOpen(!validIdOpen);
   };
@@ -217,35 +277,6 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const handleSignatureClick = () => {
     setSignatureOpen(!signatureOpen);
   };
-
-  const handleUploadFrontID = async (e, image) => {
-    if(govId !== null) {
-      setIsLoadingFront(true);
-      // await UploadFile(accountObjectId, 2, image, govId);
-      setIsLoadingFront(false);
-      setDisplayFrontID(URL.createObjectURL(image));
-    }
-    else
-      toast.error("Please select valid ID.", { autoClose: false });      
-  }
-
-  const handleUploadBackID = async (e, image) => {
-    if(govId !== null) {
-      setIsLoadingBack(true);
-      // await UploadFile(accountObjectId, 3, image, govId);
-      setIsLoadingBack(false);
-      setDisplayBackId(URL.createObjectURL(image));
-    }
-    else
-      toast.error("Please select valid ID.", { autoClose: false });
-  }
-
-  const handleUploadSignature = async (e, image) => {
-    setIsLoading(true);
-    // await UploadFile(accountObjectId, 4, image, null);
-    setIsLoading(false);
-    setDisplaySignature(URL.createObjectURL(image))
-  }
 
   const handleSelectId = (e, value) => {
     setGovId(value);
@@ -270,12 +301,12 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                     </div>
                     <div className="right">
                       <RadioGroup style={{ display: 'table'}}>
-                        <FormControlLabel value="0" control={<Radio 
+                        <FormControlLabel value="Male" control={<Radio 
                         { 
                           ...register("sex", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
                         />} label="Male" />
-                        <FormControlLabel value="1" control={<Radio
+                        <FormControlLabel value="Female" control={<Radio
                         { 
                           ...register("sex", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
@@ -298,8 +329,8 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         helperText={ errors.civilStatus?.message }
                         label="Select civil status" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                         <MenuItem value=''><em>Select status</em></MenuItem>
-                        <MenuItem value="0">Single</MenuItem>
-                        <MenuItem value="1">Married</MenuItem>
+                        <MenuItem value="Single">Single</MenuItem>
+                        <MenuItem value="Married">Married</MenuItem>
                       </TextField>
                     </div>
                   </div>
@@ -313,11 +344,22 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         { 
                           ...register("birthday", ((slideNextFirst)) ? { required: true } : { required: false } ) 
                         }
+                        onChange={e => validateDate(e.target.value)}
                         error={ !!errors.birthday }
                         helperText={ errors.birthday?.message }
                         variant="outlined" size="small" fullWidth />
                     </div>
                   </div>
+                  {
+                    (!isValidDOB) ? <div className="divContent">
+                        <div className="left"></div>
+                        <div className="right" style={{textAlign:'left'}}>
+                          <span style={{color:'red', fontSize:'12px'}}>Agent/Player must at least 21 years old.</span>
+                        </div>
+                      </div>
+                    : <></>
+                  }
+                  
                   <div className="divContent">
                     <div className="left">
                       <label>Blood Type</label>
@@ -330,11 +372,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         }
                         error={ !!errors.bloodType }
                         helperText={ errors.bloodType?.message }
-                        variant="outlined" size="small" fullWidth select>
+                        variant="outlined" defaultValue="" size="small" fullWidth select>
                         <MenuItem value=""><em>Select blood type</em></MenuItem>
                           { 
                               BloodTypes().map((item, index) => (
-                              <MenuItem data-region-code={item} key={item} value={index}>
+                              <MenuItem key={item} value={item}>
                                   {item}
                               </MenuItem>
                               ))
@@ -355,11 +397,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         }
                         error={ !!errors.natureOfWork }
                         helperText={ errors.natureOfWork?.message }
-                        variant="outlined" size="small" fullWidth select>
+                        variant="outlined" defaultValue="" size="small" fullWidth select>
                         <MenuItem value=""><em>Select nature of work</em></MenuItem>
                           { 
                               NatureOfWorkList().map((item, index) => (
-                              <MenuItem data-region-code={item} key={item} value={index}>
+                              <MenuItem key={item} value={item}>
                                   {item}
                               </MenuItem>
                               ))
@@ -380,11 +422,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         }
                         error={ !!errors.sourceOfIncome }
                         helperText={ errors.sourceOfIncome?.message }
-                        variant="outlined" size="small" fullWidth select>
+                        variant="outlined" defaultValue="" size="small" fullWidth select>
                         <MenuItem value=""><em>Select source of income</em></MenuItem>
                           { 
                               SourceOfIncomeList().map((item, index) => (
-                              <MenuItem data-region-code={item} key={item} value={index}>
+                              <MenuItem key={item} value={item}>
                                   {item}
                               </MenuItem>
                               ))
@@ -405,11 +447,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         }
                         error={ !!errors.nationality }
                         helperText={ errors.nationality?.message }
-                        variant="outlined" size="small" fullWidth select>
+                        variant="outlined" defaultValue="" size="small" fullWidth select>
                         <MenuItem value=""><em>Select nationality</em></MenuItem>
                           { 
                               NationalityList().map((item, index) => (
-                              <MenuItem data-region-code={item} key={item} value={index}>
+                              <MenuItem key={item} value={item}>
                                   {item}
                               </MenuItem>
                               ))
@@ -440,9 +482,9 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {placeOfBirthOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={placeOfBirthOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px', textAlign:'left'}}>
                           
-                          <BirthAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
+                          <BirthAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} callback={handleAddressPOBCallback} />
 
                         </List>
                       </Collapse>
@@ -452,7 +494,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                   <div>
                     <FormControlLabel style={{marginLeft:'-105px'}}
                       control={
-                        <Checkbox defaultValue={isSameBirthPlace} onChange={e => handleIsSameBirthPlace(e, isSameBirthPlace)} />
+                        <Checkbox onChange={e => handleIsSameBirthPlace(e, isSameBirthPlace)} defaultValue={isSameBirthPlace} checked={isSameBirthPlace} />
                       } label={
                         <div style={{fontSize:'14px'}}><span>Present Address same with Place of Birth.</span></div>
                       } />
@@ -469,9 +511,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {presentAddressOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={presentAddressOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
-                    
-                          <PresentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px', textAlign:'left'}}>
+                          {
+                            (isSameBirthPlace) ? <PresentAddrWidgetWithData register={register} />
+                            : <PresentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} callback={handleAddressPresentCallback} />
+                          }
 
                         </List>
                       </Collapse>
@@ -481,7 +525,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                   <div>
                     <FormControlLabel style={{marginLeft:'-65px'}}
                       control={
-                        <Checkbox defaultValue={isSamePresent} onChange={e => handleIsSamePresent(e, isSamePresent)} />
+                        <Checkbox defaultValue={isSamePresent} onChange={e => handleIsSamePresent(e, isSamePresent)} checked={isSamePresent} />
                       } label={
                         <div style={{fontSize:'14px'}}><span>Permanent Address same with Present Address.</span></div>
                       } />
@@ -498,10 +542,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {permanentAddressOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={permanentAddressOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px', textAlign:'left'}}>
-
-                          <PermanentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} />
-
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px', textAlign:'left'}}>
+                          {
+                            (isSamePresent) ? <PermanentAddrWidgetWithData register={register} />
+                            : <PermanentAddrWidget register={register} errors={errors} nextrequired={slideNextSecond} callback={handleAddressPermanentCallback} />
+                          }
                         </List>
                       </Collapse>
                     </List>
@@ -530,7 +575,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {validIdOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={validIdOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px'}}>
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
                           <div className="divContent">
                             <div className="left" style={{ width:'80px', paddingTop:'20px'}}>
                               <label>ID Type</label>
@@ -543,7 +588,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                                   <MenuItem value=""><em>Select valid ID</em></MenuItem>
                                   { 
                                       IDTypes().map((item) => (
-                                      <MenuItem data-region-code={item} key={item} value={item}>
+                                      <MenuItem key={item} value={item}>
                                           {item}
                                       </MenuItem>
                                       ))
@@ -551,18 +596,18 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                               </TextField>
                             </div>
                           </div>
-                          
-                          <div>
-                            <LoadingButton loading={ isLoading } 
-                            style={{ width: '240px', marginBottom:'10px'}} 
-                            component="label" variant="contained" loadingPosition='end' startIcon={<FilterIcon />}>
-                              Upload Goverment ID
-                              <VisuallyHiddenInput type="file" name="file" accept="image/*" 
-                              onChange={(e) => handleUploadSignature(e, e.target.files[0])}/>
-                            </LoadingButton>
-                            <div className="divImg" style={{ marginLeft: '25%'}}>
-                              <img style={{ width: '180px', borderRadius:'10px'}}
-                              className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
+
+                          <div style={{display:'flex'}}>
+                            <div className="div-imgUpload">
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                            </div>
+                            <div>
+                                <LoadingButton loading={ false } 
+                                style={{ width: '185px', marginTop:'65px'}} 
+                                component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
+                                    Upload Valid ID
+                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                </LoadingButton>
                             </div>
                           </div>
                         </List>
@@ -581,18 +626,18 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {selfieOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={selfieOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px'}}>
-                          <div>
-                            <LoadingButton loading={ isLoading } 
-                            style={{ width: '205px', marginBottom:'10px'}} 
-                            component="label" variant="contained" loadingPosition='end' startIcon={<FilterIcon />}>
-                              Upload Selfie
-                              <VisuallyHiddenInput type="file" name="file" accept="image/*" 
-                              onChange={(e) => handleUploadSignature(e, e.target.files[0])}/>
-                            </LoadingButton>
-                            <div className="divImg" style={{ marginLeft: '25%'}}>
-                              <img style={{ width: '180px', borderRadius:'10px'}}
-                              className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
+                          <div style={{display:'flex'}}>
+                            <div className="div-imgUpload">
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                            </div>
+                            <div>
+                                <LoadingButton loading={ false } 
+                                style={{ width: '185px', marginTop:'65px'}} 
+                                component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
+                                    Upload Selfie
+                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                </LoadingButton>
                             </div>
                           </div>
                         </List>
@@ -611,18 +656,18 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         {signatureOpen ? <ExpandLess /> : <ExpandMore />}
                       </ListItemButton>
                       <Collapse in={signatureOpen} timeout="auto" unmountOnExit>
-                        <List component="div" style={{ paddingLeft: '15px'}}>
-                          <div>
-                            <LoadingButton loading={ isLoading } 
-                            style={{ width: '205px', marginBottom:'10px'}} 
-                            component="label" variant="contained" loadingPosition='end' startIcon={<FilterIcon />}>
-                              Upload Signature
-                              <VisuallyHiddenInput type="file" name="file" accept="image/*" 
-                              onChange={(e) => handleUploadSignature(e, e.target.files[0])}/>
-                            </LoadingButton>
-                            <div className="divImg" style={{ marginLeft: '25%'}}>
-                              <img style={{ width: '180px', borderRadius:'10px'}}
-                              className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/noimage.png`} alt="" />
+                        <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
+                          <div style={{display:'flex'}}>
+                            <div className="div-imgUpload">
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                            </div>
+                            <div>
+                                <LoadingButton loading={ false } 
+                                style={{ width: '185px', marginTop:'65px'}} 
+                                component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
+                                    Upload Signature
+                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                </LoadingButton>
                             </div>
                           </div>
                         </List>
@@ -632,9 +677,9 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                   <br />
                   <div className='divfooter'>
                     <LoadingButton loading={ isLoadingFinal } onClick={handleBackToSecond} 
-                    style={{ marginRight: '15px'}} variant="outlined" loadingPosition='end'>Back</LoadingButton>
+                    style={{ marginRight: '15px'}} variant="outlined">Back</LoadingButton>
                     <LoadingButton loading={ isLoadingFinal } 
-                    type="submit" variant="outlined" color="success" loadingPosition='end'>
+                    type="submit" variant="outlined" color="success">
                       Submit <ArrowForwardOutlinedIcon/>
                     </LoadingButton>
                   </div>

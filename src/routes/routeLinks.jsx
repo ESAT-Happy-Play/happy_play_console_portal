@@ -111,7 +111,7 @@ const routeLinks = [
       },
       child: [
         {
-          path: "/agent/history/gamebets",
+          path: "/console/history/gamebets",
           element: <AgentGameBets />,
           state: "History.GameBets",
           sidebarProps: {
@@ -120,7 +120,7 @@ const routeLinks = [
           },
         },
         {
-          path: "/agent/history/gameresult",
+          path: "/console/history/gameresult",
           element: <AgentGameResults />,
           state: "History.GameResult",
           sidebarProps: {
@@ -294,7 +294,7 @@ const routeLinks = [
           },
         },
         {
-          path: "/agent/account/approval",
+          path: "/console/account/approval",
           element: <AgentUserApproval/>,
           state: "UserAccount.UserApproval",
           sidebarProps: {

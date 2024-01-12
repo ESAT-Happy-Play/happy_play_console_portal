@@ -23,7 +23,7 @@ function App() {
         <Routes>
           {/* public routes */}
           <Route path="dashboard/login" element={<Login />} />
-          <Route path="agent/login" element={<AgentLogin />} />
+          <Route path="console/login" element={<AgentLogin />} />
           <Route path="register/:code?" element={<Registration />} />
 
           {/* protected routes */}
