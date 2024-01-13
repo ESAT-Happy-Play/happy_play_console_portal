@@ -12,7 +12,7 @@ const PageLayout = () => {
     <>
       {
         (authdata !== null) ? <Outlet /> 
-          : (userRole.role == "Agent") ? <Navigate to="/agent/login" state={{ from: location }} replace /> 
+          : (userRole.role == "Agent") ? <Navigate to="/console/login" state={{ from: location }} replace /> 
           : <Navigate to="/dashboard/login" state={{ from: location }} replace />
       }
     </>

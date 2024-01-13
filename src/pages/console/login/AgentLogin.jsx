@@ -57,7 +57,8 @@ const AgentLogin = () => {
     if(response.status) {
       dispatch(setCredentials(response.data));
       // goto dashboard page
-      navigate('/');
+      // navigate('/');
+      window.location.href = '/';
     }
 
     if(!response.status) {
@@ -70,7 +71,8 @@ const AgentLogin = () => {
   useEffect(() => {
     // redirect to dashboard if already login
     if (loginObj !== null) {
-      navigate('/');
+      // navigate('/');
+      window.location.href = '/';
     } else {
       // set user role
       if (useRole !== null) {

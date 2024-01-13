@@ -38,7 +38,7 @@ const Navbar = () => {
     dispatch(removeRoleState());
 
     if (roleState === "Agent") {
-      navigate('/agent/login');
+      navigate('/console/login');
     } else {
       navigate('/dashboard/login');
     }

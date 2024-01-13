@@ -91,11 +91,10 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
   // on form submit 1st step
   const firstStepHandler = async (data) => {
-    if(isValidDOB) {
-      setSlideNextFirst(false);
-      setSlideNextSecond(true);
-      console.log(data);
-    }
+    // if(isValidDOB) {
+    setSlideNextFirst(false);
+    setSlideNextSecond(true);
+    // }
   };
 
   const secondStepHandler = async (data) => {
@@ -244,11 +243,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setpermanentAddressOpen(true);
   }
 
-  const validateDate = (value) => {
-    const selected = new Date(value).getFullYear();
-    const now = new Date().getFullYear();
-    setisValidDOB((now - selected) >= 18);
-  };
+  // const validateDate = (value) => {
+  //   const selected = new Date(value).getFullYear();
+  //   const now = new Date().getFullYear();
+  //   setisValidDOB((now - selected) >= 18);
+  // };
 
   const [placeOfBirthOpen, setplaceOfBirthOpen] = React.useState(true);
   const handlePlaceOfBirthClick = () => {
@@ -334,7 +333,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </TextField>
                     </div>
                   </div>
-                  <div className="divContent">
+                  {/* <div className="divContent">
                     <div className="left">
                       <label>Birthday</label>
                     </div>
@@ -358,7 +357,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         </div>
                       </div>
                     : <></>
-                  }
+                  } */}
                   
                   <div className="divContent">
                     <div className="left">

@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 const OtpVerification = ({ isOpenOTP, handleCloseOTP, handleOkay, number, isLoading }) => {
-  const _MINUTE = 29;
+  const _MINUTE = 4;
   const _SECONDS = 59;
 
   const [otp, setOtp] = useState('');

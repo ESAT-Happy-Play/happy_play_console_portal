@@ -17,6 +17,9 @@ import PageLoader from "../../components/widget/PageLoader";
 import ProceedRegistration from "../../components/Dialog/forms/registration/ProceedRegistration";
 import RegistrationUserInfo from "../../components/Dialog/forms/registration/RegistrationUserInfo";
 
+import { POSTFetch, FetchFormData } from "../../api/ApiFetchBuilder";
+
+
 const Registration = () => {
   // get url parameter
   const { code } = useParams();
@@ -52,21 +55,53 @@ const Registration = () => {
     
     setMobileNumber(data.mobileNumber);
     setFormData(data);
-    // setPageLoader(true);
-    // setIsLoading(true);
+    
+    setPageLoader(true);
+    setIsLoading(true);
+    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/auth/requestotp?mobilenumber=${data.mobileNumber}&purpose=reg`, {});
+    setPageLoader(false);
+    setIsLoading(false);
 
-    handleOTPOpen();
-    console.log("Request OTP");
+    if(response.status) {
+      handleOTPOpen();
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   }
 
   //
   const handleOTPOpen = () => { setOpenOTP(true); }
   const handleOTPClose = () => { setOpenOTP(false); }
   const handleOkayOTP = async (otpNumber) => {
-    handleOTPClose();
+    setIsLoading(true);
+    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/auth/validateotp?mobilenumber=${mobileNumber}&otp=${otpNumber}`, {});
+    setIsLoading(false);
 
-    handleProceedOpen();
-    console.log("Verify OTP : " + otpNumber);
+    if(response.status) {
+      var regfrmData = new FormData();
+      regfrmData.append('referralCode', formData.referralCode);
+      regfrmData.append('isFullRegistration', 0);
+      regfrmData.append('firstname', formData.firstname);
+      regfrmData.append('lastname', formData.lastname);
+      regfrmData.append('birthday', formData.birthday);
+      regfrmData.append('mobileNumber', formData.mobileNumber);
+
+      let response = await FetchFormData(`${process.env.REACT_APP_API_URL}/users`, 'POST', regfrmData);
+      handleOTPClose();
+      if(response.status) {
+        handleProceedOpen();
+      }
+
+      if(!response.status) {
+        toast.error(response.data.errorMessage);
+      }
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   };
 
   //
@@ -81,6 +116,13 @@ const Registration = () => {
   // fo verification modal info
   const handleUserInfoOpen = () => { setOpenUserInfoModal(true); }
   const handleUserInfoClose = () => { setOpenUserInfoModal(false); }
+
+  const [isValidDOB, setisValidDOB] = React.useState(true);
+  const validateDate = (value) => {
+    const selected = new Date(value).getFullYear();
+    const now = new Date().getFullYear();
+    setisValidDOB((now - selected) >= 18);
+  };
 
   return (
     <div className="registration">
@@ -138,16 +180,6 @@ const Registration = () => {
 
                 <div className="divContent">
                   <div className="left">
-                    <label>Middle Name</label>
-                  </div>
-                  <div className="right">
-                    <TextField { ...register("middlename") }
-                      variant="outlined" size="small" fullWidth />
-                  </div>
-                </div>
-
-                <div className="divContent">
-                  <div className="left">
                     <label>Last Name</label>
                   </div>
                   <div className="right">
@@ -160,6 +192,35 @@ const Registration = () => {
                       variant="outlined" size="small" fullWidth />
                   </div>
                 </div>
+
+                <div className="divContent">
+                  <div className="left">
+                    <label>Birthday</label>
+                  </div>
+                  <div className="right">
+                    <TextField
+                      type="date"
+                      { 
+                        ...register("birthday", { required: true } ) 
+                      }
+                      onChange={e => validateDate(e.target.value)}
+                      error={ !!errors.birthday }
+                      helperText={ errors.birthday?.message }
+                      variant="outlined" size="small" fullWidth />
+                  </div>
+                </div>
+
+                {
+                  (!isValidDOB) ? <div className="divContent">
+                      <div className="left">
+                        <label></label>
+                      </div>
+                      <div className="right">
+                        <span style={{color:'red', fontSize:'12px'}}>Agent/Player must at least 21 years old.</span>
+                      </div>
+                    </div>
+                  : <></>
+                }
 
                 <div className="divContent">
                   <div className="left">

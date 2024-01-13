@@ -57,7 +57,8 @@ const Login = () => {
     if(response.status) {
       dispatch(setCredentials(response.data));
       // goto dashboard page
-      window.location.reload(false);
+      // window.location.reload(false);
+      window.location.href = '/';
     }
 
     if(!response.status) {
@@ -70,7 +71,8 @@ const Login = () => {
   useEffect(() => {
     // redirect to dashboard if already login
     if (loginObj !== null) {
-      navigate('/');
+      // navigate('/');
+      window.location.href = '/';
     } else {
 
       // set user role
