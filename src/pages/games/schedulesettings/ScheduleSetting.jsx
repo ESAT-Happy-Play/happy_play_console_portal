@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 
-import { TextField, MenuItem, Button  } from "@mui/material";
+import { TextField, MenuItem, Button } from "@mui/material";
 
 import AddIcon from '@mui/icons-material/Add';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -12,7 +12,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AddSchedule from "../../../components/Dialog/forms/AddSchedule";
-
+import { GETFetch } from "../../../api/ApiFetchBuilder";
 import PageLoader from "../../../components/widget/PageLoader";
 import { FormatTime } from "../../../helper/Helpers";
 import AddEditGameDrawType from "../../../components/Dialog/forms/AddEditGameDrawType";
@@ -28,109 +28,108 @@ const ScheduleSetting = () => {
   const [pageLoader, setPageLoader] = useState(false);
   //MOCK DATA
   const tabHeaders = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
-  
-  const rows = ["Date 1",
-  "Date 2", 
-  "Date 3", 
-  "Date 4", 
-  "Date 5", 
-  "Date 6", 
-  "Date 7", 
-  "Date 8", 
-  "Date 9", 
-  ];
-  
-  const rows2 = ["Jack Date 1",
-  "Jack Date 2", 
-  "Jack Date 3", 
-  "Jack Date 4", 
-  "Jack Date 5", 
-  "Date 6", 
-  "Jack Date 7", 
-  "Date 8", 
-  "Jack Date 9", 
-  ];
-  
-  const rows3 = ["Jack 3.4 Date 1",
-  "Jack 3.4 Date 2", 
-  "Jack 3.4 Date 3", 
-  "Jack 3.4 Date 4", 
-  "Jack 3.4 Date 5", 
-  "Date 6", 
-  "Jack 3.4 Date 7", 
-  "Date 8", 
-  "Jack 3.4 Date 9", 
-  ];
 
-  
-  
-  const drawTypesData = [
-    {drawTime: "1PM", startCutoff: "12:30", endCutoff: "12:55"},
-    {drawTime: "2PM", startCutoff: "1:30", endCutoff: "1:55"},
-    {drawTime: "3PM", startCutoff: "2:30", endCutoff: "2:55"},
-    {drawTime: "4PM", startCutoff: "3:30", endCutoff: "3:55"},
-  ];
-
-  const drawTypesData2 = [
-    {drawTime: "5PM", startCutoff: "4:30", endCutoff: "4:55"},
-    {drawTime: "6PM", startCutoff: "5:30", endCutoff: "5:55"},
-    {drawTime: "8PM", startCutoff: "7:30", endCutoff: "7:55"},
-    {drawTime: "11PM", startCutoff: "10:30", endCutoff: "10:55"},
-  ];
-
-  const drawTypesData3 = [
-    {drawTime: "1PM", startCutoff: "12:30", endCutoff: "12:55"},
-    {drawTime: "2PM", startCutoff: "1:30", endCutoff: "1:55"},
-    {drawTime: "6PM", startCutoff: "5:30", endCutoff: "5:55"},
-    {drawTime: "8PM", startCutoff: "7:30", endCutoff: "7:55"},
-    {drawTime: "11PM", startCutoff: "10:30", endCutoff: "10:55"},
-  ];
-  
-  const [closingDates, setClosingDates]= useState(rows);
-  const [drawTypes, setDrawTypes]= useState(drawTypesData);
+  const [closingDates, setClosingDates] = useState([]);
+  const [drawTypes, setDrawTypes] = useState([]);
 
   const fetchClosingData = (newValue) => {
-    if(newValue == 0){
-      setClosingDates(rows);
+    if (newValue == 0) {
+      getClosingDates('01');
     }
-    else if(newValue == 1)
-      setClosingDates(rows2);
+    else if (newValue == 1)
+      getClosingDates('02');
     else
-      setClosingDates(rows3);
+      getClosingDates('03');
   }
 
-  
   const fetchDrawTypesData = (newValue) => {
-    if(newValue == 0){
-      setDrawTypes(drawTypesData);
+    if (newValue == 0) {
+      getDrawTypes('01');
     }
-    else if(newValue == 1)
-      setDrawTypes(drawTypesData2);
+    else if (newValue == 1)
+      getDrawTypes('02');
     else
-      setDrawTypes(drawTypesData3);
+      getDrawTypes('03');
   }
 
+  const getClosingDates = async (gameType) => {
+    setPageLoader(true);
+    let url = `${process.env.REACT_APP_API_URL}/gamesettings/closeschedules?gametype=${gameType}`;
+    let response = await GETFetch(url);
+
+    setPageLoader(false);
+
+    if (response.status) {
+      var closeSchedule = response.data.closeSchedules.map(function (item) {
+        var closeDate = new Date(item['closeDate']);
+        return closeDate.toDateString();
+      });
+
+      setClosingDates(closeSchedule);
+      // setuserdata(response.data.loggedInUserData);
+      console.log(response.data.success)
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+
+  const getDrawTypes = async (gameType) => {
+    setPageLoader(true);
+
+    let url = `${process.env.REACT_APP_API_URL}/gamesettings/drawtypes?gametype=${gameType}`;
+    let response = await GETFetch(url);
+
+    setPageLoader(false);
+
+    if (response.status) {
+      var drawTypes = response.data.drawTypes.map(function (item) {
+        var cutStart = new Date(item['cutStart']);
+        var cutEnd = new Date(item['cutEnd']);
+
+        item['cutStart'] = cutStart.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        item['cutEnd'] = cutEnd.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        return item;
+      });
+
+      setDrawTypes(drawTypes);
+
+      // setuserdata(response.data.loggedInUserData);
+      console.log(response.success)
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  useEffect(() => {
+    getClosingDates('01');
+    getDrawTypes('01');
+  }, []);
 
   const tabs = [
     {
       label: "Closing Schedule",
       Component:
-      <div className="tab-container">
-        <div className="tab-header">
-          <h1>Closing Dates</h1>
-          <Box alignItems={"center"} display={"flex"}>
-            <Button variant="outline" className="tab-button">
-              Add Closing Date <AddIcon/>
-            </Button>
-          </Box>
-          
+        <div className="tab-container">
+          <div className="tab-header">
+            <h1>Closing Dates</h1>
+            <Box alignItems={"center"} display={"flex"}>
+              <Button variant="outline" className="tab-button">
+                Add Closing Date <AddIcon />
+              </Button>
+            </Box>
+
+          </div>
+          <CustomVerticalTab
+            changeEvent={fetchClosingData}
+            tabList={
+              tabHeaders?.map((label) => ({ label: label, Component: <ClosingTable data={closingDates} /> }))
+            } />
         </div>
-        <CustomVerticalTab
-          changeEvent={fetchClosingData}
-          tabList={
-            tabHeaders?.map((label) => ({label:label, Component: <ClosingTable data={closingDates} />}))
-          }/>
-      </div>
     },
     {
       label: "Draw Types",
@@ -142,8 +141,8 @@ const ScheduleSetting = () => {
           <CustomVerticalTab
             changeEvent={fetchDrawTypesData}
             tabList={
-              tabHeaders?.map((label) => ({label:label, Component: <DrawTypesTable data={drawTypes} />}))
-            }/>
+              tabHeaders?.map((label) => ({ label: label, Component: <DrawTypesTable data={drawTypes} /> }))
+            } />
         </div>
     },
   ];
@@ -152,9 +151,9 @@ const ScheduleSetting = () => {
   return (
     <div className="content">
       <div >
-          <CustomTab tabList={tabs}/>
+        <CustomTab tabList={tabs} />
       </div>
-      <PageLoader isLoadingPage={ pageLoader } />
+      <PageLoader isLoadingPage={pageLoader} />
     </div>
   )
 }

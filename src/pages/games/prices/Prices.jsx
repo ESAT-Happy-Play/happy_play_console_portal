@@ -4,13 +4,15 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Card } from "../../../components/card/Card";
 import { Button } from "@mui/material";
 import CustomTab from "../../../components/tab/CustomTab";
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+import { toast } from 'react-toastify';
 
 const Prices = () => {
   let _PAGESIZE = 10;
 
   const [multiplier, setMultiplier] = React.useState(700);
-  const [percentage, setPercentage] = React.useState(10);
-  const [prize, setPrize] = useState(3250800)
+  const [jackPot33, setJackPot33] = React.useState({});
+  const [jackPot34, setjackPot34] = React.useState({});
   const [combinations, setCombinations] = React.useState(70);
   const [totalRows, setTotalRows] = useState(10);
   const [PageSize, setPageSize] = useState(_PAGESIZE);
@@ -22,6 +24,51 @@ const Prices = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const getRegularWinningPrice = async () => {
+    setPageLoader(true);
+    let url = `${process.env.REACT_APP_API_URL}/gamesettings/winningsettings/regularwinmultiplier`;
+    let response = await GETFetch(url);
+
+    if (response.status) {
+      setMultiplier(response.data.winMultiplier);
+      console.log(response.data.success)
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const getJackpotWinningPrice = async (gameType) => {
+    setPageLoader(true);
+    let url = `${process.env.REACT_APP_API_URL}/gamesettings/winningsettings/jackpot?gametype=${gameType}`;
+    let response = await GETFetch(url);
+
+    if (response.status) {
+      if (gameType == '02')
+      {
+        setJackPot33(response.data.jackpotWinningSettings);
+      }
+
+      if (gameType == '03')
+      {
+        setjackPot34(response.data.jackpotWinningSettings);
+      }
+
+      console.log(response.data.success)
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  useEffect(() => {
+    getRegularWinningPrice();
+    getJackpotWinningPrice('02');
+    getJackpotWinningPrice('03');
+  }, []);
 
   const tabs = [
     {
@@ -55,7 +102,7 @@ const Prices = () => {
             </Button>}
           body={
             <div className="mult-body">
-              <h1>{percentage}%</h1>
+              <h1>{jackPot33.jackpotPercentage}%</h1>
               <p>Gross percentage as prize increment</p>
             </div>
           }
@@ -65,7 +112,7 @@ const Prices = () => {
           header={"Current Prize"}
           body={
             <div className="mult-body">
-              <h1>{prize}</h1>
+              <h1>{jackPot33.jackpotAmount}</h1>
               <p>May 08, 2023  <b>2PM</b></p>
             </div>
           }
@@ -84,7 +131,7 @@ const Prices = () => {
             </Button>}
           body={
             <div className="mult-body">
-              <h1>{percentage}%</h1>
+              <h1>{jackPot34.jackpotPercentage}%</h1>
               <p>Gross percentage as prize increment</p>
             </div>
           }
@@ -94,7 +141,7 @@ const Prices = () => {
           header={"Current Prize"}
           body={
             <div className="mult-body">
-              <h1>{prize}</h1>
+              <h1>{jackPot34.jackpotAmount}</h1>
               <p>May 08, 2023  <b>2PM</b></p>
             </div>
           }

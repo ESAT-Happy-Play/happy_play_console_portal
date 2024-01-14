@@ -15,28 +15,28 @@ export const BetsTable = ({ data }) => {
                     data?.map((row, i) => (
                     <StyledTableRow key={i}>
                         <StyledTableCell align="center" component="th" scope="row">
-                            {row.accntNo}
+                            {row.bettorUserId}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.accntName}
+                            {row.bettorNameDisplay}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.transactionNo}
+                            {row.trn}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.noBet}
+                            {row.numBet}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                             {row.betAmount}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.date}
+                            {row.transactionTimestamp}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.gameTime}
+                            {row.gameType}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.recruiter}
+                            {row.recruiterNameDisplay}
                         </StyledTableCell>
                     </StyledTableRow>)) 
                     : 

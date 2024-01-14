@@ -32,13 +32,13 @@ export const DrawTypesTable = ({ data }) => {
     return (
         <CustomTable
             headers={head}
-            tableRows={data?.map((row, i) => (
-                <StyledTableRow key={i}>
+            tableRows={data?.map((row, i) =>
+                (<StyledTableRow key={i}>
                     <StyledTableCell align="center" component="th" scope="row">
-                        {row.drawTime}
+                        {row.drawType}
                     </StyledTableCell>
-                    <StyledTableCell align="center">{row.startCutoff}</StyledTableCell>
-                    <StyledTableCell align="center">{row.endCutoff}</StyledTableCell>
+                    <StyledTableCell align="center">{row.cutStart}</StyledTableCell>
+                    <StyledTableCell align="center">{row.cutEnd}</StyledTableCell>
                     <StyledTableCell align="center" width={300}>
                         <Button variant="primary" className="edit-button">Change</Button>
                         <Button variant="primary" className="delete-button">Delete</Button>

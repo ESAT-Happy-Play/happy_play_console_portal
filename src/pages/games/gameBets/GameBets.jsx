@@ -9,8 +9,12 @@ import GameBetsList from "../../../components/table/gameBets/GameBetsList";
 import { GetStoreObject } from "../../../helper/Helpers";
 import { BetsTable } from "./BetTable";
 import CustomTab from "../../../components/tab/CustomTab";
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+import PageLoader from "../../../components/widget/PageLoader";
 
 const GameBets = () => {
+  debugger;
+  const [pageLoader, setPageLoader] = useState(false);
 
   // auth api response object
   let storeObj = GetStoreObject("auth");
@@ -19,25 +23,19 @@ const GameBets = () => {
   // storeObj.isMain
   // storeObj.accountObjectId
   // storeObj.branchName
-
-  const [pageLoader, setPageLoader] = React.useState(false);
-
-  let _PAGESIZE = 5;
-  const [SearchValue, setSearchValue] = React.useState('');
-  const [PageNumber, setPageNumber] = React.useState(0);
-  const [totalRows, setTotalRows] = React.useState(0);
-  const [PageSize, setPageSize] = React.useState(_PAGESIZE);
+  const [SearchValue, setSearchValue] = useState('');
+  const [PageNumber, setPageNumber] = useState(0);
+  const [totalRows, setTotalRows] = useState(0);
+  const [PageSize, setPageSize] = useState(10);
 
   // const [getBetsHistory] = useGetBetsHistoryMutation();
-
-  const [branchId, setbranchId] = React.useState(storeObj.branchId);
 
   // On click search
   const handleGameBetsSearch = async (event, searchvalue) => { 
     setSearchValue(searchvalue);
     setPageNumber(0);
-    setPageSize(_PAGESIZE);
-    setPageLoader(true);
+    setPageSize(10);
+    // setPageLoader(true);
   }
 
   // Trigger on search empty
@@ -45,38 +43,59 @@ const GameBets = () => {
     if (searchvalue === "") {
       setSearchValue("");
       setPageNumber(0);
-      setPageSize(_PAGESIZE);
-      setPageLoader(true);
+      setPageSize(10);
+      // setPageLoader(true);
     }
   }
 
     // handle company table next page
   const handleGameBetsChangePage = async (event, newPage) => {
     setPageNumber(newPage + 1);
-    setPageLoader(true);
+    // setPageLoader(true);
   }
 
   // handle company table change page size
   const handleGameBetsRowsPerPage = async (event) => {
     setPageSize(+event.target.value);
     setPageNumber(0);
-    setPageLoader(true);
+    // setPageLoader(true);
   }
 
   const tabHeaders = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
 
-  const betReg = [
-    {accntNo: 123123, accntName:"Super Admin", transactionNo:1, noBet:2, betAmount: 20, date: "Dec 25, 2023", gameTime: "5PM", recruiter:12312},
-    {accntNo: 123124, accntName:"Super Admin2", transactionNo:5, noBet:6, betAmount: 50, date: "Dec 25, 2023", gameTime: "5PM", recruiter:12312},
-  ];
   const jackpot3 = [];
   const jackpot4 = [];
 
-  const [betsList, setBetsList] = React.useState(betReg);
+  const [betsList, setBetsList] = React.useState([]);
+
+  const getBets = async(gameType) => {
+    setPageLoader(true);
+    let filters = filterBuilder(gameType);
+    let url = `${process.env.REACT_APP_API_URL}/gamesettings/closeschedules?${filters}`;
+    let response = await GETFetch(url);
+
+    setPageLoader(false);
+
+    if (response.status)
+    {
+      setBetsList(response.data.bets)
+    }
+  }
+  
+  const filterBuilder = (gameType) => {
+    var params = `rowsperpage=${PageSize}&pagenumber=${PageNumber}&gametype=${gameType}`;
+    //TODO : Add company filter
+    return params;
+  }
+
+  useEffect(() => {
+    debugger;
+    getBets('01');
+  }, [SearchValue, PageNumber, totalRows, PageSize]);
 
   const fetchBets = (newValue) => {
     if (newValue == 0)
-      setBetsList(betReg);
+      getBets('01');
 
     else if (newValue == 1)
       setBetsList(jackpot3);
@@ -150,7 +169,7 @@ const GameBets = () => {
                       }
                       ))
                   }/>
-      {/* <PageLoader isLoadingPage={ pageLoader } /> */}
+      <PageLoader isLoadingPage={ pageLoader } />
     </div>
   );
 }
