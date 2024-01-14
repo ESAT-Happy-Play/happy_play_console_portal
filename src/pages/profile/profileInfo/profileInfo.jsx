@@ -95,14 +95,15 @@ const ProfileInfo = () => {
           <p>User ID <b>{(userdata !== null) ? userdata.userId : "..."}</b></p>
 
           {
-            (loginObj.userCode !== '0101') ?
+            (loginObj.userCode === '0101') ? <></>
+            : (loginObj.userCode === '0102') ? <></>
+            :
             <div>
               <Button style={{marginRight:'65px'}} component={Link} href={`/profile/info/getverified`} className="btn-verfied" variant="contained" size="large">
                   SEMI-VERIFIED <span>(Click to get verified)</span>
               </Button>
               <span style={{fontSize:'13px',color:'#7b7d7e'}}>Click to request full verification</span>
             </div>
-            : <></>
           }
           
         </div>

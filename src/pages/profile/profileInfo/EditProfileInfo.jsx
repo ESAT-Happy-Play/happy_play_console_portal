@@ -78,7 +78,35 @@ const EditProfileInfo = () => {
     setPageLoader(false);
     if(response.status) {
       setuserdata(response.data.loggedInUserData);
-      console.log(response.data.loggedInUserData)
+      let respUsrData = response.data.loggedInUserData;
+      reset(formValues => ({
+        ...formValues,
+        firstname: respUsrData.firstname,
+        lastname: respUsrData.lastname,
+        middlename: respUsrData.middlename,
+        sex: respUsrData.sex,
+        birthday: respUsrData.birthday,
+        nationality: "PH",
+        civilStatus: respUsrData.civilStatus,
+        bloodType: respUsrData.bloodType,
+        birthRegion: respUsrData.birthRegion,
+        birthProvince: respUsrData.birthProvince,
+        birthMunicipality: respUsrData.birthMunicipality,
+        birthBarangay: respUsrData.birthBarangay,
+        birthStreet: respUsrData.birthStreet,
+        presRegion: respUsrData.currRegion,
+        presProvince: respUsrData.currProvince,
+        presMunicipality: respUsrData.currMunicipality,
+        presBarangay: respUsrData.currBarangay,
+        presStreet: respUsrData.currStreet,
+        permRegion: respUsrData.permRegion,
+        permProvince: respUsrData.permProvince,
+        permMunicipality: respUsrData.permMunicipality,
+        permBarangay: respUsrData.permBarangay,
+        permStreet: respUsrData.permStreet,
+        natureOfWork: respUsrData.natureOfWork,
+        sourceOfIncome: respUsrData.sourceOfIncome
+      }));
     }
 
     if(!response.status) {
