@@ -10,6 +10,8 @@ import { GetStoreObject } from "../../../helper/Helpers";
 
 import WithdrawalRequestsList from "../../../components/table/withdrawalRequests/WithdrawalRequestsList";
 import WithdrawalRequestsSearchBar from "../../../components/table/withdrawalRequests/WithdrawalRequestsSearchBar";
+import ApproveWithdrawRequest from "../../../components/Dialog/forms/wallet/ApproveWithdrawRequest";
+import DeclineWithdrawRequest from "../../../components/Dialog/forms/wallet/DeclineWithdrawRequest";
 
 const WithdrawalRequests = () => {
 
@@ -18,7 +20,7 @@ const WithdrawalRequests = () => {
   let _PAGESIZE = 10;
   const [pageLoader, setPageLoader] = useState(false);
 
-  // company table state
+  // table state
   const [searchValue, setsearchValue] = useState('');
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
@@ -48,14 +50,14 @@ const WithdrawalRequests = () => {
     handleSendCreditData();
   }, [pageNumber, searchValue, pageSize, totalRows]);
 
-  // On click search company
+  // On click search
   const handleSearch = (event, value) => { 
     setsearchValue(value);
     setpageNumber(1);
     setpageSize(_PAGESIZE);
   }
 
-  // Trigger on search company empty
+  // Trigger on search empty
   const handleSearchEmpty = (event, value) => {
     if (value === "") {
       setsearchValue("");
@@ -80,6 +82,7 @@ const WithdrawalRequests = () => {
   const [requestObj, setrequestObj] = useState(null);
   const handleApproveDecline = (e, dataObject, reqType) => {
     setrequestObj(dataObject);
+    console.log(dataObject);
     if(reqType === 1) {
       handleApprWithdrawOpen();
     } else {
@@ -134,6 +137,8 @@ const WithdrawalRequests = () => {
         </div>
       </div>
 
+      <ApproveWithdrawRequest isOpenAdd={ openApprWithdraw } handleCloseAdd={ handleApprWithdrawClose } handleCallback={ handleApprWithdrawCallback } objData={requestObj} />
+      <DeclineWithdrawRequest isOpenAdd={ openDeclineWithdraw } handleCloseAdd={ handleDeclineWithdrawClose } handleCallback={ handleDeclineWithdrawCallback } objData={requestObj} />
     </div>
   )
 }

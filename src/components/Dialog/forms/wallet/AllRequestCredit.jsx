@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
-import { TextField, Button, MenuItem  } from "@mui/material";
+import { TextField, Button  } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 import FilterIcon from '@mui/icons-material/Filter';
 
@@ -21,7 +21,7 @@ import MessageDialog from "../../MessageDialog";
 // Models
 import { WalletModel } from "../../../../model/WalletModel";
 
-import { FetchFormData, GETFetch } from "../../../../api/ApiFetchBuilder";
+import { FetchFormData } from "../../../../api/ApiFetchBuilder";
 
 import { GetStoreObject } from "../../../../helper/Helpers";
 

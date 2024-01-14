@@ -22,6 +22,7 @@ import MessageDialog from "../../MessageDialog";
 import { WalletModel } from "../../../../model/WalletModel";
 
 import { FetchFormData, GETFetch } from "../../../../api/ApiFetchBuilder";
+import { GetStoreObject } from "../../../../helper/Helpers";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
@@ -41,6 +42,7 @@ const VisuallyHiddenInput = styled('input')({
 });
   
 const AdminSendCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, balance }) => {
+  let loginObj = GetStoreObject("auth");
   const [pageLoader, setPageLoader] = useState(false);
   
   const formSendCredit = useForm({ defaultValues: WalletModel.SendCreditForm });
@@ -143,9 +145,14 @@ const AdminSendCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, balance })
           <div className="rd">SEND CREDIT</div>
         </div>
         <DialogContent dividers>
-          <div style={{textAlign:'center',fontSize:'20px'}}>
-            <p style={{margin:'0 0 15px 0px'}}>Your balance <b>{balance}</b></p>
-          </div>
+          {
+            (loginObj.userCode !== '0101') ? 
+            <div style={{textAlign:'center',fontSize:'20px'}}>
+              <p style={{margin:'0 0 15px 0px'}}>Your balance <b>{balance}</b></p>
+            </div>
+            : <></>
+          }
+          
           <div id="step1" className="divStep">
             <form onSubmit={ handleSubmit(finalStepHandler) } noValidate>
               <div className="divContent">
