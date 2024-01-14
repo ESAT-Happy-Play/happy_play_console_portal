@@ -131,7 +131,6 @@ const AdminSendCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, balance })
 
   const [displayReceipt, setdisplayReceipt] = useState(null);
   const handleUploadReceipt = async (e, image) => {
-    console.log(image);
     setdisplayReceipt(URL.createObjectURL(image));
   }
 

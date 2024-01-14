@@ -19,7 +19,6 @@ import RegistrationUserInfo from "../../components/Dialog/forms/registration/Reg
 
 import { POSTFetch, FetchFormData } from "../../api/ApiFetchBuilder";
 
-
 const Registration = () => {
   // get url parameter
   const { code } = useParams();
@@ -31,7 +30,6 @@ const Registration = () => {
   const [openProceedModal, setOpenProceedModal] = React.useState(false);
   const [openUserInfoModal, setOpenUserInfoModal] = React.useState(false);
   const [mobileNumber, setMobileNumber] = React.useState(null);
-  const [accountObjectId, setAccountObjectId] = React.useState(null);
 
   // Registration form
   const formRegistration = useForm({ defaultValues: UserModel.RegistrationForm });
@@ -116,6 +114,11 @@ const Registration = () => {
   // fo verification modal info
   const handleUserInfoOpen = () => { setOpenUserInfoModal(true); }
   const handleUserInfoClose = () => { setOpenUserInfoModal(false); }
+  const handleUserInfoCallback = () => {
+    handleUserInfoClose();
+    handleProceedClose();
+    window.location.reload(false);
+  }
 
   const [isValidDOB, setisValidDOB] = React.useState(true);
   const validateDate = (value) => {
@@ -329,8 +332,8 @@ const Registration = () => {
       <RegistrationUserInfo 
       isOpen={openUserInfoModal}
       handleClose={handleUserInfoClose}
-      accountObjectId={accountObjectId}
-      accountObject={formData} />
+      accountObject={formData}
+      handleCallback= {handleUserInfoCallback} />
 
       <PageLoader isLoadingPage={ pageLoader } />
     </div>

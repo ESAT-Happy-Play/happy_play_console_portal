@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { TextField, MenuItem, Button  } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import FilterIcon from '@mui/icons-material/Filter';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
@@ -35,6 +36,9 @@ import PresentAddrWidget from '../../../widget/address/PresentAddrWidget';
 
 import PresentAddrWidgetWithData from '../../../widget/address/PresentAddrWidgetWithData';
 import PermanentAddrWidgetWithData from '../../../widget/address/PermanentAddrWidgetWithData';
+import MessageDialog from '../../MessageDialog';
+
+import { FetchFormData } from "../../../../api/ApiFetchBuilder";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
@@ -53,12 +57,11 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObject }) => {
+const RegistrationUserInfo = ({ isOpen, handleClose, accountObject, handleCallback }) => {
   
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isLoadingFinal, setIsLoadingFinal] = React.useState(false);
+  const [submitLoading, setSubmitLoading] = React.useState(false);
 
-  const formUpdateUser = useForm({ defaultValues: UserModel.UpdateAccountInfoForm });
+  const formUpdateUser = useForm({ defaultValues: UserModel.UpdateRegistrationAccountForm });
   const { register, handleSubmit, formState, reset } = formUpdateUser;
   const { errors } = formState;
   const [formData, setFormData] = React.useState({});
@@ -67,8 +70,8 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const [displayFrontID, setDisplayFrontID] = React.useState(null);
   const [displayBackId, setDisplayBackId] = React.useState(null);
   const [displaySignature, setDisplaySignature] = React.useState(null);
+  const [displaySelfie, setdisplaySelfie] = React.useState(null);
 
-  const [isValidDOB, setisValidDOB] = React.useState(false);
   const [isSameBirthPlace, setIsSameBirthPlace] = React.useState(false);
   const [isSamePresent, setIsSamePresent] = React.useState(false);
   
@@ -77,17 +80,15 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const [slideNextThird, setSlideNextThird] = React.useState(false);
 
   useEffect(() => {
-    if(accountObjectId !== null) {
-      reset(formValues => ({
-        ...formValues,
-        accountObjectId: accountObjectId,
-        firstName: accountObject.firstName,
-        lastName: accountObject.lastName,
-        middleName: accountObject.middleName,
-        mobileNumber: accountObject.mobileNumber
-      }));
-    }
-  }, [accountObjectId, accountObject, reset]);
+    reset(formValues => ({
+      ...formValues,
+      firstname: accountObject.firstname,
+      lastname: accountObject.lastname,
+      middlename: "",
+      mobilenumber: accountObject.mobileNumber,
+      birthday: accountObject.birthday
+    }));
+  }, [accountObject, reset]);
 
   // on form submit 1st step
   const firstStepHandler = async (data) => {
@@ -101,24 +102,36 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setSlideNextFirst(false);
     setSlideNextSecond(false);
     setSlideNextThird(true);
-    console.log(data);
   }
 
   const thirdStepHandler = async (data) => {
-    if(displayFrontID !== null && displayBackId !== null && displaySignature !== null) {
-      setIsLoading(true);
-      setIsLoadingFinal(true);   
-      
-      console.log("Submit data");
-    } else {
-      toast.error("Please upload your valid id / signature.", { autoClose: false });
-    }
+    // if(displayFrontID !== null && displayBackId !== null && displaySignature !== null) {
+      setFormData(data);
+      handleSubmitOpen()
+    // } else {
+    //   toast.error("Please upload your valid id / signature.", { autoClose: false });
+    // }
+  }
+
+  const handleFrontId = async (e, image) => {
+    setDisplayFrontID(URL.createObjectURL(image));
+  }
+
+  const handleBackId = async (e, image) => {
+    setDisplayBackId(URL.createObjectURL(image));
+  }
+
+  const handleSignature = async (e, image) => {
+    setDisplaySignature(URL.createObjectURL(image));
+  }
+
+  const handleSelfie = async (e, image) => {
+    setdisplaySelfie(URL.createObjectURL(image));
   }
 
   /**
    * Start Address 
    */
-
   const [addressStatePOB, setAddressStatePOB] = React.useState({
     region: null,
     province: null,
@@ -243,12 +256,6 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
     setpermanentAddressOpen(true);
   }
 
-  // const validateDate = (value) => {
-  //   const selected = new Date(value).getFullYear();
-  //   const now = new Date().getFullYear();
-  //   setisValidDOB((now - selected) >= 18);
-  // };
-
   const [placeOfBirthOpen, setplaceOfBirthOpen] = React.useState(true);
   const handlePlaceOfBirthClick = () => {
     setplaceOfBirthOpen(!placeOfBirthOpen);
@@ -280,6 +287,70 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
   const handleSelectId = (e, value) => {
     setGovId(value);
   }
+
+  // Confiration dialog message
+  const [openConfirmSubmit, setConfirmSubmit] = React.useState(false);
+  const handleSubmitOpen = () => { setConfirmSubmit(true); };
+  const handleSubmitClose = () => { setConfirmSubmit(false); };
+  const handleSendCreditOkay = async () => {
+
+    var frmData = new FormData();
+    frmData.append('firstname', formData.firstname);
+    frmData.append('lastname', formData.lastname);
+    // frmData.append('middlename', formData.middlename);
+    frmData.append('sex', (formData.sex === "Male") ? 0 : 1);
+    frmData.append('birthday', formData.amount);
+    frmData.append('mobilenumber', formData.mobilenumber);
+    frmData.append('nationality', "PH");
+    frmData.append('civilStatus', (formData.civilStatus === "Single") ? 0 : 1);
+    frmData.append('bloodType', "1");
+    frmData.append('birthRegion', "11");
+    frmData.append('birthProvince', "25");
+    frmData.append('birthMunicipality', "1129");
+    frmData.append('birthBarangay', "072231001");
+    frmData.append('birthStreet', "Purok Talisay");
+    frmData.append('presRegion', "11");
+    frmData.append('presProvince', "25");
+    frmData.append('presMunicipality', "1129");
+    frmData.append('presBarangay', "072231001");
+    frmData.append('presStreet', "Purok Talisay");
+
+    frmData.append('permRegion', "11");
+    frmData.append('permProvince', "25");
+    frmData.append('permMunicipality', "1129");
+    frmData.append('permBarangay', "072231001");
+    frmData.append('permStreet', "Purok Talisay");
+    frmData.append('natureOfWork', "3");
+    frmData.append('sourceOfIncome', "3");
+
+    if (formData.validIdImageFront.length > 0) {
+      frmData.append('validIdImageFront', formData.validIdImageFront[0]);
+    }
+
+    if (formData.validIdImageBack.length > 0) {
+      frmData.append('validIdImageBack', formData.validIdImageBack[0]);
+    }
+
+    if (formData.signatureImage.length > 0) {
+      frmData.append('signatureImage', formData.signatureImage[0]);
+    }
+    if (formData.selfieImage.length > 0) {
+      frmData.append('selfieImage', formData.selfieImage[0]);
+    }
+
+    setSubmitLoading(true);
+    let response = await FetchFormData(`${process.env.REACT_APP_API_URL}/users/registrationdata`, 'PATCH', frmData);
+    setSubmitLoading(false);
+    if(response.status) {
+      toast.success(response.data.message);
+      handleSubmitClose();
+      handleCallback();
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  };
 
   return (
     <>
@@ -333,31 +404,6 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </TextField>
                     </div>
                   </div>
-                  {/* <div className="divContent">
-                    <div className="left">
-                      <label>Birthday</label>
-                    </div>
-                    <div className="right">
-                      <TextField
-                        type="date"
-                        { 
-                          ...register("birthday", ((slideNextFirst)) ? { required: true } : { required: false } ) 
-                        }
-                        onChange={e => validateDate(e.target.value)}
-                        error={ !!errors.birthday }
-                        helperText={ errors.birthday?.message }
-                        variant="outlined" size="small" fullWidth />
-                    </div>
-                  </div>
-                  {
-                    (!isValidDOB) ? <div className="divContent">
-                        <div className="left"></div>
-                        <div className="right" style={{textAlign:'left'}}>
-                          <span style={{color:'red', fontSize:'12px'}}>Agent/Player must at least 21 years old.</span>
-                        </div>
-                      </div>
-                    : <></>
-                  } */}
                   
                   <div className="divContent">
                     <div className="left">
@@ -575,7 +621,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                       </ListItemButton>
                       <Collapse in={validIdOpen} timeout="auto" unmountOnExit>
                         <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
-                          <div className="divContent">
+                          {/* <div className="divContent">
                             <div className="left" style={{ width:'80px', paddingTop:'20px'}}>
                               <label>ID Type</label>
                             </div>
@@ -594,19 +640,30 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                                   }
                               </TextField>
                             </div>
-                          </div>
+                          </div> */}
 
-                          <div style={{display:'flex'}}>
-                            <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                          <div style={{display:'flex',gap:'5px',justifyContent:'center'}}>
+                            <div>
+                              <LoadingButton loading={ false } 
+                                style={{ width: '185px', padding:'6px'}} 
+                                component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
+                                    Upload Front ID
+                                    <VisuallyHiddenInput type="file" { ...register("validIdImageFront", { required: false }) } name="validIdImageFront" accept="image/*" onChange={(e) => handleFrontId(e, e.target.files[0])} />
+                                </LoadingButton>
+                              <div className="div-imgUpload">
+                                  <img className="imgFiles" src={(displayFrontID !== null) ? `${displayFrontID}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                              </div>
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 
-                                style={{ width: '185px', marginTop:'65px'}} 
+                                style={{ width: '185px',}} 
                                 component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
-                                    Upload Valid ID
-                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                    Upload Back ID
+                                    <VisuallyHiddenInput type="file" { ...register("validIdImageBack", { required: false }) } name="validIdImageBack" accept="image/*" onChange={(e) => handleBackId(e, e.target.files[0])} />
                                 </LoadingButton>
+                                <div className="div-imgUpload">
+                                    <img className="imgFiles" src={(displayBackId !== null) ? `${displayBackId}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                                </div>
                             </div>
                           </div>
                         </List>
@@ -628,14 +685,14 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
                           <div style={{display:'flex'}}>
                             <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                                <img className="imgFiles" src={(displaySelfie !== null) ? `${displaySelfie}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 
                                 style={{ width: '185px', marginTop:'65px'}} 
                                 component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
                                     Upload Selfie
-                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                    <VisuallyHiddenInput type="file" { ...register("selfieImage", { required: false }) } name="selfieImage" accept="image/*" onChange={(e) => handleSelfie(e, e.target.files[0])} />
                                 </LoadingButton>
                             </div>
                           </div>
@@ -658,14 +715,14 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
                           <div style={{display:'flex'}}>
                             <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                                <img className="imgFiles" src={(displaySignature !== null) ? `${displaySignature}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 
                                 style={{ width: '185px', marginTop:'65px'}} 
                                 component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
                                     Upload Signature
-                                    <VisuallyHiddenInput type="file" { ...register("proofImage", { required: false }) } name="proofImage" accept="image/*" />
+                                    <VisuallyHiddenInput type="file" { ...register("signatureImage", { required: false }) } name="signatureImage" accept="image/*" onChange={(e) => handleSignature(e, e.target.files[0])} />
                                 </LoadingButton>
                             </div>
                           </div>
@@ -675,11 +732,11 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                   </div>
                   <br />
                   <div className='divfooter'>
-                    <LoadingButton loading={ isLoadingFinal } onClick={handleBackToSecond} 
+                    <LoadingButton loading={ false } onClick={handleBackToSecond} 
                     style={{ marginRight: '15px'}} variant="outlined">Back</LoadingButton>
-                    <LoadingButton loading={ isLoadingFinal } 
+                    <LoadingButton loading={ false } 
                     type="submit" variant="outlined" color="success">
-                      Submit <ArrowForwardOutlinedIcon/>
+                      Submit <SaveAsIcon/>
                     </LoadingButton>
                   </div>
                 </form>
@@ -688,6 +745,15 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
           </div>
         </DialogContent>
       </BootstrapDialog>
+
+      <MessageDialog
+        isOpenMessage={ openConfirmSubmit } 
+        handleCloseMessage={ handleSubmitClose } 
+        handleOkay={ handleSendCreditOkay } 
+        title={ "Confirmation" } 
+        content={ "You are about to complete the registration." }
+        color={ "success" }
+        isLoading={ submitLoading } />
     </>
   )
 }

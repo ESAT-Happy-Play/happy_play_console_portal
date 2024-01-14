@@ -36,13 +36,13 @@ export const UserModel = {
         checkNationality: "",
         checkTerm: ""
     },
-    UpdateAccountInfoForm: {
+    UpdateRegistrationAccountForm: {
         firstname: "",
         lastname: "",
         middlename: "", //no
         sex: "", //no
         birthday: "",
-        mobileNumber: "",
+        mobilenumber: "",
         nationality: "", //no
         civilStatus: "",
         bloodType: "",
@@ -63,9 +63,11 @@ export const UserModel = {
         permStreet: "",
         natureOfWork: "",
         sourceOfIncome: "",
-        validIdImage: "",
+        validIdImageFront: "",
+        validIdImageBack: "",
         signatureImage: "",
-        displayName: ""
+        profilePicture: "",
+        selfieImage: ""
     },
     ApproveRejectForm: {
         userType: "",
