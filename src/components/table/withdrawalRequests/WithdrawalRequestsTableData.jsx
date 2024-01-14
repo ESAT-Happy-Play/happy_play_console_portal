@@ -1,14 +1,15 @@
-import "../table.scss";
-
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Link from '@mui/material/Link';
 
 import { Button } from "@mui/material";
+
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-function AgentCreditRequestsTableData({ dataObj, handleAppDec, handleReqType }) {
+import "../table.scss";
+
+function AgentCreditRequestsTableData({ dataObj, handleAppDec }) {
   return (
     <TableRow key={dataObj.requestId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
         <TableCell component="th" scope="row"> {dataObj.requesteeName}</TableCell>
@@ -22,18 +23,14 @@ function AgentCreditRequestsTableData({ dataObj, handleAppDec, handleReqType }) 
           }
         </TableCell>
         <TableCell>{dataObj.requestDate}</TableCell>
-        {
-          (handleReqType === 1) ? 
-            <TableCell style={{ display:'flex', gap:'5px'}}>
-              <Button onClick={e => handleAppDec(e, dataObj, 1)} className="btnSuccess" variant="contained" size="small">
-                  Approve <CheckOutlinedIcon />
-              </Button>
-              <Button onClick={e => handleAppDec(e, dataObj, 0)} className="btnEdit" variant="contained" size="small">
-                  Decline <DeleteOutlinedIcon />
-              </Button>
-          </TableCell>
-          : <></>
-        }
+        <TableCell style={{ display:'flex', gap:'5px'}}>
+            <Button onClick={e => handleAppDec(e, dataObj, 1)} className="btnSuccess" variant="contained" size="small">
+                Approve <CheckOutlinedIcon />
+            </Button>
+            <Button onClick={e => handleAppDec(e, dataObj, 0)} className="btnEdit" variant="contained" size="small">
+                Decline <DeleteOutlinedIcon />
+            </Button>
+        </TableCell>
     </TableRow>
   )
 }

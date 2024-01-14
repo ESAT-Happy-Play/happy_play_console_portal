@@ -214,7 +214,7 @@ const AdminSendCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, balance })
 
               <div style={{display:'flex'}}>
                 <div className="div-receipt">
-                    <img className="imgFiles" src={(displayReceipt !== null) ? `${displayReceipt}` : `${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                    <img className="imgFiles" src={(displayReceipt !== null) ? `${displayReceipt}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                 </div>
                 <div>
                     <LoadingButton loading={ false } 

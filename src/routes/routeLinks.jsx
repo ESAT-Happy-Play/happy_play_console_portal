@@ -78,7 +78,7 @@ import Game from '../pages/superadmin/games/Game';
 import SendCredits from '../pages/wallet/sendCredits/SendCredits';
 import CreditRequests from '../pages/wallet/creditRequests/CreditRequests';
 import WithdrawCredits from '../pages/wallet/withdraw/WithdrawCredits';
-import AgentWithdrawalRequests from '../pages/wallet/withdrawalRequests/AgentWithdrawalRequests';
+import WithdrawalRequests from '../pages/wallet/withdrawalRequests/WithdrawalRequests';
 
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
@@ -141,7 +141,7 @@ const routeLinks = [
       },
       child: [
         {
-          path: "/wallet/sendcredits",
+          path: "/wallet/send/credits",
           element: <SendCredits />,
           state: "Wallet.SendCredits",
           sidebarProps: {
@@ -150,7 +150,7 @@ const routeLinks = [
           },
         },
         {
-          path: "/wallet/creditrequests",
+          path: "/wallet/credit/requests",
           element: <CreditRequests />,
           state: "Wallet.CreditRequests",
           sidebarProps: {
@@ -168,8 +168,8 @@ const routeLinks = [
           },
         },
         {
-          path: "/wallet/withdrawalrequest",
-          element: <AgentWithdrawalRequests />,
+          path: "/wallet/withdrawal/request",
+          element: <WithdrawalRequests />,
           state: "Wallet.WithdrawalRequests",
           sidebarProps: {
             displayText: "Withdrawal Requests",

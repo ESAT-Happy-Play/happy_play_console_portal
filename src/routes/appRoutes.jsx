@@ -22,11 +22,14 @@ if(user_role != null) {
       menus.push("Profile.ProfileInformation");
       menus.push("Profile.ResetPassword");
 
-      // manually add wallet links
       menus.push("Wallet.SendCredits");
       menus.push("Wallet.CreditRequests");
-      menus.push("Wallet.Withdraw");
-      menus.push("Wallet.WithdrawalRequests");
+      if (authdata.userCode === "0102") {
+        // manually add wallet links
+        menus.push("Wallet.Withdraw");
+      } else {
+        menus.push("Wallet.WithdrawalRequests");
+      }
     }
   }
 }

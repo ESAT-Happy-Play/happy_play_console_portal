@@ -12,13 +12,15 @@ function AgentSendCreditTableData({ indexId, dataObj }) {
     <TableRow key={indexId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
         <TableCell component="th" scope="row"> {dataObj.receiverName}</TableCell>
         <TableCell>{dataObj.amount}</TableCell>
-        <TableCell>{dataObj.mode}</TableCell>
-        <TableCell>{dataObj.requestDate}</TableCell>
-        <TableCell style={{ display:'flex', gap:'5px'}}>
-            <Button component={Link} href="#" className="btnShow" variant="contained" size="small">
-                View Details<VisibilityIcon />
-            </Button>
+        <TableCell>
+          {
+            (dataObj.mode === "0") ? "Over The Counter"
+            : (dataObj.mode === "1") ? "Cash On Delivery"
+            : (dataObj.mode === "2") ? "Money Remittance"
+            : "Bank Transfer"
+          }
         </TableCell>
+        <TableCell>{dataObj.requestDate}</TableCell>
     </TableRow>
   )
 }

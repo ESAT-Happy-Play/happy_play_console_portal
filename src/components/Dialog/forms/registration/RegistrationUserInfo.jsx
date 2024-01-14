@@ -598,7 +598,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
 
                           <div style={{display:'flex'}}>
                             <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 
@@ -628,7 +628,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
                           <div style={{display:'flex'}}>
                             <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 
@@ -658,7 +658,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObjectId, accountObj
                         <List component="div" style={{ paddingLeft: '15px', marginRight:'10px'}}>
                           <div style={{display:'flex'}}>
                             <div className="div-imgUpload">
-                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                                <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                             </div>
                             <div>
                                 <LoadingButton loading={ false } 

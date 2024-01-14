@@ -35,11 +35,10 @@ const AgentSendCreditsList = ({
           <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>AGENT</TableCell>
+                <TableCell>NAME</TableCell>
                 <TableCell>AMOUNT</TableCell>
                 <TableCell>MODE</TableCell>
                 <TableCell>REQUEST DATE</TableCell>
-                <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

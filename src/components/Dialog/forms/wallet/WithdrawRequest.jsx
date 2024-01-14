@@ -124,7 +124,7 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
     } else if (walletType === "1") {
         setwalletBal(dataObj.commissionBalance);
     } else {
-        setwalletBal(0);
+        setwalletBal(dataObj.creditBalance);
     }
   }
 
@@ -163,8 +163,11 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
                     label="Select wallet" sx={{ width: "100%" }} defaultValue="" variant="outlined" size="small" select>
                     <MenuItem value=''><em>Select wallet</em></MenuItem>
                     <MenuItem value="0" data-value="0">Credit Wallet</MenuItem>
-                    <MenuItem value="1" data-value="1">Commission Wallet</MenuItem>
-                    <MenuItem value="2" data-value="2">Winning Wallet</MenuItem>
+                    {
+                      (loginObj.userCode !== '0102') ?
+                      <MenuItem value="1" data-value="1">Commission Wallet</MenuItem>
+                      : <></>
+                    }
                   </TextField>
                   <br />
                   <div style={{fontSize:'15px',marginTop:'15px'}}>
@@ -212,7 +215,7 @@ const MasterAgentRequestCredit = ({ isOpenAdd, handleCloseAdd, handleCallback, d
 
               {/* <div style={{display:'flex'}}>
                 <div className="div-receipt">
-                    <img className="imgFiles" src={(displayReceipt !== null) ? `${displayReceipt}` : `${process.env.PUBLIC_URL}/default-profile.jpg`} salt="" />
+                    <img className="imgFiles" src={(displayReceipt !== null) ? `${displayReceipt}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
                 </div>
                 <div>
                     <LoadingButton loading={ false } 

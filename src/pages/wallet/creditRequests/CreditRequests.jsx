@@ -12,14 +12,16 @@ import { GETFetch } from "../../../api/ApiFetchBuilder";
 import { GetStoreObject } from "../../../helper/Helpers";
 import MasterAgentRequestCredit from "../../../components/Dialog/forms/wallet/MasterAgentRequestCredit";
 import AllRequestCredit from "../../../components/Dialog/forms/wallet/AllRequestCredit";
+import ApproveCreditRequest from "../../../components/Dialog/forms/wallet/ApproveCreditRequest";
+import DeclineCreditRequest from "../../../components/Dialog/forms/wallet/DeclineCreditRequest";
 
 const CreditRequests = () => {
 
   let loginObj = GetStoreObject("auth");
 
-  let _PAGESIZE = 5;
+  let _PAGESIZE = 10;
   const [pageLoader, setPageLoader] = useState(false);
-  const [requestType, setrequestType] = useState(0);
+  const [requestType, setrequestType] = useState(1);
 
   // table state
   const [searchValue, setsearchValue] = useState('');
@@ -31,8 +33,9 @@ const CreditRequests = () => {
 
   const handleCreditRequestData = async () => {
     setPageLoader(true);
-    let url = (requestType === 0) ? `${process.env.REACT_APP_API_URL}/credits/requests?requestto=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`
-      : `${process.env.REACT_APP_API_URL}/credits/requests?requestfrom=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`;
+    let url = (loginObj.userCode === '0101') ? `${process.env.REACT_APP_API_URL}/credits/requests?requestto=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`
+      : (requestType === 1) ? `${process.env.REACT_APP_API_URL}/credits/requests?requestto=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`
+      : `${process.env.REACT_APP_API_URL}/credits/requests/history?requestfrom=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`;
 
     let response = await GETFetch(url);
     setPageLoader(false);
@@ -122,32 +125,72 @@ const CreditRequests = () => {
 
   const handleRequestCreditCallback = () => {
     handleRequestCreditClose();
+    setTotalRows(totalRows + 1);
+  }
+
+  // trigger to 
+  const [requestData, setrequestData] = useState(null);
+  const handleApproveDecline = (event, objData, requestType) => {
+    setrequestData(objData);
+    if (requestType === 1) {
+      handleApproveCreditOpen();
+    } else {
+      handleDeclineCreditOpen();
+    }
+  };
+
+  // Approve dialog
+  const [openApproveCredit, setApproveCredit] = React.useState(false);
+  const handleApproveCreditOpen = () => { setApproveCredit(true); };
+  const handleApproveCreditClose = () => { setApproveCredit(false); };
+
+  const handleApproveCreditCallback = () => {
+    handleApproveCreditClose();
+    setTotalRows(totalRows - 1);
+  }
+
+  // Decline dialog
+  const [openDeclineCredit, setDeclineCredit] = React.useState(false);
+  const handleDeclineCreditOpen = () => { setDeclineCredit(true); };
+  const handleDeclineCreditClose = () => { setDeclineCredit(false); };
+
+  const handleDeclineCreditCallback = () => {
+    handleDeclineCreditClose();
+    setTotalRows(totalRows - 1);
   }
 
   return (
     <div className="agentWallet">
-      <div className="div-balance">
-        <div className="div1">
-          <h1>{(userdata !== null) ? (userdata.creditBalance === null) ? 0 : userdata.creditBalance : '...'}</h1>
-          <span>Credit Balance</span>
+      {
+        (loginObj.userCode !== '0101') ?
+        <div className="div-balance">
+          <div className="div1">
+            <h1>{(userdata !== null) ? (userdata.creditBalance === null) ? 0 : userdata.creditBalance : '...'}</h1>
+            <span>Credit Balance</span>
+          </div>
+          <div className="div1">
+            <br /><br />
+            <Button onClick={ handleRequestCreditOpen } variant="outlined" color="error">
+              Request Credits <AddIcon />
+            </Button>
+          </div>
         </div>
-        <div className="div1">
-          <br /><br />
-          <Button onClick={ handleRequestCreditOpen } variant="outlined" color="error">
-            Request Credits <AddIcon />
-          </Button>
-        </div>
-      </div>
+        : <></>
+      }
+
       <div className="div-table">
         <div className="div-table-head" style={{display:'block'}}>
-          <div className="div-head" style={{display:'flex',justifyContent:'center',boxShadow:'none',margin:'0px'}}>
-            <ul style={{margin:'0px'}}>
-              <li onClick={(e) => handleClick(e, 0)}  className="li-active">Request from Downline</li>
-              <li onClick={(e) => handleClick(e, 1)} >Your Requests</li>
-            </ul>
-          </div>
+          {
+            (loginObj.userCode !== '0101') ?
+            <div className="div-head" style={{display:'flex',justifyContent:'center',boxShadow:'none',margin:'0px'}}>
+              <ul style={{margin:'0px'}}>
+                <li onClick={(e) => handleClick(e, 1)}  className="li-active">Request from Downline</li>
+                <li onClick={(e) => handleClick(e, 0)} >Your Requests</li>
+              </ul>
+            </div>
+            : <></>
+          }
           <br />
-
           <div style={{display:'flex',justifyContent:'space-between'}}>
             <div></div>
             <div className="bottom" style={{width:'100%'}}>
@@ -163,8 +206,10 @@ const CreditRequests = () => {
             RowsPerPage={ handleRowsPerPage }
             pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
             pageSize = { pageSize }
-            companyChangePage={ handleChangePage }
+            ChangePage={ handleChangePage }
             isLoading = { pageLoader }
+            ApproveDecline = { handleApproveDecline }
+            handleRequestType={requestType}
           />
         </div>
       </div>
@@ -176,6 +221,9 @@ const CreditRequests = () => {
         : (loginObj.userCode === '0201') ? <MasterAgentRequestCredit isOpenAdd={ openRequestCredit } handleCloseAdd={ handleRequestCreditClose } handleCallback={ handleRequestCreditCallback } />
         : <AllRequestCredit isOpenAdd={ openRequestCredit } handleCloseAdd={ handleRequestCreditClose } handleCallback={ handleRequestCreditCallback } />
       }
+
+      <ApproveCreditRequest isOpenAdd={ openApproveCredit } handleCloseAdd={ handleApproveCreditClose } handleCallback={ handleApproveCreditCallback } objData={requestData} objUser={userdata} />
+      <DeclineCreditRequest isOpenAdd={ openDeclineCredit } handleCloseAdd={ handleDeclineCreditClose } handleCallback={ handleDeclineCreditCallback } objData={requestData} objUser={userdata} />
     </div>
   )
 }

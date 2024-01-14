@@ -75,3 +75,28 @@
         }
     }
 }
+
+table {
+    thead>tr>th {
+        font-weight: 600 !important;
+        color: #4845d2;
+    }
+
+    .btnEdit {
+        background: #dd6b20 !important;
+        color: white;
+        text-transform: capitalize;
+    }
+
+    .btnShow {
+        background: #fec30e !important;
+        color: black;
+        text-transform: capitalize;
+    }
+
+    .btnSuccess {
+        background: green !important;
+        color: white;
+        text-transform: capitalize;
+    }
+}

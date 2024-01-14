@@ -1,7 +1,7 @@
-import AgentCreditRequestsTableData from "./AgentCreditRequestsTableData";
+import WithdrawalRequestsTableData from "./WithdrawalRequestsTableData";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 
-const AgentCreditRequestsList = ({ 
+const WithdrawalRequestsList = ({ 
   SearchResults,
   ChangePage,
   RowsPerPage,
@@ -9,14 +9,12 @@ const AgentCreditRequestsList = ({
   pageSize, 
   totalCount,
   ApproveDecline,
-  handleRequestType,
   isLoading}) => {
 
-    const results = SearchResults.map(obj => <AgentCreditRequestsTableData 
+    const results = SearchResults.map(obj => <WithdrawalRequestsTableData 
       key={obj.requestId} 
       dataObj={obj} 
-      handleAppDec= {ApproveDecline}
-      handleReqType= {handleRequestType}
+      handleAppDec={ApproveDecline}
     />)
     
 
@@ -33,7 +31,7 @@ const AgentCreditRequestsList = ({
     }
 
     return ( 
-    <div className="AgentCreditRequestsList">
+    <div className="WithdrawalRequestsList">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>
@@ -42,9 +40,7 @@ const AgentCreditRequestsList = ({
                 <TableCell>AMOUNT</TableCell>
                 <TableCell>MODE</TableCell>
                 <TableCell>REQUEST DATE</TableCell>
-                {
-                  (handleRequestType === 1) ? <TableCell>ACTION</TableCell> : <></>
-                }
+                <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -66,4 +62,4 @@ const AgentCreditRequestsList = ({
     )
 }
 
-export default AgentCreditRequestsList
+export default WithdrawalRequestsList

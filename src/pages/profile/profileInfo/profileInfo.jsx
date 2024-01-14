@@ -70,7 +70,7 @@ const ProfileInfo = () => {
     <div className="divprofile">
       <div className="divleft">
         <br />
-        <img src={`${process.env.PUBLIC_URL}/default-profile.jpg`} alt="img" className='avatar' />
+        <img src={`${process.env.PUBLIC_URL}/empty.jpg`} alt="img" className='avatar' />
         <div className="leftInfo">
           <h2>Ussop One</h2>
           <p>Refferal Code <b>0992888</b></p>

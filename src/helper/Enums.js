@@ -59,7 +59,6 @@ export function AgentMenus() {
     "Wallet.SendCredits", // is parent false
     "Wallet.CreditRequests", // is parent false
     "Wallet.Withdraw", // is parent false
-    "Wallet.WithdrawalRequests", // is parent false
     
     "Profile", // is parent true
     "Profile.ProfileInformation", // is parent false

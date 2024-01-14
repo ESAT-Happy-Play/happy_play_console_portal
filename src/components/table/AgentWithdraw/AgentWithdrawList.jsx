@@ -38,7 +38,6 @@ const AgentWithdrawList = ({
                 <TableCell>AMOUNT</TableCell>
                 <TableCell>MODE</TableCell>
                 <TableCell>REQUEST DATE</TableCell>
-                <TableCell>ACTION</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

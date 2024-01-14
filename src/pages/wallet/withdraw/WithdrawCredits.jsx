@@ -85,6 +85,7 @@ const WithdrawCredits = () => {
 
   const handleWithrawCallback = () => {
     handleWithdrawCreditClose();
+    setTotalRows(totalRows + 1);
   }
 
   return (
@@ -94,10 +95,14 @@ const WithdrawCredits = () => {
           <h1>{(userdata !== null) ? (userdata.creditBalance === null) ? 0 : userdata.creditBalance : '...'}</h1>
           <span>Credit Balance</span>
         </div>
-        <div className="div1">
-          <h1>{(userdata !== null) ? (userdata.commissionBalance === null) ? 0 : userdata.commissionBalance : '...'}</h1>
-          <span>Commission Balance</span>
-        </div>
+        {
+          (loginObj.userCode !== "0102") ? 
+          <div className="div1">
+            <h1>{(userdata !== null) ? (userdata.commissionBalance === null) ? 0 : userdata.commissionBalance : '...'}</h1>
+            <span>Commission Balance</span>
+          </div>
+          : <></>
+        }
         <div className="div1">
           <br /><br />
           <Button onClick={ handleWithdrawCreditOpen } variant="outlined">
@@ -114,7 +119,7 @@ const WithdrawCredits = () => {
             RowsPerPage={ handleRowsPerPage }
             pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
             pageSize = { pageSize }
-            companyChangePage={ handleChangePage }
+            ChangePage={ handleChangePage }
             isLoading = { pageLoader }
           />
         </div>

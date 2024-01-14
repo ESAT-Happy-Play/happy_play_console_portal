@@ -19,10 +19,10 @@ const SendCredits = () => {
 
   let loginObj = GetStoreObject("auth");
 
-  let _PAGESIZE = 5;
+  let _PAGESIZE = 10;
   const [pageLoader, setPageLoader] = useState(false);
 
-  // company table state
+  // table state
   const [searchValue, setsearchValue] = useState('');
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
@@ -30,36 +30,9 @@ const SendCredits = () => {
   const [tablelistdata, settablelistdata] = useState([]);
   const [userdata, setuserdata] = useState(null);
 
-  // const handleSendCreditData = async () => {
-  //   setPageLoader(true);
-  //   let url = `${process.env.REACT_APP_API_URL}/credits/send/history?senderuserid=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&receivernamesearch=${searchValue}`;
-
-  //   let response = await GETFetch(url);
-  //   setPageLoader(false);
-
-  //   if(response.status) {
-  //     settablelistdata(response.data.historyData);
-
-  //     setTotalRows(response.data.totalRows);
-  //     setpageNumber(response.data.currentPage);
-  //     setpageSize(response.data.rowsPerPage);
-  //   }
-
-  //   if(!response.status) {
-  //     toast.error(response.data.errorMessage);
-  //   }
-  // }
-
-  // // trigger call API endpoint if state change
-  // useEffect(() => {
-  //   handleSendCreditData();
-  // }, [pageNumber, searchValue, pageSize, totalRows]);
-
   const handleCurrentUserData = async () => {
-    setPageLoader(true);
     let url = `${process.env.REACT_APP_API_URL}/users/currentuserdata`;
     let response = await GETFetch(url);
-    setPageLoader(false);
 
     if(response.status) {
       setuserdata(response.data.loggedInUserData);
@@ -70,9 +43,31 @@ const SendCredits = () => {
     }
   }
 
+  const handleSendCreditData = async () => {
+    setPageLoader(true);
+    let url = (loginObj.userCode === '0101') ? `${process.env.REACT_APP_API_URL}/credits/send/history?rowsperpage=${pageSize}&pagenumber=${pageNumber}&receivernamesearch=${searchValue}`
+      : `${process.env.REACT_APP_API_URL}/credits/send/history?senderuserid=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&receivernamesearch=${searchValue}`;
+
+    let response = await GETFetch(url);
+    setPageLoader(false);
+
+    if(response.status) {
+      settablelistdata(response.data.historyData);
+
+      setTotalRows(response.data.totalRows);
+      setpageNumber(response.data.currentPage);
+      setpageSize(response.data.rowsPerPage);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
   useEffect(() => {
     handleCurrentUserData();
-  }, []);
+    handleSendCreditData();
+  }, [pageNumber, searchValue, pageSize, totalRows]);
 
   // On click search company
   const handleSearch = (event, value) => { 
@@ -110,26 +105,40 @@ const SendCredits = () => {
 
   const handleSendCreditCallback = () => {
     handleSendCreditClose();
+    setTotalRows(totalRows + 1);
   }
 
   return (
     <div className="agentWallet">
-      <div className="div-balance">
-        <div className="div1">
-          <h1>{(userdata !== null) ? (userdata.creditBalance === null) ? 0 : userdata.creditBalance : '...'}</h1>
-          <span>Credit Balance</span>
-        </div>
-        <div className="div1">
-          <h1>{(userdata !== null) ? (userdata.commissionBalance === null) ? 0 : userdata.commissionBalance : '...'}</h1>
-          <span>Commission Balance</span>
-        </div>
-        <div className="div1">
-          <br /><br />
-          <Button type="submit" onClick={ handleSendCreditOpen } variant="outlined" color="success">
-            Send Credits <AddIcon />
-          </Button>
-        </div>
-      </div>
+      {
+        (loginObj.userCode !== "0101") ?
+          <div className="div-balance">
+            <div className="div1">
+              <h1>{(userdata !== null) ? (userdata.creditBalance === null) ? 0 : userdata.creditBalance : '...'}</h1>
+              <span>Credit Balance</span>
+            </div>
+            {
+              (loginObj.userCode !== "0102") ? 
+              <div className="div1">
+                <h1>{(userdata !== null) ? (userdata.commissionBalance === null) ? 0 : userdata.commissionBalance : '...'}</h1>
+                <span>Commission Balance</span>
+              </div>
+              : <></>
+            }
+            <div className="div1">
+              <br /><br />
+              <Button type="submit" onClick={ handleSendCreditOpen } variant="outlined" color="success">
+                Send Credits <AddIcon />
+              </Button>
+            </div>
+          </div>
+          : <div style={{padding:'15px',display:'flex',justifyContent:'end'}}>
+            <Button type="submit" onClick={ handleSendCreditOpen } variant="outlined" color="success">
+                Send Credits <AddIcon />
+              </Button>
+          </div>
+      }
+
       <div className="div-table">
         <div className="div-table-head" style={{display:'block'}}>
           <div style={{display:'flex',justifyContent:'space-between'}}>
@@ -148,7 +157,7 @@ const SendCredits = () => {
             RowsPerPage={ handleRowsPerPage }
             pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
             pageSize = { pageSize }
-            companyChangePage={ handleChangePage }
+            ChangePage={ handleChangePage }
             isLoading = { pageLoader }
           />
         </div>

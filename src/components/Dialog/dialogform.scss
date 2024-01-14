@@ -785,3 +785,21 @@ $defaultPad: 5px;
         height: 140px;
     }
 }
+
+.btnEdit {
+    background: #dd6b20 !important;
+    color: white;
+    text-transform: capitalize;
+}
+
+.btnShow {
+    background: #fec30e !important;
+    color: black;
+    text-transform: capitalize;
+}
+
+.btnSuccess {
+    background: green !important;
+    color: white;
+    text-transform: capitalize;
+}
