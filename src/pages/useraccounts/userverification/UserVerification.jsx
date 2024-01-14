@@ -15,7 +15,7 @@ const UserVerification = () => {
    * constants and functions
    */
   let _UserAgentCode = "0202"; // Agent as default
-  let _UserPlayerCode = "0301"; // Agent as default
+  let _UserPlayerCode = "0301"; // player as default
 
   const [pageLoader, setPageLoader] = useState(false);
   const [userCode, setuserCode] = useState(_UserAgentCode);

@@ -10,6 +10,7 @@ import AgentLogin from "./pages/console/login/AgentLogin";
 
 import CompanyDetails from "./pages/superadmin/company/CompanyDetails";
 import BranchDetails from "./pages/superadmin/branch/BranchDetails";
+import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,6 +34,7 @@ function App() {
             {/* Start Details routes */}
             <Route exact path="/company/:id" element={<LayoutWrapper state="SuperAdmin.Company"><CompanyDetails /></LayoutWrapper>} />
             <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
+            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} />
             {/* End Details routes */}
             
           </Route>
