@@ -107,7 +107,7 @@ const RegistrationUserInfo = ({ isOpen, handleClose, accountObject, handleCallba
   const thirdStepHandler = async (data) => {
     // if(displayFrontID !== null && displayBackId !== null && displaySignature !== null) {
       setFormData(data);
-      handleSubmitOpen()
+      handleSubmitOpen();
     // } else {
     //   toast.error("Please upload your valid id / signature.", { autoClose: false });
     // }

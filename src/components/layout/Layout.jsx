@@ -34,8 +34,8 @@ const Layout = () => {
       <div className="layoutContainer">
         <Navbar />
         {
-          (authdata !== null) ? <Outlet /> 
-          : (userRole === null) ? <Navigate to="/" state={{ from: location }} replace /> 
+          (userRole === null) ? <Navigate to="/happyplay" state={{ from: location }} replace /> 
+          : (authdata !== null) ? <Outlet />  
           : (userRole.role == "Agent") ? <Navigate to="/console/login" state={{ from: location }} replace /> 
           : <Navigate to="/dashboard/login" state={{ from: location }} replace />
         }

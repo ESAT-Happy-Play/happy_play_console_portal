@@ -24,7 +24,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* public routes */}
-          <Route path="/" element={<IndexPage />} />
+          <Route path="/happyplay" element={<IndexPage />} />
           <Route path="dashboard/login" element={<Login />} />
           <Route path="console/login" element={<AgentLogin />} />
           <Route path="register/:code?" element={<Registration />} />

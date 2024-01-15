@@ -38,6 +38,7 @@ import PermanentAddrWidget1 from "../../../components/widget/address/PermanentAd
 import PermanentAddrWidgetWithData from "../../../components/widget/address/PermanentAddrWidgetWithData";
 
 import { FetchFormData } from "../../../api/ApiFetchBuilder";
+import MessageDialog from "../../../components/Dialog/MessageDialog";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -54,6 +55,7 @@ const VisuallyHiddenInput = styled('input')({
 const EditProfileInfo = () => {
   let loginObj = GetStoreObject("auth");
   const [pageLoader, setPageLoader] = useState(false);
+  const [submitLoading, setSubmitLoading] = React.useState(false);
 
   const formUpdateUser = useForm({ defaultValues: UserModel.UpdateRegistrationAccountForm });
   const { register, handleSubmit, formState, reset } = formUpdateUser;
@@ -79,6 +81,7 @@ const EditProfileInfo = () => {
     if(response.status) {
       setuserdata(response.data.loggedInUserData);
       let respUsrData = response.data.loggedInUserData;
+      console.log(respUsrData);
       reset(formValues => ({
         ...formValues,
         firstname: respUsrData.firstname,
@@ -86,6 +89,7 @@ const EditProfileInfo = () => {
         middlename: respUsrData.middlename,
         sex: respUsrData.sex,
         birthday: respUsrData.birthday,
+        mobilenumber: respUsrData.mobileNumber,
         nationality: "PH",
         civilStatus: respUsrData.civilStatus,
         bloodType: respUsrData.bloodType,
@@ -273,13 +277,22 @@ const EditProfileInfo = () => {
   }
 
   const submitHandler = async (data) => {
-    console.log(data);
+    setFormData(data);
+    handleSubmitOpen();
+  } 
+
+  // Confiration dialog message
+  const [openConfirmSubmit, setConfirmSubmit] = React.useState(false);
+  const handleSubmitOpen = () => { setConfirmSubmit(true); };
+  const handleSubmitClose = () => { setConfirmSubmit(false); };
+  const handleSendCreditOkay = async () => {
+    console.log(formData);
     var frmData = new FormData();
     frmData.append('firstname', formData.firstname);
     frmData.append('lastname', formData.lastname);
     frmData.append('middlename', formData.middlename);
     frmData.append('sex', (formData.sex === "Male") ? 0 : 1);
-    frmData.append('birthday', formData.amount);
+    frmData.append('birthday', formData.birthday);
     frmData.append('nationality', "PH");
     frmData.append('civilStatus', (formData.civilStatus === "Single") ? 0 : 1);
     frmData.append('bloodType', "1");
@@ -301,8 +314,9 @@ const EditProfileInfo = () => {
     frmData.append('natureOfWork', "3");
     frmData.append('sourceOfIncome', "3");
     frmData.append('displayName', `${formData.firstname} ${formData.lastname} ${formData.middlename}`);
-    if (formData.validIdImage.length > 0) {
-      frmData.append('validIdImage', formData.validIdImage[0]);
+    
+    if (formData.validIdImageFront.length > 0) {
+      frmData.append('validIdImage', formData.validIdImageFront[0]);
     }
     if (formData.signatureImage.length > 0) {
       frmData.append('signatureImage', formData.signatureImage[0]);
@@ -322,17 +336,18 @@ const EditProfileInfo = () => {
     //   frmData.append('selfieImage', formData.selfieImage[0]);
     // }
 
-    setPageLoader(true);
+    setSubmitLoading(true);
     let response = await FetchFormData(`${process.env.REACT_APP_API_URL}/users/requestfullverification`, 'POST', frmData);
-    setPageLoader(false);
+    setSubmitLoading(false);
     if(response.status) {
-      toast.success(response.data.message);
+      toast.success(`User infomation updated successfully and sent request for full verification.`);
+      handleSubmitClose();
     }
 
     if(!response.status) {
       toast.error(response.data.errorMessage);
     }
-  } 
+  }
 
   return (
     <div className="divprofile" style={{maxWidth:'1024px'}}>
@@ -341,32 +356,39 @@ const EditProfileInfo = () => {
           <div className="div-r-content">
             <div className="div-cont">
               <p>First Name</p>
-              {
-                (userdata !== null) ? <TextField defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : "..."
-              }
+              <TextField
+                { 
+                  ...register("firstname", { required: false } ) 
+                }
+                error={ !!errors.firstname }
+                helperText={ errors.firstname?.message } variant="outlined" size="small" fullWidth /> 
             </div>
             <div className="div-cont">
               <p>Middle Name</p>
-              {
-                (userdata !== null) ? <TextField defaultValue={userdata.middlename} variant="outlined" size="small" fullWidth /> : "..."
-              }
+              <TextField
+                { 
+                  ...register("middlename", { required: false } ) 
+                }
+                error={ !!errors.middlename }
+                helperText={ errors.middlename?.message } variant="outlined" size="small" fullWidth /> 
             </div>
             <div className="div-cont">
               <p>Last Name</p>
-              {
-                (userdata !== null) ? <TextField defaultValue={userdata.lastname} variant="outlined" size="small" fullWidth /> : "..."
-              }
+              <TextField
+                { 
+                  ...register("lastname", { required: false } ) 
+                }
+                error={ !!errors.lastname }
+                helperText={ errors.lastname?.message } variant="outlined" size="small" fullWidth /> 
             </div>
             <div className="div-cont">
               <p>Mobile Number</p>
-              {
-                (userdata !== null) ? <TextField disabled defaultValue={userdata.mobileNumber} variant="outlined" size="small" fullWidth /> : "..."
-              }
+              <TextField disabled { 
+                  ...register("mobilenumber", { required: false } ) 
+                } variant="outlined" size="small" fullWidth /> 
             </div>
             <div className="div-cont">
               <p>Gender</p>
-          
-
               <RadioGroup style={{ display: 'table', marginLeft:'-55px'}}>
                 <FormControlLabel value="Male" control={<Radio 
                 { 
@@ -549,7 +571,7 @@ const EditProfileInfo = () => {
                         style={{ width: '185px', padding:'6px'}} 
                         component="label" variant="outlined" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
                             Upload Front ID
-                            <VisuallyHiddenInput type="file" { ...register("validIdImage", { required: false }) } name="validIdImage" accept="image/*" onChange={(e) => handleFrontId(e, e.target.files[0])} />
+                            <VisuallyHiddenInput type="file" { ...register("validIdImageFront", { required: false }) } name="validIdImageFront" accept="image/*" onChange={(e) => handleFrontId(e, e.target.files[0])} />
                         </LoadingButton>
                         <div className="div-imgUpload">
                             <img className="imgFiles" src={(displayFrontID !== null) ? `${displayFrontID}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
@@ -644,6 +666,15 @@ const EditProfileInfo = () => {
         </div>
       </form>
       <PageLoader isLoadingPage={ pageLoader } />
+
+      <MessageDialog
+        isOpenMessage={ openConfirmSubmit } 
+        handleCloseMessage={ handleSubmitClose } 
+        handleOkay={ handleSendCreditOkay } 
+        title={ "Confirmation" } 
+        content={ "You are about to request for full verification." }
+        color={ "success" }
+        isLoading={ submitLoading } />
     </div>
   )
 }
