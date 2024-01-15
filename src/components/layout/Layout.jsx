@@ -35,6 +35,7 @@ const Layout = () => {
         <Navbar />
         {
           (authdata !== null) ? <Outlet /> 
+          : (userRole === null) ? <Navigate to="/" state={{ from: location }} replace /> 
           : (userRole.role == "Agent") ? <Navigate to="/console/login" state={{ from: location }} replace /> 
           : <Navigate to="/dashboard/login" state={{ from: location }} replace />
         }

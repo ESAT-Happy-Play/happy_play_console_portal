@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import PageLayout from "./components/layout/PageLayout";
 import LayoutWrapper from "./components/layout/LayoutWrapper";
+import IndexPage from "./pages/index/IndexPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* public routes */}
+          <Route path="/" element={<IndexPage />} />
           <Route path="dashboard/login" element={<Login />} />
           <Route path="console/login" element={<AgentLogin />} />
           <Route path="register/:code?" element={<Registration />} />
