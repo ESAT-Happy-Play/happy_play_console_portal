@@ -19,6 +19,18 @@ export function IDTypes() {
   ];
 }
 
+export function CivilSatusTypes() {
+  return [
+    "Single",
+    "Married",
+    "Separated",
+    "Widow/Widower",
+    "Annulled",
+    "Divorced",
+    "Common Law"
+  ];
+}
+
 export function BloodTypes() {
   return [
     "A+",
@@ -34,19 +46,54 @@ export function BloodTypes() {
 
 export function NatureOfWorkList() {
   return [
-    "Goverment",
-    "IT Industry",
-    "Insurance",
-    "Health",
-    "Others"
+    "Lawyer",
+    "Dentist",
+    "Engineer",
+    "SelfEmployed",
+    "Employee private Sector",
+    "Professional",
+    "Other Professional",
+    "Unemployed",
+    "Retired",
+    "Home duties",
+    "Student",
+    "Business/Entrepreneur",
+    "Doctor",
+    "Athlete",
+    "Housewife",
+    "Managers",
+    "Technicians and associate professionals",
+    "Clerical support workers",
+    "Service and sales workers",
+    "Skilled agricultural, forestry and fishery workers",
+    "Craft and related trades workers",
+    "Plant and machine operators and assemblers",
+    "Elementary occupations  (unskilled workers)",
+    "Armed forces occupation",
   ];
 }
 
 export function SourceOfIncomeList() {
   return [
-    "Employment",
-    "Business",
-    "Others"
+    "Student Allowance - Domestic/Local",
+    "Spouse Allowance - Domestic/Local",
+    "Salary - Domestic/Local",
+    "Commission",
+    "Pension - Domestic/Local",
+    "Retired",
+    "Retirement - Domestic/Local",
+    "Business - Domestic/Local",
+    "Allotment/Remittance - Local",
+    "Salary - Abroad/Offshore",
+    "Student Allowance - Abroad/Offshore",
+    "Pension - Abroad/Offshore",
+    "Retirement - Abroad/Offshore",
+    "Business - Abroad/Offshore",
+    "Allotment/Remittance - Abroad",
+    "Proceeds from Sale of Property",
+    "Proceeds from Lottery",
+    "Proceeds from Loan",
+    "Donations",
   ];
 }
 

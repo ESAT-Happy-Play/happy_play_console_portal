@@ -29,6 +29,7 @@ const UserVerification = () => {
 
     if(response.status) {
       setusersForV(response.data.usersForVerification);
+      console.log(response.data.usersForVerification);
     }
 
     if(!response.status) {
