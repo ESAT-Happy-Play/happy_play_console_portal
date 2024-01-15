@@ -243,12 +243,13 @@ const Registration = () => {
                     }
                     error={!!errors.mobileNumber}
                     helperText={errors.mobileNumber?.message}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,11) }}
                     variant="outlined" size="small" fullWidth />
                 </div>
               </div>
 
-              <div className="divIam">
-                <FormGroup style={{ marginBottom: '10px' }}>
+              <div className="divIam" style={{paddingTop:'15px', marginLeft:'10px' }}>
+                <FormGroup>
                   <FormControlLabel className={(!checkAge) ? 'hasError' : ''}
                     {
                     ...register("checkAge", { required: true })
@@ -263,52 +264,34 @@ const Registration = () => {
 
                       </div>
                     } />
+                </FormGroup>
 
-                  <FormControlLabel className={(!checkNationality) ? 'hasError' : ''}
-                    {
-                    ...register("checkNationality", { required: true })
-                    }
-                    control={<Checkbox defaultValue={checkNationality} onChange={e => setCheckNationality(!checkNationality)} />}
-                    label={
+                <div className="divTerms" style={{marginTop:'0px'}}>
+                  <FormControlLabel className={(!checkTerm) ? 'hasError' : ''}
+                    control={
+                      <Checkbox {
+                        ...register("checkTerm", { required: true })
+                      } defaultValue={checkTerm} onChange={e => setCheckTerm(!checkTerm)} />
+                    } label={
                       <div>
-                        <span>I am a Filipino Citizen </span>
+                        <span>I agree to Happy Play </span>
                         {
-                          (!checkNationality) ? <span className="checkRequired">(required *)</span> : ''
+                          (!checkTerm) ? <span className="checkRequired">(required *)</span> : ''
                         }
-
                       </div>
                     } />
-                </FormGroup>
-              </div>
-
-              <div className="divTerms">
-                <FormControlLabel className={(!checkTerm) ? 'hasError' : ''}
-                  control={
-                    <Checkbox {
-                      ...register("checkTerm", { required: true })
-                    } defaultValue={checkTerm} onChange={e => setCheckTerm(!checkTerm)} />
-                  } label={
-                    <div>
-                      <span>I agree to Happy Play </span>
-                      {
-                        (!checkTerm) ? <span className="checkRequired">(required *)</span> : ''
-                      }
-                    </div>
-                  } />
-                <div style={{ fontSize: '14px' }}>
-                  <Link to={'/privacy'}>Privacy Policy</Link>
-                  <span> and </span>
-                  <Link to={'/terms'}>Terms of Use</Link>
+                  <div style={{ fontSize: '14px', marginLeft:'32px' }}>
+                    <Link to={'/privacy'}>Privacy Policy</Link>
+                    <span> and </span>
+                    <Link to={'/terms'}>Terms of Use</Link>
+                  </div>
                 </div>
               </div>
 
-              <div className="divContent">
-                <div className="left"></div>
-                <div className="right">
+              <div className="divContent" style={{justifyContent:'center',marginTop:'30px'}}>
                   <Button type="submit" variant="outlined" color="success">
                     Register
                   </Button>
-                </div>
               </div>
             </form>
           </div>
