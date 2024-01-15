@@ -22,18 +22,21 @@
         margin-bottom: 20px;
     }
 
-    .divIam, .divTerms {
+    .divIam,
+    .divTerms {
         span {
             color: black;
             font-size: 14px;
         }
+
         .hasError {
+
             // color: #ee2525;
             // border: 1px solid;
             // margin-top: 10px;
             // border-radius: 5px;
             .checkRequired {
-                color:red;
+                color: red;
                 font-size: 12px;
             }
         }
@@ -50,6 +53,7 @@
         border-radius: 10px;
         overflow: hidden;
         display: flex;
+        flex-direction: row;
 
         .lfContent {
             flex: 1;
@@ -71,7 +75,7 @@
                     font-weight: 500;
                     text-transform: uppercase;
                 }
-        
+
                 .left {
                     width: 125px;
                     padding: 8px;
@@ -79,15 +83,15 @@
                     text-align: left;
                     margin-right: 10px;
                 }
-        
+
                 .right {
                     flex: 2.5;
                     text-align: left;
                 }
-        
+
                 .divFoot {
                     text-align: right;
-        
+
                     button {
                         padding: 10px;
                         margin: 5px;
@@ -99,6 +103,7 @@
         .show {
             display: block !important;
         }
+
         .hide {
             display: none !important;
         }
