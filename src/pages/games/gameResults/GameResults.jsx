@@ -4,10 +4,11 @@ import { TextField, Button, MenuItem  } from "@mui/material";
 import { toast } from 'react-toastify';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab";
 import { Card } from "../../../components/card/Card";
-import { ResultsTable } from "./ResultTable";
+
+import { FormatDateMMDDYY } from "../../../helper/Helpers";
+
 import PageLoader from "../../../components/widget/PageLoader";
 import GameResultList from "../../../components/table/gameResults/GameResultList";
 
@@ -15,10 +16,11 @@ import { GETFetch } from "../../../api/ApiFetchBuilder";
 import PostResultRegular from "../../../components/Dialog/forms/gameResult/PostResultRegular";
 import PostResultJockpot33 from "../../../components/Dialog/forms/gameResult/PostResultJockpot33";
 import PostResultJackpot34 from "../../../components/Dialog/forms/gameResult/PostResultJackpot34";
+import WinnersList from "../../../components/table/winners/WinnersList";
 
 const GameResults = () => {
-  let storeObj = GetStoreObject("auth");
   const [pageLoader, setPageLoader] = React.useState(false);
+  const [winnersLoader, setwinnersLoader] = React.useState(false);
 
   let _PAGESIZE = 5;
   // table state
@@ -27,6 +29,7 @@ const GameResults = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
   const [tablelistdata, settablelistdata] = useState([]);
+  const [winlistdata, setwinlistdata] = useState([]);
 
   const [tabsVal, settabsVal] = useState(0);
 
@@ -58,9 +61,26 @@ const GameResults = () => {
     }
   }
 
+  const handleWinnerData = async (reqType, datfrom, gamtype, drwtype) => {
+    setwinnersLoader(true);
+    let url = (reqType === 0) ? `${process.env.REACT_APP_API_URL}/bets/winners`
+    : `${process.env.REACT_APP_API_URL}/bets/winners?gametype=${gamtype}&drawtype=${drwtype}&datefrom=${datfrom}`;
+    let response = await GETFetch(url);
+    setwinnersLoader(false);
+
+    if(response.status) {
+      setwinlistdata(response.data.winners);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
   // trigger call API endpoint if state change
   useEffect(() => {
     handleGameResultData();
+    handleWinnerData(0);
   }, [pageNumber, searchValue, pageSize, totalRows, tabsVal]);
 
   // handle table next page
@@ -79,8 +99,8 @@ const GameResults = () => {
     settabsVal(newValue);
   }
 
-  const handleShowWinner = (e, dataObject) => {
-    console.log(dataObject);
+  const handleShowWinner = async (e, dataObject) => {
+    await handleWinnerData(1, FormatDateMMDDYY(dataObject.drawTimeStamp), dataObject.gameType, dataObject.drawType);
   }
 
   // Add dialog
@@ -124,7 +144,7 @@ const GameResults = () => {
                   header={"RESULT HISTORY"}
                   body={
                     <div>
-                      <div className="dateSearch">
+                      {/* <div className="dateSearch">
                         <div className="row">
                           <div className="row">
                             <div className="labelTitle">
@@ -147,7 +167,7 @@ const GameResults = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
 
                       <GameResultList 
                         SearchResults={ tablelistdata }
@@ -165,6 +185,13 @@ const GameResults = () => {
           }))
         }
       />
+
+      <div style={{padding:'15px', background:'white', borderRadius:'10px'}}>
+        <h2 style={{color:'#4845d2'}}>Winners</h2>
+        <div>
+          <WinnersList SearchResults={winlistdata} isLoading={winnersLoader} />
+        </div>
+      </div>
 
       {
         (tabsVal === 0) ? <PostResultRegular isOpenAdd={openPostResult} handleCloseAdd={handlePostResultClose} handleCallback={handlePostResultCallback} />
