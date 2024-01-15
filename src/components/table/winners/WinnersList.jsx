@@ -25,9 +25,9 @@ const WinnersList = ({
         <TableCell component="th" scope="row" align="center" colSpan={8}> No records found! </TableCell>
     </TableRow>;
 
-    const handleChangePage = (event, newpage) => {
-      ChangePage(event, newpage);
-    }
+    // const handleChangePage = (event, newpage) => {
+    //   ChangePage(event, newpage);
+    // }
 
     return ( 
     <div className="WinnersList">
