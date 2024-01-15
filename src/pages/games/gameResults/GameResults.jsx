@@ -8,56 +8,89 @@ import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab";
 import { Card } from "../../../components/card/Card";
 import { ResultsTable } from "./ResultTable";
+import PageLoader from "../../../components/widget/PageLoader";
+import GameResultList from "../../../components/table/gameResults/GameResultList";
+
+import { GETFetch } from "../../../api/ApiFetchBuilder";
+import PostResultRegular from "../../../components/Dialog/forms/gameResult/PostResultRegular";
+import PostResultJockpot33 from "../../../components/Dialog/forms/gameResult/PostResultJockpot33";
+import PostResultJackpot34 from "../../../components/Dialog/forms/gameResult/PostResultJackpot34";
 
 const GameResults = () => {
-  // auth api response object
   let storeObj = GetStoreObject("auth");
-  // storeObj.companyObjId
-  // storeObj.branchId
-  // storeObj.isMain
-  // storeObj.accountObjectId
-  // storeObj.branchName
-
   const [pageLoader, setPageLoader] = React.useState(false);
 
   let _PAGESIZE = 5;
-  // const [SearchValue, setSearchValue] = React.useState('');
-  const [PageNumber, setPageNumber] = React.useState(0);
-  const [totalRows, setTotalRows] = React.useState(0);
-  const [PageSize, setPageSize] = React.useState(_PAGESIZE);
+  // table state
+  const [searchValue, setsearchValue] = useState('');
+  const [pageNumber, setpageNumber] = useState(1);
+  const [totalRows, setTotalRows] = useState(0);
+  const [pageSize, setpageSize] = useState(_PAGESIZE);
+  const [tablelistdata, settablelistdata] = useState([]);
 
-  // const [getDrawHistoryResults] = useGetDrawHistoryResultsMutation();
-  const [resultsList, setResultsList] = React.useState([]);
-  const [branchId, setbranchId] = React.useState(storeObj.branchId);
+  const [tabsVal, settabsVal] = useState(0);
 
-    // handle company table next page
-  const handleGameResultsChangePage = async (event, newPage) => {
-    setPageNumber(newPage + 1);
+  const handleGameResultData = async () => {
     setPageLoader(true);
+    let gameType = "01";
+    if (tabsVal === 1) {
+      gameType = "02";
+    } else if (tabsVal === 2) {
+      gameType = "03";
+    } else {
+      gameType = "01";
+    }
+    let url = `${process.env.REACT_APP_API_URL}/gameresults?gametype=${gameType}&rowsperpage=${pageSize}&pagenumber=${pageNumber}`;
+
+    let response = await GETFetch(url);
+    setPageLoader(false);
+
+    if(response.status) {
+      settablelistdata(response.data.resultHistory);
+
+      setTotalRows(response.data.totalRows);
+      setpageNumber(response.data.currentPage);
+      setpageSize(response.data.rowsPerPage);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   }
 
-  // handle company table change page size
-  const handleGameResultsRowsPerPage = async (event) => {
-    setPageSize(+event.target.value);
-    setPageNumber(0);
-    setPageLoader(true);
+  // trigger call API endpoint if state change
+  useEffect(() => {
+    handleGameResultData();
+  }, [pageNumber, searchValue, pageSize, totalRows, tabsVal]);
+
+  // handle table next page
+  const handleChangePage = (event, newPage) => {
+    setpageNumber(newPage + 1);
   }
 
-  const results = ["1","2","6"];
-  const resultsJ3 = ["2","8","3",  "K", "J", "Q"];
-  const resultsJ4 = ["9",  "7", "6", "K", ,"A","J", "Q"];
+  // handle table change page size
+  const handleRowsPerPage = (event) => {
+    setpageSize(+event.target.value);
+    setpageNumber(1);
+  }
 
   const tabs = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
-
-  const [resultList, setResultList] = useState(results);
-
   const fetchResults = (newValue) => {
-    if (newValue == 0)
-      setResultList(results);
-    else if (newValue == 1)
-      setResultList(resultsJ3);
-    else
-      setResultList(resultsJ4);
+    settabsVal(newValue);
+  }
+
+  const handleShowWinner = (e, dataObject) => {
+    console.log(dataObject);
+  }
+
+  // Add dialog
+  const [openPostResult, setPostResult] = React.useState(false);
+  const handlePostResultOpen = () => { setPostResult(true); };
+  const handlePostResultClose = () => { setPostResult(false); };
+
+  const handlePostResultCallback = () => {
+    handlePostResultClose();
+    setTotalRows(totalRows + 1);
   }
 
   return (
@@ -73,19 +106,16 @@ const GameResults = () => {
                   style={{flex:1.2}}
                   header={"Latest Result"}
                   actions={
-                    <Button onClick={() => {}} variant="outline" className="post-button" size="large">
+                    <Button onClick={handlePostResultOpen} variant="outline" className="post-button" size="large">
                       Post Result <EditOutlinedIcon />
                     </Button>
                   }
                   body={
                     <div className="result-div">
-                      <h1>{resultList.slice(0,3).join("-")}</h1>
-                      {resultList.length > 3 && 
-                        <h1>{resultList?.slice(3).join("-")}</h1>
-                      }
-                      <h2>October 8, 2023</h2>
-                      <h2>1PM</h2>
-                      <p>Posted by: Operator Name</p>
+                      <h1>{(tablelistdata.length > 0) ? tablelistdata[0].numRes : "..."}</h1>
+                      <h2>{(tablelistdata.length > 0) ? tablelistdata[0].formattedDate : "..."}</h2>
+                      <h2>{(tablelistdata.length > 0) ? tablelistdata[0].drawType : "..."}</h2>
+                      <p>Posted by: {(tablelistdata.length > 0) ? tablelistdata[0].operatorNameDisplay : "..."}</p>
                     </div>
                   }
                 />
@@ -118,7 +148,16 @@ const GameResults = () => {
                           </div>
                         </div>
                       </div>
-                      <ResultsTable/>
+
+                      <GameResultList 
+                        SearchResults={ tablelistdata }
+                        totalCount={ totalRows }
+                        RowsPerPage={ handleRowsPerPage }
+                        pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
+                        pageSize = { pageSize }
+                        ChangePage={ handleChangePage }
+                        isLoading = { pageLoader }
+                        Show = { handleShowWinner }/>
                     </div>
                   }
                 />
@@ -126,7 +165,14 @@ const GameResults = () => {
           }))
         }
       />
-      {/* <PageLoader isLoadingPage={ pageLoader } /> */}
+
+      {
+        (tabsVal === 0) ? <PostResultRegular isOpenAdd={openPostResult} handleCloseAdd={handlePostResultClose} handleCallback={handlePostResultCallback} />
+        : (tabsVal === 1) ? <PostResultJockpot33 isOpenAdd={openPostResult} handleCloseAdd={handlePostResultClose} handleCallback={handlePostResultCallback} />
+        : <PostResultJackpot34 isOpenAdd={openPostResult} handleCloseAdd={handlePostResultClose} handleCallback={handlePostResultCallback} />
+      }
+      
+      <PageLoader isLoadingPage={ pageLoader } />
     </div>
   );
 }

@@ -31,6 +31,15 @@ export function FormatDate(stringDate) {
   return (yy + '-' + mm + '-' + dd)
 }
 
+export function FormatDateMMDDYY(stringDate) {
+  let dt = (new Date(stringDate));
+  var mm = ('0' + (dt.getMonth()+1)).slice(-2);
+  var dd = ('0' + (dt.getDate())).slice(-2);
+  var yy = dt.getFullYear();
+
+  return (mm + '-' + dd + '-' + yy)
+}
+
 export function FormatDateTime(stringDate) {
   let dt = (new Date(stringDate));
   var mm = ('0' + (dt.getMonth()+1)).slice(-2);

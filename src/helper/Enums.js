@@ -97,6 +97,22 @@ export function SourceOfIncomeList() {
   ];
 }
 
+export function DrawTypes() {
+  return [
+    "1PM",
+    "2PM",
+    "3PM",
+    "4PM",
+    "5PM",
+    "6PM",
+    "7PM",
+    "8PM",
+    "9PM",
+    "10PM",
+    "11PM",
+  ];
+}
+
 export function AgentMenus() {
   return [
     "Home.Home",// not parent and no parent id

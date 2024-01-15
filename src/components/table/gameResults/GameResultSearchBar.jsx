@@ -3,36 +3,36 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useState } from 'react';
 
-const GameResultsSearchBar = ({ handleSearch, handleSearchEmpty }) => {
-  //declarations
-  const [searchVal, setSearchVal] = useState('');
+const WithdrawalRequestsSearchBar = ({ handleSearch, handleSearchEmpty }) => {
+    //declarations
+    const [searchVal, setSearchVal] = useState('');
 
-  // submit form if buttons submit available
-  const handleSubmit = (e) => e.preventDefault();
+    // submit form if buttons submit available
+    const handleSubmit = (e) => e.preventDefault();
 
-  // onchange trigger
-  const handleSearchChange = (e) => {
-      setSearchVal(e.target.value);
-      handleSearchEmpty(e, e.target.value);
-  }
+    // onchange trigger
+    const handleSearchChange = (e) => {
+        setSearchVal(e.target.value);
+        handleSearchEmpty(e, e.target.value);
+    }
 
-  // on search icon trigger
-  const handleSearchSubmit = (e) => {
-      handleSearch(e, searchVal);
-  }
-
-  const handleKeyDown = (e) => {
-    if(e.keyCode === 13){
+    // on search icon trigger
+    const handleSearchSubmit = (e) => {
         handleSearch(e, searchVal);
     }
-  }
+
+    const handleKeyDown = (e) => {
+      if(e.keyCode === 13){
+         handleSearch(e, searchVal);
+      }
+    }
 
   return (
     <header>
         <form className="search" onSubmit={ handleSubmit }>
             <TextField
                 size="small"
-                label="Enter Transaction #"
+                label="Search"
                 variant="outlined"
                 fullWidth
                 onChange={ handleSearchChange }
@@ -50,4 +50,4 @@ const GameResultsSearchBar = ({ handleSearch, handleSearchEmpty }) => {
   )
 }
 
-export default GameResultsSearchBar
+export default WithdrawalRequestsSearchBar

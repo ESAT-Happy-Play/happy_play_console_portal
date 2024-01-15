@@ -381,7 +381,7 @@ const routeLinks = [
         },
         {
           path: "/game/gamebets",
-          element: (userRole === "Dashboard") ? <AdminGameBets /> : <GameBets />,
+          element: (userRole === "Dashboard") ? <GameBets /> : <AdminGameBets />,
           state: "Game.GameBets",
           sidebarProps: {
             displayText: "Game Bets",
@@ -390,7 +390,7 @@ const routeLinks = [
         },
         {
           path: "/game/gameresult",
-          element: (userRole === "Dashboard") ? <AdminGameResult /> : <GameResults />,
+          element: (userRole === "Dashboard") ? <GameResults /> : <AdminGameResult />,
           state: "Game.GameResult",
           sidebarProps: {
             displayText: "Game Result",
