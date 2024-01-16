@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import VerificationList from "../../../components/table/userVerification/VerificationList";
 
 import { GETFetch } from "../../../api/ApiFetchBuilder";
+import UserVerificationRequest from "../../../components/Dialog/forms/verification/UserVerificationRequest";
 
 const UserVerification = () => {
   /**
@@ -55,6 +56,25 @@ const UserVerification = () => {
     setuserCode(code);
   }
 
+
+  const [userObject, setuserObject] = useState(null);
+  const handleShowVerification = ( event, userObj) => {
+    console.log(userObj.userId);
+
+    // TODO: /users/:userid .user
+
+    setuserObject(userObj);
+    handleVerifyRequestOpen();
+  };
+
+  const [openVerifyRequest, setVerifyRequest] = React.useState(false);
+  const handleVerifyRequestOpen = () => { setVerifyRequest(true); };
+  const handleVerifyRequestClose = () => { setVerifyRequest(false); };
+
+  const handleVerficationCallback = () => {
+    console.log("done");
+  };
+
   return (
     <div className="verificationPage">
       <div className="container">
@@ -70,11 +90,15 @@ const UserVerification = () => {
           </div>
           <div className="div-right">
             <div className="div-bottom">
-              <VerificationList searchResults={ usersForV } isLoading={ pageLoader } />
+              <VerificationList searchResults={ usersForV } ShowVerify={handleShowVerification} isLoading={ pageLoader } />
             </div>
           </div>
         </div>
       </div>
+
+      <UserVerificationRequest isOpenAdd={ openVerifyRequest } 
+        handleCloseAdd={ handleVerifyRequestClose } 
+        userObj={ userObject } handleCallback={handleVerficationCallback} />
     </div>
   )
 }

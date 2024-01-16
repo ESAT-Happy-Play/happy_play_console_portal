@@ -42,6 +42,7 @@ const ApproveWithdrawRequest = ({ isOpenAdd, handleCloseAdd, handleCallback, obj
   // trigger call API endpoint if state change
   useEffect(() => {
     if(objData !== null) {
+      console.log(objData);
       setrequestId(objData.requestId);
       if (objData.mode === "0") {
         setpaymode(0)
@@ -65,19 +66,18 @@ const ApproveWithdrawRequest = ({ isOpenAdd, handleCloseAdd, handleCallback, obj
   const handleSubmitOpen = () => { setConfirmSubmit(true); };
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleApproveCreditOkay = async () => {
-    // setSubmitLoading(true);
-    // let response = await PATCHFetch(`${process.env.REACT_APP_API_URL}/credits/withdraw/requests/${requestId}?isapprove=1`, {});
-    // setSubmitLoading(false);
-    // if(response.status) {
-    //   handleSubmitClose();
-    //   handleCallback();
-    //   toast.success(response.data.message);
-    // }
+    setSubmitLoading(true);
+    let response = await PATCHFetch(`${process.env.REACT_APP_API_URL}/credits/withdraw/requests/${requestId}?isapprove=1&&requesteecompanyid=${objData.companyId}&requesteebranchcode=${objData.branchCode}`, {});
+    setSubmitLoading(false);
+    if(response.status) {
+      toast.success(response.data.message);
+      handleSubmitClose();
+      handleCallback();
+    }
 
-    // if(!response.status) {
-    //   toast.error(response.data.errorMessage);
-    // }
-    toast.error("Ongoing dev.");
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   };
 
   return (

@@ -55,7 +55,7 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
         gametype: formData.gametype,
         drawtype: formData.drawtype,
         drawdate: FormatDateMMDDYY(formData.drawdate),
-        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}`,
+        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}`.toUpperCase(),
     }
     let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/gameresults/postresult`, submitData);
     // if(response.status) {

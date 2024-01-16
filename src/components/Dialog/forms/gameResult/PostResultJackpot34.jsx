@@ -56,7 +56,7 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
         gametype: formData.gametype,
         drawtype: formData.drawtype,
         drawdate: FormatDateMMDDYY(formData.drawdate),
-        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}-${formData.numresult4}-${formData.numresult5}-${formData.numresult6}-${formData.numresult7}`,
+        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}-${formData.numresult4}-${formData.numresult5}-${formData.numresult6}-${formData.numresult7}`.toUpperCase(),
     }
 
     let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/gameresults/postresult`, submitData);
