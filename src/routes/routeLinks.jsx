@@ -80,6 +80,8 @@ import CreditRequests from '../pages/wallet/creditRequests/CreditRequests';
 import WithdrawCredits from '../pages/wallet/withdraw/WithdrawCredits';
 import WithdrawalRequests from '../pages/wallet/withdrawalRequests/WithdrawalRequests';
 
+import ReportAProblem from '../pages/issuesAndConcerns/reportAProblem/ReportAProblem';
+
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
 
@@ -438,7 +440,55 @@ const routeLinks = [
         },
       ]
     },
-    // Reporting 9
+    // Issues and Concern 9
+    {
+      path: "",
+      element: <PageLayout />,
+      state: "Support",
+      sidebarProps: {
+        displayText: "ISSUES & CONCERN",
+        icon: <DashboardOutlinedIcon />
+      },
+      child: [
+        {
+          path: "/support/reportProblem",
+          element: <ReportAProblem />,
+          state: "Support.ReportProblem",
+          sidebarProps: {
+            displayText: "Report a Problem",
+            icon: <MonetizationOnIcon />
+          },
+        },
+        {
+          path: "/support/cases",
+          element: <PageLayout />,
+          state: "Support.Cases",
+          sidebarProps: {
+            displayText: "Cases",
+            icon: <PointOfSaleIcon />
+          },
+        },
+        {
+          path: "/accounts/violations",
+          element: <PageLayout />,
+          state: "Support.Violations",
+          sidebarProps: {
+            displayText: "Violations",
+            icon: <AcUnitOutlinedIcon />
+          },
+        },
+        {
+          path: "/accounts/actions",
+          element: <PageLayout />,
+          state: "Support.AccountActions",
+          sidebarProps: {
+            displayText: "Account Suspension / Cancellation",
+            icon: <AcUnitOutlinedIcon />
+          },
+        }
+      ]
+    },
+    // Reporting 10
     {
       path: "",
       element: <PageLayout />,

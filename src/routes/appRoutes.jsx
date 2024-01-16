@@ -7,14 +7,14 @@ let user_role = GetStoreObject("role");
 
 let menus = [];
 
-if(user_role != null) {
+if (user_role != null) {
   if (user_role.role === "Agent") {
     menus = AgentMenus();
   } else {
     menus = AdminMenus();
 
     // remove some links
-    if(authdata !== null) {
+    if (authdata !== null) {
       let excludeUserAccess = GetUserAccess(authdata.userProfile);
       menus = menus.filter((menu) => excludeUserAccess.includes(menu));
 
@@ -44,6 +44,7 @@ let listRoutes = {
   userAccount: false,
   game: false,
   postings: false,
+  support: false,
   reporting: false
 }
 
@@ -53,14 +54,14 @@ const buildChildObj = (dataObj, childLinks) => {
   for (let i = 0; i < childLinks.length; i++) {
     finalChild.push(dataObj.child.find(item => item.state === childLinks[i]));
   }
-  dataObj.child.splice(0,dataObj.child.length);
+  dataObj.child.splice(0, dataObj.child.length);
   dataObj.child = finalChild;
   return dataObj;
 }
 
 let finalRoutes = [];
 
-if(user_role != null) {
+if (user_role != null) {
   (user_role.role !== "Agent") ? finalRoutes.push(routeLinks[1]) : finalRoutes.push(routeLinks[0]);
 }
 
@@ -74,6 +75,7 @@ if (menus !== null) {
   if ((menus.filter(str => str.includes("UserAccount.")).length > 0)) { listRoutes.userAccount = true; }
   if ((menus.filter(str => str.includes("Game.")).length > 0)) { listRoutes.game = true; }
   if ((menus.filter(str => str.includes("Postings.")).length > 0)) { listRoutes.postings = true; }
+  if ((menus.filter(str => str.includes("Support.")).length > 0)) { listRoutes.support = true; }
   if ((menus.filter(str => str.includes("Reporting.")).length > 0)) { listRoutes.reporting = true; }
 
   // add child menus
@@ -83,7 +85,8 @@ if (menus !== null) {
   if (listRoutes.userAccount) { finalRoutes.push(buildChildObj(routeLinks[6], menus.filter(str => str.includes("UserAccount.")))); }
   if (listRoutes.game) { finalRoutes.push(buildChildObj(routeLinks[7], menus.filter(str => str.includes("Game.")))); }
   if (listRoutes.postings) { finalRoutes.push(buildChildObj(routeLinks[8], menus.filter(str => str.includes("Postings.")))); }
-  if (listRoutes.reporting) { finalRoutes.push(buildChildObj(routeLinks[9], menus.filter(str => str.includes("Reporting.")))); }
+  if (listRoutes.support) { finalRoutes.push(buildChildObj(routeLinks[9], menus.filter(str => str.includes("Support.")))); }
+  if (listRoutes.reporting) { finalRoutes.push(buildChildObj(routeLinks[10], menus.filter(str => str.includes("Reporting.")))); }
   if (listRoutes.history) { finalRoutes.push(buildChildObj(routeLinks[2], menus.filter(str => str.includes("History.")))); }
 }
 

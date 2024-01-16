@@ -140,6 +140,12 @@ export function AgentMenus() {
     "Reporting.SalesReport", // is parent false
     "Reporting.TransactionReport", // is parent false
     "Reporting.UserActivityReport", // is parent false
+
+    "Support", // is parent true
+    "Support.ReportProblem", // is parent false
+    "Support.Cases", // is parent false
+    "Support.Violations", // is parent false
+    "Support.AccountActions", // is parent false
   ];
 }
 
@@ -195,6 +201,12 @@ export function AdminMenus() {
     "Reporting.TransactionReport", // is parent false
     "Reporting.UserActivityReport", // is parent false
     "Reporting.UserGrowth", // is parent false
+
+    "Support", // is parent true
+    "Support.ReportProblem", // is parent false
+    "Support.Cases", // is parent false
+    "Support.Violations", // is parent false
+    "Support.AccountActions", // is parent false
   ];
 }
 
@@ -226,6 +238,11 @@ export function GetUserAccess(data) {
   if(data.g4_txtBlast === 1) { excludeLinks.push("Postings.TextBlast") }
   if(data.g4_announcements === 1) { excludeLinks.push("Postings.Announcements") }
   if(data.g4_livestreaming === 1) { excludeLinks.push("Postings.LiveStreaming") }
+
+  excludeLinks.push("Support.ReportProblem")
+  excludeLinks.push("Support.Cases")
+  excludeLinks.push("Support.Violations")
+  excludeLinks.push("Support.AccountActions")
   
   if(data.g5_sales === 1) { excludeLinks.push("Reporting.SalesReport") }
   if(data.g5_transactions === 1) { excludeLinks.push("Reporting.TransactionReport") }

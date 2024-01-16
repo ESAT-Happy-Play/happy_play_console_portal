@@ -1,0 +1,18 @@
+export const CaseModel = {
+    CaseId: 0,
+    Title: "",
+    Description: "",
+    CaseOwnerId: 0,
+    CategoryId: 0,
+    OrganizationId: 0,
+    StatusId: 0,
+    Internal: false,
+    Importance: 0,
+    Remarks: "",
+    ReportedPersonId: 0,
+    Category: "",
+    Organization: "",
+    Status: "",
+    CaseOwner: {},
+    ReportedPerson: {},
+}

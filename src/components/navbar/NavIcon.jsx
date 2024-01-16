@@ -31,87 +31,98 @@ import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
 
 const NavIcon = ({ sideBarSate }) => {
-  switch(sideBarSate) {
-    case "Home.Home":
-        return <DashboardOutlinedIcon />
-    case "Admin.Dashboard":
-        return <DashboardOutlinedIcon />
+    switch (sideBarSate) {
+        case "Home.Home":
+            return <DashboardOutlinedIcon />
+        case "Admin.Dashboard":
+            return <DashboardOutlinedIcon />
 
-    case "History.GameBets":
-        return <PaymentsOutlinedIcon />
-    case "History.GameResult":
-        return <PostAddOutlinedIcon />
+        case "History.GameBets":
+            return <PaymentsOutlinedIcon />
+        case "History.GameResult":
+            return <PostAddOutlinedIcon />
 
-    case "Wallet.SendCredits":
-        return <WalletOutlinedIcon />
+        case "Wallet.SendCredits":
+            return <WalletOutlinedIcon />
 
-    case "Wallet.CreditRequests":
-        return <WalletOutlinedIcon />
+        case "Wallet.CreditRequests":
+            return <WalletOutlinedIcon />
 
-    case "Wallet.Withdraw":
-        return <WalletOutlinedIcon />
+        case "Wallet.Withdraw":
+            return <WalletOutlinedIcon />
 
-    case "Wallet.WithdrawalRequests":
-        return <WalletOutlinedIcon />
+        case "Wallet.WithdrawalRequests":
+            return <WalletOutlinedIcon />
 
-    case "Profile.ProfileInformation":
-        return <PersonIcon />
-    case "Profile.ResetPassword":
-        return <VisibilityOutlinedIcon />
+        case "Profile.ProfileInformation":
+            return <PersonIcon />
+        case "Profile.ResetPassword":
+            return <VisibilityOutlinedIcon />
 
-    case "SuperAdmin.SuperAdmin":
-        return <LockOutlinedIcon />
-    case "SuperAdmin.Company":
-        return <ApartmentOutlinedIcon />
-    case "SuperAdmin.Branch":
-        return <HomeWorkOutlinedIcon />
-    case "SuperAdmin.Profiles":
-        return <AssignmentIndIcon />
-    case "SuperAdmin.Games":
-        return <DashboardOutlinedIcon />
+        case "SuperAdmin.SuperAdmin":
+            return <LockOutlinedIcon />
+        case "SuperAdmin.Company":
+            return <ApartmentOutlinedIcon />
+        case "SuperAdmin.Branch":
+            return <HomeWorkOutlinedIcon />
+        case "SuperAdmin.Profiles":
+            return <AssignmentIndIcon />
+        case "SuperAdmin.Games":
+            return <DashboardOutlinedIcon />
 
-    case "UserAccount.SystemUsers":
-        return <Diversity3OutlinedIcon />
-    case "UserAccount.Operators":
-        return <AccountCircleIcon />
-    case "UserAccount.UserApproval":
-        return <VerifiedOutlinedIcon />
-    case "UserAccount.UserVerification":
-        return <VerifiedOutlinedIcon />
-    case "UserAccount.MasterAgents":
-        return <PersonAddAltOutlinedIcon />
-    case "UserAccount.Agents":
-        return <PeopleOutlinedIcon />
-    case "UserAccount.Players":
-        return <PersonOutlineOutlinedIcon />
+        case "UserAccount.SystemUsers":
+            return <Diversity3OutlinedIcon />
+        case "UserAccount.Operators":
+            return <AccountCircleIcon />
+        case "UserAccount.UserApproval":
+            return <VerifiedOutlinedIcon />
+        case "UserAccount.UserVerification":
+            return <VerifiedOutlinedIcon />
+        case "UserAccount.MasterAgents":
+            return <PersonAddAltOutlinedIcon />
+        case "UserAccount.Agents":
+            return <PeopleOutlinedIcon />
+        case "UserAccount.Players":
+            return <PersonOutlineOutlinedIcon />
 
-    case "Game.GameScheduleSettings":
-        return <QueryBuilderOutlinedIcon />
-    case "Game.GameMechanicsSettings":
-        return <SettingsOutlinedIcon />
-    case "Game.Price&Prizes":
-        return <MoneyOutlinedIcon />
-    case "Game.GameBets":
-        return <PaymentsOutlinedIcon />
-    case "Game.GameResult":
-        return <PostAddOutlinedIcon />
+        case "Game.GameScheduleSettings":
+            return <QueryBuilderOutlinedIcon />
+        case "Game.GameMechanicsSettings":
+            return <SettingsOutlinedIcon />
+        case "Game.Price&Prizes":
+            return <MoneyOutlinedIcon />
+        case "Game.GameBets":
+            return <PaymentsOutlinedIcon />
+        case "Game.GameResult":
+            return <PostAddOutlinedIcon />
 
-    case "Postings.TextBlast":
-        return <SmsIcon />
-    case "Postings.Announcements":
-        return <CampaignOutlinedIcon />
-    case "Postings.LiveStreaming":
-        return <LiveTvOutlinedIcon />
+        case "Postings.TextBlast":
+            return <SmsIcon />
+        case "Postings.Announcements":
+            return <CampaignOutlinedIcon />
+        case "Postings.LiveStreaming":
+            return <LiveTvOutlinedIcon />
 
-    case "Reporting.SalesReport":
-        return <MonetizationOnIcon />
-    case "Reporting.TransactionReport":
-        return <PointOfSaleIcon />
-    case "Reporting.UserActivityReport":
-        return <AcUnitOutlinedIcon />
-    default:
-        return <DashboardOutlinedIcon />
-  }
+        case "Reporting.SalesReport":
+            return <MonetizationOnIcon />
+        case "Reporting.TransactionReport":
+            return <PointOfSaleIcon />
+        case "Reporting.UserActivityReport":
+            return <AcUnitOutlinedIcon />
+            
+        case "Support.IssuesAndConcern":
+            return <MonetizationOnIcon />
+        case "Support.ReportProblem":
+            return <MonetizationOnIcon />
+        case "Support.Cases":
+            return <MonetizationOnIcon />
+        case "Support.Violations":
+            return <MonetizationOnIcon />
+        case "Support.AccountActions":
+            return <MonetizationOnIcon />
+        default:
+            return <DashboardOutlinedIcon />
+    }
 }
 
 export default NavIcon
