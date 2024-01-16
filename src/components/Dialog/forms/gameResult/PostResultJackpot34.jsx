@@ -69,6 +69,19 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
     //   toast.error(response.data.errorMessage);
     // }
     toast.success(`Jackpot 3.4 game result posted successfully.`);
+    reset(formValues => ({
+        ...formValues,
+        gametype: "02",
+        drawtype: "",
+        drawdate: "",
+        numresult1: "",
+        numresult2: "",
+        numresult3: "",
+        numresult4: "",
+        numresult5: "",
+        numresult6: "",
+        numresult7: "",
+    }));
     handleSubmitClose();
     handleCallback();
   };
@@ -146,7 +159,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult1 }
                     helperText={ errors.numresult1?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -155,7 +169,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult2 }
                     helperText={ errors.numresult2?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -164,7 +179,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult3 }
                     helperText={ errors.numresult3?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <p><b>-</b></p>
                 <TextField 
@@ -174,7 +190,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult4 }
                     helperText={ errors.numresult4?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -183,7 +200,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult5 }
                     helperText={ errors.numresult5?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -192,7 +210,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult6 }
                     helperText={ errors.numresult6?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -201,7 +220,8 @@ const PostResultJackpot34 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     error={ !!errors.numresult7 }
                     helperText={ errors.numresult7?.message }
                     style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '1.5rem'}}}
+                    inputProps={{style: {fontSize: '1.5rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
               </div>
 
