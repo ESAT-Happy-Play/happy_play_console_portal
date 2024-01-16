@@ -15,7 +15,7 @@ const GameBetsList = ({
 
   const results = SearchResults.map((obj, index ) => <GameBetsTableData
     key={ index }
-    // onView= { handleOnView }
+    uniqueKey= { index }
     objct={obj}
   />)
 
@@ -40,15 +40,14 @@ const GameBetsList = ({
             <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>
                     <TableRow>
-                    <TableCell>Draw Date</TableCell>
-                    <TableCell>Acct. No</TableCell>
-                    <TableCell>Acct. Name</TableCell>
-                    <TableCell>Location</TableCell>
-                    <TableCell>Trans. No</TableCell>
-                    <TableCell>Combo</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Total</TableCell>
-                    <TableCell>X</TableCell>
+                    <TableCell>ACCT #</TableCell>
+                    <TableCell>ACCT NAME</TableCell>
+                    <TableCell>TRXN #</TableCell>
+                    <TableCell>NUM BET</TableCell>
+                    <TableCell>BET AMNT</TableCell>
+                    <TableCell>BET DATE</TableCell>
+                    <TableCell>GAME TYPE</TableCell>
+                    <TableCell>RECRUITER</TableCell>
                     </TableRow>
                 </TableHead>
             <TableBody>

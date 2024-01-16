@@ -62,19 +62,36 @@
 
         .div-right {
             form {
-                padding: 15px;
-                display: flex;
-                gap: 10px;
-                width: 100%;
-        
-                .div-content {
+                .div-body {
+                    padding: 15px;
+                    display: flex;
+                    gap: 10px;
                     width: 100%;
-        
-                    h4 {
-                        margin: 0;
-                        color: #4845d2;
+                
+                    .div-content {
+                        width: 100%;
+                
+                        h4 {
+                            margin: 0;
+                            color: #4845d2;
+                        }
                     }
                 }
+
+                .div-body-bottom {
+                    padding: 15px;
+                    display: flex;
+                    justify-content: center;
+                    gap: 10px;
+                }
+            }
+
+            .div-show {
+                display: block !important;
+            }
+
+            .div-hide {
+                display: none !important;
             }
 
             .div-bottom {
