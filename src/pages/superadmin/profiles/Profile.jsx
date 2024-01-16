@@ -14,7 +14,7 @@ import Checkbox from '@mui/material/Checkbox';
 import PageLoader from "../../../components/widget/PageLoader";
 import { toast } from 'react-toastify';
 
-import { GETFetch, DELETEFetch } from "../../../api/ApiFetchBuilder";
+import { GETFetch, DELETEFetch, PATCHFetch } from "../../../api/ApiFetchBuilder";
 import AddProfile from "../../../components/Dialog/forms/profile/AddProfile";
 import EditProfile from "../../../components/Dialog/forms/profile/EditProfile";
 import MessageDialog from "../../../components/Dialog/MessageDialog";
@@ -27,6 +27,7 @@ const Profile = () => {
    */
   const [pageLoader, setPageLoader] = useState(false);
   const [submitLoading, setSubmitLoading] = React.useState(false);
+  const [updateLoading, setupdateLoading] = React.useState(false);
   const [disabledCheckbox, setdisabledCheckbox] = React.useState(true);
   const [isEditProfile, setisEditProfile] = React.useState(false);
 
@@ -72,34 +73,6 @@ const Profile = () => {
 
     if(response.status) {
       setuserAccessProfile(response.data.userAccessProfile);
-      let accessData = response.data.userAccessProfile;
-      console.log(accessData);
-      reset(formValues => ({
-        ...formValues,
-        g1_superadmin: accessData.g1_superadmin,
-        g1_company: accessData.g1_company,
-        g1_branch: accessData.g1_branch,
-        g1_profiles: accessData.g1_profiles,
-        g1_game: accessData.g1_game,
-        g2_systemusers: accessData.g2_systemusers,
-        g2_operators: accessData.g2_operators,
-        g2_userverification: accessData.g2_userverification,
-        g2_masteragents: accessData.g2_masteragents,
-        g2_agents: accessData.g2_agents,
-        g2_players: accessData.g2_players,
-        g3_gameschedulesettings: accessData.g3_gameschedulesettings,
-        g3_gamemechanicssettings: accessData.g3_gamemechanicssettings,
-        g3_gamewinningsettings: accessData.g3_gamewinningsettings,
-        g3_gamebets: accessData.g3_gamebets,
-        g3_gameresults: accessData.g3_gameresults,
-        g4_txtblast: accessData.g4_txtblast,
-        g4_announcements: accessData.g4_announcements,
-        g4_livestream: accessData.g4_livestream,
-        g5_sales: accessData.g5_sales,
-        g5_transactions: accessData.g5_transactions,
-        g5_useractivity: accessData.g5_useractivity,
-        g5_usergrowth: accessData.g5_usergrowth
-      }));
     }
 
     if(!response.status) {
@@ -176,9 +149,54 @@ const Profile = () => {
   // Edit submit handler
   const submitEditHandler = async (data) => {
     setFormData(data);
-    // handleSubmitOpen();
-    console.log(formProfile);
-    console.log(data);
+    handleUpdateOpen();
+  };
+
+  // Confiration dialog message
+  const [openConfirmUpdate, setConfirmUpdate] = React.useState(false);
+  const handleUpdateOpen = () => { setConfirmUpdate(true); };
+  const handleUpdateClose = () => { setConfirmUpdate(false); };
+  const handleUpdateProfileOkay = async () => {
+    let finalData = {
+      g1_superadmin: (typeof formData.g1_superadmin == "boolean") ? (formData.g1_superadmin) ? 1 : 0 : userAccessProfile.g1_superAdmin,
+      g1_company: (typeof formData.g1_company == "boolean") ? (formData.g1_company) ? 1 : 0 : userAccessProfile.g1_company,
+      g1_branch: (typeof formData.g1_branch == "boolean") ? (formData.g1_branch) ? 1 : 0 : userAccessProfile.g1_branch,
+      g1_profiles: (typeof formData.g1_profiles == "boolean") ? (formData.g1_profiles) ? 1 : 0 : userAccessProfile.g1_profiles,
+      g1_game: (typeof formData.g1_game == "boolean") ? (formData.g1_game) ? 1 : 0 : userAccessProfile.g1_games,
+      g2_systemusers: (typeof formData.g2_systemusers == "boolean") ? (formData.g2_systemusers) ? 1 : 0 : userAccessProfile.g2_systemUsers,
+      g2_operators: (typeof formData.g2_operators == "boolean") ? (formData.g2_operators) ? 1 : 0 : userAccessProfile.g2_operators,
+      g2_userverification: (typeof formData.g2_userverification == "boolean") ? (formData.g2_userverification) ? 1 : 0 : userAccessProfile.g2_userVerification,
+      g2_masteragents: (typeof formData.g2_masteragents == "boolean") ? (formData.g2_masteragents) ? 1 : 0 : userAccessProfile.g2_masterAgents,
+      g2_agents: (typeof formData.g2_agents == "boolean") ? (formData.g2_agents) ? 1 : 0 : userAccessProfile.g2_agents,
+      g2_players: (typeof formData.g2_players == "boolean") ? (formData.g2_players) ? 1 : 0 : userAccessProfile.g2_players,
+      g3_gameschedulesettings: (typeof formData.g3_gameschedulesettings == "boolean") ? (formData.g3_gameschedulesettings) ? 1 : 0 : userAccessProfile.g3_gameScheduleSettings,
+      g3_gamemechanicssettings: (typeof formData.g3_gamemechanicssettings == "boolean") ? (formData.g3_gamemechanicssettings) ? 1 : 0 : userAccessProfile.g3_gameMecahnicsSettings,
+      g3_gamewinningsettings: (typeof formData.g3_gamewinningsettings == "boolean") ? (formData.g3_gamewinningsettings) ? 1 : 0 : userAccessProfile.g3_gameWinningSettings,
+      g3_gamebets: (typeof formData.g3_gamebets == "boolean") ? (formData.g3_gamebets) ? 1 : 0 : userAccessProfile.g3_bets,
+      g3_gameresults: (typeof formData.g3_gameresults == "boolean") ? (formData.g3_gameresults) ? 1 : 0 : userAccessProfile.g3_gameResult,
+      g4_txtblast: (typeof formData.g4_txtblast == "boolean") ? (formData.g4_txtblast) ? 1 : 0 : userAccessProfile.g4_txtBlast,
+      g4_announcements: (typeof formData.g4_announcements == "boolean") ? (formData.g4_announcements) ? 1 : 0 : userAccessProfile.g4_announcements,
+      g4_livestream: (typeof formData.g4_livestream == "boolean") ? (formData.g4_livestream) ? 1 : 0 : userAccessProfile.g4_livestreaming,
+      g5_sales: (typeof formData.g5_sales == "boolean") ? (formData.g5_sales) ? 1 : 0 : userAccessProfile.g5_sales,
+      g5_transactions: (typeof formData.g5_transactions == "boolean") ? (formData.g5_transactions) ? 1 : 0 : userAccessProfile.g5_transactions,
+      g5_useractivity: (typeof formData.g5_useractivity == "boolean") ? (formData.g5_useractivity) ? 1 : 0 : userAccessProfile.g5_userActivity,
+      g5_usergrowth: (typeof formData.g5_usergrowth == "boolean") ? (formData.g5_usergrowth) ? 1 : 0 : userAccessProfile.g5_userGrowth
+    }
+
+    setupdateLoading(true);
+    let response = await PATCHFetch(`${process.env.REACT_APP_API_URL}/users/accessprofile?featureid=${userAccessProfile.pofileId}`, finalData);
+    setupdateLoading(false);
+    if(response.status) {
+      toast.success(response.data.message);
+      handleUpdateClose();
+
+      setisEditProfile(false);
+      setdisabledCheckbox(true);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   };
 
   return (
@@ -317,6 +335,16 @@ const Profile = () => {
         content={ `Are you sure you want to delete ${dynamicProfileName}?` }
         color={ "error" }
         isLoading={ submitLoading } />
+
+      <MessageDialog
+        isOpenMessage={ openConfirmUpdate } 
+        handleCloseMessage={ handleUpdateClose } 
+        handleOkay={ handleUpdateProfileOkay } 
+        title={ "Confirmation" } 
+        content={ `Are you sure you want to update ${dynamicProfileName}?` }
+        color={ "success" }
+        isLoading={ updateLoading } />
+
       <PageLoader isLoadingPage={ pageLoader } />
     </div>
   )
