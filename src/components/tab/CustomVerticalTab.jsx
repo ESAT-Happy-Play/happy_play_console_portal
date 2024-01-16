@@ -13,19 +13,18 @@ const CustomVerticalTab = ({tabList, changeEvent = ()=>{}}) => {
       setValue(newValue);
       changeEvent(newValue);
     };
-    console.log(tabList);
 
   return (
     <Tabs value={value}  onChange={handleChange} orientation="vertical">
       <Box>
         <TabsList>
           {tabList?.map(({ label }, i) => (
-            <Tab value={i}>{label}</Tab>
+            <Tab key={i} value={i}>{label}</Tab>
           ))}
         </TabsList>
       </Box>
       {tabList?.map(({ Component }, i) => (
-        <TabPanel value={i}>
+        <TabPanel key={i} value={i}>
           {Component}
         </TabPanel>
       ))}

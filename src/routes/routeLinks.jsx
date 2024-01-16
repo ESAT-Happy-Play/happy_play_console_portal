@@ -81,6 +81,9 @@ import WithdrawCredits from '../pages/wallet/withdraw/WithdrawCredits';
 import WithdrawalRequests from '../pages/wallet/withdrawalRequests/WithdrawalRequests';
 
 import ReportAProblem from '../pages/issuesAndConcerns/reportAProblem/ReportAProblem';
+import Cases from '../pages/issuesAndConcerns/cases/Cases';
+import Violations from '../pages/issuesAndConcerns/violations/Violations';
+import AccountActions from '../pages/issuesAndConcerns/accountActions/AccountActions';
 
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
@@ -451,7 +454,7 @@ const routeLinks = [
       },
       child: [
         {
-          path: "/support/reportProblem",
+          path: "/support/report/problem",
           element: <ReportAProblem />,
           state: "Support.ReportProblem",
           sidebarProps: {
@@ -461,7 +464,7 @@ const routeLinks = [
         },
         {
           path: "/support/cases",
-          element: <PageLayout />,
+          element: <Cases />,
           state: "Support.Cases",
           sidebarProps: {
             displayText: "Cases",
@@ -470,7 +473,7 @@ const routeLinks = [
         },
         {
           path: "/accounts/violations",
-          element: <PageLayout />,
+          element: <Violations />,
           state: "Support.Violations",
           sidebarProps: {
             displayText: "Violations",
@@ -479,7 +482,7 @@ const routeLinks = [
         },
         {
           path: "/accounts/actions",
-          element: <PageLayout />,
+          element: <AccountActions />,
           state: "Support.AccountActions",
           sidebarProps: {
             displayText: "Account Suspension / Cancellation",
