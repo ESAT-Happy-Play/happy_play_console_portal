@@ -21,6 +21,7 @@ const UserVerification = () => {
   const [pageLoader, setPageLoader] = useState(false);
   const [userCode, setuserCode] = useState(_UserAgentCode);
   const [usersForV, setusersForV] = useState([]);
+  const [userDataInfo, setuserDataInfo] = useState(null);
 
   const [counter, setCounter] = useState(0);
 
@@ -32,6 +33,22 @@ const UserVerification = () => {
 
     if(response.status) {
       setusersForV(response.data.usersForVerification);
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const handleUserData = async (userid) => {
+    setPageLoader(true);
+    let url = `${process.env.REACT_APP_API_URL}/users/${userid}`; 
+    let response = await GETFetch(url);
+    setPageLoader(false);
+
+    if(response.status) {
+      setuserDataInfo(response.data.user);
+      console.log(response.data.user);
     }
 
     if(!response.status) {
@@ -58,13 +75,14 @@ const UserVerification = () => {
   }
 
 
-  const [userObject, setuserObject] = useState(null);
-  const handleShowVerification = ( event, userObj) => {
+  // const [userObject, setuserObject] = useState(null);
+  const handleShowVerification = async ( event, userObj) => {
     console.log(userObj.userId);
 
     // TODO: /users/:userid .user
+    await handleUserData(userObj.userId);
 
-    setuserObject(userObj);
+    // setuserObject(userObj);
     handleVerifyRequestOpen();
   };
 
@@ -100,7 +118,7 @@ const UserVerification = () => {
 
       <UserVerificationRequest isOpenAdd={ openVerifyRequest } 
         handleCloseAdd={ handleVerifyRequestClose } 
-        userObj={ userObject } handleCallback={handleVerficationCallback} />
+        userObj={ userDataInfo } handleCallback={handleVerficationCallback} />
     </div>
   )
 }

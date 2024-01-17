@@ -75,102 +75,106 @@ const UserVerificationRequest = ({ isOpenAdd, handleCloseAdd, userObj, handleCal
         </div>
         <DialogContent dividers>
           <div className="divStep">
-            <form noValidate> 
-              <div className='div-verify'>
-                <div className='div-img'>
-                  <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
-                    <div className="div-imgUpload" style={{width:'190px'}}>
-                        <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
-                    </div>
-                  </div>
-                  <div style={{width:'100%'}}>
-                      <div className="div-imgUpload" style={{width:'190px'}}>
-                          <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+            {
+              (userObj !== null) ?
+                <form noValidate> 
+                  <div className='div-verify'>
+                    <div className='div-img'>
+                      <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
+                        <div className="div-imgUpload" style={{width:'190px'}}>
+                            <img className="imgFiles" src={(userObj.idFront !== null) ? `${userObj.idFront}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                        </div>
                       </div>
-                  </div>
-                </div>
-                <hr />
-                <div className='div-img'>
-                  <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
-                    <div className="div-imgUpload" style={{width:'190px'}}>
-                        <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
-                    </div>
-                  </div>
-                  <div style={{width:'100%'}}>
-                      <div className="div-imgUpload" style={{width:'190px'}}>
-                          <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                      <div style={{width:'100%'}}>
+                          <div className="div-imgUpload" style={{width:'190px'}}>
+                              <img className="imgFiles" src={(userObj.idBack !== null) ? `${userObj.idBack}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                          </div>
                       </div>
-                  </div>
-                </div>
-                <hr />
-                
-                <div className='div-v-details'>
-                  <div>
-                    <div className='div-text'>
-                      <span>First Name</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
                     </div>
-                    <div className='div-text'>
-                      <span>Middle Name</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
+                    <hr />
+                    <div className='div-img'>
+                      <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
+                        <div className="div-imgUpload" style={{width:'190px'}}>
+                            <img className="imgFiles" src={(userObj.idPic !== null) ? `${userObj.idPic}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                        </div>
+                      </div>
+                      <div style={{width:'100%'}}>
+                          <div className="div-imgUpload" style={{width:'190px'}}>
+                              <img className="imgFiles" src={(userObj.signaturePic !== null) ? `${userObj.signaturePic}` : `${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                          </div>
+                      </div>
                     </div>
-                    <div className='div-text'>
-                      <span>Last Name</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    <hr />
+                    
+                    <div className='div-v-details'>
+                      <div>
+                        <div className='div-text'>
+                          <span>First Name</span>
+                          <TextField disabled defaultValue={userObj.firstname} variant="outlined" size="small" fullWidth /> 
+                        </div>
+                        <div className='div-text'>
+                          <span>Middle Name</span>
+                          <TextField disabled defaultValue={userObj.middlename} variant="outlined" size="small" fullWidth /> 
+                        </div>
+                        <div className='div-text'>
+                          <span>Last Name</span>
+                          <TextField disabled defaultValue={userObj.lastname} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Gender</span>
+                          <TextField disabled defaultValue={(userObj.sex === "1") ? "Male" : "Female"} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Birthdate</span>
+                          <TextField disabled defaultValue={userObj.birthday} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Civil Status</span>
+                          <TextField disabled defaultValue={"Single"} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Blood Type</span>
+                          <TextField disabled defaultValue={"A+"} variant="outlined" size="small" fullWidth />
+                        </div>
+                      </div>
+                      <div>
+                        <div className='div-text'>
+                          <span>Place Of Birth</span>
+                          <TextField disabled defaultValue={"145 Tres De Abril, Pahina San Nicolas, Cebu"} variant="outlined" size="small" fullWidth /> 
+                        </div>
+                        <div className='div-text'>
+                          <span>Present Address</span>
+                          <TextField disabled defaultValue={"145 Tres De Abril, Pahina San Nicolas, Cebu"} variant="outlined" size="small" fullWidth /> 
+                        </div>
+                        <div className='div-text'>
+                          <span>Permanent Address</span>
+                          <TextField disabled defaultValue={"145 Tres De Abril, Pahina San Nicolas, Cebu"} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Nationality</span>
+                          <TextField disabled defaultValue={"Filipino"} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Nature Of Work</span>
+                          <TextField disabled defaultValue={"Managers"} variant="outlined" size="small" fullWidth />
+                        </div>
+                        <div className='div-text'>
+                          <span>Source Of Income</span>
+                          <TextField disabled defaultValue={"Salary"} variant="outlined" size="small" fullWidth />
+                        </div>
+                      </div>
                     </div>
-                    <div className='div-text'>
-                      <span>Gender</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Birthdate</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Civil Status</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Blood Type</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                  </div>
-                  <div>
-                    <div className='div-text'>
-                      <span>Place Of Birth</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Present Address</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Permanent Address</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Nationality</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Nature Of Work</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                    <div className='div-text'>
-                      <span>Source Of Income</span>
-                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
-                    </div>
-                  </div>
-                </div>
 
-                <div className='div-v-footer'>
-                  <Button onClick={submitDecline} color='error' variant="contained">Decline</Button>
-                  <Button onClick={submitAccept} variant="contained" color="success">
-                    Accept &nbsp; <SaveAsIcon/>
-                  </Button>
-                </div>
-              </div>
-            </form>
+                    <div className='div-v-footer'>
+                      <Button onClick={submitDecline} color='error' variant="contained">Decline</Button>
+                      <Button onClick={submitAccept} variant="contained" color="success">
+                        Accept &nbsp; <SaveAsIcon/>
+                      </Button>
+                    </div>
+                  </div>
+                </form>
+              : <></>
+            }
           </div>
           
         </DialogContent>
