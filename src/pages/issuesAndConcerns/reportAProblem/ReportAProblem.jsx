@@ -3,29 +3,26 @@ import "./reportaproblem.scss"
 import React, { useState, useEffect } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Card } from "../../../components/card/Card";
-import { Box } from '@mui/material';
 import { Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
 
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { LoadingButton } from '@mui/lab';
 import FilterIcon from '@mui/icons-material/Filter';
 import { TextField, MenuItem } from "@mui/material";
 import { GETFetch } from "../../../api/ApiFetchBuilder";
 
 import { useForm } from 'react-hook-form';
+import { IssuesAndConcernModel } from "../../../model/IssuesAndConcernModel";
 
 import CustomTab from "../../../components/tab/CustomTab";
 
 function ReportAProblem() {
-  const caseForm = useForm();
-  const { register, handleSubmit, formState, reset } = caseForm;
+
+  const formAddIssue = useForm({ defaultValues: IssuesAndConcernModel.AddIssueForm });
+  const { register, handleSubmit, formState, reset } = formAddIssue;
   const { errors } = formState;
+  const [formData, setFormData] = React.useState({});
 
   const [multiplier, setMultiplier] = React.useState(700);
 
@@ -48,7 +45,7 @@ function ReportAProblem() {
   }
 
   const handleOrganizationData = async () => {
-    setPageLoader(true);
+    // setPageLoader(true);
     let url = `${process.env.REACT_APP_SUPPORT_URL}/api/organization`;
     let response = await GETFetch(url);
     setPageLoader(false);
@@ -87,18 +84,46 @@ function ReportAProblem() {
     {
       label: "Issues",
       Component:
-        <div className="container divreport">
+        <div style={{display:'flex', justifyContent:'center'}}>
+        <div className="container divreport" style={{width:'535px'}}>
           <form onSubmit={handleSubmit(submitHandler)} noValidate>
-            <div className="divright" style={{ margin: '15px 15px 0px 15px' }}>
-              <div className="div-r-content">
+            <div className="divright" style={{ margin: '15px 15px 0px 15px', background:'none' }}>
+              <div className="div-r-content" style={{paddingRight:'40px'}}>
                 <div className="div-cont">
                   <p>Section</p>
                   <TextField
-                    onChange={e => handleSelect(e, e.target.value)}
-                    label="Section / Page Name" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
+                    {
+                    ...register("categoryId", { required: false })
+                    }
+                    error={!!errors.categoryId}
+                    helperText={errors.categoryId?.message}
+                    label="Section / Page Name" style={{ minWidth: "66%" }} defaultValue="" variant="outlined" size="small" select>
                     <MenuItem value=''><em>Section / Page Name</em></MenuItem>
                     {
                       (categories.length !== 0) ? categories.map((item) => (
+                        <MenuItem key={item.categoryId} value={item.categoryId}>
+                          {item.name}
+                        </MenuItem>
+                      ))
+                        : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
+                          : <MenuItem value=''>No records found!</MenuItem>
+                    }
+                  </TextField>
+                </div>
+
+                <div className="div-cont">
+                  <p>Organization</p>
+                  <TextField
+                    {
+                      ...register("organizationId", { required: false })
+                      }
+                      error={!!errors.organizationId}
+                      helperText={errors.organizationId?.message}
+                    // onChange={e => handleSelect(e, e.target.value)}
+                    label="Select organization" style={{ minWidth: "66%" }} defaultValue="" variant="outlined" size="small" select>
+                    <MenuItem value=''><em>Select organization</em></MenuItem>
+                    {
+                      (organizations.length !== 0) ? organizations.map((item) => (
                         <MenuItem key={item.categoryId} value={item.categoryId}>
                           {item.name}
                         </MenuItem>
@@ -115,8 +140,8 @@ function ReportAProblem() {
                     {
                     ...register("title", { required: false })
                     }
-                    error={!!errors.firstname}
-                    helperText={errors.firstname?.message} variant="outlined" size="small" fullWidth />
+                    error={!!errors.title}
+                    helperText={errors.title?.message} variant="outlined" size="small" fullWidth />
                 </div>
                 <div className="div-cont">
                   <p>Report Description</p>
@@ -124,24 +149,37 @@ function ReportAProblem() {
                     {
                     ...register("description", { required: false })
                     }
-                    error={!!errors.middlename}
-                    helperText={errors.middlename?.message}
+                    error={!!errors.description}
+                    helperText={errors.description?.message}
                     variant="outlined"
                     className="report-text-area"
                     size="small" multiline fullWidth />
                 </div>
-                <div className="div-cont">
-                  <LoadingButton loading={false}
-                    style={{ width: '280px', padding: '6px', backgroundColor: '#4845d2' }}
-                    component="label" variant="contained" color="success" loadingPosition='end' endIcon={<FilterIcon />}>
-                    Upload Supporting Attachment
-                    <VisuallyHiddenInput type="file" {...register("validIdImageFront", { required: false })} name="validIdImageFront" accept="image/*" onChange={(e) => handleFileUpload(e, e.target.files[0])} />
-                  </LoadingButton>
+                <br /><br />
+                <div className="div-cont" style={{justifyContent:'end'}}>
+                  <div>
+                    <LoadingButton loading={false}
+                      component="label" variant="contained" loadingPosition='end' endIcon={<FilterIcon />}>
+                      Supporting Attachment
+                      <VisuallyHiddenInput type="file" {...register("validIdImageFront", { required: false })} name="validIdImageFront" accept="image/*" onChange={(e) => handleFileUpload(e, e.target.files[0])} />
+                    </LoadingButton>
+                    <br />
+                    <div className="div-imgUpload">
+                        <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div className="div-cont" style={{justifyContent:'end'}}>
+                  <Button type="submit" variant="contained" color="success">
+                    Submit &nbsp; <SaveAsIcon/>
+                  </Button>
                 </div>
               </div>
             </div>
           </form>
         </div>
+      </div>
     },
     {
       label: "Report Someone",
@@ -163,7 +201,6 @@ function ReportAProblem() {
       <CustomTab
         tabList={tabs}
       />
-      {/* <PageLoader isLoadingPage={ pageLoader } /> */}
     </div>
   )
 }
