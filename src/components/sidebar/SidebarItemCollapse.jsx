@@ -7,14 +7,13 @@ import { useSelector } from "react-redux";
 
 import SidebarItem from "./SidebarItem";
 
-const SidebarItemCollapse = ({ item }) => {
-  const [open, setOpen] = useState(false);
+const SidebarItemCollapse = ({ item, selected, setSelected }) => {
 
   const { appState } = useSelector((state) => state.appState);
   useEffect(() => {
     let itemState = (appState.split(".")[0]);
     if (itemState === item.state) {
-      setOpen(true);
+      setSelected(item.sidebarProps.displayText);
     }
   }, [appState, item]);
 
@@ -22,25 +21,25 @@ const SidebarItemCollapse = ({ item }) => {
     item.sidebarProps ? (
       <>
         <ListItemButton
-          onClick={() => setOpen(!open)}
+          onClick={() => setSelected(selected ? "" : item.sidebarProps.displayText)}
           sx={{
             "&: hover": {
               backgroundColor: "#e9e6e6"
             },
-            zIndex:1
+            zIndex: 1
             // border: "0.5px solid rgb(230, 227, 227)"
           }}
         >
-        <ListItemText disableTypography
+          <ListItemText disableTypography
             primary={
               <Typography sx={{ "fontSize": "14px" }}>
                 {item.sidebarProps.displayText}
               </Typography>
             }
           />
-          {open ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
+          {selected ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto">
+        <Collapse in={selected} timeout="auto">
           <List sx={{ padding: 0 }}>
             {item.child?.map((route, index) => (
               route.sidebarProps ? (
