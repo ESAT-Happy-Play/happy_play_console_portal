@@ -7,25 +7,28 @@ import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
-import { TextField, Button, MenuItem  } from "@mui/material";
+import { TextField, Button, MenuItem } from "@mui/material";
 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import MessageDialog from "../../MessageDialog";
 
-import { PATCHFetch } from "../../../../api/ApiFetchBuilder";
+import { GETFetch, PATCHFetch, POSTFetch } from "../../../../api/ApiFetchBuilder";
 
 // import { GetStoreObject } from "../../../../helper/Helpers";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': { padding: theme.spacing(2), },
-    '& .MuiDialogActions-root': { padding: theme.spacing(1), },
+  '& .MuiDialogContent-root': { padding: theme.spacing(2), },
+  '& .MuiDialogActions-root': { padding: theme.spacing(1), },
 }));
 
 const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => {
-
-//   let loginObj = GetStoreObject("auth");
+  //   let loginObj = GetStoreObject("auth");
   const [submitLoading, setSubmitLoading] = React.useState(false);
 
+  const [loggedInUserData, setLoggedInUserData] = useState({});
+  const [taggedUserData, setTaggedUserData] = useState({});
+  const [categories, setCategories] = useState([]);
+  
   const formProcess = useForm({ defaultValues: { desctiption: "", tagUserId: "" } });
   const { register, handleSubmit, formState, reset } = formProcess;
   const { errors } = formState;
@@ -36,19 +39,143 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
     setFormData(data);
     handleSubmitOpen();
   };
+  
+  const handleCategoryData = async () => {
+    let url = `${process.env.REACT_APP_SUPPORT_URL}/api/category/1`;
+    let response = await GETFetch(url);
+    if (response.status) {
+      setCategories(response.data.categories);
+    } 
+  }
+
+  const handleCurrentUserData = async () => {    
+    let url = `${process.env.REACT_APP_API_URL}/users/currentuserdata`;
+    let response = await GETFetch(url);
+
+    if (response.status) {
+      setLoggedInUserData(response.data.loggedInUserData);
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const submitCaseComment = async () => {
+    let url = `${process.env.REACT_APP_SUPPORT_URL}/api/casecomment`;
+    const data = {
+      "caseId": objData.caseId,
+      "title": objData.title,
+      "description": objData.description,
+      "categoryId": objData.categoryId,
+      "organizationId": objData.organizationId,
+      "statusId": 4,
+      "reportedPersonId": 0,
+      "remarks": "completed",
+      "importance": objData.importance,
+      "comment": formData.desctiption,
+      "commentAccount": {
+        "userId": loggedInUserData.userId,
+        "mobileNumber": loggedInUserData.mobileNumber,
+        "firstName": loggedInUserData.firstname,
+        "lastName": loggedInUserData.lastname,
+        "middleName": loggedInUserData.middlename,
+        "email": ""
+      },
+      "reportedPerson": {
+        "userId": taggedUserData.userId,
+        "mobileNumber": taggedUserData.userId,
+        "firstName": taggedUserData.firstName,
+        "lastName": taggedUserData.lastName,
+        "middleName": taggedUserData.middleName,
+        "email": ""
+      },
+      "attachments": []
+    };
+    debugger;
+    let response = await POSTFetch(url, data);
+
+    if (response.status) {
+      if (objData.organizationId == 9) {
+        submitViolation();
+      }
+
+      handleSubmitClose();
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const submitViolation = async () => {
+    const categoryName = categories.find(o => o.categoryId == objData.categoryId)?.name ?? "";
+    let url = `${process.env.REACT_APP_API_URL}/violations`;
+    const data = {
+      "userId": loggedInUserData.userId, // logged user
+      "caseId": `${objData.caseId}`,
+      "title": objData.title,
+      "description": objData.description,
+      "violationTypeId": objData.categoryId, // categoryId
+      "violationType": categoryName, // name
+      "parmuserid": taggedUserData.userId // tagged user Id
+    };
+    debugger;
+    let response = await POSTFetch(url, data);
+
+    if (response.status) {
+      setLoggedInUserData(response.data.loggedInUserData);
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const getUserDataByUserId = async () => {
+    let url = `${process.env.REACT_APP_API_URL}/account/${formData.tagUserId}`;
+    let response = await GETFetch(url);
+
+    if (response.status) {
+      setTaggedUserData(response.data.userData);
+      submitCaseComment();
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
+
+  const getCategories = async () => {
+    let url = `${process.env.REACT_APP_API_URL}/account/${formData.tagUserId}`;
+    let response = await GETFetch(url);
+
+    if (response.status) {
+      setTaggedUserData(response.data.userData);
+    }
+
+    if (!response.status) {
+      toast.error(response.data.errorMessage);
+    }
+  }
 
   // Confiration dialog message
   const [openConfirmSubmit, setConfirmSubmit] = React.useState(false);
   const handleSubmitOpen = () => { setConfirmSubmit(true); };
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleProcessOkay = async () => {
-    console.log("Sbmit");
+    getUserDataByUserId();
   };
+
+  useEffect(() => {
+    handleCategoryData();
+    handleCurrentUserData();
+  });
 
   return (
     <>
       <BootstrapDialog className="divDialogForm-small"
-        open={ isOpenAdd }
+        open={isOpenAdd}
         disableEscapeKeyDown
       >
         <div className="dialogHeader">
@@ -56,7 +183,7 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
         </div>
         <DialogContent dividers>
           <div id="step1" className="divStep">
-            <form onSubmit={ handleSubmit(submitHandler) } noValidate>
+            <form onSubmit={handleSubmit(submitHandler)} noValidate>
               <div className="divContent">
                 <div className="left">
                   <label>Category</label>
@@ -80,13 +207,13 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
                   <label>Reason</label>
                 </div>
                 <div className="right">
-                  <TextField variant="outlined" 
-                  placeholder="Explain the problem"
-                    { 
-                      ...register("desctiption", { required: true } ) 
+                  <TextField variant="outlined"
+                    placeholder="Explain the problem"
+                    {
+                    ...register("desctiption", { required: true })
                     }
-                    error={ !!errors.desctiption }
-                    helperText={ errors.desctiption?.message }
+                    error={!!errors.desctiption}
+                    helperText={errors.desctiption?.message}
                     multiline maxRows={4} size="small" fullWidth />
                 </div>
               </div>
@@ -96,33 +223,33 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
                   <label>Tagged User</label>
                 </div>
                 <div className="right">
-                  <TextField { 
-                      ...register("tagUserId", { required: true } ) 
-                    } variant="outlined" defaultValue="" size="small" fullWidth />
+                  <TextField {
+                    ...register("tagUserId", { required: true })
+                  } variant="outlined" defaultValue="" size="small" fullWidth />
                 </div>
               </div>
 
               <br />
-              <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
-                <Button onClick={ handleCloseAdd } variant="outlined">Cancel</Button>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px' }}>
+                <Button onClick={handleCloseAdd} variant="outlined">Cancel</Button>
                 <Button type="submit" className="btnSuccess" variant="contained">
                   Submit
                 </Button>
               </div>
             </form>
           </div>
-          
+
         </DialogContent>
       </BootstrapDialog>
-      
+
       <MessageDialog
-        isOpenMessage={ openConfirmSubmit } 
-        handleCloseMessage={ handleSubmitClose } 
-        handleOkay={ handleProcessOkay } 
-        title={ "Confirmation" } 
-        content={ "Are you sure you want to process case?" }
-        color={ "error" }
-        isLoading={ submitLoading } />
+        isOpenMessage={openConfirmSubmit}
+        handleCloseMessage={handleSubmitClose}
+        handleOkay={handleProcessOkay}
+        title={"Confirmation"}
+        content={"Are you sure you want to process case?"}
+        color={"error"}
+        isLoading={submitLoading} />
     </>
   )
 }

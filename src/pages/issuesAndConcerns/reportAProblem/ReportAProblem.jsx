@@ -85,7 +85,7 @@ function ReportAProblem() {
         title: formData.title,
         description: formData.description,
         categoryId: formData.categoryId,
-        organizationId: (reportType !==0) ? 5 : 9,
+        organizationId: (reportType !==0) ? 9 : 9,
         attachments: []
     };
 
