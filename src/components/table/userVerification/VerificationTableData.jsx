@@ -6,14 +6,14 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-function VerificationTableData({ objct }) {
+function VerificationTableData({ objct, handleVerify }) {
   return (
     <TableRow key={ objct.userId } sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
     <TableCell>{ objct.nameFull}</TableCell>
     <TableCell>{ objct.requestDate }</TableCell>
     <TableCell>
         <div className="row">
-          <Button component={Link} href="#" className="btnShow" variant="contained" size="small">
+          <Button onClick={e => handleVerify(e, objct)} className="btnShow" variant="contained" size="small">
                 View Details<VisibilityIcon />
             </Button>
         </div>

@@ -55,7 +55,7 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
         gametype: formData.gametype,
         drawtype: formData.drawtype,
         drawdate: FormatDateMMDDYY(formData.drawdate),
-        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}`,
+        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}`.toUpperCase(),
     }
     let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/gameresults/postresult`, submitData);
     // if(response.status) {
@@ -69,6 +69,15 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
     //   toast.error(response.data.errorMessage);
     // }
     toast.success(`Regular game result posted successfully.`);
+    reset(formValues => ({
+        ...formValues,
+        gametype: "01",
+        drawtype: "",
+        drawdate: "",
+        numresult1: "",
+        numresult2: "",
+        numresult3: "",
+    }));
     handleSubmitClose();
     handleCallback();
   };
@@ -143,8 +152,9 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult1 }
                     helperText={ errors.numresult1?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -152,8 +162,9 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult2 }
                     helperText={ errors.numresult2?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -161,8 +172,9 @@ const PostResultRegular = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult3 }
                     helperText={ errors.numresult3?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
               </div>
 

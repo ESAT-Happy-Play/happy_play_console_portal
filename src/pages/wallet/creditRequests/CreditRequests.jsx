@@ -35,7 +35,7 @@ const CreditRequests = () => {
     setPageLoader(true);
     let url = (loginObj.userCode === '0101') ? `${process.env.REACT_APP_API_URL}/credits/requests?requestto=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`
       : (requestType === 1) ? `${process.env.REACT_APP_API_URL}/credits/requests?requestto=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`
-      : `${process.env.REACT_APP_API_URL}/credits/requests/history?requestfrom=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`;
+      : `${process.env.REACT_APP_API_URL}/credits/requests?requestfrom=${loginObj.userId}&rowsperpage=${pageSize}&pagenumber=${pageNumber}&requesteename=${searchValue}`;
 
     let response = await GETFetch(url);
     setPageLoader(false);

@@ -56,7 +56,7 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
         gametype: formData.gametype,
         drawtype: formData.drawtype,
         drawdate: FormatDateMMDDYY(formData.drawdate),
-        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}-${formData.numresult4}-${formData.numresult5}-${formData.numresult6}`,
+        numresult: `${formData.numresult1}-${formData.numresult2}-${formData.numresult3}-${formData.numresult4}-${formData.numresult5}-${formData.numresult6}`.toUpperCase(),
     }
 
     let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/gameresults/postresult`, submitData);
@@ -69,6 +69,18 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
     //   toast.error(response.data.errorMessage);
     // }
     toast.success(`Jackpot 3.3 game result posted successfully.`);
+    reset(formValues => ({
+        ...formValues,
+        gametype: "02",
+        drawtype: "",
+        drawdate: "",
+        numresult1: "",
+        numresult2: "",
+        numresult3: "",
+        numresult4: "",
+        numresult5: "",
+        numresult6: "",
+    }));
     handleSubmitClose();
     handleCallback();
   };
@@ -145,8 +157,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult1 }
                     helperText={ errors.numresult1?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -154,8 +167,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult2 }
                     helperText={ errors.numresult2?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -163,8 +177,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult3 }
                     helperText={ errors.numresult3?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <p><b>-</b></p>
                 <TextField 
@@ -173,8 +188,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult4 }
                     helperText={ errors.numresult4?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -182,8 +198,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult5 }
                     helperText={ errors.numresult5?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
                 <TextField 
                     { 
@@ -191,8 +208,9 @@ const PostResultJockpot33 = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                     }
                     error={ !!errors.numresult6 }
                     helperText={ errors.numresult6?.message }
-                    style={{width:'50px'}}
-                    inputProps={{style: {fontSize: '2rem'}}}
+                    style={{width:'60px'}}
+                    inputProps={{style: {fontSize: '2rem', textTransform:'uppercase'}}}
+                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,1) }}
                     variant="outlined" size="small" fullWidth />
               </div>
 

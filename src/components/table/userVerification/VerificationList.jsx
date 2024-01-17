@@ -8,11 +8,13 @@ const VerificationList = ({
   // pageNumber, 
   // pageSize, 
   // totalCount,
+  ShowVerify,
   isLoading}) => {
 
     const results = searchResults.map(verfication => <VerificationTableData 
       key={verfication.userId} 
       objct={verfication}
+      handleVerify={ShowVerify}
     />)
     
 
