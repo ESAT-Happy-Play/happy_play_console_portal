@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "localhost/static/css/main.dae89499.css",
+    "main.js": "localhost/static/js/main.1327c1ea.js",
+    "static/media/esat-sidebar-foot.png": "localhost/static/media/esat-sidebar-foot.12053c11175aaf3ea5bc.png",
+    "static/media/esat-mock-logo.png": "localhost/static/media/esat-mock-logo.ebc44f1fe97c87f78b7c.png",
+    "index.html": "localhost/index.html",
+    "main.dae89499.css.map": "localhost/static/css/main.dae89499.css.map",
+    "main.1327c1ea.js.map": "localhost/static/js/main.1327c1ea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dae89499.css",
+    "static/js/main.1327c1ea.js"
+  ]
+}
