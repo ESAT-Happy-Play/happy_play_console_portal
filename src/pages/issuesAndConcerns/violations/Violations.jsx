@@ -1,28 +1,51 @@
 import "./violations.scss";
 
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
 import { toast } from 'react-toastify';
 
 import { TextField, MenuItem, Button } from "@mui/material";
 
-import AddIcon from '@mui/icons-material/Add';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { GETFetch } from "../../../api/ApiFetchBuilder";
+import { POSTFetch } from "../../../api/ApiFetchBuilder";
 import PageLoader from "../../../components/widget/PageLoader";
 
 import { GetStoreObject } from "../../../helper/Helpers";
 
 import CustomTab from "../../../components/tab/CustomTab"
 import { Card } from "../../../components/card/Card";
+import ViolationsList from "../../../components/table/violations/ViolationsList";
 
 const Violations = () => {
   const [pageLoader, setPageLoader] = useState(false);
 
-  const tabs = ["On-Going", "History"];
-  const [reportType, setreportType] = useState(0);
+  const [tablelistdata, settablelistdata] = useState([]);
+  const tabs = ["On-Going"];
   const selectReportType = (newValue) => {
-    setreportType(newValue);
+    console.log(newValue);
+  }
+
+  const handleViolationsData = async () => {
+    setPageLoader(true);
+    let url = `${process.env.REACT_APP_API_URL}/violations/search`;
+    let response = await POSTFetch(url, {
+        "userType": null,
+        "searchKey": null,
+        "sortBy": null,
+        "offset": 0,
+        "size": 100
+    });
+
+    setPageLoader(false);
+    if (response.status) {
+      settablelistdata(response.data);
+    }
+  }
+
+  useEffect(() => {
+    handleViolationsData();
+  }, []);
+
+  const handleAct = (e, objtData) => {
+    console.log(objtData);
   }
 
   return (
@@ -39,33 +62,8 @@ const Violations = () => {
                   header={null}
                   body={
                     <div>
-                      <div className="dateSearch">
-                        <div className="row">
-                          <div className="row">
-                            <div className="labelTitle">
-                              <span>Date From</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-4 labelTitle">
-                              <span>Date To</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div>
-                        Voilations Table
+                        <ViolationsList SearchResults={ tablelistdata } ProcessAct={handleAct} isLoading = { pageLoader } />
                       </div>
                     </div>
                   }
