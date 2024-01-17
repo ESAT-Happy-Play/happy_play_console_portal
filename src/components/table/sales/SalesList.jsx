@@ -8,12 +8,14 @@ const SalesList = ({
   // pageNumber, 
   // pageSize, 
   // totalCount,
+  ProcessCase,
   isLoading}) => {
 
     const results = SearchResults.sort( (a,b) => b.id - a.id ).map((obj, i) => <SalesTableData 
       key={i} 
       dataObj={obj}
       uniqKey= {i}
+      handleProcessCase={ProcessCase}
     />)
     
 

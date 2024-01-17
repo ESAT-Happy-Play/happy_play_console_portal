@@ -13,6 +13,7 @@ import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab"
 import CustomVerticalTab from "../../../components/tab/CustomVerticalTab";
 import CasesList from "../../../components/table/cases/CasesList";
+import ProcessCase from "../../../components/Dialog/forms/issueConcern/ProcessCase";
 
 const Cases = () => {
   let _PAGESIZE = 10;
@@ -127,6 +128,22 @@ const Cases = () => {
     }
   }
 
+  const [caseObjData, setcaseObjData] = React.useState(false);
+  const handleProcessCase = (e, objdata) => {
+    console.log(objdata);
+    setcaseObjData(objdata);
+    handleProcessCaseOpen();
+  }
+
+  // Add dialog
+  const [openProcessCase, setProcessCase] = React.useState(false);
+  const handleProcessCaseOpen = () => { setProcessCase(true); };
+  const handleProcessCaseClose = () => { setProcessCase(false); };
+
+  const handleProcessCaseCallback = () => {
+    handleProcessCaseClose();
+  }
+
   return (
     <div className="content">
       <div >
@@ -145,6 +162,7 @@ const Cases = () => {
                         pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
                         pageSize = { pageSize }
                         ChangePage={ handleChangePage }
+                        ProcessCase={handleProcessCase}
                         isLoading = { pageLoader } />
                   </div>
                   }))
@@ -154,6 +172,7 @@ const Cases = () => {
         } />
       </div>
       <PageLoader isLoadingPage={pageLoader} />
+      <ProcessCase isOpenAdd={openProcessCase} handleCloseAdd={handleProcessCaseClose} handleCallback={handleProcessCaseCallback} objData={caseObjData} />
     </div>
   )
 }
