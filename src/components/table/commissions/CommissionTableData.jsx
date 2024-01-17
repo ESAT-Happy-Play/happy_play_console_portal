@@ -15,7 +15,7 @@ function CommissionTableData({ uniqueId, dataObj }) {
           }
         </TableCell>
         <TableCell>{dataObj.drawType}</TableCell>
-        <TableCell>N/A</TableCell>
+        {/* <TableCell>N/A</TableCell> */}
         <TableCell>{dataObj.fromDownlineName}</TableCell>
         <TableCell>{dataObj.amount}</TableCell>
     </TableRow>
