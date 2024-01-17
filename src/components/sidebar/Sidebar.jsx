@@ -22,7 +22,9 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <img src={require('../../assets/esat-mock-logo.png')} className="logo" title="Esat Logo"/>
+        <a href="/" style={{display:'flex', height:'135px'}}>
+          <img src={require('../../assets/esat-mock-logo.jpg')} className="logo" title="Esat Logo"/>
+        </a>
       </div>
       {
         appRoutes.map((route, index) => (
@@ -35,9 +37,9 @@ const Sidebar = () => {
           ) : null
         ))
       }
-      <div className="foot">
+      {/* <div className="foot">
         <img src={require('../../assets/esat-sidebar-foot.png')} className="foot-logo" title="esat foot"/>
-      </div>
+      </div> */}
     </div>
   );
 };

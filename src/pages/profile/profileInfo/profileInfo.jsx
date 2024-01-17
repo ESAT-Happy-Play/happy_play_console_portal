@@ -100,7 +100,13 @@ const ProfileInfo = () => {
             :
             <div>
               <Button style={{marginRight:'65px'}} component={Link} href={`/profile/info/getverified`} className="btn-verfied" variant="contained" size="large">
-                  SEMI-VERIFIED <span>(Click to get verified)</span>
+                  {
+                    (userdata !== null) ? (userdata.verificationStatus === "0") ? "PENDING"
+                    : (userdata.verificationStatus === "2") ? "SEMI-VERIFIED"
+                    : (userdata.verificationStatus === "3") ? "FULLY-VERIFIED"
+                    : "DECLINED" : "..."
+                  }
+                <span>(Click to get verified)</span>
               </Button>
               <span style={{fontSize:'13px',color:'#7b7d7e'}}>Click to request full verification</span>
             </div>
