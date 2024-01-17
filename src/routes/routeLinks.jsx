@@ -84,6 +84,7 @@ import ReportAProblem from '../pages/issuesAndConcerns/reportAProblem/ReportAPro
 import Cases from '../pages/issuesAndConcerns/cases/Cases';
 import Violations from '../pages/issuesAndConcerns/violations/Violations';
 import AccountActions from '../pages/issuesAndConcerns/accountActions/AccountActions';
+import UserGrowth from '../pages/reports/usergrowth/UserGrowth';
 
 let user_role = GetStoreObject("role");
 var userRole = "Agent";
@@ -529,8 +530,8 @@ const routeLinks = [
           },
         },
         {
-          path: "/activity/report",
-          element: (userRole === "Dashboard") ? <Admin/> : <AgentUserActivities/>,
+          path: "/user/growth",
+          element: <UserGrowth />,
           state: "Reporting.UserGrowth",
           sidebarProps: {
             displayText: "User Growth",

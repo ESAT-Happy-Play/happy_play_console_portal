@@ -134,18 +134,18 @@ export function AgentMenus() {
     
     "History", // is parent true
     "History.GameBets", // is parent false
-    "History.GameResult", // is parent false
+    // "History.GameResult", // is parent false
     
     "Reporting", // is parent true
     "Reporting.SalesReport", // is parent false
     "Reporting.TransactionReport", // is parent false
-    "Reporting.UserActivityReport", // is parent false
+    // "Reporting.UserActivityReport", // is parent false
 
     "Support", // is parent true
     "Support.ReportProblem", // is parent false
     "Support.Cases", // is parent false
-    "Support.Violations", // is parent false
-    "Support.AccountActions", // is parent false
+    // "Support.Violations", // is parent false
+    // "Support.AccountActions", // is parent false
   ];
 }
 
