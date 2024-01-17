@@ -21,7 +21,7 @@ const TransactionReport = () => {
 
   // company table state
   const [SearchValue, setSearchValue] = useState('');
-  const [companyCode, setcompanyCode] = useState(null);
+  const [gameType, setgameType] = useState(null);
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
@@ -29,7 +29,9 @@ const TransactionReport = () => {
 
   const handleCommissionData = async () => {
     setPageLoader(true);
-    let url = `${process.env.REACT_APP_API_URL}/users/commissiontransactions?rowsperpage=${pageSize}&pagenumber=${pageNumber}&gametype=`;
+    let url = (gameType !== null) ? `${process.env.REACT_APP_API_URL}/users/commissiontransactions?rowsperpage=${pageSize}&pagenumber=${pageNumber}&gametype=${gameType}`
+      : `${process.env.REACT_APP_API_URL}/users/commissiontransactions?rowsperpage=${pageSize}&pagenumber=${pageNumber}`;
+
     let response = await GETFetch(url);
     setPageLoader(false);
 
@@ -49,7 +51,7 @@ const TransactionReport = () => {
   // trigger call API endpoint if state change
   useEffect(() => {
     handleCommissionData();
-  }, [pageNumber, SearchValue, pageSize, totalRows]);
+  }, [pageNumber, SearchValue, pageSize, totalRows, gameType]);
 
   // On click search company
   const handleSearch = (event, value) => { 
@@ -81,7 +83,7 @@ const TransactionReport = () => {
   }
 
   const handleSelect = (e, value) => {
-    setcompanyCode(value);
+    setgameType(value);
   }
 
   return (
@@ -97,9 +99,9 @@ const TransactionReport = () => {
                 onChange={e => handleSelect(e, e.target.value) }
                 label="Select game type" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
                 <MenuItem value=''><em>Select game type</em></MenuItem>
-                <MenuItem value='01'><em>Regular</em></MenuItem>
-                <MenuItem value='02'><em>Jackpot 3.3</em></MenuItem>
-                <MenuItem value='03'><em>Jackpot 3.4</em></MenuItem>
+                <MenuItem value='01'>Regular</MenuItem>
+                <MenuItem value='02'>Jackpot 3.3</MenuItem>
+                <MenuItem value='03'>Jackpot 3.4</MenuItem>
               </TextField>
           </div>
           <div className="bottom" style={{width:'50%'}}>

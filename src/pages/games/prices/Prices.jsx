@@ -52,6 +52,7 @@ const Prices = () => {
     let response = await GETFetch(url);
 
     if (response.status) {
+<<<<<<< HEAD
       // if (gameType == '02')
       // {
       //   setJackPot33(response.data.jackpotWinningSettings);
@@ -61,6 +62,23 @@ const Prices = () => {
       // {
       //   setjackPot34(response.data.jackpotWinningSettings);
       // }
+=======
+      if (gameType == '02')
+      {
+        if (!!response.data.jackpotWinningSettings)
+        {
+          setJackPot33(response.data.jackpotWinningSettings);
+        }
+      }
+
+      if (gameType == '03')
+      {
+        if (!!response.data.jackpotWinningSettings)
+        {
+          setjackPot34(response.data.jackpotWinningSettings);
+        }
+      }
+>>>>>>> bf0be9b8d909de0a57586c812639dc55070b7b5a
 
       console.log(response.data.success)
     }

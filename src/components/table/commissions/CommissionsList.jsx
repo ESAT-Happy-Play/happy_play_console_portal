@@ -38,7 +38,7 @@ const CommissionsList = ({
                 <TableCell>Effective Date</TableCell>
                 <TableCell>Game Type</TableCell>
                 <TableCell>Game Time</TableCell>
-                <TableCell>Trn. No.</TableCell>
+                {/* <TableCell>Trn. No.</TableCell> */}
                 <TableCell>Source</TableCell>
                 <TableCell>Commission Amount</TableCell>
               </TableRow>

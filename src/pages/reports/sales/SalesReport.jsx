@@ -82,7 +82,8 @@ const SalesReport = () => {
     console.log(intervalId);
   }, [tabsVal]);
   
-  const tabs = ["Overall", "Company", "Branch", "Master Agent", "Agent", "Player"];
+  // const tabs = ["Overall", "Company", "Branch", "Master Agent", "Agent", "Player"];
+  const tabs = ["Overall"];
   const fetchResults = (newValue) => {
     settabsVal(newValue);
   }

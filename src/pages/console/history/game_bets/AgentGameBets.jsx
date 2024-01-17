@@ -115,56 +115,9 @@ const AgentGameBets = () => {
                   </div>
                   
                   <div className="header-actions">
-                    <div className="col-8">
-
-                      <div className="row">
-                        <div className="labelTitle">
-                          <span>Game Time</span>
-                        </div>
-                        <div className="col-8">
-                          <TextField style={{textAlign:'left'}} sx={{ width: "200px" }}
-                            label="Select draw schedule"
-                            onClick={clickDrawSchedEvent}
-                            variant="outlined" defaultValue="" size="small" fullWidth select>
-                            <MenuItem value=""><em>Select draw schedule</em></MenuItem>
-                                { 
-                                    DrawTypes().map((item, index) => (
-                                    <MenuItem key={item} value={item}>
-                                        {item}
-                                    </MenuItem>
-                                    ))
-                                }
-                            </TextField>
-                        </div>
-                      </div>
-                    </div>
                     <div className="dateSearch">
-                      <div className="row">
-                        <div className="row">
-                          <div className="labelTitle">
-                            <span>Date From</span>
-                          </div>
-                          <div className="col-8">
-                            <TextField
-                              type="date"
-                              sx={{ width: "200px" }}  variant="outlined" size="small" />
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-4 labelTitle">
-                            <span>Date To</span>
-                          </div>
-                          <div className="col-8">
-                            <TextField
-                              type="date"
-                              sx={{ width: "200px" }}  variant="outlined" size="small" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="col-3">
+                        <div></div>
                         <GameBetsSearchBar handleSearch={ handleGameBetsSearch } handleSearchEmpty={ handleGameBetsSearchEmpty } />
-                      </div>
                     </div>
                   </div>
 
