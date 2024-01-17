@@ -13,6 +13,7 @@ import { GetStoreObject } from "../../../helper/Helpers";
 import CustomTab from "../../../components/tab/CustomTab"
 import { Card } from "../../../components/card/Card";
 import ViolationsList from "../../../components/table/violations/ViolationsList";
+import ActViolation from "../../../components/Dialog/forms/issueConcern/ActViolation";
 
 const Violations = () => {
   const [pageLoader, setPageLoader] = useState(false);
@@ -44,8 +45,19 @@ const Violations = () => {
     handleViolationsData();
   }, []);
 
+  const [actObj, setactObj] = React.useState(null);
   const handleAct = (e, objtData) => {
-    console.log(objtData);
+    setactObj(objtData);
+    handleActOpen();
+  }
+
+  // 
+  const [openAct, setAct] = React.useState(false);
+  const handleActOpen = () => { setAct(true); };
+  const handleActClose = () => { setAct(false); };
+
+  const handleActCallback = () => {
+    handleActClose();
   }
 
   return (
@@ -74,6 +86,7 @@ const Violations = () => {
       />
       
       <PageLoader isLoadingPage={ pageLoader } />
+      <ActViolation isOpenAdd={openAct} handleCloseAdd={handleActClose} handleCallback={handleActCallback} objData={actObj} />
     </div>
   )
 }

@@ -15,15 +15,32 @@ import { GetStoreObject } from "../../../helper/Helpers";
 
 import CustomTab from "../../../components/tab/CustomTab"
 import { Card } from "../../../components/card/Card";
+import AccountActionList from "../../../components/table/accountactions/AccountActionList";
 
 const AccountActions = () => {
   const [pageLoader, setPageLoader] = useState(false);
-
+  const [tablelistdata, settablelistdata] = useState([]);
   const tabs = ["Suspended Accounts", "Cancelled Accounts"];
   const [reportType, setreportType] = useState(0);
   const selectReportType = (newValue) => {
     setreportType(newValue);
   }
+
+  const handleViolationsData = async () => {
+    setPageLoader(true);
+    let url = (reportType === 0) ? `${process.env.REACT_APP_API_URL}/violations/action/Suspended`
+      : `${process.env.REACT_APP_API_URL}/violations/action/Cancellation`;
+    let response = await GETFetch(url);
+
+    setPageLoader(false);
+    if (response.status) {
+      settablelistdata(response.data);
+    }
+  }
+
+  useEffect(() => {
+    handleViolationsData();
+  }, [reportType]);
 
   return (
     <div className="content">
@@ -39,33 +56,8 @@ const AccountActions = () => {
                   header={null}
                   body={
                     <div>
-                      <div className="dateSearch">
-                        <div className="row">
-                          <div className="row">
-                            <div className="labelTitle">
-                              <span>Date From</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-4 labelTitle">
-                              <span>Date To</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div>
-                        Account Suspension / Cancellation
+                        <AccountActionList SearchResults={ tablelistdata } isLoading = { pageLoader } />
                       </div>
                     </div>
                   }

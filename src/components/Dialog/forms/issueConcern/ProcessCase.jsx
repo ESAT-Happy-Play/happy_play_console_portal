@@ -61,7 +61,7 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
     }
   }
 
-  const submitCaseComment = async () => {
+  const submitCaseComment = async (userData) => {
     let url = `${process.env.REACT_APP_SUPPORT_URL}/api/casecomment`;
     const data = {
       "caseId": objData.caseId,
@@ -83,24 +83,22 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
         "email": ""
       },
       "reportedPerson": {
-        "userId": taggedUserData.userId,
-        "mobileNumber": taggedUserData.userId,
-        "firstName": taggedUserData.firstName,
-        "lastName": taggedUserData.lastName,
-        "middleName": taggedUserData.middleName,
+        "userId": userData.userId,
+        "mobileNumber": userData.userId,
+        "firstName": userData.firstName,
+        "lastName": userData.lastName,
+        "middleName": userData.middleName,
         "email": ""
       },
       "attachments": []
     };
-    debugger;
+
     let response = await POSTFetch(url, data);
 
     if (response.status) {
       if (objData.organizationId == 9) {
-        submitViolation();
+        await submitViolation();
       }
-
-      handleSubmitClose();
     }
 
     if (!response.status) {
@@ -120,12 +118,8 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
       "violationType": categoryName, // name
       "parmuserid": loggedInUserData.userId // tagged user Id
     };
-    debugger;
-    let response = await POSTFetch(url, data);
 
-    if (response.status) {
-      setLoggedInUserData(response.data.loggedInUserData);
-    }
+    let response = await POSTFetch(url, data);
 
     if (!response.status) {
       toast.error(response.data.errorMessage);
@@ -137,21 +131,7 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
     let response = await GETFetch(url);
 
     if (response.status) {
-      setTaggedUserData(response.data.userData);
-      submitCaseComment();
-    }
-
-    if (!response.status) {
-      toast.error(response.data.errorMessage);
-    }
-  }
-
-  const getCategories = async () => {
-    let url = `${process.env.REACT_APP_API_URL}/account/${formData.tagUserId}`;
-    let response = await GETFetch(url);
-
-    if (response.status) {
-      setTaggedUserData(response.data.userData);
+      await submitCaseComment(response.data.userData);
     }
 
     if (!response.status) {
@@ -164,13 +144,18 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
   const handleSubmitOpen = () => { setConfirmSubmit(true); };
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleProcessOkay = async () => {
-    getUserDataByUserId();
+    setSubmitLoading(true);
+    await getUserDataByUserId();
+    setSubmitLoading(false);
+    toast.success("Successfully processed.");
+    handleSubmitClose();
+    handleCallback();
   };
 
   useEffect(() => {
     handleCategoryData();
     handleCurrentUserData();
-  });
+  }, []);
 
   return (
     <>
