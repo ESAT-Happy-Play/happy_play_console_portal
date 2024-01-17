@@ -230,7 +230,7 @@ export function GetUserAccess(data) {
   if(data.g2_players === 1) { excludeLinks.push("UserAccount.Players") }
 
   if(data.g3_gameScheduleSettings === 1) { excludeLinks.push("Game.GameScheduleSettings") }
-  if(data.g3_gameMecahnicsSettings === 1) { excludeLinks.push("Game.MechanicsSettings") }
+  if(data.g3_gameMecahnicsSettings === 1) { excludeLinks.push("Game.GameMechanicsSettings") }
   if(data.g3_gameWinningSettings === 1) { excludeLinks.push("Game.GameWinningSettings") }
   if(data.g3_bets === 1) { excludeLinks.push("Game.GameBets") }
   if(data.g3_gameResult === 1) { excludeLinks.push("Game.GameResult") }
