@@ -50,8 +50,10 @@ const MechanicsSetting = () => {
     let response = await GETFetch(url);
 
     if (response.status) {
-      setoverallLimit(response.data.overallGameLimits);
-      console.log(response.data.success)
+      if (!!response.data.overallGameLimits)
+      {
+        setoverallLimit(response.data.overallGameLimits);
+      }
     }
 
     if (!response.status) {
@@ -63,7 +65,10 @@ const MechanicsSetting = () => {
     let url = `${process.env.REACT_APP_API_URL}/gamesettings/limitspercombination?gametype=${gameType}`;
     let response = await GETFetch(url);
     if (response.status) {
-      setLimitPerCombination(response.data.limitsPerCombo);
+      if (!!response.data.limitsPerCombo)
+      {
+        setLimitPerCombination(response.data.limitsPerCombo);
+      }
     }
 
     if (!response.status) {
@@ -76,7 +81,10 @@ const MechanicsSetting = () => {
     let response = await GETFetch(url);
 
     if (response.status) {
-      setSoldOutCombination(response.data.soldouts);
+      if (!!response.data.soldouts)
+      {
+        setSoldOutCombination(response.data.soldouts);
+      }
     }
 
     if (!response.status) {
