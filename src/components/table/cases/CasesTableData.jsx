@@ -12,7 +12,7 @@ function CasesTableData({ dataObj, handleProcessCase }) {
         <TableCell>{dataObj.description}</TableCell>
         <TableCell>0</TableCell>
         <TableCell>{dataObj.createdOn}</TableCell>
-        <TableCell style={{ display:'flex', gap:'5px'}}>
+        <TableCell>
             <Button onClick={e => handleProcessCase(e, dataObj)} className="btnShow" variant="contained" size="small">
                 Process
             </Button>

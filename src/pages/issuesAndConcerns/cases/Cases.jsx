@@ -24,12 +24,29 @@ const Cases = () => {
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
+  const [tablelistdataAll, settablelistdataAll] = useState([]);
   const [tablelistdata, settablelistdata] = useState([]);
   const parentTabHeaders = ["System Issue", "Report Someone"];
 
   const [reportType, setreportType] = useState(0);
   const selectReportType = (newValue) => {
     setreportType(newValue);
+    if (newValue === 0) {
+      settablelistdata(tablelistdataAll.filter(m => m.organizationId === 5));
+    } else {
+      settablelistdata(tablelistdataAll.filter(m => m.organizationId === 9));
+    }
+  }
+
+  const [filterValue, setfilterValue] = useState(1);
+  const selectFilter = (newValue) => {
+    if (newValue === 0) {
+      setfilterValue(1);
+    } else if (newValue === 1) {
+      setfilterValue(3);
+    } else {
+      setfilterValue(4);
+    }
   }
 
   const sysIssueTabHeaders = ["Pending", "Acknowledged", "Complete"];
@@ -63,7 +80,9 @@ const Cases = () => {
     });
     setPageLoader(false);
     if (response.status) {
-      settablelistdata(response.data.cases);
+      settablelistdataAll(response.data.cases);
+      let responseData = response.data.cases;
+      settablelistdata(responseData.filter(m => m.organizationId === 5));
     }
   }
 
@@ -101,7 +120,7 @@ const Cases = () => {
   }
 
   const reportHeaders = (value) => {
-    if (value === "System Issue") {
+    if (value === 0) {
       return sysIssueTabHeaders;
     } else {
       return reportTabHeaders;
@@ -115,38 +134,12 @@ const Cases = () => {
           parentTabHeaders.map((labelP) => ({ label: labelP, Component:
             <div className="tab-container" style={{padding:'15px'}}>
               <CustomVerticalTab
-                changeEvent={(labelP === "System Issue") ? selectsystemIssue : selectreportSomeone}
+                changeEvent={selectFilter}
                 tabList={
-                  reportHeaders(labelP)?.map((label) => ({ label: label, Component: 
+                  reportHeaders(reportType)?.map((label) => ({ label: label, Component: 
                   <div className="div-tabbody">
-
-                      <div className="dateSearch">
-                        <div className="row">
-                          <div className="row">
-                            <div className="labelTitle">
-                              <span>Date From</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-4 labelTitle">
-                              <span>Date To</span>
-                            </div>
-                            <div className="col-8">
-                              <TextField
-                                type="date"
-                                sx={{ width: "200px" }}  variant="outlined" size="small" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <CasesList 
-                        SearchResults={ tablelistdata }
+                        SearchResults={ tablelistdata.filter(m => m.statusId === filterValue) }
                         totalCount={ totalRows }
                         RowsPerPage={ handleRowsPerPage }
                         pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
