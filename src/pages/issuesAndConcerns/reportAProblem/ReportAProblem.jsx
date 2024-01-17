@@ -14,10 +14,10 @@ import { IssuesAndConcernModel } from "../../../model/IssuesAndConcernModel";
 import CustomTab from "../../../components/tab/CustomTab";
 import PageLoader from "../../../components/widget/PageLoader";
 
-import { GetStoreObject } from "../../../helper/Helpers";
+import { POSTFetch } from "../../../api/ApiFetchBuilder";
+import MessageDialog from "../../../components/Dialog/MessageDialog";
 
 function ReportAProblem() {
-  let loginObj = GetStoreObject("auth");
 
   const formAddIssue = useForm({ defaultValues: IssuesAndConcernModel.AddIssueForm });
   const { register, handleSubmit, formState, reset } = formAddIssue;
@@ -25,6 +25,7 @@ function ReportAProblem() {
   const [formData, setFormData] = React.useState({});
 
   const [pageLoader, setPageLoader] = useState(false);
+  const [submitLoading, setSubmitLoading] = React.useState(false);
   const [categories, setCategories] = useState([]);
   const [userdata, setuserdata] = useState(null);
   const tabHeaders = ["Issues", "Report Someone"];
@@ -63,6 +64,15 @@ function ReportAProblem() {
   }, [reportType]);
 
   const submitHandler = async (data) => {
+    setFormData(data);
+    handleSubmitOpen();
+  }
+
+  // Confiration dialog message
+  const [openConfirmSubmit, setConfirmSubmit] = React.useState(false);
+  const handleSubmitOpen = () => { setConfirmSubmit(true); };
+  const handleSubmitClose = () => { setConfirmSubmit(false); };
+  const handleProblemOkay = async () => {
     let formObj = {
       owner: {
           userId: userdata.userId,
@@ -72,23 +82,28 @@ function ReportAProblem() {
           middleName: (userdata.middlename !== null) ? userdata.middlename : "",
           email: (userdata.email !== null) ? userdata.email : ""
         },
-        title: data.title,
-        description: data.description,
-        categoryId: data.categoryId,
+        title: formData.title,
+        description: formData.description,
+        categoryId: formData.categoryId,
         organizationId: (reportType !==0) ? 5 : 9,
         attachments: []
     };
 
-    setPageLoader(true);
+    setSubmitLoading(true);
     let response = await POSTFetch(`${process.env.REACT_APP_SUPPORT_URL}/api/case`, formObj);
-    setPageLoader(false);
+    setSubmitLoading(false);
 
     if (response.status) {
       toast.success("report successfully submitted!");
-
+      handleSubmitClose();
       reset(formValues => ({
-        ...formValues
+        ...formValues,
+        title: "",
+        description: "",
+        categoryId: "",
       }));
+    } else {
+      toast.error("Error creating report!");
     }
   }
 
@@ -160,6 +175,15 @@ function ReportAProblem() {
         } />
       </div>
       <PageLoader isLoadingPage={pageLoader} />
+
+      <MessageDialog
+        isOpenMessage={ openConfirmSubmit } 
+        handleCloseMessage={ handleSubmitClose } 
+        handleOkay={ handleProblemOkay } 
+        title={ "Confirmation" } 
+        content={ "Are you sure you want to report problem?" }
+        color={ "success" }
+        isLoading={ submitLoading } />
     </div>
   )
 }
