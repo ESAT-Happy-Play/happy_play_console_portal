@@ -48,12 +48,18 @@ const Prices = () => {
     if (response.status) {
       if (gameType == '02')
       {
-        setJackPot33(response.data.jackpotWinningSettings);
+        if (!!response.data.jackpotWinningSettings)
+        {
+          setJackPot33(response.data.jackpotWinningSettings);
+        }
       }
 
       if (gameType == '03')
       {
-        setjackPot34(response.data.jackpotWinningSettings);
+        if (!!response.data.jackpotWinningSettings)
+        {
+          setjackPot34(response.data.jackpotWinningSettings);
+        }
       }
 
       console.log(response.data.success)
@@ -102,7 +108,7 @@ const Prices = () => {
             </Button>}
           body={
             <div className="mult-body">
-              <h1>{jackPot33.jackpotPercentage}%</h1>
+              <h1>{jackPot33.jackpotPercentage }%</h1>
               <p>Gross percentage as prize increment</p>
             </div>
           }

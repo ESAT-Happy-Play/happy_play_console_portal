@@ -11,17 +11,17 @@ export const LimitTable = ({ data }) => {
         <CustomTable
             headers={head}
             tableRows={
-                data?.length > 1 ? 
+                data?.length > 0 ? 
                     data?.map((row, i) => (
                     <StyledTableRow key={i}>
                         <StyledTableCell align="center" component="th" scope="row">
                             {row.combination}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.betAmount}
+                            {row.amountlimit}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.currentBet}
+                            {row.amountCurrent}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                             <Button variant="primary" className="edit-button">Change Limit</Button>
@@ -36,21 +36,20 @@ export const LimitTable = ({ data }) => {
 
 
 export const SoldOutTable = ({ data }) => {
-
     const head = ["Combination", "IsTemporary", "Action"];
 
     return (
         <CustomTable
             headers={head}
             tableRows={
-                data?.length > 1 ? 
+                data?.length > 0 ? 
                     data?.map((row, i) => (
                     <StyledTableRow key={i}>
                         <StyledTableCell align="center" component="th" scope="row">
                             {row.combination}
                         </StyledTableCell>
                         <StyledTableCell align="center">
-                            {row.isTemp? "1" : "0"}
+                            {row.isTemporary == 0 ? '0': '1' }
                         </StyledTableCell>
                         <StyledTableCell align="center">
                             <Button variant="primary" className="edit-button">Change Limit</Button>
@@ -62,7 +61,6 @@ export const SoldOutTable = ({ data }) => {
                 } />
     );
 };
-
 
 
 const StyledTableRow = styled(TableRow)(`
