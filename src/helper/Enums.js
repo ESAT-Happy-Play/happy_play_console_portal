@@ -132,9 +132,9 @@ export function AgentMenus() {
     "UserAccount.Agents", // is parent false
     "UserAccount.Players", // is parent false
     
-    // "History", // is parent true
-    // "History.GameBets", // is parent false
-    // "History.GameResult", // is parent false
+    "History", // is parent true
+    "History.GameBets", // is parent false
+    "History.GameResult", // is parent false
     
     "Reporting", // is parent true
     "Reporting.SalesReport", // is parent false

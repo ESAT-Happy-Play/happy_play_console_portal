@@ -19,20 +19,18 @@ const SalesReport = () => {
 
   const [overAllSales, setoverAllSales] = React.useState([]);
   const [salesPerDay, setsalesPerDay] = React.useState([]);
-  const [salesPerDraw, setsalesPerDraw] = React.useState([]);
+  // const [salesPerDraw, setsalesPerDraw] = React.useState([]);
 
   const handleSalesData = async () => {
-    setPageLoader(true);
+    // setPageLoader(true);
     let url = `${process.env.REACT_APP_API_URL}/reportings/sales/overall`;
     let response = await GETFetch(url);
-    setPageLoader(false);
+    // setPageLoader(false);
 
     if (response.status) {
       setoverAllSales(response.data.overAllSales)
       setsalesPerDay(response.data.salesPerDay.slice(-7))
-      setsalesPerDraw(response.data.salesPerDraw)
-
-      console.log(response.data.salesPerDay);
+      // setsalesPerDraw(response.data.salesPerDraw)
 
       let salesPerDrawObjKeys = Object.keys(response.data.salesPerDraw);
       let filaArry = [];
@@ -76,7 +74,12 @@ const SalesReport = () => {
 
   // trigger call API endpoint if state change
   useEffect(() => {
-    handleSalesData();
+    // execute every 5 mins
+    const intervalId = setInterval(() => {
+      handleSalesData().then();
+    }, 5000);
+
+    console.log(intervalId);
   }, [tabsVal]);
   
   const tabs = ["Overall", "Company", "Branch", "Master Agent", "Agent", "Player"];
