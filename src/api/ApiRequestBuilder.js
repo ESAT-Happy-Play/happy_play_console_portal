@@ -41,7 +41,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
     return result
 }
-
+console.log(`current url ${process.env.REACT_APP_AGENT_API_URL}`);
 export const ApiRequestBuilder = createApi({
     baseQuery: baseQueryWithReauth,
     endpoints: builder => ({})
