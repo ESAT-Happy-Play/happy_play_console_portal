@@ -803,3 +803,37 @@ $defaultPad: 5px;
     color: white;
     text-transform: capitalize;
 }
+
+.div-verify {
+    .div-img {
+        display: flex;
+        gap: '5px';
+        justify-content: center;
+    }
+
+    hr {
+        border-top: 1px solid #4845d2 !important;
+    }
+    .div-v-details {
+        display: flex;
+        gap: 5px;
+
+        .div-text {
+            display: flex;
+            margin-bottom: 10px;
+            span {
+                width: 150px;
+                text-align: left;
+                font-size: 12px;
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .div-v-footer {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+}

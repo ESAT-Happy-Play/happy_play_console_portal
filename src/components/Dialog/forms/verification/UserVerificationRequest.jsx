@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import "./../../dialogform.scss";
 import { toast } from 'react-toastify';
 
-import { useForm } from 'react-hook-form'
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
+
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,13 +22,21 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   
 const UserVerificationRequest = ({ isOpenAdd, handleCloseAdd, userObj, handleCallback }) => {
 
-  useEffect(() => {
+  const [submitLoading, setSubmitLoading] = React.useState(false);
+  const [isAccept, setisAccept] = React.useState(false);
+  const [userdata, setuserdata] = React.useState(null);
+  
+  // useEffect(() => {
+    // userObj.userId
+  // }, []);
 
-  }, []);
+  const submitAccept = () => {
+    setisAccept(true);
+    handleSubmitOpen();
+  };
 
-  // final step submit handler
-  const submitHandler = async (data) => {
-    // setFormData(data);
+  const submitDecline = () => {
+    setisAccept(false);
     handleSubmitOpen();
   };
 
@@ -35,7 +45,19 @@ const UserVerificationRequest = ({ isOpenAdd, handleCloseAdd, userObj, handleCal
   const handleSubmitOpen = () => { setConfirmSubmit(true); };
   const handleSubmitClose = () => { setConfirmSubmit(false); };
   const handleOkay = async () => {
-    console.log("okay");
+    setSubmitLoading(true);
+    let paramval = (isAccept) ? 1 : 0;
+    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/users/forverification/${userObj.userId}?isapproved=${paramval}`, {});
+    setSubmitLoading(false);
+    if(response.status) {
+      toast.success(response.data.message);
+      handleSubmitClose();
+      handleCallback();
+    }
+
+    if(!response.status) {
+      toast.error(response.data.errorMessage);
+    }
   };
 
   return (
@@ -45,18 +67,107 @@ const UserVerificationRequest = ({ isOpenAdd, handleCloseAdd, userObj, handleCal
         disableEscapeKeyDown
       >
         <div className="dialogHeader">
-          <div className="rd">Verification Request</div>
+          <div className="rd">Verification Request
+            <IconButton style={{background:'white'}} onClick={ handleCloseAdd } color="primary">
+              <CancelIcon />
+            </IconButton>
+          </div>
         </div>
         <DialogContent dividers>
           <div className="divStep">
             <form noValidate> 
-              <div className="divContent">
-                <div className="left"></div>
-                <div className="right divFoot">
-                <Button onClick={ handleCloseAdd } variant="outlined">Close</Button>
-                <Button sx={{ backgroundColor: "#38a169" }} variant="contained" color="success">
-                  Submit &nbsp; <SaveAsIcon/>
-                </Button>
+              <div className='div-verify'>
+                <div className='div-img'>
+                  <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
+                    <div className="div-imgUpload" style={{width:'190px'}}>
+                        <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                    </div>
+                  </div>
+                  <div style={{width:'100%'}}>
+                      <div className="div-imgUpload" style={{width:'190px'}}>
+                          <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                      </div>
+                  </div>
+                </div>
+                <hr />
+                <div className='div-img'>
+                  <div style={{width:'100%',display:'flex',justifyContent:'end'}}>
+                    <div className="div-imgUpload" style={{width:'190px'}}>
+                        <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                    </div>
+                  </div>
+                  <div style={{width:'100%'}}>
+                      <div className="div-imgUpload" style={{width:'190px'}}>
+                          <img className="imgFiles" src={`${process.env.PUBLIC_URL}/empty.jpg`} salt="" />
+                      </div>
+                  </div>
+                </div>
+                <hr />
+                
+                <div className='div-v-details'>
+                  <div>
+                    <div className='div-text'>
+                      <span>First Name</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Middle Name</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Last Name</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Gender</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Birthdate</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Civil Status</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Blood Type</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                  </div>
+                  <div>
+                    <div className='div-text'>
+                      <span>Place Of Birth</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Present Address</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled  variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Permanent Address</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Nationality</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Nature Of Work</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                    <div className='div-text'>
+                      <span>Source Of Income</span>
+                      { (userdata !== null) ? <TextField disabled defaultValue={userdata.firstname} variant="outlined" size="small" fullWidth /> : <TextField disabled variant="outlined" size="small" fullWidth /> }
+                    </div>
+                  </div>
+                </div>
+
+                <div className='div-v-footer'>
+                  <Button onClick={submitDecline} color='error' variant="contained">Decline</Button>
+                  <Button onClick={submitAccept} variant="contained" color="success">
+                    Accept &nbsp; <SaveAsIcon/>
+                  </Button>
                 </div>
               </div>
             </form>
@@ -70,9 +181,9 @@ const UserVerificationRequest = ({ isOpenAdd, handleCloseAdd, userObj, handleCal
         handleCloseMessage={ handleSubmitClose } 
         handleOkay={ handleOkay } 
         title={ "Confirmation" } 
-        content={ "Are you sure you want accept request?" }
-        color={ "success" }
-        isLoading={ false } />
+        content={ `Are you sure you want ${(isAccept) ? "accept" : "decline"} request?` }
+        color={ (isAccept) ? "success" : "error" }
+        isLoading={ submitLoading } />
     </>
   )
 }

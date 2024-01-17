@@ -22,6 +22,8 @@ const UserVerification = () => {
   const [userCode, setuserCode] = useState(_UserAgentCode);
   const [usersForV, setusersForV] = useState([]);
 
+  const [counter, setCounter] = useState(0);
+
   const handleVerificationData = async () => {
     setPageLoader(true);
     let url = `${process.env.REACT_APP_API_URL}/users/forverification?usercode=${userCode}`; 
@@ -30,7 +32,6 @@ const UserVerification = () => {
 
     if(response.status) {
       setusersForV(response.data.usersForVerification);
-      console.log(response.data.usersForVerification);
     }
 
     if(!response.status) {
@@ -41,7 +42,7 @@ const UserVerification = () => {
   // trigger call API endpoint if state change
   useEffect(() => {
     handleVerificationData();
-  }, [userCode]);
+  }, [userCode, counter]);
 
   const handleClick = async (elem, code) => {
     let listClass = document.getElementsByClassName('active-b')
@@ -72,7 +73,8 @@ const UserVerification = () => {
   const handleVerifyRequestClose = () => { setVerifyRequest(false); };
 
   const handleVerficationCallback = () => {
-    console.log("done");
+    handleVerifyRequestClose();
+    setCounter(counter + 1);
   };
 
   return (
