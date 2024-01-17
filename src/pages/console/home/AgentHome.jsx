@@ -49,14 +49,19 @@ const AgentHome = () => {
                 </span>
               </div>
             </div>
-            <div>
-              <div className="widget" style={{ background: "#fbb6ce"}}>
-                <span className="w-title">PLAYERS</span>
-                <span className="w-content">
-                  { authState.playerCount }
-                </span>
+            {
+              (authState.userCode !== "0201") ?
+              <div>
+                <div className="widget" style={{ background: "#fbb6ce"}}>
+                  <span className="w-title">PLAYERS</span>
+                  <span className="w-content">
+                    { authState.playerCount }
+                  </span>
+                </div>
               </div>
-            </div>
+              : <></>
+            }
+            
           </div>
         </div>
         <br />

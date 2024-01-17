@@ -503,7 +503,7 @@ const routeLinks = [
       child: [
         {
           path: "/sales/report",
-          element: (userRole === "Dashboard") ?  <SalesReport /> : <AgentSales />,
+          element: <SalesReport />,
           state: "Reporting.SalesReport",
           sidebarProps: {
             displayText: "Sales Report",
@@ -512,7 +512,7 @@ const routeLinks = [
         },
         {
           path: "/transactions/report",
-          element: (userRole === "Dashboard") ? <TransactionReport /> : <AgentTransactions />,
+          element: <TransactionReport />,
           state: "Reporting.TransactionReport",
           sidebarProps: {
             displayText: "Transaction Report",
