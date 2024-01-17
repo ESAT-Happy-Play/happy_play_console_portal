@@ -23,9 +23,12 @@ import CustomTab from "../../../components/tab/CustomTab"
 import CustomVerticalTab from "../../../components/tab/CustomVerticalTab";
 
 import { ClosingTable, DrawTypesTable } from "./scheduleTables";
+import AddClosingDialog from "../../../components/Dialog/AddClosingDialog";
+import { DateTimePicker } from "@mui/lab";
 
 const ScheduleSetting = () => {
   const [pageLoader, setPageLoader] = useState(false);
+  const [addClosingOpen, setAddClosingOpen] = useState(false);
   //MOCK DATA
   const tabHeaders = ["Regular", "Jackpot 3.3", "Jackpot 3.4"];
 
@@ -117,8 +120,8 @@ const ScheduleSetting = () => {
         <div className="tab-container">
           <div className="tab-header">
             <h1>Closing Dates</h1>
-            <Box alignItems={"center"} display={"flex"}>
-              <Button variant="outline" className="tab-button">
+            <Box alignItems={"center"} display={"flex"} >
+              <Button variant="outline" className="tab-button" onClick={() => setAddClosingOpen(true)}>
                 Add Closing Date <AddIcon />
               </Button>
             </Box>
@@ -154,6 +157,7 @@ const ScheduleSetting = () => {
         <CustomTab tabList={tabs} />
       </div>
       <PageLoader isLoadingPage={pageLoader} />
+      <AddClosingDialog isOpen={addClosingOpen} setOpen={setAddClosingOpen} />
     </div>
   )
 }

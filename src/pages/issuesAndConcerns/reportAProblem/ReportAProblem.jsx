@@ -1,10 +1,7 @@
 import "./reportaproblem.scss"
 
 import React, { useState, useEffect } from 'react';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Card } from "../../../components/card/Card";
 import { Button } from "@mui/material";
-import { styled } from '@mui/material/styles';
 
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { TextField, MenuItem } from "@mui/material";
@@ -29,6 +26,7 @@ function ReportAProblem() {
 
   const [pageLoader, setPageLoader] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [userdata, setuserdata] = useState(null);
   const tabHeaders = ["Issues", "Report Someone"];
 
   const [reportType, setreportType] = useState(0);
@@ -51,7 +49,7 @@ function ReportAProblem() {
     let response = await GETFetch(url);
 
     if(response.status) {
-      console.log(response.data.loggedInUserData);
+      setuserdata(response.data.loggedInUserData);
     }
 
     if(!response.status) {
@@ -67,12 +65,12 @@ function ReportAProblem() {
   const submitHandler = async (data) => {
     let formObj = {
       owner: {
-          userId: loginObj.userId,
-          mobileNumber: "",
-          firstName: "",
-          lastName: "",
-          middleName: "",
-          email: ""
+          userId: userdata.userId,
+          mobileNumber: userdata.mobileNumber,
+          firstName: (userdata.firstname !== null) ? userdata.firstname : "",
+          lastName: (userdata.lastname !== null) ? userdata.lastname : "",
+          middleName: (userdata.middlename !== null) ? userdata.middlename : "",
+          email: (userdata.email !== null) ? userdata.email : ""
         },
         title: data.title,
         description: data.description,
@@ -81,7 +79,17 @@ function ReportAProblem() {
         attachments: []
     };
 
-    console.log(data);
+    setPageLoader(true);
+    let response = await POSTFetch(`${process.env.REACT_APP_SUPPORT_URL}/api/case`, formObj);
+    setPageLoader(false);
+
+    if (response.status) {
+      toast.success("report successfully submitted!");
+
+      reset(formValues => ({
+        ...formValues
+      }));
+    }
   }
 
   return (
