@@ -112,13 +112,13 @@ const ProcessCase = ({ isOpenAdd, handleCloseAdd, handleCallback, objData }) => 
     const categoryName = categories.find(o => o.categoryId == objData.categoryId)?.name ?? "";
     let url = `${process.env.REACT_APP_API_URL}/violations`;
     const data = {
-      "userId": loggedInUserData.userId, // logged user
+      "userId": taggedUserData.userId, // logged user
       "caseId": `${objData.caseId}`,
       "title": objData.title,
       "description": objData.description,
       "violationTypeId": objData.categoryId, // categoryId
       "violationType": categoryName, // name
-      "parmuserid": taggedUserData.userId // tagged user Id
+      "parmuserid": loggedInUserData.userId // tagged user Id
     };
     debugger;
     let response = await POSTFetch(url, data);
