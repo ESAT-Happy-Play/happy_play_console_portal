@@ -16,11 +16,7 @@ const validateTxt = (
         required: {
             value: required,
             message: 'required',
-        },
-        // minLength: {
-        //     value: 6,
-        //     message: 'min 6 characters',
-        // },
+        }
     },
     variant: variant,
     size: size,

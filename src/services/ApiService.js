@@ -22,7 +22,7 @@ const ApiService = {
 
         return objdata;
     },
-    postData: async (URL, DATA) => {
+    post: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.post(URL, DATA, {
             headers: headersParams
@@ -35,7 +35,7 @@ const ApiService = {
 
         return objdata;
     },
-    patchData: async (URL, DATA) => {
+    patch: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.patch(URL, DATA, {
             headers: headersParams
@@ -48,7 +48,7 @@ const ApiService = {
 
         return objdata;
     },
-    putData: async (URL, DATA) => {
+    put: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.put(URL, DATA, {
             headers: headersParams
@@ -61,7 +61,7 @@ const ApiService = {
 
         return objdata;
     },
-    deleteData: async (URL) => {
+    delete: async (URL) => {
         let objdata = { status: true, data: null };
         await axios.delete(URL, {
             headers: headersParams
