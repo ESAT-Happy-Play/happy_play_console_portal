@@ -2,7 +2,7 @@ import "./app.scss"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import { routes } from "./routes";
-import Login from "./pages/login/Login";
+import Login from "./views/login/Login";
 import Registration from "./pages/registration/Registration";
 import NotFound from "./pages/404/NotFound";
 

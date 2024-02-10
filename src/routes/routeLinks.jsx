@@ -32,7 +32,7 @@ import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
 
 import Admin from '../pages/superadmin/admin/Admin';
 import Branch from '../pages/superadmin/branch/Branch';
-import Company from '../pages/superadmin/company/Company';
+import Company from '../views/company/Company';
 import Profile from '../pages/superadmin/profiles/Profile';
 import SystemUser from '../pages/useraccounts/systemusers/SystemUser';
 import Operator from '../pages/useraccounts/operators/Operator';
