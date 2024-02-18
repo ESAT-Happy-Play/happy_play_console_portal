@@ -7,7 +7,7 @@ import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 
 import { setCredentials } from "../../redux/reducers/auth/AuthReducer";
-import { setRoleState } from "../../redux/reducers/RoleStateReducer";
+// import { setRoleState } from "../../redux/reducers/RoleStateReducer";
 
 import { GetStoreObject } from "../../helper/Helpers";
 
@@ -17,15 +17,15 @@ const Layout = () => {
   const location = useLocation();
 
   let authdata = GetStoreObject("auth");
-  let userRole = GetStoreObject("role");
+  // let userRole = GetStoreObject("role");
 
 // for auth state
   useEffect(() => {
     if (authdata !== null) {
       dispatch(setCredentials(authdata))
-      dispatch(setRoleState(userRole));
+      // dispatch(setRoleState(userRole));
     }
-  }, [dispatch, authdata, userRole]);
+  }, [dispatch, authdata]);
 
 
   return (
@@ -34,10 +34,7 @@ const Layout = () => {
       <div className="layoutContainer">
         <Navbar />
         {
-          (userRole === null) ? <Navigate to="/happyplay" state={{ from: location }} replace /> 
-          : (authdata !== null) ? <Outlet />  
-          : (userRole.role == "Agent") ? <Navigate to="/console/login" state={{ from: location }} replace /> 
-          : <Navigate to="/dashboard/login" state={{ from: location }} replace />
+          (authdata !== null) ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
         }
       </div>
     </div>

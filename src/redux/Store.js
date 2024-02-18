@@ -2,14 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import AuthReducer from "./reducers/auth/AuthReducer";
 import AppStateReducer from "./reducers/AppStateReducer";
-import RoleStateReducer from "./reducers/RoleStateReducer";
+import MenuStateReducer from "./reducers/MenuStateReducer";
+import AccountStateReducer from "./reducers/AccountStateReducer";
 
 import { ApiRequestBuilder } from "../api/ApiRequestBuilder";
 
 export const store = configureStore({
   reducer: {
     appState: AppStateReducer,
-    roleState: RoleStateReducer,
+    menuState: MenuStateReducer,
+    accountState: AccountStateReducer,
     [ApiRequestBuilder.reducerPath]: ApiRequestBuilder.reducer,
     authState: AuthReducer
   },

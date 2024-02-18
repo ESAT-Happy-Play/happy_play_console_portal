@@ -14,7 +14,7 @@ const ValidateUsername = () => {
 
 const ValidatePassword = (eye) => {
   return {
-    name: 'Password',
+    name: 'password',
     label: 'Password',
     type: (eye) ? "text" : "password",
     placeholder: 'Enter password',

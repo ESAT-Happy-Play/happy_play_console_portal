@@ -8,9 +8,12 @@ import NotificationDialog from "../Dialog/NotificationDialog";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+
 import { logOut } from '../../redux/reducers/auth/AuthReducer';
 import { removeAppState } from '../../redux/reducers/AppStateReducer';
-import { removeRoleState } from '../../redux/reducers/RoleStateReducer';
+import { removeMenuState } from '../../redux/reducers/MenuStateReducer';
+import { removeAccountState } from '../../redux/reducers/AccountStateReducer';
+
 import MessageDialog from "../Dialog/MessageDialog";
 import NavIcon from './NavIcon';
 
@@ -19,7 +22,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { appState } = useSelector((state) => state.appState);
-  const { roleState } = useSelector((state) => state.roleState);
+  // const { roleState } = useSelector((state) => state.roleState);
 
   let title = (appState.split(".")[1]);
   let navTitle = (title !== undefined) ? title.replace(/([a-z](?=[A-Z]))/g, '$1 ').toUpperCase() : "";
@@ -35,13 +38,10 @@ const Navbar = () => {
   const handleLogoutOkay = async () => {
     dispatch(logOut());
     dispatch(removeAppState());
-    dispatch(removeRoleState());
+    dispatch(removeMenuState());
+    dispatch(removeAccountState());
 
-    if (roleState === "Agent") {
-      navigate('/console/login');
-    } else {
-      navigate('/dashboard/login');
-    }
+    window.location.href = '/login';
   };
 
   return (

@@ -1,0 +1,14 @@
+.inputFlex {
+    display: flex;
+    margin-bottom: 10px;
+    .div-fchild {
+        padding: 8px;
+        flex: 1;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .div-lchild {
+        flex: 2;
+    }
+}

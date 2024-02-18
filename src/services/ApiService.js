@@ -1,18 +1,11 @@
 import axios from 'axios';
-
-var headersParams = {
-    Accept: "application/json",
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-    // 'Content-Type': 'multipart/form-data',
-    // 'Content-Type': `multipart/form-data; boundary=${form._boundary}`
-};
+import { RequestHeader } from './RequestHeader';
 
 const ApiService = { 
     get: async (URL) => {
         let objdata = { status: true, data: null };
         await axios.get(URL, {
-            headers: headersParams
+            headers: RequestHeader()
         })
         .then((res) => { objdata.data = res.data; })
         .catch((err) => {
@@ -25,7 +18,7 @@ const ApiService = {
     post: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.post(URL, DATA, {
-            headers: headersParams
+            headers: RequestHeader()
         })
         .then((res) => { objdata.data = res.data; })
         .catch((err) => {
@@ -38,7 +31,7 @@ const ApiService = {
     patch: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.patch(URL, DATA, {
-            headers: headersParams
+            headers: RequestHeader()
         })
         .then((res) => { objdata.data = res.data; })
         .catch((err) => {
@@ -51,7 +44,7 @@ const ApiService = {
     put: async (URL, DATA) => {
         let objdata = { status: true, data: null };
         await axios.put(URL, DATA, {
-            headers: headersParams
+            headers: RequestHeader()
         })
         .then((res) => { objdata.data = res.data; })
         .catch((err) => {
@@ -64,7 +57,7 @@ const ApiService = {
     delete: async (URL) => {
         let objdata = { status: true, data: null };
         await axios.delete(URL, {
-            headers: headersParams
+            headers: RequestHeader()
         })
         .then((res) => { objdata.data = res.data; })
         .catch((err) => {

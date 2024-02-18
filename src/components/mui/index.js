@@ -1,3 +1,5 @@
 import { MuiInput } from './Input';
+import { MuiInputFlex } from './InputFlex';
+
 import { MuiLoadingButton } from './LoadingButton';
-export { MuiInput, MuiLoadingButton };
+export { MuiInput, MuiInputFlex, MuiLoadingButton };

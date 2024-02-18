@@ -1,9 +1,7 @@
 import "./login.scss";
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 
 import { Stack, InputAdornment, IconButton } from "@mui/material";
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
@@ -11,90 +9,68 @@ import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-import { setRoleState } from '../../redux/reducers/RoleStateReducer';
 import { setCredentials } from '../../redux/reducers/auth/AuthReducer';
+import { setMenuState } from '../../redux/reducers/MenuStateReducer';
+import { setAccountState } from '../../redux/reducers/AccountStateReducer';
 
 import PageLoader from "../../components/widget/PageLoader";
-import { GetStoreObject, GetNEStoreObject } from "../../utils/helpers/helper";
-
-import { POSTFetch } from "../../api/ApiFetchBuilder";
+import { StoreExt } from "../../utils/helpers";
 
 import { MuiInput, MuiLoadingButton } from "../../components/mui";
 import { ValidateUsername, ValidatePassword } from "../../utils/validations/ValidateLogin";
+import { AuthService, AccountService } from "../../services";
 
 const Login = () => {
-  let loginObj = GetStoreObject("auth");
-  let useRole = GetStoreObject("role");
-  let deviceInfo = GetNEStoreObject("deviceInfo");
+  let loginObj = StoreExt.getStore("auth");
+  // let deviceInfo = GetNEStoreObject("deviceInfo");
 
   const [pageLoader, setPageLoader] = useState(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const formLogin = useForm({
     defaultValues: {
       username: "",
       password: "",
-      deviceName: deviceInfo.browserName,
-      deviceModel: deviceInfo.osName,
-      webSystemCode: "01"
+      ipAddress: "192.168.1.1"
     }
   });
 
   const { register, handleSubmit, formState } = formLogin;
   const { errors } = formState;
   const [eye, setEye] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  // handle basic validation
+  const validate_username = ValidateUsername();
+  const validate_password = ValidatePassword(eye);
 
   // Handle for password show/hide
   const handleEye = () => { setEye(!eye); }
   
   // Handle for login submit
   const loginHandler = async (data) => {
-    setIsLoading(true);
     setPageLoader(true);
-    let response = await POSTFetch(`${process.env.REACT_APP_API_URL}/auth/login`, data);
-
-    if(response.status) {
-      dispatch(setCredentials(response.data));
-      // goto dashboard page
-      // window.location.reload(false);
-      window.location.href = '/';
-    }
-
-    if(!response.status) {
-      setIsLoading(false);
-      setPageLoader(false);
-      toast.error(response.data.errorMessage);
-    }
+    AuthService.authenticate(data).then((authResp) => {
+      if (authResp) {
+        dispatch(setCredentials(authResp.data));
+        // get current user and menu
+        AccountService.current().then((acctResp) => {
+          if(acctResp) {
+            dispatch(setMenuState(acctResp.data.acocuntMenus));
+            dispatch(setAccountState(acctResp.data.account));
+            window.location.reload(false);
+          }
+        });
+      }
+    });
   }
 
   useEffect(() => {
     // redirect to dashboard if already login
     if (loginObj !== null) {
-      // navigate('/');
       window.location.href = '/';
-    } else {
-
-      // set user role
-      if (useRole !== null) {
-        if (useRole.role !== "Dashboard") {
-          if(useRole !== null && useRole.role !== "Dashboard") {
-            dispatch(setRoleState({ role: "Dashboard"}));
-            window.location.reload(false);
-          }
-        }
-      } else {
-        // set role for Super Admin and Operator.
-        dispatch(setRoleState({ role: "Dashboard"}));
-        window.location.reload(false);
-      }
     }
-  }, [loginObj, useRole]);
-
-  const validate_username = ValidateUsername();
-  const validate_password = ValidatePassword(eye);
+  }, [loginObj]);
 
   return (
     <div className="login">
@@ -117,8 +93,8 @@ const Login = () => {
               <MuiInput
                 {...validate_password}
                 register={register}
-                isError={ !!errors.Password }
-                errorMsg={ errors.Password?.message }
+                isError={ !!errors.password }
+                errorMsg={ errors.password?.message }
                 inputProps={{
                   endAdornment:<InputAdornment position="end">
                     <IconButton onClick={ handleEye } size="small">
@@ -132,9 +108,9 @@ const Login = () => {
                 justifyContent: "end",
                 marginRight: "15px" 
               }}>
-              <MuiLoadingButton type="submit" loading={ isLoading } className="btn-success" variant="outlined" color="success" size="medium"
+              <MuiLoadingButton text="Login" type="submit" loading={ pageLoader } className="btn-success" size="medium"
                 loadingPosition='end'
-                endIcon={ <LoginRoundedIcon/> } />
+                icon={ <LoginRoundedIcon/> } />
             </Stack>
           </form>
         </div>

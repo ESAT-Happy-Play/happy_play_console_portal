@@ -14,7 +14,7 @@ import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-import { setRoleState } from '../../../redux/reducers/RoleStateReducer';
+// import { setRoleState } from '../../../redux/reducers/RoleStateReducer';
 import { setCredentials } from '../../../redux/reducers/auth/AuthReducer';
 import PageLoader from "../../../components/widget/PageLoader";
 import { GetStoreObject, GetNEStoreObject } from "../../../helper/Helpers";
@@ -78,13 +78,13 @@ const AgentLogin = () => {
       if (useRole !== null) {
         if (useRole.role !== "Agent") {
           if(useRole !== null && useRole.role !== "Agent") {
-            dispatch(setRoleState({ role: "Agent"}));
+            // dispatch(setRoleState({ role: "Agent"}));
             window.location.reload(false);
           }
         }
       } else {
         // set role for Super Admin and Operator.
-        dispatch(setRoleState({ role: "Agent"}));
+        // dispatch(setRoleState({ role: "Agent"}));
         window.location.reload(false);
       }
     }

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import ApiService from './ApiService';
 
-const MenuService = {
+export const MenuService = {
     getSecrityGroupeMenu: async () => {
         return ApiService.get(`${process.env.REACT_APP_API_URL}/api/Menu/securitygroup?UserTypeId=1`)
         .then((res) => {
@@ -13,5 +13,3 @@ const MenuService = {
         })
     }
 }
-
-export default MenuService; 

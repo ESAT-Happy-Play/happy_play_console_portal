@@ -1,38 +1,18 @@
 import routeLinks from "./routeLinks";
 import { GetStoreObject } from "../helper/Helpers";
-import { AgentMenus, AdminMenus, GetUserAccess } from "../helper/Enums";
 
 let authdata = GetStoreObject("auth");
-let user_role = GetStoreObject("role");
+let listMenuObj = GetStoreObject("menuList");
 
 let menus = [];
 
-if (user_role != null) {
-  if (user_role.role === "Agent") {
-    menus = AgentMenus();
-  } else {
-    menus = AdminMenus();
-
-    // remove some links
-    if (authdata !== null) {
-      let excludeUserAccess = GetUserAccess(authdata.userProfile);
-      menus = menus.filter((menu) => excludeUserAccess.includes(menu));
-
-      // manually add profile links
-      menus.push("Profile.ProfileInformation");
-      menus.push("Profile.ResetPassword");
-
-      menus.push("Wallet.SendCredits");
-      menus.push("Wallet.CreditRequests");
-      if (authdata.userCode === "0102") {
-        // manually add wallet links
-        menus.push("Wallet.Withdraw");
-      } else {
-        menus.push("Wallet.WithdrawalRequests");
-      }
-    }
-  }
+if (listMenuObj !== null) {
+  listMenuObj.forEach(item => {
+    menus.push(item.menuCode);
+  });
 }
+
+console.log(menus);
 
 let listRoutes = {
   home: false,
@@ -61,9 +41,10 @@ const buildChildObj = (dataObj, childLinks) => {
 
 let finalRoutes = [];
 
-if (user_role != null) {
-  (user_role.role !== "Agent") ? finalRoutes.push(routeLinks[1]) : finalRoutes.push(routeLinks[0]);
-}
+// if (user_role != null) {
+//   (user_role.role !== "Agent") ? finalRoutes.push(routeLinks[1]) : finalRoutes.push(routeLinks[0]);
+// }
+finalRoutes.push(routeLinks[0]);
 
 if (menus !== null) {
 
@@ -92,5 +73,7 @@ if (menus !== null) {
 
 // Final list of menus
 const appRoutes = finalRoutes;
+
+console.log(appRoutes);
 
 export default appRoutes;

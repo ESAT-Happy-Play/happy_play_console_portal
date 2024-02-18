@@ -4,66 +4,40 @@ import CryptoJS from "crypto-js";
 const AuthReducer = createSlice({
     name: 'auth',
     initialState: {
-        sessionToken: null,
-        userCode: null,
-        userId: null, 
-        featureId: null,
-        companyId: null,
-        branchCode: null,
-        displayName: null,
-        email: null,
-        mobileNumber: null,
-        referralCode: null,
-        creditBalance: null,
-        commissionBalance: null,
-        commissionPercentage: null,
-        agentCount: null,
-        playerCount: null,
-        userProfile: null
+        id: null,
+        accountObjectId: null,
+        idNumber: null,
+        userName: null,
+        token: null,
+        clientId: null,
+        expirationDate: null,
+        status: null,
     },
     reducers: {
         setCredentials: (state, action) => {
-            const { sessionToken, userCode, userId, featureId, companyId, branchCode, displayName ,
-            email, mobileNumber, referralCode, creditBalance, commissionBalance, commissionPercentage,
-            agentCount, playerCount, userProfile } = action.payload;
+            const { id, accountObjectId, idNumber, userName, token, clientId, expirationDate, status} = action.payload;
 
-            state.sessionToken = sessionToken;
-            state.userCode = userCode;
-            state.userId = userId; 
-            state.featureId = featureId;
-            state.companyId = companyId;
-            state.branchCode = branchCode;
-            state.displayName = displayName;
-            state.email = email;
-            state.mobileNumber = mobileNumber;
-            state.referralCode = referralCode;
-            state.creditBalance = creditBalance;
-            state.commissionBalance = commissionBalance;
-            state.commissionPercentage = commissionPercentage;
-            state.agentCount = agentCount;
-            state.playerCount = playerCount;
-            state.userProfile = userProfile;
+            state.id = id;
+            state.accountObjectId = accountObjectId;
+            state.idNumber = idNumber;
+            state.userName = userName;
+            state.token = token;
+            state.clientId = clientId;
+            state.expirationDate = expirationDate;
+            state.status = status;
 
             const authdata = CryptoJS.AES.encrypt(JSON.stringify(action.payload), process.env.REACT_APP_SECRET_PASS).toString();
             localStorage.setItem("auth", authdata)
         },
         logOut: (state) => {
-            state.sessionToken = null;
-            state.userCode = null;
-            state.userId = null; 
-            state.featureId = null;
-            state.companyId = null;
-            state.branchCode = null;
-            state.displayName = null;
-            state.email = null;
-            state.mobileNumber = null;
-            state.referralCode = null;
-            state.creditBalance = null;
-            state.commissionBalance = null;
-            state.commissionPercentage = null;
-            state.agentCount = null;
-            state.playerCount = null;
-            state.userProfile = null;
+            state.id = null;
+            state.accountObjectId = null;
+            state.idNumber = null;
+            state.userName = null;
+            state.token = null;
+            state.clientId = null;
+            state.expirationDate = null;
+            state.status = null;
 
             localStorage.removeItem("auth")
         }

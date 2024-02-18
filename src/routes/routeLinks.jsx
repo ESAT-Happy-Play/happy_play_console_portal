@@ -86,12 +86,7 @@ import Violations from '../pages/issuesAndConcerns/violations/Violations';
 import AccountActions from '../pages/issuesAndConcerns/accountActions/AccountActions';
 import UserGrowth from '../pages/reports/usergrowth/UserGrowth';
 
-let user_role = GetStoreObject("role");
-var userRole = "Agent";
-
-if(user_role !== null) {
-  userRole = user_role.role;
-}
+let userRole = "Dashboard";
 
 const routeLinks = [
     // Home 1
@@ -379,9 +374,9 @@ const routeLinks = [
         {
           path: "/game/prices",
           element: <Prices />,
-          state: "Game.GameWinningSettings",
+          state: "Game.Price&Prizes",
           sidebarProps: {
-            displayText: "Game Winning Settings",
+            displayText: "Price And Prizes",
             icon: <MoneyOutlinedIcon />
           },
         },

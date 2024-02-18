@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
-import { setRoleState } from '../../redux/reducers/RoleStateReducer';
+// import { setRoleState } from '../../redux/reducers/RoleStateReducer';
 import { setCredentials } from '../../redux/reducers/auth/AuthReducer';
 
 import PageLoader from "../../components/widget/PageLoader";
@@ -16,7 +16,7 @@ import { GetStoreObject, GetNEStoreObject } from "../../helper/Helpers";
 
 const IndexPage = () => {
   let loginObj = GetStoreObject("auth");
-  let useRole = GetStoreObject("role");
+  // let useRole = GetStoreObject("role");
   let deviceInfo = GetNEStoreObject("deviceInfo");
 
   const [pageLoader, setPageLoader] = useState(false);

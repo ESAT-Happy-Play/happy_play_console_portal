@@ -19,6 +19,8 @@ import DefaultAddressWidget from '../../../widget/address/DefaultAddressWidget';
 
 import { POSTFetch } from "../../../../api/ApiFetchBuilder";
 
+import { MuiInputFlex } from "../../../mui";
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': { padding: theme.spacing(2), },
     '& .MuiDialogActions-root': { padding: theme.spacing(1), },
@@ -103,57 +105,36 @@ const AddCompany = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
             <form onSubmit={ handleSubmit(firstStepHandler) } noValidate>
               <h3>COMPANY IDENTITY</h3>
               <br />
-              <div className="divContent">
-                <div className="left">
-                  <label>COMPANY NAME</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter company name"
-                    { 
-                      ...register("companyName", { required: true } ) 
-                    }
-                    error={ !!errors.companyName }
-                    helperText={ errors.companyName?.message }
-                    label="Enter company name" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
-              <div className="divContent">
-                <div className="left">
-                  <label>BRANCH NAME</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter branch name"
-                    { 
-                      ...register("branchName", { required: true } ) 
-                    }
-                    error={ !!errors.branchName }
-                    helperText={ errors.branchName?.message }
-                    label="Enter branch name" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="Company Name"
+                name="companyName"
+                placeholder="Enter company name"
+                focused={true}
+                register={register}
+                validation={{ required: true }}
+                error={ !!errors.companyName }
+                helperText={ errors.companyName?.message } />
+
+              <MuiInputFlex
+                title="Branch Name"
+                name="branchName"
+                placeholder="Enter branch name"
+                register={register}
+                validation={{ required: true }}
+                error={ !!errors.branchName }
+                helperText={ errors.branchName?.message } />
 
               <br />
-
               <DefaultAddressWidget register={register} errors={errors} />
 
-              <div className="divContent">
-                <div className="left">
-                  <label>STREET/PUROK</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter street/purok"
-                    { 
-                      ...register("branchSitio", { required: true } ) 
-                    }
-                    error={ !!errors.branchSitio }
-                    helperText={ errors.branchSitio?.message }
-                    label="Enter street/purok" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
-
+              <MuiInputFlex
+                title="Street/Purok"
+                name="branchSitio"
+                placeholder="Enter street/purok"
+                register={register}
+                validation={{ required: true }}
+                error={ !!errors.branchSitio }
+                helperText={ errors.branchSitio?.message } />
               <br/>
 
               <div className="divContent">
@@ -172,53 +153,32 @@ const AddCompany = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
             <form onSubmit={ handleSubmit(finalStepHandler) } noValidate> 
               <h3>OPERATOR</h3>
               <br />
-              <div className="divContent">
-                <div className="left">
-                  <label>FIRST NAME</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter firstname"
-                    { 
-                      ...register("operatorFirstname", ((!slidePrev)) ? { required: true } : { required: false } ) 
-                    }
-                    error={ !!errors.operatorFirstname }
-                    helperText={ errors.operatorFirstname?.message }
-                    label="Enter firstname" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="First Name"
+                name="operatorFirstname"
+                placeholder="Enter first name"
+                register={register}
+                validation={((!slidePrev)) ? { required: true } : { required: false }}
+                error={ !!errors.operatorFirstname }
+                helperText={ errors.operatorFirstname?.message } />
 
-              <div className="divContent">
-                <div className="left">
-                  <label>LAST NAME</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter lastname"
-                    { 
-                      ...register("operatorLastname", ((!slidePrev)) ? { required: true } : { required: false } ) 
-                    }
-                    error={ !!errors.operatorLastname }
-                    helperText={ errors.operatorLastname?.message }
-                    label="Enter lastname" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="Last Name"
+                name="operatorLastname"
+                placeholder="Enter last name"
+                register={register}
+                validation={((!slidePrev)) ? { required: true } : { required: false }}
+                error={ !!errors.operatorLastname }
+                helperText={ errors.operatorLastname?.message } />
 
-              <div className="divContent">
-                <div className="left">
-                  <label>MIDDLE NAME</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    placeholder="Enter middlename"
-                    { 
-                      ...register("operatorMiddlename", { required: false } ) 
-                    }
-                    error={ !!errors.operatorMiddlename }
-                    helperText={ errors.operatorMiddlename?.message }
-                    label="Enter middlename" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="Midde Name"
+                name="operatorMiddlename"
+                placeholder="Enter middle name"
+                register={register}
+                validation={{ required: false }}
+                error={ !!errors.operatorMiddlename }
+                helperText={ errors.operatorMiddlename?.message } />
 
               <div className="divContent">
                 <div className="left">
@@ -260,48 +220,31 @@ const AddCompany = ({ isOpenAdd, handleCloseAdd, handleCallback }) => {
                 </div>
               </div>
 
-              <div className="divContent">
-                <div className="left">
-                  <label>BIRTHDAY</label>
-                </div>
-                <div className="right">
-                  <TextField
-                    type="date"
-                    { 
-                      ...register("operatorBirthday", ((!slidePrev)) ? { required: true } : { required: false } ) 
-                    }
-                    error={ !!errors.operatorBirthday }
-                    helperText={ errors.operatorBirthday?.message }
-                    variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="Birthday"
+                name="operatorBirthday"
+                type="date"
+                register={register}
+                validation={((!slidePrev)) ? { required: true } : { required: false }}
+                error={ !!errors.operatorBirthday }
+                helperText={ errors.operatorBirthday?.message } />
 
-              <div className="divContent">
-                <div className="left">
-                  <label>CONTACT NUMBER</label>
-                </div>
-                <div className="right">
-                  <TextField 
-                    type='number'
-                    placeholder="Enter contact number"
-                    { 
-                      ...register("operatorMobileNumber", ((!slidePrev)) ? 
-                      { 
-                        required: true,
-                        minLength: {
-                          value: 10,
-                          message: "Phone number must at least 10 digits"
-                        },
-                        // pattern:{
-                        //   value: /^(0|[1-9]\d*)(\.\d+)?$/
-                        // },
-                      } : { required: false } ) 
-                    }
-                    error={ !!errors.operatorMobileNumber }
-                    helperText={ errors.operatorMobileNumber?.message }
-                    label="Enter contact number" variant="outlined" size="small" fullWidth />
-                </div>
-              </div>
+              <MuiInputFlex
+                title="Contact Number"
+                name="operatorMobileNumber"
+                type="number"
+                placeholder="Enter contact number"
+                register={register}
+                validation={((!slidePrev)) ? 
+                { 
+                  required: true,
+                  minLength: {
+                    value: 10,
+                    message: "Phone number must at least 10 digits"
+                  }
+                } : { required: false }}
+                error={ !!errors.operatorMobileNumber }
+                helperText={ errors.operatorMobileNumber?.message } />
 
               <br/>
 
