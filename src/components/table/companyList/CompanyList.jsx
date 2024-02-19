@@ -31,7 +31,7 @@ const CompanyList = ({
     }
 
     return ( 
-    <div className="companyList">
+    <div className="div-table-list">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} stickyHeader>
             <TableHead>

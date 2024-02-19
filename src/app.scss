@@ -66,4 +66,77 @@ $defaultPad: 5px;
         background: rgba(25, 118, 210, 0.2);
         border-radius: 5px;
     }
+
+    .div-table {
+        margin: 30px 15px 0 15px;
+        .div-container {
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background: white;
+            width: 100%;
+
+            .div-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #444444;
+                border-radius: 10px;
+                padding: 15px;
+                .title {
+                    font-weight: 700;
+                    margin: 0;
+                    color: #4845d2;
+                }
+            }
+
+            .div-content {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                gap: 15px;
+
+                .div-search {
+                    width: 100%;
+                    .MuiInputBase-root {
+                        padding: 0;
+                        .MuiInputAdornment-root {
+                            background: #edf2f7;
+                            padding: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+
+            .div-table-list {
+                border-radius: 10px;
+                padding: 20px;
+                width: 100%;
+                box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+                
+                table {
+                    thead>tr>th {
+                        font-weight: 600 !important;
+                        color: #4845d2;
+                    }
+
+                    .btnEdit {
+                        background: #dd6b20 !important;
+                        color: white;
+                        text-transform: capitalize;
+                    }
+
+                    .btnShow {
+                        background: #fec30e !important;
+                        color: black;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+        }
+    }
 }

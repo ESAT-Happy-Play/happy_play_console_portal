@@ -1,4 +1,9 @@
 export const DateExt = {
+    readableDate: (stringDate) => {
+        let dt = (new Date(stringDate));
+        const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+        return dt.toLocaleDateString('en-us', options);
+    },
     formatDate: (stringDate, format = 0) => {
         let dt = (new Date(stringDate));
         var mm = ('0' + (dt.getMonth()+1)).slice(-2);

@@ -6,15 +6,17 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
+import { DateExt } from "../../../utils/helpers";
+
 import "../table.scss";
 
 function CompanyTableData({ company, handleEditCompanyProfile }) {
   return (
     <TableRow key={company.companyId} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
         <TableCell component="th" scope="row"> {company.companyName}</TableCell>
-        <TableCell align="center">{company.branchCount}</TableCell>
-        <TableCell align="center">{company.operatorCount}</TableCell>
-        <TableCell>{company.registrationDate}</TableCell>
+        <TableCell align="center">{company.numberOfBranch}</TableCell>
+        <TableCell align="center">{company.numberOfOperator}</TableCell>
+        <TableCell>{DateExt.readableDate(company.createdOn)}</TableCell>
         <TableCell style={{ display:'flex', gap:'5px'}}>
             <Button onClick={e => handleEditCompanyProfile(e, company) } className="btnEdit" variant="contained" size="small">
                 Edit <EditOutlinedIcon />

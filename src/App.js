@@ -8,7 +8,7 @@ import NotFound from "./pages/404/NotFound";
 
 import AgentLogin from "./pages/console/login/AgentLogin";
 
-import CompanyDetails from "./pages/superadmin/company/CompanyDetails";
+import CompanyDetails from "./views/company/CompanyDetails";
 import BranchDetails from "./pages/superadmin/branch/BranchDetails";
 import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
 
@@ -26,7 +26,6 @@ function App() {
           {/* public routes */}
           <Route path="/happyplay" element={<IndexPage />} />
           <Route path="login" element={<Login />} />
-          <Route path="console/login" element={<AgentLogin />} />
           <Route path="register/:code?" element={<Registration />} />
 
           {/* protected routes */}

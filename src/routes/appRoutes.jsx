@@ -12,8 +12,6 @@ if (listMenuObj !== null) {
   });
 }
 
-console.log(menus);
-
 let listRoutes = {
   home: false,
   dashboard: false,
@@ -73,7 +71,4 @@ if (menus !== null) {
 
 // Final list of menus
 const appRoutes = finalRoutes;
-
-console.log(appRoutes);
-
 export default appRoutes;

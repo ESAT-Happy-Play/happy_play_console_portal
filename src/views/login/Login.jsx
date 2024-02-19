@@ -61,7 +61,7 @@ const Login = () => {
             window.location.reload(false);
           }
         });
-      }
+      } else { setPageLoader(false); }
     });
   }
 

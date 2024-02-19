@@ -7,11 +7,10 @@ import { Button } from "@mui/material";
 import CompanySearchBar from "../../components/table/companyList/CompanySearchBar";
 import CompanyList from "../../components/table/companyList/CompanyList";
 
-import { toast } from 'react-toastify';
-
-import { GETFetch } from "../../api/ApiFetchBuilder";
 import AddCompany from "../../components/Dialog/forms/company/AddCompany";
 import EditCompany from "../../components/Dialog/forms/company/EditCompany";
+
+import { CompanyService } from "../../services";
 
 const Company = () => {
   /**
@@ -27,27 +26,19 @@ const Company = () => {
   const [pageSize, setpageSize] = useState(_PAGESIZE);
   const [companies, setCompanies] = useState([]);
 
-  const handleComapanyData = async () => {
-    setPageLoader(true);
-    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/companies?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companysearch=${companySearchValue}`);
-    setPageLoader(false);
-
-    if(response.status) {
-      setCompanies(response.data.companies);
-
-      setTotalRows(response.data.totalRows);
-      setpageNumber(response.data.currentPage);
-      setpageSize(response.data.rowsPerPage);
-    }
-
-    if(!response.status) {
-      toast.error(response.data.errorMessage);
-    }
-  }
-
   // trigger call API endpoint if state change
   useEffect(() => {
-    handleComapanyData();
+    setPageLoader(true);
+    CompanyService.getPaginateCompany(companySearchValue, pageNumber, pageSize)
+    .then((resp) => {
+      if (resp) {
+        setTotalRows(resp.data.total);
+        setpageNumber(resp.data.pageNumber);
+        setpageSize(resp.data.pageSize);
+        setCompanies(resp.data.companyList);
+        setPageLoader(false);
+      }
+    });
   }, [pageNumber, companySearchValue, pageSize, totalRows]);
 
   // On click search company
@@ -108,9 +99,9 @@ const Company = () => {
   }
 
   return (
-    <div className="company">
-      <div className="container">
-        <div className="top">
+    <div className="div-table">
+      <div className="div-container">
+        <div className="div-head">
           <h2 className="title">LIST OF COMPANIES</h2>
           <Button className="btn-success" variant="outlined" size="large" onClick={ handleAddCompanyOpen }>
             Register New Company <AddIcon />
@@ -118,8 +109,8 @@ const Company = () => {
         </div>
         <div style={{display:'flex',justifyContent:'space-between'}}>
           <div></div>
-          <div className="bottom" style={{width:'50%'}}>
-            <div className="search">
+          <div className="div-content" style={{width:'50%'}}>
+            <div className="div-search">
               <CompanySearchBar handleCompanySearch={ handleCompanySearch } handleCompanySearchEmpty={ handleCompanySearchEmpty } />
             </div>
           </div>
@@ -142,8 +133,6 @@ const Company = () => {
         handleCloseEdit={ handleEditCompanyClose } 
         handleEditCallback={ handleEditCompanyCallback }
         objData={ companyObj } />
-
-      {/* <PageLoader isLoadingPage={ pageLoader } /> */}
     </div>
   )
 }
