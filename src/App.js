@@ -4,9 +4,7 @@ import Layout from "./components/layout/Layout";
 import { routes } from "./routes";
 import Login from "./views/login/Login";
 import Registration from "./pages/registration/Registration";
-import NotFound from "./pages/404/NotFound";
-
-import AgentLogin from "./pages/console/login/AgentLogin";
+import NotFound from "./views/404/NotFound";
 
 import CompanyDetails from "./views/company/CompanyDetails";
 import BranchDetails from "./pages/superadmin/branch/BranchDetails";
@@ -14,9 +12,7 @@ import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import PageLayout from "./components/layout/PageLayout";
 import LayoutWrapper from "./components/layout/LayoutWrapper";
-import IndexPage from "./pages/index/IndexPage";
 
 function App() {
   return (
@@ -24,7 +20,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* public routes */}
-          <Route path="/happyplay" element={<IndexPage />} />
           <Route path="login" element={<Login />} />
           <Route path="register/:code?" element={<Registration />} />
 

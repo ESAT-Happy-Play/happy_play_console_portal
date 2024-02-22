@@ -31,9 +31,9 @@ import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
 
 import Admin from '../pages/superadmin/admin/Admin';
-import Branch from '../pages/superadmin/branch/Branch';
+import Branch from '../views/branch/Branch';
 import Company from '../views/company/Company';
-import Profile from '../pages/superadmin/profiles/Profile';
+import Profile from '../views/profiles/Profile';
 import SystemUser from '../pages/useraccounts/systemusers/SystemUser';
 import Operator from '../pages/useraccounts/operators/Operator';
 import MasterAgent from '../pages/useraccounts/masteragents/MasterAgent';
