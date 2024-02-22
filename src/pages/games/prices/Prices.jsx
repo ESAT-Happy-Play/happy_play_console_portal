@@ -52,18 +52,14 @@ const Prices = () => {
     let response = await GETFetch(url);
 
     if (response.status) {
-      if (gameType == '02')
-      {
-        if (!!response.data.jackpotWinningSettings)
-        {
+      if (gameType == '02') {
+        if (!!response.data.jackpotWinningSettings) {
           setJackPot33(response.data.jackpotWinningSettings);
         }
       }
 
-      if (gameType == '03')
-      {
-        if (!!response.data.jackpotWinningSettings)
-        {
+      if (gameType == '03') {
+        if (!!response.data.jackpotWinningSettings) {
           setjackPot34(response.data.jackpotWinningSettings);
         }
       }

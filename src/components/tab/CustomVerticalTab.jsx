@@ -3,19 +3,19 @@ import { styled } from '@mui/system';
 import { Box } from '@mui/material';
 import { Tabs as BaseTabs, TabPanel as BaseTabPanel, TabsList as BaseTabsList, Tab as BaseTab, tabClasses } from '@mui/base';
 import { buttonClasses } from '@mui/base/Button';
-import {COLORS} from '../../helper/colors';
+import { COLORS } from '../../helper/colors';
 
-const CustomVerticalTab = ({tabList, changeEvent = ()=>{}}) => {
+const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
 
-    const [value, setValue] = React.useState(0);
-  
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-      changeEvent(newValue);
-    };
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    changeEvent(newValue);
+  };
 
   return (
-    <Tabs value={value}  onChange={handleChange} orientation="vertical">
+    <Tabs value={value} onChange={handleChange} orientation="vertical">
       <Box>
         <TabsList>
           {tabList?.map(({ label }, i) => (
@@ -35,7 +35,6 @@ const CustomVerticalTab = ({tabList, changeEvent = ()=>{}}) => {
 
 const Tab = styled(BaseTab)`
     color: ${COLORS.violetMain};
-    font-family: 'IBM Plex Sans', sans-serif;
     cursor: pointer;
     font-size: 0.875rem;
     background-color: transparent;
@@ -65,13 +64,13 @@ const Tabs = styled(BaseTabs)`
 `;
 
 const TabPanel = styled(BaseTabPanel)(
-    ({ theme }) => `
+  ({ theme }) => `
     width: 100%;
     font-size: 0.875rem;
     `,
 );
 
-const TabsList = styled(BaseTabsList) `
+const TabsList = styled(BaseTabsList)`
     border-radius: 12px;
     margin-bottom: 16px;
     padding-left:20px;

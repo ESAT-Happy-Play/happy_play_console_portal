@@ -2,6 +2,7 @@ import appRoutes from "../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import React, { useEffect, useState } from 'react';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import { useSelector, useDispatch } from "react-redux";
 import "./sidebar.scss"
@@ -19,14 +20,14 @@ const Sidebar = () => {
 
   const { authState } = useSelector((state) => state);
   const [selected, setSelected] = useState("");
+  // TODO: connect to actual notification number
+  const mockNotifCounter = 4;
+
 
   return (
     <div className="sidebar">
       <div className="top">
-        <img src={require('../../assets/esat-top.png')} className="bg-img" title="Esat Logo" />
-        <a href="/">
-          <img src={require('../../assets/esat-mock-logo.png')} className="logo" title="Esat Logo" />
-        </a>
+        <img src={require('../../assets/happy-play-logo.png')} className="logo" title="Esat Logo" />
       </div>
       {
         appRoutes.map((route, index) => (
@@ -40,7 +41,17 @@ const Sidebar = () => {
         ))
       }
       <div className="foot">
-        <img src={require('../../assets/esat-foot.png')} className="foot-logo" title="esat foot" />
+        <div className="notifications">
+          <NotificationsIcon className='icon' />
+          <p>Notifications</p>
+          {mockNotifCounter > 0 &&
+            <p className="notif-count">{mockNotifCounter}</p>
+          }
+        </div>
+        <div className="trademark">
+          <h2>Web Dashboard</h2>
+          <p>Happy Play © 2024</p>
+        </div>
       </div>
     </div>
   );
