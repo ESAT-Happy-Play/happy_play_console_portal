@@ -16,7 +16,7 @@ const SidebarItem = ({ item }) => {
             fontWeight: "bold"
           },
 
-          padding: "12px 15px",
+          padding: "8px 15px",
           marginLeft: "10%",
           borderLeft: "2px solid rgba(255, 255, 255, 0.5)",
           fontSize: "14px",

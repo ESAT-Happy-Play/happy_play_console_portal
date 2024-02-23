@@ -2,7 +2,10 @@ import appRoutes from "../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import React, { useEffect, useState } from 'react';
+
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import { useSelector, useDispatch } from "react-redux";
 import "./sidebar.scss"
@@ -47,6 +50,14 @@ const Sidebar = () => {
           {mockNotifCounter > 0 &&
             <p className="notif-count">{mockNotifCounter}</p>
           }
+        </div>
+        <div className="profile">
+          <AccountCircleRoundedIcon className='icon' />
+          <div>
+            <h2>Username</h2>
+            <p>Your Profile</p>
+          </div>
+          <ArrowForwardIosIcon className='icon' />
         </div>
         <div className="trademark">
           <h2>Web Dashboard</h2>

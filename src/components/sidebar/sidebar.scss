@@ -19,7 +19,7 @@
         justify-content: center;
 
         .logo {
-            width: 75%;
+            width: 70%;
             padding: 0px 10px;
         }
     }
@@ -28,14 +28,103 @@
         width: 100%;
         margin-top: auto;
         display: flex;
+        padding: 10px 0px;
         flex-direction: column;
+
+        .notifications {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+            &:hover {
+                background-color: #FFDA18;
+                color: #4845D2;
+                cursor: pointer;
+
+                & .icon {
+                    color: #4845D2;
+                }
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .icon {
+                width: 16px;
+            }
+
+            .notif-count {
+                background-color: #DC4C64;
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+                font-size: 12px;
+                margin: 0;
+                text-align: center;
+                line-height: 16px;
+                color: white;
+
+            }
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+            &:hover {
+                background-color: #FFDA18;
+                color: #4845D2;
+                cursor: pointer;
+
+                & .icon {
+                    color: #4845D2;
+                }
+            }
+
+            h2 {
+                font-size: 14px;
+                margin: 0;
+            }
+
+            p {
+                font-size: 12px;
+                margin: 0;
+                font-weight: 200;
+            }
+
+            .icon {
+                width: 16px;
+
+                &:last-child {
+                    margin-left: auto;
+                }
+            }
+
+            .notif-count {
+                background-color: #DC4C64;
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+                font-size: 12px;
+                margin: 0;
+                text-align: center;
+                line-height: 16px;
+
+            }
+        }
 
         .trademark {
             display: flex;
             flex-direction: column;
-            padding: 15px 0px;
             align-items: center;
             justify-content: center;
+            padding: 10px 0px;
 
             h2 {
                 font-size: 16px;
@@ -49,33 +138,6 @@
                 opacity: 0.50;
                 margin: 0;
             }
-        }
-    }
-
-    .notifications {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 8px 16px;
-
-        p {
-            font-size: 14px;
-        }
-
-        .icon {
-            width: 16px;
-        }
-
-        .notif-count {
-            background-color: #DC4C64;
-            width: 16px;
-            height: 16px;
-            border-radius: 8px;
-            font-size: 12px;
-            margin: 0;
-            text-align: center;
-            line-height: 16px;
-
         }
     }
 }
