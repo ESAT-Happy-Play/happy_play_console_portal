@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import ApiService from './ApiService';
 
-export const CompanyService = {
-    getPaginateCompany: async (keyword, pageNum, pageSize) => {
+export const BranchService = {
+    getPaginateBranch: async (keyword, pageNum, pageSize) => {
         let data = {
             pagedQuery: {
                 search: keyword,
@@ -20,7 +20,7 @@ export const CompanyService = {
             return res;
         })
     },
-    getCompanyDetails: async (companyId) => {
+    getBranchDetails: async (companyId) => {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/Company/${companyId}`)
         .then((res) => {
             if (!res.status) { 
@@ -30,7 +30,7 @@ export const CompanyService = {
             return res;
         })
     },
-    addCompany: async (formData) => {
+    addBranch: async (formData) => {
         let data = {
             companyName: "",
             branchName: "",

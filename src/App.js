@@ -7,7 +7,6 @@ import Registration from "./pages/registration/Registration";
 import NotFound from "./pages/404/NotFound";
 import './assets/fonts/Inter-Regular.otf';
 
-import AgentLogin from "./pages/console/login/AgentLogin";
 
 import CompanyDetails from "./views/company/CompanyDetails";
 import BranchDetails from "./pages/superadmin/branch/BranchDetails";
@@ -15,9 +14,7 @@ import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import PageLayout from "./components/layout/PageLayout";
 import LayoutWrapper from "./components/layout/LayoutWrapper";
-import IndexPage from "./pages/index/IndexPage";
 
 function App() {
   return (
@@ -25,7 +22,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* public routes */}
-          <Route path="/happyplay" element={<IndexPage />} />
           <Route path="login" element={<Login />} />
           <Route path="register/:code?" element={<Registration />} />
 
@@ -34,9 +30,9 @@ function App() {
             {routes}
 
             {/* Start Details routes */}
-            <Route exact path="/company/:id" element={<LayoutWrapper state="SuperAdmin.Company"><CompanyDetails /></LayoutWrapper>} />
-            <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
-            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} />
+            <Route exact path="/companies/:id" element={<LayoutWrapper state="Administrative.Company"><CompanyDetails /></LayoutWrapper>} />
+            {/* <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
+            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} /> */}
             {/* End Details routes */}
 
           </Route>

@@ -14,16 +14,12 @@ if (listMenuObj !== null) {
 
 let listRoutes = {
   home: false,
-  dashboard: false,
-  history: false,
-  wallet: false,
-  profile: false,
-  superAdmin: false,
-  userAccount: false,
+  administrative: false,
+  userAccounts: false,
   game: false,
-  postings: false,
-  support: false,
-  reporting: false
+  posts: false,
+  reports: false,
+  system: false
 }
 
 // menus.push("SuperAdmin.Profiles");
@@ -38,37 +34,27 @@ const buildChildObj = (dataObj, childLinks) => {
 }
 
 let finalRoutes = [];
-
-// if (user_role != null) {
-//   (user_role.role !== "Agent") ? finalRoutes.push(routeLinks[1]) : finalRoutes.push(routeLinks[0]);
-// }
 finalRoutes.push(routeLinks[0]);
 
 if (menus !== null) {
-
   // set parent menu active
-  if ((menus.filter(str => str.includes("History.")).length > 0)) { listRoutes.history = true; }
-  if ((menus.filter(str => str.includes("Wallet.")).length > 0)) { listRoutes.wallet = true; }
-  if ((menus.filter(str => str.includes("Profile.")).length > 0)) { listRoutes.profile = true; }
-  if ((menus.filter(str => str.includes("SuperAdmin.")).length > 0)) { listRoutes.superAdmin = true; }
-  if ((menus.filter(str => str.includes("UserAccount.")).length > 0)) { listRoutes.userAccount = true; }
+  if ((menus.filter(str => str.includes("Administrative.")).length > 0)) { listRoutes.administrative = true; }
+  if ((menus.filter(str => str.includes("UserAccounts.")).length > 0)) { listRoutes.userAccounts = true; }
   if ((menus.filter(str => str.includes("Game.")).length > 0)) { listRoutes.game = true; }
-  if ((menus.filter(str => str.includes("Postings.")).length > 0)) { listRoutes.postings = true; }
-  if ((menus.filter(str => str.includes("Support.")).length > 0)) { listRoutes.support = true; }
-  if ((menus.filter(str => str.includes("Reporting.")).length > 0)) { listRoutes.reporting = true; }
+  if ((menus.filter(str => str.includes("Posts.")).length > 0)) { listRoutes.posts = true; }
+  if ((menus.filter(str => str.includes("Reports.")).length > 0)) { listRoutes.reports = true; }
+  if ((menus.filter(str => str.includes("System.")).length > 0)) { listRoutes.system = true; }
+
+  console.log(menus);
 
   // add child menus
-  if (listRoutes.superAdmin) { finalRoutes.push(buildChildObj(routeLinks[5], menus.filter(str => str.includes("SuperAdmin.")))); }
-  if (listRoutes.profile) { finalRoutes.push(buildChildObj(routeLinks[4], menus.filter(str => str.includes("Profile.")))); }
-  if (listRoutes.wallet) { finalRoutes.push(buildChildObj(routeLinks[3], menus.filter(str => str.includes("Wallet.")))); }
-  if (listRoutes.userAccount) { finalRoutes.push(buildChildObj(routeLinks[6], menus.filter(str => str.includes("UserAccount.")))); }
-  if (listRoutes.game) { finalRoutes.push(buildChildObj(routeLinks[7], menus.filter(str => str.includes("Game.")))); }
-  if (listRoutes.postings) { finalRoutes.push(buildChildObj(routeLinks[8], menus.filter(str => str.includes("Postings.")))); }
-  if (listRoutes.support) { finalRoutes.push(buildChildObj(routeLinks[9], menus.filter(str => str.includes("Support.")))); }
-  if (listRoutes.reporting) { finalRoutes.push(buildChildObj(routeLinks[10], menus.filter(str => str.includes("Reporting.")))); }
-  if (listRoutes.history) { finalRoutes.push(buildChildObj(routeLinks[2], menus.filter(str => str.includes("History.")))); }
+  if (listRoutes.administrative) { finalRoutes.push(buildChildObj(routeLinks[1], menus.filter(str => str.includes("Administrative.")))); }
+  if (listRoutes.userAccounts) { finalRoutes.push(buildChildObj(routeLinks[2], menus.filter(str => str.includes("UserAccounts.")))); }
+  if (listRoutes.game) { finalRoutes.push(buildChildObj(routeLinks[3], menus.filter(str => str.includes("Game.")))); }
+  if (listRoutes.posts) { finalRoutes.push(buildChildObj(routeLinks[4], menus.filter(str => str.includes("Posts.")))); }
+  if (listRoutes.reports) { finalRoutes.push(buildChildObj(routeLinks[5], menus.filter(str => str.includes("Reports.")))); }
+  if (listRoutes.system) { finalRoutes.push(buildChildObj(routeLinks[6], menus.filter(str => str.includes("System.")))); }
 }
-
 // Final list of menus
 const appRoutes = finalRoutes;
 export default appRoutes;

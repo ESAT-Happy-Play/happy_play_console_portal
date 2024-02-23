@@ -39,7 +39,7 @@ const Company = () => {
         setPageLoader(false);
       }
     });
-  }, [pageNumber, companySearchValue, pageSize, totalRows]);
+  }, []);
 
   // On click search company
   const handleCompanySearch = (event, value) => { 

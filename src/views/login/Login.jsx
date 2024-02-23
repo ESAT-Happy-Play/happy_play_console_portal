@@ -18,7 +18,7 @@ import { StoreExt } from "../../utils/helpers";
 
 import { MuiInput, MuiLoadingButton } from "../../components/mui";
 import { ValidateUsername, ValidatePassword } from "../../utils/validations/ValidateLogin";
-import { AuthService, AccountService } from "../../services";
+import { AuthService, MenuService } from "../../services";
 
 const Login = () => {
   let loginObj = StoreExt.getStore("auth");
@@ -53,11 +53,11 @@ const Login = () => {
     AuthService.authenticate(data).then((authResp) => {
       if (authResp) {
         dispatch(setCredentials(authResp.data));
+        let tokenObj = StoreExt.getDecodeJWT(authResp.data.token);
         // get current user and menu
-        AccountService.current().then((acctResp) => {
-          if(acctResp) {
-            dispatch(setMenuState(acctResp.data.acocuntMenus));
-            dispatch(setAccountState(acctResp.data.account));
+        MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then((menuResp) => {
+          if(menuResp) {
+            dispatch(setMenuState(menuResp.data));
             window.location.reload(false);
           }
         });
