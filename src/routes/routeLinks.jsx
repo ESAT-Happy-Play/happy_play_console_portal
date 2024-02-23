@@ -1,7 +1,6 @@
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
 import PageLayout from '../components/layout/PageLayout';
-
 import AboutUs from '../views/about_us/AboutUs';
 import ActivityReports from '../views/activity_reports/ActivityReports';
 import Agents from '../views/agents/Agents';
@@ -378,5 +377,4 @@ const routeLinks = [
       ]
     }
   ];
-
 export default routeLinks;

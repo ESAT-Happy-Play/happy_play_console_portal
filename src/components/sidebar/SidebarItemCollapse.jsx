@@ -23,16 +23,21 @@ const SidebarItemCollapse = ({ item, selected, setSelected }) => {
         <ListItemButton
           onClick={() => setSelected(selected ? "" : item.sidebarProps.displayText)}
           sx={{
-            "&: hover": {
-              backgroundColor: "#e9e6e6"
+            "p: hover": {
+              fontWeight: "bold"
             },
-            zIndex: 1
-            // border: "0.5px solid rgb(230, 227, 227)"
+            flexGrow: 0,
+            gap: "5px"
           }}
         >
+          {item.sidebarProps.icon}
           <ListItemText disableTypography
             primary={
-              <Typography sx={{ "fontSize": "14px" }}>
+              <Typography sx={{
+                "fontSize": "14px",
+                fontFamily: "Inter",
+                fontWeight: (selected) ? "bold" : "normal",
+              }}>
                 {item.sidebarProps.displayText}
               </Typography>
             }
@@ -40,7 +45,9 @@ const SidebarItemCollapse = ({ item, selected, setSelected }) => {
           {selected ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
         </ListItemButton>
         <Collapse in={selected} timeout="auto">
-          <List sx={{ padding: 0 }}>
+          <List sx={{
+            padding: 0
+          }}>
             {item.child?.map((route, index) => (
               route.sidebarProps ? (
                 route.child ? (

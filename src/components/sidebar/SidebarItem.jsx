@@ -8,20 +8,25 @@ const SidebarItem = ({ item }) => {
   let isSelected = (appState === item.state) ? true : false;
 
   return (
-      item.sidebarProps && item.path ? (
+    item.sidebarProps && item.path ? (
       <ListItemButton sx={
-        { 
-          padding: "12px 0px", 
-          borderRadius: "14px",
-          margin: "5px 10px",
-          fontSize:"14px",
+        {
+          "&: hover": {
+            backgroundColor: "#FFDA18",
+            fontWeight: "bold"
+          },
+
+          padding: "8px 15px",
+          marginLeft: "10%",
+          borderLeft: "2px solid rgba(255, 255, 255, 0.5)",
+          fontSize: "14px",
+          fontFamily: "Inter",
           fontWeight: (isSelected) ? "bold" : null,
-          display: "flex",
-          justifyContent: "center",
+          flexGrow: '0',
           // "borderBottom": "0.5px solid rgb(19 219 219)", 
-          background: (isSelected) ? "rgba(72, 69, 210, 0.15)" : null,
-          color: (isSelected) ? "#4845d2" : "rgba(66, 66, 66, 0.85)",
-          zIndex:1
+          background: (isSelected) ? "white" : null,
+          color: (isSelected) ? "#4845d2" : "white",
+          zIndex: 1
         }} component={Link} to={item.path} >
         {item.sidebarProps.displayText}
       </ListItemButton>

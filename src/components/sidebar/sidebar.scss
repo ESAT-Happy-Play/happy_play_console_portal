@@ -1,49 +1,143 @@
 .sidebar {
     flex: 1.4;
-    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
     height: 100vh;
-    background-color: white;
-    color: #4845d2;
-    position: relative;
-    overflow: auto;
+    background-color: #4845D2;
+    color: white;
 
     svg {
-        color: #4845d2;
+        color: white;
     }
 
     .top {
-        // width:100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        a {
-            display: flex;
-            height: 120px;
-            margin-top: -40px;
-
-            .logo {
-                width: 100%;
-                object-fit: contain;
-            }
-        }
-
-        .bg-img {
-            width: 100%;
-            object-fit: contain;
+        .logo {
+            width: 70%;
+            padding: 0px 10px;
         }
     }
 
     .foot {
         width: 100%;
-        position: absolute;
-        bottom: 0;
-        z-index: 0;
+        margin-top: auto;
+        display: flex;
+        padding: 10px 0px;
+        flex-direction: column;
 
-        .foot-logo {
-            width: 100%;
+        .notifications {
             display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+            &:hover {
+                background-color: #FFDA18;
+                color: #4845D2;
+                cursor: pointer;
+
+                & .icon {
+                    color: #4845D2;
+                }
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .icon {
+                width: 16px;
+            }
+
+            .notif-count {
+                background-color: #DC4C64;
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+                font-size: 12px;
+                margin: 0;
+                text-align: center;
+                line-height: 16px;
+                color: white;
+
+            }
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+            &:hover {
+                background-color: #FFDA18;
+                color: #4845D2;
+                cursor: pointer;
+
+                & .icon {
+                    color: #4845D2;
+                }
+            }
+
+            h2 {
+                font-size: 14px;
+                margin: 0;
+            }
+
+            p {
+                font-size: 12px;
+                margin: 0;
+                font-weight: 200;
+            }
+
+            .icon {
+                width: 16px;
+
+                &:last-child {
+                    margin-left: auto;
+                }
+            }
+
+            .notif-count {
+                background-color: #DC4C64;
+                width: 16px;
+                height: 16px;
+                border-radius: 8px;
+                font-size: 12px;
+                margin: 0;
+                text-align: center;
+                line-height: 16px;
+
+            }
+        }
+
+        .trademark {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0px;
+
+            h2 {
+                font-size: 16px;
+                opacity: 0.75;
+                font-weight: 200;
+                margin: 0;
+            }
+
+            p {
+                font-size: 12px;
+                opacity: 0.50;
+                margin: 0;
+            }
         }
     }
 }
