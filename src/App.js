@@ -28,9 +28,9 @@ function App() {
             {routes}
 
             {/* Start Details routes */}
-            <Route exact path="/company/:id" element={<LayoutWrapper state="SuperAdmin.Company"><CompanyDetails /></LayoutWrapper>} />
-            <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
-            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} />
+            <Route exact path="/companies/:id" element={<LayoutWrapper state="Administrative.Company"><CompanyDetails /></LayoutWrapper>} />
+            {/* <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
+            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} /> */}
             {/* End Details routes */}
             
           </Route>

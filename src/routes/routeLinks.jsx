@@ -1,538 +1,380 @@
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
-import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import PageLayout from '../components/layout/PageLayout';
 
-import QueryBuilderOutlinedIcon from '@mui/icons-material/QueryBuilderOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import MoneyOutlinedIcon from '@mui/icons-material/MoneyOutlined';
-import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
-import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
-import PreviewOutlinedIcon from '@mui/icons-material/PreviewOutlined';
-
-import SmsIcon from '@mui/icons-material/Sms';
-import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
-import LiveTvOutlinedIcon from '@mui/icons-material/LiveTvOutlined';
-
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-
-import PersonIcon from '@mui/icons-material/Person';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
-import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
-
-import Admin from '../pages/superadmin/admin/Admin';
+import AboutUs from '../views/about_us/AboutUs';
+import ActivityReports from '../views/activity_reports/ActivityReports';
+import Agents from '../views/agents/Agents';
+import Annoucements from '../views/annoucements/Annoucements';
+import Bets from '../views/bets/Bets';
 import Branch from '../views/branch/Branch';
 import Company from '../views/company/Company';
-import Profile from '../views/profiles/Profile';
-import SystemUser from '../pages/useraccounts/systemusers/SystemUser';
-import Operator from '../pages/useraccounts/operators/Operator';
-import MasterAgent from '../pages/useraccounts/masteragents/MasterAgent';
-// import Agents from '../pages/useraccounts/agents/Agents';
-// import Players from '../pages/useraccounts/players/Players';
-import AdminAgents from '../pages/useraccounts/adminAgents/AdminAgents';
-import AdminPlayers from '../pages/useraccounts/adminPlayers/AdminPlayers';
-import ScheduleSetting from '../pages/games/schedulesettings/ScheduleSetting';
-import MechanicsSetting from '../pages/games/mechanicssettings/MechanicsSetting';
-import GameBets from '../pages/games/gameBets/GameBets';
-import GameResults from '../pages/games/gameResults/GameResults';
-import TextBlast from '../pages/postings/textblast/TextBlast';
-import Announcement from '../pages/postings/announcements/Announcement';
-import LiveStreaming from '../pages/postings/livestreaming/LiveStreaming';
-import SalesReport from '../pages/reports/sales/SalesReport';
-import TransactionReport from '../pages/reports/transactions/TransactionReport';
-import PageLayout from '../components/layout/PageLayout';
-import Prices from '../pages/games/prices/Prices';
-import ProfileInfo from '../pages/profile/profileInfo/profileInfo';
-import Resetpassword from '../pages/profile/resetpassword/resetpassword';
-
-// import UserApproval from '../pages/useraccounts/userApproval/UserApproval';
-import AdminGameResult from '../pages/games/adminGameResults/AdminGameResult';
-import UserVerification from '../pages/useraccounts/userverification/UserVerification';
-import Home from '../pages/home/Home';
-
-import AgentHome from '../pages/console/home/AgentHome';
-import AgentGameBets from '../pages/console/history/game_bets/AgentGameBets';
-import AgentGameResults from '../pages/console/history/game_results/AgentGameResults';
-
-import AgentUserApproval from '../pages/console/user_accounts/user_approval/AgentUserApproval';
-import AccountAgent from '../pages/console/user_accounts/agent/AccountAgent';
-import AccountPlayer from '../pages/console/user_accounts/player/AccountPlayer';
-import AgentSales from '../pages/console/reports/sales/AgentSales';
-import AgentTransactions from '../pages/console/reports/transactions/AgentTransactions';
-import AgentUserActivities from '../pages/console/reports/user_activities/AgentUserActivities';
-
-import { GetStoreObject } from "../helper/Helpers";
-import AdminGameBets from '../pages/games/adminGameBets/AdminGameBets';
-import Game from '../pages/superadmin/games/Game';
-
-import SendCredits from '../pages/wallet/sendCredits/SendCredits';
-import CreditRequests from '../pages/wallet/creditRequests/CreditRequests';
-import WithdrawCredits from '../pages/wallet/withdraw/WithdrawCredits';
-import WithdrawalRequests from '../pages/wallet/withdrawalRequests/WithdrawalRequests';
-
-import ReportAProblem from '../pages/issuesAndConcerns/reportAProblem/ReportAProblem';
-import Cases from '../pages/issuesAndConcerns/cases/Cases';
-import Violations from '../pages/issuesAndConcerns/violations/Violations';
-import AccountActions from '../pages/issuesAndConcerns/accountActions/AccountActions';
-import UserGrowth from '../pages/reports/usergrowth/UserGrowth';
-
-let userRole = "Dashboard";
+import GamePrizes from '../views/game_prizes/GamePrizes';
+import GameResults from '../views/game_results/GameResults';
+import Games from '../views/games/Games';
+import Growth from '../views/growth_reports/Growth';
+import Home from '../views/home/Home';
+import Livestream from '../views/livestream/Livestream';
+import MasterAgents from '../views/master_agents/MasterAgents';
+import MechanicsSettings from '../views/mechanics_settings/MechanicsSettings';
+import Performance from '../views/performance_reports/Performance';
+import Players from '../views/players/Players';
+import PrivacyPolicy from '../views/privacy_policy/PrivacyPolicy';
+import Promotions from '../views/promotions/Promotions';
+import ReportAnIssue from '../views/report_an_issue/ReportAnIssue';
+import Revenue from '../views/revenue_reports/Revenue';
+import Roles from '../views/roles/Roles';
+import ScheduleSettings from '../views/schedule_settings/ScheduleSettings';
+import StoreSettings from '../views/store_settings/StoreSettings';
+import SystemUsers from '../views/system_users/SystemUsers';
+import Terms from '../views/terms_of_use/Terms';
+import TextBlast from '../views/text_blast/TextBlast';
+import TransactionReports from '../views/transaction_reports/TransactionReports';
+import UserStatus from '../views/user_status/UserStatus';
+import UserVerification from '../views/user_verification/UserVerification';
 
 const routeLinks = [
-    // Home 1
-    {
-      path: "/",
-      element: <AgentHome />,
-      state: "Home.Home",
-    },
-    // Dashboard 0
     {
       path: "/",
       element: <Home />,
-      state: "Admin.Dashboard"
+      state: "Home.Home",
     },
-    // History 2
+    // Administrative 1
     {
       path: "",
       element: <PageLayout />,
-      state: "History",
+      state: "Administrative",
       sidebarProps: {
-        displayText: "HISTORY",
+        displayText: "Administrative",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/console/history/gamebets",
-          element: <AgentGameBets />,
-          state: "History.GameBets",
-          sidebarProps: {
-            displayText: "Game Bets",
-            icon: <PaymentsOutlinedIcon />
-          },
-        },
-        {
-          path: "/console/history/gameresult",
-          element: <AgentGameResults />,
-          state: "History.GameResult",
-          sidebarProps: {
-            displayText: "Game Result",
-            icon: <PostAddOutlinedIcon />
-          },
-        }
-      ]
-    },
-    // Wallet 3
-    {
-      path: "",
-      element: <PageLayout />,
-      state: "Wallet",
-      sidebarProps: {
-        displayText: "WALLET",
-        icon: <DashboardOutlinedIcon />
-      },
-      child: [
-        {
-          path: "/wallet/send/credits",
-          element: <SendCredits />,
-          state: "Wallet.SendCredits",
-          sidebarProps: {
-            displayText: "Send Credits",
-            icon: <WalletOutlinedIcon />
-          },
-        },
-        {
-          path: "/wallet/credit/requests",
-          element: <CreditRequests />,
-          state: "Wallet.CreditRequests",
-          sidebarProps: {
-            displayText: "Credit Requests",
-            icon: <WalletOutlinedIcon />
-          },
-        },
-        {
-          path: "/wallet/withdraw",
-          element: <WithdrawCredits />,
-          state: "Wallet.Withdraw",
-          sidebarProps: {
-            displayText: "Withdraw",
-            icon: <WalletOutlinedIcon />
-          },
-        },
-        {
-          path: "/wallet/withdrawal/request",
-          element: <WithdrawalRequests />,
-          state: "Wallet.WithdrawalRequests",
-          sidebarProps: {
-            displayText: "Withdrawal Requests",
-            icon: <WalletOutlinedIcon />
-          },
-        }
-      ]
-    },
-    // Profile 4
-    {
-      path: "",
-      element: <PageLayout />,
-      state: "Profile",
-      sidebarProps: {
-        displayText: "PROFILE",
-        icon: <DashboardOutlinedIcon />
-      },
-      child: [
-        {
-          path: "/profile/info",
-          element: <ProfileInfo />,
-          state: "Profile.ProfileInformation",
-          sidebarProps: {
-            displayText: "Profile Information",
-            icon: <PersonIcon />
-          },
-        },
-        {
-          path: "/profile/reset",
-          element: <Resetpassword />,
-          state: "Profile.ResetPassword",
-          sidebarProps: {
-            displayText: "Reset Password",
-            icon: <VisibilityOutlinedIcon />
-          },
-        },
-      ]
-    },
-    // Super Admin 5
-    {
-      path: "",
-      element: <PageLayout />,
-      state: "SuperAdmin",
-      sidebarProps: {
-        displayText: "SUPER ADMIN",
-        icon: <DashboardOutlinedIcon />
-      },
-      child: [
-        {
-          path: "/admin",
-          element: <Admin/>,
-          state: "SuperAdmin.SuperAdmin",
-          sidebarProps: {
-            displayText: "Super Admin",
-            icon: <LockOutlinedIcon />
-          },
-        },
-        {
-          path: "/company",
+          path: "/companies",
           element: <Company />,
-          state: "SuperAdmin.Company",
+          state: "Administrative.Company",
           sidebarProps: {
             displayText: "Company",
-            icon: <ApartmentOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/branch",
+          path: "/branches",
           element: <Branch />,
-          state: "SuperAdmin.Branch",
+          state: "Administrative.Branch",
           sidebarProps: {
             displayText: "Branch",
-            icon: <HomeWorkOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/profiles",
-          element: <Profile />,
-          state: "SuperAdmin.Profiles",
+          path: "/roles",
+          element: <Roles />,
+          state: "Administrative.Roles",
           sidebarProps: {
-            displayText: "Profiles",
-            icon: <AssignmentIndIcon />
-          },
+            displayText: "Roles",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
+        {
+          path: "/user/verification",
+          element: <UserVerification />,
+          state: "Administrative.UserVerification",
+          sidebarProps: {
+            displayText: "User Verification",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
+        {
+          path: "/user/status",
+          element: <UserStatus />,
+          state: "Administrative.UserStatus",
+          sidebarProps: {
+            displayText: "User Status",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
           path: "/games",
-          element: <Game />,
-          state: "SuperAdmin.Games",
+          element: <UserStatus />,
+          state: "Administrative.UserGames",
           sidebarProps: {
             displayText: "Games",
             icon: <DashboardOutlinedIcon />
-          },
-        }
+          }
+        },
       ]
     },
-    // User Account 6
+
+    // User Accounts 2
     {
       path: "",
       element: <PageLayout />,
-      state: "UserAccount",
+      state: "UserAccounts",
       sidebarProps: {
-        displayText: "USER ACCOUNTS",
+        displayText: "User Accounts",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/account/systemusers",
-          element: <SystemUser />,
-          state: "UserAccount.SystemUsers",
+          path: "/system/users",
+          element: <SystemUsers />,
+          state: "UserAccounts.SystemUsers",
           sidebarProps: {
             displayText: "System Users",
-            icon: <Diversity3OutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/account/operators",
-          element: <Operator />,
-          state: "UserAccount.Operators",
-          sidebarProps: {
-            displayText: "Operators",
-            icon: <AccountCircleIcon />
-          },
-        },
-        {
-          path: "/console/account/approval",
-          element: <AgentUserApproval/>,
-          state: "UserAccount.UserApproval",
-          sidebarProps: {
-            displayText: "User Approval",
-            icon: <VerifiedOutlinedIcon />
-          },
-        },
-        {
-          path: "/account/verify",
-          element: <UserVerification />,
-          state: "UserAccount.UserVerification",
-          sidebarProps: {
-            displayText: "User Verification",
-            icon: <VerifiedOutlinedIcon />
-          },
-        },
-        {
-          path: "/account/masteragents",
-          element: <MasterAgent />,
-          state: "UserAccount.MasterAgents",
+          path: "/master/agents",
+          element: <MasterAgents />,
+          state: "UserAccounts.MasterAgents",
           sidebarProps: {
             displayText: "Master Agents",
-            icon: <PersonAddAltOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
-
         {
-          path: "/account/agents",
-          element: (userRole === "Dashboard") ? <AdminAgents /> : <AccountAgent />,
-          state: "UserAccount.Agents",
+          path: "/agents",
+          element: <Agents />,
+          state: "UserAccounts.Agents",
           sidebarProps: {
             displayText: "Agents",
-            icon: <PeopleOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/account/players",
-          element: (userRole === "Dashboard") ? <AdminPlayers /> : <AccountPlayer />,
-          state: "UserAccount.Players",
+          path: "/players",
+          element: <Players />,
+          state: "UserAccounts.Players",
           sidebarProps: {
             displayText: "Players",
-            icon: <PersonOutlineOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
-
       ]
     },
-    // Game 7
+
+    // Game 3
     {
       path: "",
       element: <PageLayout />,
       state: "Game",
       sidebarProps: {
-        displayText: "GAME",
+        displayText: "Game",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/game/schedulesettings",
-          element: <ScheduleSetting />,
-          state: "Game.GameScheduleSettings",
+          path: "/schedule/settings",
+          element: <ScheduleSettings />,
+          state: "Game.ScheduleSettings",
           sidebarProps: {
-            displayText: "Game Schedule Settings",
-            icon: <QueryBuilderOutlinedIcon />
-          },
+            displayText: "Schedule Settings",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/game/mechanicssettings",
-          element: <MechanicsSetting />,
-          state: "Game.GameMechanicsSettings",
+          path: "/mechanics/settings",
+          element: <MechanicsSettings />,
+          state: "Game.MechanicsSettings",
           sidebarProps: {
-            displayText: "Game Mechanics Settings",
-            icon: <SettingsOutlinedIcon />
-          },
+            displayText: "Mechanics Settings",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/game/prices",
-          element: <Prices />,
-          state: "Game.Price&Prizes",
+          path: "/store/settings",
+          element: <StoreSettings />,
+          state: "Game.StoreSettings",
           sidebarProps: {
-            displayText: "Price And Prizes",
-            icon: <MoneyOutlinedIcon />
-          },
+            displayText: "Store Settings",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/game/gamebets",
-          element: (userRole === "Dashboard") ? <GameBets /> : <AdminGameBets />,
-          state: "Game.GameBets",
+          path: "/promotions",
+          element: <Promotions />,
+          state: "Game.Promotions",
           sidebarProps: {
-            displayText: "Game Bets",
-            icon: <PaymentsOutlinedIcon />
-          },
+            displayText: "Promotions",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/game/gameresult",
-          element: (userRole === "Dashboard") ? <GameResults /> : <AdminGameResult />,
-          state: "Game.GameResult",
+          path: "/bets",
+          element: <Bets />,
+          state: "Game.Bets",
           sidebarProps: {
-            displayText: "Game Result",
-            icon: <PostAddOutlinedIcon />
-          },
+            displayText: "Bets",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
+        {
+          path: "/game/results",
+          element: <GameResults />,
+          state: "Game.Results",
+          sidebarProps: {
+            displayText: "Game Results",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
+        {
+          path: "/game/prizes",
+          element: <GamePrizes />,
+          state: "Game.GamePrizes",
+          sidebarProps: {
+            displayText: "Game Prizes",
+            icon: <DashboardOutlinedIcon />
+          }
         },
       ]
     },
-    // Postings 8
+
+    // Posts 4
     {
       path: "",
       element: <PageLayout />,
-      state: "Postings",
+      state: "Posts",
       sidebarProps: {
-        displayText: "POSTINGS",
+        displayText: "Posts",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/textblast",
+          path: "/text/blast",
           element: <TextBlast />,
-          state: "Postings.TextBlast",
+          state: "Posts.TextBlast",
           sidebarProps: {
             displayText: "Text Blast",
-            icon: <SmsIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
           path: "/announcements",
-          element: <Announcement />,
-          state: "Postings.Announcements",
+          element: <Annoucements />,
+          state: "Posts.Announcements",
           sidebarProps: {
             displayText: "Announcements",
-            icon: <CampaignOutlinedIcon />
-          },
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/livestreaming",
-          element: <LiveStreaming />,
-          state: "Postings.LiveStreaming",
+          path: "/livestream",
+          element: <Annoucements />,
+          state: "Posts.Livestream",
           sidebarProps: {
-            displayText: "Livestreaming",
-            icon: <LiveTvOutlinedIcon />
-          },
+            displayText: "Livestream",
+            icon: <DashboardOutlinedIcon />
+          }
         },
       ]
     },
-    // Issues and Concern 9
+
+    // Reports 5
     {
       path: "",
       element: <PageLayout />,
-      state: "Support",
+      state: "Reports",
       sidebarProps: {
-        displayText: "ISSUES & CONCERN",
+        displayText: "Reports",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/support/report/problem",
-          element: <ReportAProblem />,
-          state: "Support.ReportProblem",
+          path: "/reports/revenue",
+          element: <Revenue />,
+          state: "Reports.Revenue",
           sidebarProps: {
-            displayText: "Report a Problem",
-            icon: <MonetizationOnIcon />
-          },
+            displayText: "Revenue",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/support/cases",
-          element: <Cases />,
-          state: "Support.Cases",
+          path: "/reports/transactions",
+          element: <TransactionReports />,
+          state: "Reports.Transaction",
           sidebarProps: {
-            displayText: "Cases",
-            icon: <PointOfSaleIcon />
-          },
+            displayText: "Transactions",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/accounts/violations",
-          element: <Violations />,
-          state: "Support.Violations",
+          path: "/reports/performance",
+          element: <Performance />,
+          state: "Reports.Performance",
           sidebarProps: {
-            displayText: "Violations",
-            icon: <AcUnitOutlinedIcon />
-          },
+            displayText: "Performance",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/accounts/actions",
-          element: <AccountActions />,
-          state: "Support.AccountActions",
+          path: "/reports/ativities",
+          element: <ActivityReports />,
+          state: "Reports.Activity",
           sidebarProps: {
-            displayText: "Account Suspension / Cancellation",
-            icon: <AcUnitOutlinedIcon />
-          },
-        }
+            displayText: "Activity",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
+        {
+          path: "/reports/growth",
+          element: <Growth />,
+          state: "Reports.Growth",
+          sidebarProps: {
+            displayText: "Growth",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
       ]
     },
-    // Reporting 10
+
+    // System 6
     {
       path: "",
       element: <PageLayout />,
-      state: "Reporting",
+      state: "System",
       sidebarProps: {
-        displayText: "REPORTING",
+        displayText: "System",
         icon: <DashboardOutlinedIcon />
       },
       child: [
         {
-          path: "/sales/report",
-          element: <SalesReport />,
-          state: "Reporting.SalesReport",
+          path: "/system/issues",
+          element: <ReportAnIssue />,
+          state: "System.ReportAnIssue",
           sidebarProps: {
-            displayText: "Sales Report",
-            icon: <MonetizationOnIcon />
-          },
+            displayText: "Report An Issue",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/transactions/report",
-          element: <TransactionReport />,
-          state: "Reporting.TransactionReport",
+          path: "/system/terms",
+          element: <Terms />,
+          state: "System.TermsOfUse",
           sidebarProps: {
-            displayText: "Transaction Report",
-            icon: <PointOfSaleIcon />
-          },
+            displayText: "Terms Of Use",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/activity/report",
-          element: (userRole === "Admin") ? <Admin/> : <AgentUserActivities/>,
-          state: "Reporting.UserActivityReport",
+          path: "/system/privacy-policy",
+          element: <PrivacyPolicy />,
+          state: "System.PrivacyPolicy",
           sidebarProps: {
-            displayText: "User Activity Report",
-            icon: <AcUnitOutlinedIcon />
-          },
+            displayText: "Privacy Policy",
+            icon: <DashboardOutlinedIcon />
+          }
         },
         {
-          path: "/user/growth",
-          element: <UserGrowth />,
-          state: "Reporting.UserGrowth",
+          path: "/system/aboutus",
+          element: <AboutUs />,
+          state: "System.AboutUs",
           sidebarProps: {
-            displayText: "User Growth",
-            icon: <AcUnitOutlinedIcon />
-          },
-        }
+            displayText: "About Us",
+            icon: <DashboardOutlinedIcon />
+          }
+        },
       ]
     }
   ];
