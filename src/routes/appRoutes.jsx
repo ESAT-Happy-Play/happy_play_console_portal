@@ -45,8 +45,6 @@ if (menus !== null) {
   if ((menus.filter(str => str.includes("Reports.")).length > 0)) { listRoutes.reports = true; }
   if ((menus.filter(str => str.includes("System.")).length > 0)) { listRoutes.system = true; }
 
-  console.log(menus);
-
   // add child menus
   if (listRoutes.administrative) { finalRoutes.push(buildChildObj(routeLinks[1], menus.filter(str => str.includes("Administrative.")))); }
   if (listRoutes.userAccounts) { finalRoutes.push(buildChildObj(routeLinks[2], menus.filter(str => str.includes("UserAccounts.")))); }

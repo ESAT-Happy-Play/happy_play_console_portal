@@ -1,0 +1,294 @@
+{
+  "countries": [
+    {
+      "COUNTRY_CODE": "AE",
+      "COUNTRY_NAME": "UAE (United Arab Emirates)",
+      "NTNLTY_CTZNSHP": "Emirati"
+    },
+    {
+      "COUNTRY_CODE": "AT",
+      "COUNTRY_NAME": "Austria",
+      "NTNLTY_CTZNSHP": "Austrian"
+    },
+    {
+      "COUNTRY_CODE": "AU",
+      "COUNTRY_NAME": "Australia",
+      "NTNLTY_CTZNSHP": "Australian"
+    },
+    {
+      "COUNTRY_CODE": "BD",
+      "COUNTRY_NAME": "Bangladesh",
+      "NTNLTY_CTZNSHP": "Bangladeshi"
+    },
+    {
+      "COUNTRY_CODE": "BE",
+      "COUNTRY_NAME": "Belgium",
+      "NTNLTY_CTZNSHP": "Belgian"
+    },
+    {
+      "COUNTRY_CODE": "BG",
+      "COUNTRY_NAME": "Bulgaria",
+      "NTNLTY_CTZNSHP": "Bulgarian"
+    },
+    {
+      "COUNTRY_CODE": "BN",
+      "COUNTRY_NAME": "Brunei Darussalam",
+      "NTNLTY_CTZNSHP": "Bruneian"
+    },
+    {
+      "COUNTRY_CODE": "CA",
+      "COUNTRY_NAME": "Canada",
+      "NTNLTY_CTZNSHP": "Canadian"
+    },
+    {
+      "COUNTRY_CODE": "CH",
+      "COUNTRY_NAME": "Switzerland",
+      "NTNLTY_CTZNSHP": "Swiss"
+    },
+    {
+      "COUNTRY_CODE": "CN",
+      "COUNTRY_NAME": "China",
+      "NTNLTY_CTZNSHP": "Chinese"
+    },
+    {
+      "COUNTRY_CODE": "CZ",
+      "COUNTRY_NAME": "Czech",
+      "NTNLTY_CTZNSHP": "Czech"
+    },
+    {
+      "COUNTRY_CODE": "DE",
+      "COUNTRY_NAME": "Germany",
+      "NTNLTY_CTZNSHP": "German"
+    },
+    {
+      "COUNTRY_CODE": "DK",
+      "COUNTRY_NAME": "Denmark",
+      "NTNLTY_CTZNSHP": "Dane"
+    },
+    {
+      "COUNTRY_CODE": "DZ",
+      "COUNTRY_NAME": "Algeria",
+      "NTNLTY_CTZNSHP": "Algerian"
+    },
+    {
+      "COUNTRY_CODE": "EG",
+      "COUNTRY_NAME": "Egypt",
+      "NTNLTY_CTZNSHP": "Egyptian"
+    },
+    {
+      "COUNTRY_CODE": "ES",
+      "COUNTRY_NAME": "Spain",
+      "NTNLTY_CTZNSHP": "Spaniard"
+    },
+    {
+      "COUNTRY_CODE": "FI",
+      "COUNTRY_NAME": "Finland",
+      "NTNLTY_CTZNSHP": "Finnish"
+    },
+    {
+      "COUNTRY_CODE": "FR",
+      "COUNTRY_NAME": "France",
+      "NTNLTY_CTZNSHP": "French"
+    },
+    {
+      "COUNTRY_CODE": "GB",
+      "COUNTRY_NAME": "United Kingdom",
+      "NTNLTY_CTZNSHP": "British"
+    },
+    {
+      "COUNTRY_CODE": "HU",
+      "COUNTRY_NAME": "Hungary",
+      "NTNLTY_CTZNSHP": "Hungarian"
+    },
+    {
+      "COUNTRY_CODE": "IN",
+      "COUNTRY_NAME": "India",
+      "NTNLTY_CTZNSHP": "Indian"
+    },
+    {
+      "COUNTRY_CODE": "IT",
+      "COUNTRY_NAME": "Italy",
+      "NTNLTY_CTZNSHP": "Italian"
+    },
+    {
+      "COUNTRY_CODE": "JO",
+      "COUNTRY_NAME": "Jordan",
+      "NTNLTY_CTZNSHP": "Jordanian"
+    },
+    {
+      "COUNTRY_CODE": "JP",
+      "COUNTRY_NAME": "Japan",
+      "NTNLTY_CTZNSHP": "Japanese"
+    },
+    {
+      "COUNTRY_CODE": "KP",
+      "COUNTRY_NAME": "North Korea",
+      "NTNLTY_CTZNSHP": "North Korean"
+    },
+    {
+      "COUNTRY_CODE": "KR",
+      "COUNTRY_NAME": "South Korea",
+      "NTNLTY_CTZNSHP": "South Korean"
+    },
+    {
+      "COUNTRY_CODE": "KW",
+      "COUNTRY_NAME": "Kuwait",
+      "NTNLTY_CTZNSHP": "Kuwaiti"
+    },
+    {
+      "COUNTRY_CODE": "LK",
+      "COUNTRY_NAME": "Sri Lanka",
+      "NTNLTY_CTZNSHP": "Sri Lankan"
+    },
+    {
+      "COUNTRY_CODE": "LU",
+      "COUNTRY_NAME": "Luxembourg",
+      "NTNLTY_CTZNSHP": "Luxembourgish"
+    },
+    {
+      "COUNTRY_CODE": "MN",
+      "COUNTRY_NAME": "Mongolia",
+      "NTNLTY_CTZNSHP": "Mongolian"
+    },
+    {
+      "COUNTRY_CODE": "MX",
+      "COUNTRY_NAME": "Mexico",
+      "NTNLTY_CTZNSHP": "Mexican"
+    },
+    {
+      "COUNTRY_CODE": "MY",
+      "COUNTRY_NAME": "Malaysia",
+      "NTNLTY_CTZNSHP": "Malaysian"
+    },
+    {
+      "COUNTRY_CODE": "NL",
+      "COUNTRY_NAME": "Netherlands",
+      "NTNLTY_CTZNSHP": "Dutch"
+    },
+    {
+      "COUNTRY_CODE": "NG",
+      "COUNTRY_NAME": "Nigeria",
+      "NTNLTY_CTZNSHP": "nigerian"
+    },
+    {
+      "COUNTRY_CODE": "NO",
+      "COUNTRY_NAME": "Norway",
+      "NTNLTY_CTZNSHP": "Norwegian"
+    },
+    {
+      "COUNTRY_CODE": "NZ",
+      "COUNTRY_NAME": "New Zealand",
+      "NTNLTY_CTZNSHP": "New Zealander"
+    },
+    {
+      "COUNTRY_CODE": "PH",
+      "COUNTRY_NAME": "Philippines",
+      "NTNLTY_CTZNSHP": "Filipino"
+    },
+    {
+      "COUNTRY_CODE": "PK",
+      "COUNTRY_NAME": "Pakistan",
+      "NTNLTY_CTZNSHP": "Pakistani"
+    },
+    {
+      "COUNTRY_CODE": "PL",
+      "COUNTRY_NAME": "Poland",
+      "NTNLTY_CTZNSHP": "Polish"
+    },
+    {
+      "COUNTRY_CODE": "RO",
+      "COUNTRY_NAME": "Romania",
+      "NTNLTY_CTZNSHP": "Romanian"
+    },
+    {
+      "COUNTRY_CODE": "RU",
+      "COUNTRY_NAME": "Russia",
+      "NTNLTY_CTZNSHP": "Russian"
+    },
+    {
+      "COUNTRY_CODE": "SA",
+      "COUNTRY_NAME": "Saudi Arabia",
+      "NTNLTY_CTZNSHP": "Saudi Arabian"
+    },
+    {
+      "COUNTRY_CODE": "SC",
+      "COUNTRY_NAME": "Seychelles",
+      "NTNLTY_CTZNSHP": "Seychellois"
+    },
+    {
+      "COUNTRY_CODE": "SD",
+      "COUNTRY_NAME": "Sudan",
+      "NTNLTY_CTZNSHP": "Sudanese"
+    },
+    {
+      "COUNTRY_CODE": "SE",
+      "COUNTRY_NAME": "Sweden",
+      "NTNLTY_CTZNSHP": "Swedish"
+    },
+    {
+      "COUNTRY_CODE": "SG",
+      "COUNTRY_NAME": "Singapore",
+      "NTNLTY_CTZNSHP": "Singaporean"
+    },
+    {
+      "COUNTRY_CODE": "SK",
+      "COUNTRY_NAME": "Slovak",
+      "NTNLTY_CTZNSHP": "Slovak"
+    },
+    {
+      "COUNTRY_CODE": "SY",
+      "COUNTRY_NAME": "Syria",
+      "NTNLTY_CTZNSHP": "Syrian"
+    },
+    {
+      "COUNTRY_CODE": "TH",
+      "COUNTRY_NAME": "Thailand",
+      "NTNLTY_CTZNSHP": "Thai"
+    },
+    {
+      "COUNTRY_CODE": "TN",
+      "COUNTRY_NAME": "Tunisia",
+      "NTNLTY_CTZNSHP": "Tunisian"
+    },
+    {
+      "COUNTRY_CODE": "TR",
+      "COUNTRY_NAME": "Turkey",
+      "NTNLTY_CTZNSHP": "Turkish"
+    },
+    {
+      "COUNTRY_CODE": "TW",
+      "COUNTRY_NAME": "Taipei / Taiwan",
+      "NTNLTY_CTZNSHP": "Taiwanese"
+    },
+    {
+      "COUNTRY_CODE": "UA",
+      "COUNTRY_NAME": "Ukraine",
+      "NTNLTY_CTZNSHP": "Ukrainian"
+    },
+    {
+      "COUNTRY_CODE": "US",
+      "COUNTRY_NAME": "United States of America",
+      "NTNLTY_CTZNSHP": "American"
+    },
+    {
+      "COUNTRY_CODE": "UZ",
+      "COUNTRY_NAME": "Uzbekistan",
+      "NTNLTY_CTZNSHP": "Uzbekistani"
+    },
+    {
+      "COUNTRY_CODE": "VE",
+      "COUNTRY_NAME": "Venezuela",
+      "NTNLTY_CTZNSHP": "Venezuelan"
+    },
+    {
+      "COUNTRY_CODE": "VN",
+      "COUNTRY_NAME": "Vietnam",
+      "NTNLTY_CTZNSHP": "Vietnamese"
+    },
+    {
+      "COUNTRY_CODE": "ZA",
+      "COUNTRY_NAME": "South Africa",
+      "NTNLTY_CTZNSHP": "South African"
+    }
+  ]
+}

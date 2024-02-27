@@ -14,7 +14,7 @@ export const MenuService = {
                 toast.error("Something went wrong. Please try again."); 
                 return false; 
             }
-            return res;
+            return res.data;
         })
     }
 }

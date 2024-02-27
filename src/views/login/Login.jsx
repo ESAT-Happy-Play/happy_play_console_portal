@@ -11,7 +11,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { setCredentials } from '../../redux/reducers/auth/AuthReducer';
 import { setMenuState } from '../../redux/reducers/MenuStateReducer';
-import { setAccountState } from '../../redux/reducers/AccountStateReducer';
 
 import PageLoader from "../../components/widget/PageLoader";
 import { StoreExt } from "../../utils/helpers";

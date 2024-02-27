@@ -9,7 +9,8 @@ export const MuiLoadingButton = ({
     color='success',
     size='medium',
     loadingPosition='end',
-    icon
+    icon,
+    style
   }) => {
   return (
     <>
@@ -19,6 +20,7 @@ export const MuiLoadingButton = ({
             className={className} 
             variant={variant} color={color} size={size}
             loadingPosition={loadingPosition}
+            style={style}
             endIcon={ icon }>
             {text}
         </LoadingButton>

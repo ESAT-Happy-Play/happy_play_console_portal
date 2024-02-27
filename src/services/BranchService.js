@@ -2,6 +2,27 @@ import { toast } from 'react-toastify';
 import ApiService from './ApiService';
 
 export const BranchService = {
+    getBranchByReferral: async (referralCode) => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/Branch/referral/${referralCode}`)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res.data;
+        })
+    },
+    getBranchByAddress: async (data) => {
+        // "region": "string",
+        // "province": "string",
+        // "municipality": "string"
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/Branch/address`, data)
+        .then((res) => {
+            if (!res.status) {
+                return false; 
+            }
+            return res.data;
+        })
+    },
     getPaginateBranch: async (keyword, pageNum, pageSize) => {
         let data = {
             pagedQuery: {

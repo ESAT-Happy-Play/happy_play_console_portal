@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import { routes } from "./routes";
 import Login from "./views/login/Login";
-import Registration from "./pages/registration/Registration";
-import NotFound from "./pages/404/NotFound";
+import Registration from "./views/registration/Registration";
+import NotFound from "./views/404/NotFound";
 import './assets/fonts/Inter-Regular.otf';
 
 
@@ -15,6 +15,8 @@ import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LayoutWrapper from "./components/layout/LayoutWrapper";
+import RegistrationOTP from "./views/registration/RegistrationOTP";
+import RegisterDetails from "./views/registration/RegisterDetails";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           {/* public routes */}
           <Route path="login" element={<Login />} />
           <Route path="register/:code?" element={<Registration />} />
+          <Route path="register/otp/:mobilenum/:code?" element={<RegistrationOTP />} />
+          <Route path="register/info/:mobilenum/:code?" element={<RegisterDetails />} />
 
           {/* protected routes */}
           <Route path="/" element={<Layout />}>

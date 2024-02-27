@@ -16,10 +16,13 @@ export const MuiInput = ({
   required = false, 
   className,
   inputProps,
-  onchange }) => {
+  onchange,
+  focused=false,
+ onInput}) => {
   return (
     <>
         <TextField
+            focused={focused}
             onChange={onchange}
             className={className}
             type={type}
@@ -33,7 +36,8 @@ export const MuiInput = ({
             multiline={multiline}
             size={size}
             fullWidth={fullWidth}
-            InputProps={inputProps} />
+            InputProps={inputProps}
+            onInput={onInput} />
     </>
   )
 }

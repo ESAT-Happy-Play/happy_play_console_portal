@@ -96,47 +96,47 @@ $defaultPad: 5px;
 
         .col-3 {
             padding: $defaultPad;
-            width: 24.99%;
+            width: 25%;
         }
 
         .col-4 {
             padding: $defaultPad;
-            width: 33.32%;
+            width: 33.33%;
         }
 
         .col-5 {
             padding: $defaultPad;
-            width: 41.65%;
+            width: 41.66%;
         }
 
         .col-6 {
             padding: $defaultPad;
-            width: 49.98%;
+            width: 50%;
         }
 
         .col-7 {
             padding: $defaultPad;
-            width: 58.31%;
+            width: 58.33%;
         }
 
         .col-8 {
             padding: $defaultPad;
-            width: 66.64%;
+            width: 66.66%;
         }
 
         .col-9 {
             padding: $defaultPad;
-            width: 74.97%;
+            width: 75%;
         }
 
         .col-10 {
             padding: $defaultPad;
-            width: 83.3%;
+            width: 83.33%;
         }
 
         .col-11 {
             padding: $defaultPad;
-            width: 91.63%;
+            width: 91.66%;
         }
 
         .col-12 {
@@ -274,6 +274,98 @@ $defaultPad: 5px;
                     }
                 }
             }
+        }
+    }
+    .input-center-bg {
+        .MuiInputBase-sizeSmall {
+            input {
+                text-align: center;
+                background: #1976d2;
+                border-radius: 25px;
+                color: white;
+            }
+            fieldset {
+                border: none;
+            }
+            .MuiInputAdornment-sizeSmall {
+                margin-left: -45px;
+                svg {
+                    color: white;
+                }
+            }
+        }
+    }
+    .input-center {
+        .MuiInputBase-sizeSmall {
+            input {
+                text-align: center;
+            }
+        }
+    }
+    .MuiInputBase-root.MuiInputBase-sizeSmall {
+        border-radius: 25px;
+        height: 34px;
+        fieldset {
+            top: -6px !important;
+        }
+    }
+    .MuiButton-root {
+        text-transform: capitalize;
+    }
+
+    .MuiList-root {
+        padding: 0px;
+    }
+
+    .MuiListItemButton-root {
+        margin-left: -15px;
+        justify-content: space-between;
+        .MuiListItemText-root {
+            flex: none;
+            span {
+                color: black;
+            }
+        }
+    }
+
+    .MuiStepIcon-root.Mui-completed {
+        color: green;
+    }
+
+    .div-otp-input {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        input {
+            font-size: 45px;
+            padding: 0;
+            width: 1em !important;
+            border: none;
+            -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+            box-shadow: 2px 4px 10px 1px rgb(147 147 147 / 47%);
+            border-radius: 10px;
+            border: 1px solid #365089;
+        }
+    }
+
+    .div-otp-input-success {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        input {
+            font-size: 45px;
+            padding: 0;
+            width: 1em !important;
+            border: none;
+            box-shadow: 2px 4px 10px 1px rgb(111 217 111);
+            border-radius: 10px;
+            border: 1px solid #008000;
         }
     }
 }
