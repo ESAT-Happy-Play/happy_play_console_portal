@@ -5,6 +5,8 @@ import { CompanyService } from './CompanyService';
 import { OTPService } from './OTPService';
 import { AddressService } from './AddressService';
 import { BranchService } from './BranchService';
+import { ImageService } from './ImageService';
+import { UserService } from './UserService';
 
 export { AuthService, MenuService, AccountService, CompanyService, OTPService, AddressService,
-BranchService };
+BranchService, ImageService, UserService };

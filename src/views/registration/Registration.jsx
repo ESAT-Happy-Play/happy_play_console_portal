@@ -26,7 +26,7 @@ const Registration = () => {
     setPageLoader(true);
     OTPService.generateOTP(data).then((resp) => {
       if(resp) {
-        window.location.href = `/register/otp/${data.mobileNumber}/${code}`;
+        window.location.href = `/register/otp/${data.mobileNumber}/${(code !== undefined) ? code : ''}`;
       }
       setPageLoader(false);
     });

@@ -14,6 +14,11 @@ export const DragDropUpload = ({ callBack }) => {
                     })
                 )
             );
+
+            // upload to image Api
+            acceptedFiles.map((file) => {
+                console.log(file);
+            });
         }
     });
 

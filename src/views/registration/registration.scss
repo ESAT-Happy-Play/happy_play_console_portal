@@ -49,9 +49,17 @@
 
         .lfContent {
             flex: 1;
+            width: 140px;
             background: rgb(27, 44, 77, 1);
             background: linear-gradient(274deg, rgba(27, 44, 77, 1) 0%, rgba(45, 68, 117, 1) 39%, rgba(71, 103, 174, 1) 100%);
 
+            h3 {
+                color: #808fb1;
+                font-weight: 900;
+                font-size: 30px;
+                transform: rotate(-90deg);
+                margin: 190px 45px 0px 0px;
+            }
             .div-referral {
                 position: absolute;
                 bottom: 0;

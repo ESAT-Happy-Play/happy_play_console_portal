@@ -5,9 +5,12 @@ import { useForm } from 'react-hook-form';
 
 import { FirstStep, SecondStep, FinalStep } from "../../components/mui/registration";
 import { ContentLoader, FormStepper } from "../../components/mui";
-import { AddressService, BranchService } from "../../services";
+import { AddressService, BranchService, UserService } from "../../services";
+import { UserModel } from "../../utils/models";
+import { StoreExt } from "../../utils/helpers";
 
 const RegisterDetails = () => {
+  let numbverVerified = StoreExt.getStore("isnumberverified");
   const { mobilenum, code } = useParams();
   const [pageLoader, setPageLoader] = useState(false);
 
@@ -16,39 +19,8 @@ const RegisterDetails = () => {
   let municipalities = require('../../assets/data/municipality.json');
   let barangays = require('../../assets/data/barangay.json');
 
-  const formSecndStep = useForm({
-        defaultValues: {
-            referralCode: "",
-            mobileNumber: "",
-            firstName: "",
-            lastName: "",
-            middleName: "",
-            nationality: "",
-            birthDate: "",
-
-            placeOfBirth: "",
-
-            presentRegion: "",
-            presentProvince: "",
-            presentMunicipality: "",
-            presentBarangay: "",
-            presentStreetOrPurok: "",
-            permanentRegion: "",
-            permanentProvince: "",
-            permanentMunicipality: "",
-            permanentBarangay: "",
-            permanentStreetOrPurok: "",
-            branchId: "",
-
-            sourceOfIncome: "",
-            natureOfWork: "",
-            validId: "",
-            frontIdPath: "",
-            selfiePath: ""
-        }
-    });
-  
-  const { register, handleSubmit, formState, reset } = formSecndStep;
+  const formRegistration = useForm({ defaultValues: UserModel.registration() });
+  const { register, handleSubmit, formState, reset } = formRegistration;
   const { errors } = formState;
 
   const [regionProvinceData, setregionProvinceData] = useState(null);
@@ -80,9 +52,10 @@ const RegisterDetails = () => {
       }
     }
     if (step3) { 
-      console.log("Show privacy/policy") 
+      UserService.registerUser(data).then((resp) => {
+        console.log(resp);
+      });
     }
-    console.log(data);
   }
 
   const handleResetPermanentAddr = (data) => {
@@ -98,28 +71,33 @@ const RegisterDetails = () => {
   }
 
   useEffect(() => {
-    // set mobile number
-    reset(formValues => ({ ...formValues, 
-      mobileNumber: mobilenum, referralCode: (code !== undefined) ? code : "" }));
-    // // get address
-    // AddressService.getRegionProvinces().then((resp) => {
-    //   if(resp) { setregionProvinceData(resp.data.regions); console.log(resp.data.regions); }
-    // })
-    // get branch by referral code
-    if (code !== undefined) {
-      BranchService.getBranchByReferral(code).then((resp) => {
-        if(resp) { 
-          reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
-          setbranchId(resp.data.branchId);
-        }
-      })
+    if(numbverVerified !== null) {
+      // set mobile number
+      reset(formValues => ({ ...formValues, 
+        mobileNumber: mobilenum, referralCode: (code !== undefined) ? code : "" }));
+      // // get address
+      // AddressService.getRegionProvinces().then((resp) => {
+      //   if(resp) { setregionProvinceData(resp.data.regions); console.log(resp.data.regions); }
+      // })
+      // get branch by referral code
+      if (code !== undefined) {
+        BranchService.getBranchByReferral(code).then((resp) => {
+          if(resp) { 
+            reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
+            setbranchId(resp.data.branchId);
+          }
+        })
+      } 
+    } else {
+      // window.location.href = `/register`;
     }
-  }, [code, mobilenum]);
+  }, [code, mobilenum, numbverVerified]);
 
   return (
     <div className="registration">
       <div className='container'>
         <div className="lfContent">
+          <div><h3>REGISTRATION</h3></div>
           {
             (code !== undefined) 
             ? <div className="div-referral">

@@ -1,5 +1,6 @@
 import "./registration.scss"
 import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
 import { Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
@@ -13,9 +14,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { ContentLoader } from "../../components/mui";
 import { OTPService } from "../../services";
+import { setNumberVerified } from '../../redux/reducers/OtpVerifiedStateReducer';
 
 const RegistrationOTP = () => {
   const { mobilenum, code } = useParams();
+  const dispatch = useDispatch();
   
   const _MINUTE = 4;
   const _SECONDS = 59;
@@ -63,6 +66,7 @@ const RegistrationOTP = () => {
     OTPService.verifyOTP({ mobileNumber: mobilenum, otpCode: otp}).then((resp) => {
       if (resp) {
         setSuccess(true);
+        dispatch(setNumberVerified(true));
         setTimeout(function() {
           setPageLoader(true);
           window.location.href = `/register/info/${mobilenum}/${(code !== undefined) ? code : ''}`;
