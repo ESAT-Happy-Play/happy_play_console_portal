@@ -89,7 +89,7 @@ const RegisterDetails = () => {
         })
       } 
     } else {
-      // window.location.href = `/register`;
+      window.location.href = `/register`;
     }
   }, [code, mobilenum, numbverVerified]);
 
