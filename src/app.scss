@@ -206,6 +206,7 @@ $defaultPad: 5px;
 
     .div-table {
         margin: 30px 15px 0 15px;
+
         .div-container {
             -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
             box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
@@ -221,6 +222,7 @@ $defaultPad: 5px;
                 color: #444444;
                 border-radius: 10px;
                 padding: 15px;
+
                 .title {
                     font-weight: 700;
                     margin: 0;
@@ -238,8 +240,10 @@ $defaultPad: 5px;
 
                 .div-search {
                     width: 100%;
+
                     .MuiInputBase-root {
                         padding: 0;
+
                         .MuiInputAdornment-root {
                             background: #edf2f7;
                             padding: 20px;
@@ -254,7 +258,7 @@ $defaultPad: 5px;
                 padding: 20px;
                 width: 100%;
                 box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-                
+
                 table {
                     thead>tr>th {
                         font-weight: 600 !important;
@@ -276,6 +280,7 @@ $defaultPad: 5px;
             }
         }
     }
+
     .input-center-bg {
         .MuiInputBase-sizeSmall {
             input {
@@ -284,17 +289,21 @@ $defaultPad: 5px;
                 border-radius: 25px;
                 color: white;
             }
+
             fieldset {
                 border: none;
             }
+
             .MuiInputAdornment-sizeSmall {
                 margin-left: -45px;
+
                 svg {
                     color: white;
                 }
             }
         }
     }
+
     .input-center {
         .MuiInputBase-sizeSmall {
             input {
@@ -302,30 +311,22 @@ $defaultPad: 5px;
             }
         }
     }
+
     .MuiInputBase-root.MuiInputBase-sizeSmall {
         border-radius: 25px;
         height: 34px;
+
         fieldset {
             top: -6px !important;
         }
     }
+
     .MuiButton-root {
         text-transform: capitalize;
     }
 
     .MuiList-root {
         padding: 0px;
-    }
-
-    .MuiListItemButton-root {
-        margin-left: -15px;
-        justify-content: space-between;
-        .MuiListItemText-root {
-            flex: none;
-            span {
-                color: black;
-            }
-        }
     }
 
     .MuiStepIcon-root.Mui-completed {
