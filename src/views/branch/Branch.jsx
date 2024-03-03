@@ -2,185 +2,144 @@ import "./branch.scss";
 
 import React, { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { TextField, MenuItem, Button  } from "@mui/material"
-import { toast } from 'react-toastify';
+import { TextField, MenuItem, Button  } from "@mui/material";
 
-import BranchSearchBar from "../../components/table/branchList/BranchSearchBar";
-import BranchList from "../../components/table/branchList/BranchList";
+import { TableSearchBar, BranchList} from "../../components/mui/tables";
+import { AddBranch } from "../../components/mui/modals";
+import { CompanyService, BranchService } from "../../services";
 
-import { GETFetch } from "../../api/ApiFetchBuilder";
-import AddBranch from "../../components/Dialog/forms/branch/AddBranch";
-import EditBranch from "../../components/Dialog/forms/branch/EditBranch";
-
-const Branch = () => {
+export const Branch = () => {
   /**
-   * Branch table list constants and functions
+   * table list constants and functions
    */
   let _PAGESIZE = 5;
-  // let _CompanyCode = loginObj.companyId;
   const [pageLoader, setPageLoader] = useState(false);
 
-  // company table state
-  const [branchSearchValue, setbranchSearchValue] = useState('');
-  const [companyCode, setcompanyCode] = useState(null);
+  // table state
+  const [searchValue, setsearchValue] = useState('');
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
-  const [braches, setbraches] = useState([]);
-  const [allCompanies, setallCompanies] = useState([]);
+  const [listData, setlistData] = useState([]);
+  const [companies, setcompanies] = useState([]);
+  const [companyGUID, setcompanyGUID] = useState(null);
+  const [clickCounter, setclickCounter] = useState(0);
 
-  const handleBranchData = async () => {
+  const handleLoadlistData = () => {
     setPageLoader(true);
-    let url = (companyCode === null) ? `${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&branchsearch=${branchSearchValue}`
-      : `${process.env.REACT_APP_API_URL}/branches?rowsperpage=${pageSize}&pagenumber=${pageNumber}&companyid=${companyCode}&branchsearch=${branchSearchValue}`;
+    BranchService.getPaginateBranch(searchValue, pageNumber, pageSize, companyGUID)
+    .then((resp) => {
+      if (resp) {
+        setTotalRows(resp.data.total);
+        setpageNumber(resp.data.pageNumber);
+        setpageSize(resp.data.pageSize);
+        setlistData(resp.data.branchList);
 
-    let response = await GETFetch(url);
-    setPageLoader(false);
-
-    if(response.status) {
-      setbraches(response.data.branches);
-
-      setTotalRows(response.data.totalRows);
-      setpageNumber(response.data.currentPage);
-      setpageSize(response.data.rowsPerPage);
-    }
-
-    if(!response.status) {
-      toast.error(response.data.errorMessage);
-    }
+        setPageLoader(false);
+      }
+    });
   }
 
-  const handleComapanyAll = async () => {
-    let response = await GETFetch(`${process.env.REACT_APP_API_URL}/companies/all`);
-    if(response.status) {
-      setallCompanies(response.data.companies);
-    }
-
-    if(!response.status) {
-      toast.error(response.data.errorMessage);
-    }
+  const handleCompanies = () => {
+    CompanyService.getPaginateCompany("", 1, 100)
+    .then((resp) => {
+        if (resp) { setcompanies(resp.data.companyList);}
+    });
   }
 
   // trigger call API endpoint if state change
   useEffect(() => {
-    handleBranchData();
-    handleComapanyAll();
-  }, [pageNumber, branchSearchValue, pageSize, totalRows, companyCode]);
+    handleLoadlistData();
+    if (companies !== null) {
+      handleCompanies();
+    }
+  }, [clickCounter]);
 
-  // On click search company
-  const handleBranchSearch = (event, value) => { 
-    setbranchSearchValue(value);
+  // On click search
+  const handleSearch = (event, value) => { 
+    setsearchValue(value);
     setpageNumber(1);
     setpageSize(_PAGESIZE);
+    setclickCounter(clickCounter + 1);
   }
 
-  // Trigger on search company empty
-  const handleBranchSearchEmpty = (event, value) => {
+  // Trigger on search  empty
+  const handleSearchEmpty = (event, value) => {
     if (value === "") {
-      setbranchSearchValue("");
+      setsearchValue("");
       setpageNumber(1);
       setpageSize(_PAGESIZE);
+      setclickCounter(clickCounter + 1);
     }
   }
 
-  // handle company table next page
-  const handleBranchChangePage = (event, newPage) => {
+  // handle table next page
+  const handleChangePage = (event, newPage) => {
     setpageNumber(newPage + 1);
-    setPageLoader(true);
+    setclickCounter(clickCounter + 1);
   }
 
-  // handle company table change page size
-  const handleBranchRowsPerPage = (event) => {
+  // handle table change page size
+  const handleRowsPerPage = (event) => {
     setpageSize(+event.target.value);
     setpageNumber(1);
-    setPageLoader(true);
+    setclickCounter(clickCounter + 1);
   }
 
-  const handleSelect = (e, value) => {
-    setcompanyCode(value);
+  const handleFilterByCompany = event => {
+    setcompanyGUID(event.target.getAttribute('data-value'));
+    setclickCounter(clickCounter + 1);
   }
 
-  // Add company dialog
-  const [openAddBranch, setAddBranch] = React.useState(false);
-  const handleAddBranchOpen = () => { setAddBranch(true); };
-  const handleAddBranchClose = () => { setAddBranch(false); };
-
-  const handleBranchCallback = () => {
-    setPageLoader(true);
-    setTotalRows(totalRows + 1);
-  }
-
-  // trigger to edit company
-  const handleEditBranchProfile = ( event, objData) => {
-    setbranchObj(objData);
-    handleEditBranchOpen();
-  };
-
-  // Edit company dialog
-  const [branchObj, setbranchObj] = React.useState(null);
-  const [openEditBranch, setEditBranch] = React.useState(false);
-  const handleEditBranchOpen = () => { setEditBranch(true); };
-  const handleEditBrachClose = () => { setEditBranch(false); };
-
-  const handleEditBranchCallback = () => {
-    setPageLoader(true);
-    setTotalRows(totalRows + 1);
-    handleEditBrachClose();
-  }
+  // Add dialog
+  const [openAddModal, setAddModal] = React.useState(false);
+  const handleAddModalOpen = () => { setAddModal(true); };
+  const handleAddModalClose = () => { setAddModal(false); };
 
   return (
-    <div className="branch">
-      <div className="container">
-        <div className="top">
-          <h2 className="title">LIST OF BRANCHES</h2>
-          <Button className="btn-success" variant="outlined" size="large" onClick={ handleAddBranchOpen }>
-            Register New Branch <AddIcon />
+    <div className="div-table">
+      <div className="div-container">
+        <div className="div-head">
+          <h2 className="title">Branch List</h2>
+          <Button variant="outlined" size="medium" onClick={ handleAddModalOpen }>
+            New Branch <AddIcon />
           </Button>
         </div>
         <div style={{display:'flex',justifyContent:'space-between'}}>
-          <div className="bottom">
-            <span>Company</span>
-            <TextField 
-                onChange={e => handleSelect(e, e.target.value) }
-                label="Select Company" style={{ minWidth: "250px" }} defaultValue="" variant="outlined" size="small" select>
-                <MenuItem value=''><em>Select Company</em></MenuItem>
-                { 
-                    (allCompanies.length !== 0) ? allCompanies.map((item) => (
-                    <MenuItem data-province-code={item.companyId} key={item.companyId} value={item.companyId}>
+          <div style={{display:'flex', gap:'10px', padding:'20px'}}>
+            <span style={{marginTop:'5px'}}>Company</span>
+            <TextField type="text" sx={{width:'250px'}} defaultValue="" label="Select Company" 
+            size="small" onClick={handleFilterByCompany} select>
+            <MenuItem value=""><em>Select company</em></MenuItem>
+            { 
+                (companies.length > 0) ?
+                companies.map((item, index) => (
+                    <MenuItem key={item.companyId} value={item.companyObjectId}>
                         {item.companyName}
                     </MenuItem>
-                    )) 
-                    : (pageLoader) ? <MenuItem value=''>Loading options...</MenuItem>
-                    : <MenuItem value=''>No records found!</MenuItem>
-                }
-              </TextField>
+                ))
+                : <MenuItem value=""><em>No data found!</em></MenuItem>
+            }
+            </TextField>
           </div>
-          <div className="bottom" style={{width:'50%'}}>
-            <div className="search">
-              <BranchSearchBar handleSearch={ handleBranchSearch } handleSearchEmpty={ handleBranchSearchEmpty } />
+          <div className="div-content" style={{width:'50%'}}>
+            <div className="div-search">
+              <TableSearchBar handleSearch={handleSearch} handleSearchEmpty={handleSearchEmpty} searchTitle="Search" />
             </div>
           </div>
         </div>
-        <BranchList 
-          searchResults={ braches }
+        <BranchList
+          listData={listData}
           totalCount={ totalRows }
-          EditProfile={ handleEditBranchProfile }
-          RowsPerPage={ handleBranchRowsPerPage }
+          rowsPerPage={handleRowsPerPage}
+          changePage={ handleChangePage }
           pageNumber = { (pageNumber === 0) ? pageNumber : (pageNumber - 1) }
           pageSize = { pageSize }
-          ChangePage={ handleBranchChangePage }
           isLoading = { pageLoader }
         />
       </div>
 
-      <AddBranch isOpenAdd={ openAddBranch } handleCloseAdd={ handleAddBranchClose } handleCallback={ handleBranchCallback } />
-      <EditBranch 
-        isOpenEdit={ openEditBranch } 
-        handleCloseEdit={ handleEditBrachClose } 
-        handleEditCallback={ handleEditBranchCallback }
-        objData={ branchObj } />
+      <AddBranch isOpen={ openAddModal } handleClose={ handleAddModalClose } companies={companies} />
     </div>
   )
 }
-
-export default Branch

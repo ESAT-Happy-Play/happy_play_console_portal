@@ -1,22 +1,19 @@
 import "./app.scss"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./components/layout/Layout";
-import { routes } from "./routes";
-import Login from "./views/login/Login";
-import Registration from "./views/registration/Registration";
-import NotFound from "./views/404/NotFound";
-import './assets/fonts/Inter-Regular.otf';
-
-
-import CompanyDetails from "./views/company/CompanyDetails";
-import BranchDetails from "./pages/superadmin/branch/BranchDetails";
-import EditProfileInfo from "./pages/profile/profileInfo/EditProfileInfo";
-
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { routes } from "./routes";
+import './assets/fonts/Inter-Regular.otf';
+
+import Login from "./views/login/Login";
+import Layout from "./components/layout/Layout";
 import LayoutWrapper from "./components/layout/LayoutWrapper";
+import Registration from "./views/registration/Registration";
 import RegistrationOTP from "./views/registration/RegistrationOTP";
 import RegisterDetails from "./views/registration/RegisterDetails";
+import NotFound from "./views/404/NotFound";
+
+import {CompanyDetails, BranchDetails} from './views';
 
 function App() {
   return (
@@ -35,8 +32,7 @@ function App() {
 
             {/* Start Details routes */}
             <Route exact path="/companies/:id" element={<LayoutWrapper state="Administrative.Company"><CompanyDetails /></LayoutWrapper>} />
-            {/* <Route exact path="/branch/:branchCode/:companyId" element={<LayoutWrapper state="SuperAdmin.Branch"><BranchDetails /></LayoutWrapper>} />
-            <Route exact path="/profile/info/getverified" element={<LayoutWrapper state="Profile.ProfileInformation"><EditProfileInfo /></LayoutWrapper>} /> */}
+            <Route exact path="/branches/:id" element={<LayoutWrapper state="Administrative.Branch"><BranchDetails /></LayoutWrapper>} />
             {/* End Details routes */}
 
           </Route>

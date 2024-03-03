@@ -1,0 +1,106 @@
+.show { display: block !important; }
+
+.hide { display: none !important; }
+
+.medium-modal-dialog {
+    .MuiPaper-root {
+        width: 480px;
+        text-transform: capitalize;
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            h2 {
+                padding: 15px;
+                margin: 0;
+                color: #4845d2;
+            }
+        }
+        .modal-body {
+            padding: 15px;
+            .form-div {
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+                margin-bottom: 10px;
+        
+                .form-input, .MuiTextField-root {
+                    width: 100%;
+        
+                    input {
+                        text-align: left;
+                        width: 100%;
+                    }
+                    .form-title {
+                        padding-bottom: 5px;
+                        display: flex;
+                        gap: 10px;
+                        .required { color: red;}
+                    }
+                }
+
+                .form-input > .drpAddress {
+                    width: 200px !important;
+                }
+            }
+            .groupTitle {
+                text-align: center;
+                h4{ margin: 0px; }
+            }
+        }
+        .modal-footer {
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+    }
+}
+
+.input-center-bg {
+    .MuiInputBase-sizeSmall {
+        input {
+            text-align: center;
+            background: #1976d2;
+            border-radius: 25px;
+            color: white;
+        }
+
+        fieldset {
+            border: none;
+        }
+
+        .MuiInputAdornment-sizeSmall {
+            margin-left: -45px;
+
+            svg {
+                color: white;
+            }
+        }
+    }
+}
+
+.input-center {
+    .MuiInputBase-sizeSmall {
+        input {
+            text-align: center;
+        }
+    }
+}
+
+.MuiInputBase-root.MuiInputBase-sizeSmall {
+    border-radius: 25px;
+    height: 34px;
+
+    fieldset {
+        top: -6px !important;
+    }
+}
+
+.MuiButton-root {
+    text-transform: capitalize;
+}
+
+.MuiList-root {
+    padding: 0px;
+}

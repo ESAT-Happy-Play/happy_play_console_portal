@@ -167,9 +167,9 @@ $defaultPad: 5px;
         display: none;
     }
 
-    .title {
-        text-transform: uppercase;
-    }
+    // .title {
+    //     text-transform: uppercase;
+    // }
 
     .btn-success {
         border: 1px solid #38a169;
@@ -221,10 +221,61 @@ $defaultPad: 5px;
                 color: #444444;
                 border-radius: 10px;
                 padding: 15px;
+                border-bottom: 2px solid #e3e3e3;
                 .title {
                     font-weight: 700;
                     margin: 0;
                     color: #4845d2;
+                }
+            }
+
+            .div-body {
+                padding: 20px;
+                .div-content1 {
+                    h3{ margin: 0px;}
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 2px solid #e3e3e3;
+                    padding-bottom: 10px;
+                }
+                .div-content2 {
+                    display: flex;
+                    justify-content: space-around;
+                    border-bottom: 2px solid #e3e3e3;
+                    .content1 {
+                        width: 100%;
+                        border-right: 1px solid #e3e3e3;
+                        display: flex;
+                        justify-content: center;
+                    }
+                    .content2 {
+                        width: 100%;
+                        border-left: 1px solid #e3e3e3;
+                        display: flex;
+                        justify-content: center;
+                    }
+
+                    .content1, .content2 {
+                        text-align: center;
+                        padding-bottom: 10px;
+                        h1 {
+                            color: #4845d2;
+                            font-size: 50px;
+                            margin-bottom: 0px;
+                        }
+
+                        .user-group {
+                            display: flex;
+                            gap: 25px;
+                            margin-top: 15px;
+                            span {
+                                color: #4845d2;
+                                font-size: 18px;
+                                font-weight: 600;
+                            }
+                            p { margin: 0px }
+                        }
+                    }
                 }
             }
 
@@ -241,7 +292,7 @@ $defaultPad: 5px;
                     .MuiInputBase-root {
                         padding: 0;
                         .MuiInputAdornment-root {
-                            background: #edf2f7;
+                            // background: #edf2f7;
                             padding: 20px;
                             cursor: pointer;
                         }
@@ -317,16 +368,16 @@ $defaultPad: 5px;
         padding: 0px;
     }
 
-    .MuiListItemButton-root {
-        margin-left: -15px;
-        justify-content: space-between;
-        .MuiListItemText-root {
-            flex: none;
-            span {
-                color: black;
-            }
-        }
-    }
+    // .MuiListItemButton-root {
+    //     margin-left: -15px;
+    //     justify-content: space-between;
+    //     .MuiListItemText-root {
+    //         flex: none;
+    //         span {
+    //             color: black;
+    //         }
+    //     }
+    // }
 
     .MuiStepIcon-root.Mui-completed {
         color: green;
