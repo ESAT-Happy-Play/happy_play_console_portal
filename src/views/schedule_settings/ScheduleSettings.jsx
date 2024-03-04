@@ -52,7 +52,8 @@ const ScheduleSettings = () => {
               tabList={[
                 { label: "Game Types", isHeader: true },
                 ...game.child?.map((subtype) => { return { label: subtype.subGameName, Component: <ScheduleCalendar /> } }) ?? [{ label: game.gameName, Component: <ScheduleCalendar /> }],
-                { label: "Draw Types", isHeader: true },
+                { label: "Draw Time", isHeader: true },
+                { label: "Draw Time", Component: <p>No design yet</p> }
               ]} />
           </div>
       }
