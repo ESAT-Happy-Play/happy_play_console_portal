@@ -1,170 +1,222 @@
-.react-calendar {
-    width: 500px;
-    height: 450px;
-    max-width: 100%;
-    background-color: #fff;
-    color: #222;
-    border-radius: 8px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    line-height: 1.125em;
+.schedule-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: flex-start;
 
-
-    .react-calendar__navigation {
+    .calendar-header {
+        width: 100%;
+        background: #F4F3FC;
         display: flex;
         justify-content: center;
-        align-items: center;
-
-        &__label {
-            flex-grow: 0 !important;
-            background: black !important;
-            color: white !important;
-            padding: 8px;
-            border-radius: 5px;
-            font-family: "Inter";
-            font-size: 12px;
-        }
-
-        &__arrow {
-            min-width: 44px;
-            padding: 8px;
-            background: none;
-            font-size: 20px;
-            border: none;
-        }
-
-
-        &__prev2-button,
-        &__next2-button {
-            display: none;
-        }
-
-        button:enabled:hover,
-        button:enabled:focus {
-            cursor: pointer;
-        }
-
-        button[disabled] {
-            color: #f0f0f0;
-        }
-
+        gap: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
 
-    .react-calendar__viewContainer {
+    .react-calendar {
+        flex: 1;
+        margin: 0 auto;
+        max-width: 550px;
+        background-color: #fff;
+        color: #222;
+        border-radius: 8px;
+        line-height: 1.125em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
 
-        .react-calendar__month-view {
-            &__weekdays {
-                text-align: center;
-                padding: 10px 0px;
-                margin-bottom: 10px;
 
-                abbr[title] {
-                    text-decoration: none;
-                    font-size: 12px;
+        .react-calendar__navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &__label {
+                flex-grow: 0 !important;
+                background: black !important;
+                color: white !important;
+                padding: 8px;
+                border-radius: 5px;
+                font-family: "Inter";
+                font-size: 12px;
+            }
+
+            &__arrow {
+                min-width: 44px;
+                padding: 8px;
+                background: none;
+                font-size: 20px;
+                border: none;
+            }
+
+
+            &__prev2-button,
+            &__next2-button {
+                display: none;
+            }
+
+            button:enabled:hover,
+            button:enabled:focus {
+                cursor: pointer;
+            }
+
+            button[disabled] {
+                color: #f0f0f0;
+            }
+
+        }
+
+        .react-calendar__viewContainer {
+
+            .react-calendar__month-view {
+                &__weekdays {
+                    text-align: center;
+                    padding: 10px 0px;
+                    margin-bottom: 10px;
+
+                    abbr[title] {
+                        text-decoration: none;
+                        font-size: 12px;
+                    }
+
+                    abbr[title=Saturday],
+                    abbr[title=Sunday] {
+                        color: #17A1FA;
+                    }
                 }
 
-                abbr[title=Saturday],
-                abbr[title=Sunday] {
-                    color: #17A1FA;
+                &__days {
+                    justify-content: space-evenly;
+
+                    .react-calendar__tile {
+                        font-family: "Inter";
+                        font-size: 14px;
+                        border: none;
+                        border-radius: 6px;
+                        flex-basis: 7% !important;
+                        margin: 3.64% !important;
+                        aspect-ratio: 1;
+                        background: none;
+                        color: #CCC5B9;
+
+                        &:enabled {
+                            color: #14A44D;
+                        }
+
+                        &:enabled:hover {
+                            background: #f8f8fa;
+                            color: #14A44D;
+                            cursor: pointer;
+                        }
+
+                        &--now {
+                            font-weight: bold;
+                            border: 2px solid #14A44D;
+                            color: #14A44D;
+                        }
+
+                        &--active {
+                            background: #DC4C64;
+                            color: white !important;
+
+                            &:hover,
+                            &:focus {
+                                background: #DC4C64 !important;
+                                color: white !important;
+                            }
+                        }
+                    }
+
+                }
+
+                &__weekNumbers {
+                    .react-calendar__tile {
+                        font-family: "Inter";
+                        display: flex;
+                        font-weight: 100;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 12px;
+                        border: none;
+                        border-radius: 6px;
+                        margin: 32% !important;
+                        color: white;
+                        background-color: #403D39;
+                        aspect-ratio: 1;
+
+                        span {
+                            background-color: #403D39;
+                            aspect-ratio: 1;
+                        }
+                    }
                 }
             }
 
-            &__days {
-                justify-content: space-evenly;
-
+            .react-calendar__year-view__months {
                 .react-calendar__tile {
                     font-family: "Inter";
                     font-size: 16px;
                     border: none;
                     border-radius: 6px;
-                    flex-basis: 7% !important;
-                    margin: 3.64% !important;
-                    aspect-ratio: 1;
+                    aspect-ratio: 1.5;
                     background: none;
                     color: #CCC5B9;
 
+                    &--now {
+                        color: #14A44D;
+                        background: #f8f8fa;
+                        font-weight: 600;
+                    }
+
                     &:enabled {
                         color: #14A44D;
-                    }
 
-                    &:enabled:hover {
-                        background: #f8f8fa;
-                        color: #14A44D;
-                        cursor: pointer;
-                    }
-
-                    &--now {
-                        font-weight: bold;
-                        border: 2px solid #14A44D;
-                        color: #14A44D;
-                    }
-
-                    &--active {
-                        background: #DC4C64;
-                        color: white !important;
-
-                        &:hover,
-                        &:focus {
-                            background: #DC4C64 !important;
-                            color: white !important;
+                        &:hover {
+                            cursor: pointer;
+                            background: #f8f8fa;
                         }
                     }
                 }
 
             }
-
-            &__weekNumbers {
-                .react-calendar__tile {
-                    font-family: "Inter";
-                    display: flex;
-                    font-weight: 100;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 12px;
-                    border: none;
-                    border-radius: 6px;
-                    margin: 32% !important;
-                    color: white;
-                    background-color: #403D39;
-                    aspect-ratio: 1;
-
-                    span {
-                        background-color: #403D39;
-                        aspect-ratio: 1;
-                    }
-                }
-            }
-        }
-
-        .react-calendar__year-view__months {
-            .react-calendar__tile {
-                font-family: "Inter";
-                font-size: 16px;
-                border: none;
-                border-radius: 6px;
-                aspect-ratio: 1.5;
-                background: none;
-                color: #CCC5B9;
-
-                &--now {
-                    color: #14A44D;
-                    background: #f8f8fa;
-                    font-weight: 600;
-                }
-
-                &:enabled {
-                    color: #14A44D;
-
-                    &:hover {
-                        cursor: pointer;
-                        background: #f8f8fa;
-                    }
-                }
-            }
-
         }
     }
 
+    .toggles-container {
+        flex: 0.5;
+        min-width: 150px;
+        max-width: 400px;
+        padding: 10px;
+
+        .toggles-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+
+            h2 {
+                color: #4845d2;
+                font-size: 16px;
+                font-weight: 400;
+                text-transform: uppercase;
+                margin: 0;
+
+            }
+        }
+
+        .draw-time-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #797979a6;
+            padding: 5px 10px;
+
+            p {
+                color: #4845d2;
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0;
+            }
+        }
+    }
 }
