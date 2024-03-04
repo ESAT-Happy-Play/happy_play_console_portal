@@ -5,9 +5,20 @@ import { Tabs as BaseTabs, TabPanel as BaseTabPanel, TabsList as BaseTabsList, T
 import { buttonClasses } from '@mui/base/Button';
 import { COLORS } from '../../helper/colors';
 
-const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
+/*
+Use to create Vertical tab, require the ff:
+  -Tablist
+    -Content for every tab
+    - obj : 
+      {
+        label: "NameOfTab",
+        Component: <display-of-the-said-tab/>,
+        isHeader?: optional, display as category header of the vertical nav
+      }
+*/
 
-  const [value, setValue] = React.useState(0);
+const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
+  const [value, setValue] = React.useState(tabList[0].isHeader ? 1 : 0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -16,10 +27,13 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
 
   return (
     <Tabs value={value} onChange={handleChange} orientation="vertical">
-      <Box>
+      <Box sx={{ borderRight: "1px solid rgba(0, 0, 0, 0.4)" }}>
         <TabsList>
-          {tabList?.map(({ label }, i) => (
-            <Tab key={i} value={i}>{label}</Tab>
+          {tabList?.map((tabs, i) => (
+            tabs.isHeader ?
+              <HeaderTab key={i} disabled>{tabs.label}</HeaderTab>
+              :
+              <Tab key={i} value={i}>{tabs.label}</Tab>
           ))}
         </TabsList>
       </Box>
@@ -34,12 +48,11 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
 
 
 const Tab = styled(BaseTab)`
-    color: ${COLORS.violetMain};
     cursor: pointer;
     font-size: 0.875rem;
     background-color: transparent;
-    min-width: 150px;
-    padding: 10px 15px;
+    min-width: 200px;
+    padding: 10px 20px;
     border: none;
     display: flex;
 
@@ -58,14 +71,26 @@ const Tab = styled(BaseTab)`
     }
 `;
 
+
+const HeaderTab = styled(BaseTab)`
+    justify-content:center;
+    color: #403d3980;
+    font-size: 0.875rem;
+    background-color: transparent;
+    min-width: 200px;
+    padding: 10px 20px;
+    border: none;
+    display: flex;
+`;
+
 const Tabs = styled(BaseTabs)`
   display: flex;
-  gap: 16px;
 `;
 
 const TabPanel = styled(BaseTabPanel)(
   ({ theme }) => `
     width: 100%;
+    padding: 15px;
     font-size: 0.875rem;
     `,
 );
@@ -73,7 +98,6 @@ const TabPanel = styled(BaseTabPanel)(
 const TabsList = styled(BaseTabsList)`
     border-radius: 12px;
     margin-bottom: 16px;
-    padding-left:20px;
     background-color:#fff;
     display: flex;
     flex-direction: column;

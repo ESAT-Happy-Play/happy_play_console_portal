@@ -3,20 +3,20 @@ import { styled } from '@mui/system';
 import { Box } from '@mui/material';
 import { Tabs, TabPanel as BaseTabPanel, TabsList as BaseTabsList, Tab as BaseTab, tabClasses } from '@mui/base';
 import { buttonClasses } from '@mui/base/Button';
-import {COLORS} from '../../helper/colors';
+import { COLORS } from '../../helper/colors';
 
-const CustomTab = ({tabList, changeEvent = () => {}}) => {
+const CustomTab = ({ tabList, changeEvent = () => { } }) => {
 
-    const [value, setValue] = React.useState(0);
-  
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-      changeEvent(newValue);
-    };
-  
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    changeEvent(newValue);
+  };
+
   return (
-    <Tabs value={value}  onChange={handleChange}>
-      <Box>
+    <Tabs value={value} onChange={handleChange} >
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <TabsList>
           {tabList?.map(({ label }, i) => (
             <Tab key={i} value={i}>{label}</Tab>
@@ -34,26 +34,26 @@ const CustomTab = ({tabList, changeEvent = () => {}}) => {
 
 
 const Tab = styled(BaseTab)`
-    color: ${COLORS.violetMain};
+    color: #fff;
     cursor: pointer;
     font-size: 0.875rem;
-    font-weight: bold;
+    font-family: "Inter";
+    min-width: 160px;
     background-color: transparent;
     line-height: 1.5;
     padding: 8px 12px;
-    margin: 6px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
 
     &:hover {
-        background-color: ${COLORS.background};
+        background-color: #ffffff20;
     }
 
     &.${tabClasses.selected} {
-        background-color: ${COLORS.violetMain};
-        color: #fff;
+        background-color: #fff;
+        color: black;
     }
 
     &.${buttonClasses.disabled} {
@@ -63,19 +63,20 @@ const Tab = styled(BaseTab)`
 `;
 
 const TabPanel = styled(BaseTabPanel)(
-    ({ theme }) => `
+  ({ theme }) => `
     width: 100%;
     font-size: 0.875rem;
     `,
 );
 
-const TabsList = styled(BaseTabsList) `
+const TabsList = styled(BaseTabsList)`
     border-radius: 12px;
     margin-bottom: 16px;
-    padding-left:20px;
-    background-color:#fff;
+    background-color: ${COLORS.violetMain};
     display: flex;
     box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    padding:5px;
+    gap:5px;
     `;
 
 export default CustomTab
