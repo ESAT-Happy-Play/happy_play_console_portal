@@ -17,7 +17,7 @@ export const CompanyService = {
                 toast.error("Sorry, unsuccessfull gateway communication."); 
                 return false; 
             }
-            return res;
+            return res.data;
         })
     },
     getCompanyDetails: async (companyId) => {
@@ -27,41 +27,27 @@ export const CompanyService = {
                 toast.error("Sorry, unsuccessfull gateway communication."); 
                 return false; 
             }
-            return res;
+            return res.data;
         })
     },
     addCompany: async (formData) => {
-        let data = {
-            companyName: "",
-            branchName: "",
-            details: {
-                firstName: "",
-                lastName: "",
-                middleName: "",
-                email: "",
-                gender: "",
-                martialStatus: "",
-                birthDate: "",
-                contactNumber: "",
-                region: "",
-                province: "",
-                municipality: "",
-                barangay: "",
-                streetOrPurok: "",
-                permanentRegion: "",
-                permanentProvince: "",
-                permanentMunicipality: "",
-                permanentBarangay: "",
-                permanentStreetOrPurok: ""
-            }
-        }
-        return await ApiService.put(`${process.env.REACT_APP_GATEWAY_URL}/api/Company`, data)
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/Company`, formData)
         .then((res) => {
             if (!res.status) { 
                 toast.error("Sorry, unsuccessfull gateway communication."); 
                 return false; 
             }
-            return res;
+            return res.data;
+        })
+    },
+    UpdateCompany: async (formData) => {
+        return await ApiService.put(`${process.env.REACT_APP_GATEWAY_URL}/api/Company`, formData)
+        .then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res.data;
         })
     }
 }

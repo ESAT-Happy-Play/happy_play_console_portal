@@ -1,0 +1,135 @@
+.group-type {
+    display: flex;
+    justify-content: center;
+    .group-content {
+        padding: 4px 15px 4px 15px;
+        margin-top: 5px;
+        border-radius: 15px;
+        background: #4845d2;
+        display: flex;
+        gap: 40px;
+        button { color:white; padding: 5px 15px 5px 15px;
+            border-radius: 12px; }
+        .btnActive {
+            color: black;
+            background: white;
+        }
+    }
+}
+.card-roles {
+    margin: 10px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #e5ecf1;
+    .card-container {
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 2px solid #bdbdbd;
+            .card-title {
+                font-size: 20px;
+                color: #4845d2;
+                font-weight: 700;
+            }
+        }
+        .card-body {
+            display: flex;
+            .body-left {
+                width: 290px;
+                border-right: 2px solid #bdbdbd;
+                .search {
+                    padding: 15px 10px 10px 10px;
+                }
+                .btn-new-role {
+                    text-align: center;
+                    button { font-weight: 600;}
+                }
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                    li {
+                        list-style: none;
+                        padding: 5px;
+                        // margin: 0 0 5px 0;
+                        padding-left: 15px;
+                        cursor: pointer;
+
+                        &:hover {
+                            background: rgba(25, 118, 210, 0.2);
+                            color: black;
+                        }
+                    }
+                    .li-usertypes-active {
+                        background: #4845d2;
+                        color: white;
+                    }
+                }
+            }
+
+            .body-right {
+                width: 100%;
+                .right-head {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 15px;
+                    border-bottom: 2px solid #bdbdbd;
+                    .stdiv {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        span { margin-top: 5px;}
+                    }
+
+                    .nddiv {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        span { 
+                            color:rgba(0, 0, 0, 0.38); 
+                            margin-top: 10px; 
+                        }
+                        .active {
+                            background: #4845d2;
+                            color: white;
+                            border-radius: 5px;
+                            padding: 0 5px 0px 5px;
+                        }
+                        .us-new {
+                            color: rgba(0, 0, 0, 0.38);
+                            margin-top: 10px;
+                            border: 1px solid;
+                            border-radius: 5px;
+                            padding: 0 5px 0px 5px;
+                            &:hover {
+                                border: 1px solid blue;
+                                cursor: pointer;
+                            }
+                        }
+                        .new-active {
+                            background: #4845d2;
+                            color: white;
+                            border-radius: 5px;
+                            padding: 0 5px 0px 5px;
+                        }
+                    }
+                }
+                .right-content {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    padding: 20px;
+                    height: 56vh;
+                    overflow: auto;
+                }
+
+                .div-role-footer {
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+                    padding: 10px;
+                    background: aliceblue;
+                }
+            }
+        }
+    }
+}

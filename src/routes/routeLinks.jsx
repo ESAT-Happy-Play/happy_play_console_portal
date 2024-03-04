@@ -1,13 +1,13 @@
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
+import {Company, Branch, Roles} from '../views';
+
 import PageLayout from '../components/layout/PageLayout';
 import AboutUs from '../views/about_us/AboutUs';
 import ActivityReports from '../views/activity_reports/ActivityReports';
 import Agents from '../views/agents/Agents';
 import Annoucements from '../views/annoucements/Annoucements';
 import Bets from '../views/bets/Bets';
-import Branch from '../views/branch/Branch';
-import Company from '../views/company/Company';
 import GamePrizes from '../views/game_prizes/GamePrizes';
 import GameResults from '../views/game_results/GameResults';
 import Games from '../views/games/Games';
@@ -22,7 +22,6 @@ import PrivacyPolicy from '../views/privacy_policy/PrivacyPolicy';
 import Promotions from '../views/promotions/Promotions';
 import ReportAnIssue from '../views/report_an_issue/ReportAnIssue';
 import Revenue from '../views/revenue_reports/Revenue';
-import Roles from '../views/roles/Roles';
 import ScheduleSettings from '../views/schedule_settings/ScheduleSettings';
 import StoreSettings from '../views/store_settings/StoreSettings';
 import SystemUsers from '../views/system_users/SystemUsers';

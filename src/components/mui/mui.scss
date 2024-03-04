@@ -12,3 +12,19 @@
         flex: 2;
     }
 }
+
+.form-div {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+
+    .form-input {
+        width: 100%;
+
+        input {
+            text-align: left;
+            width: 100%;
+        }
+    }
+}
