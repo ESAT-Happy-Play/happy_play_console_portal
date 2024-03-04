@@ -27,7 +27,7 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
 
   return (
     <Tabs value={value} onChange={handleChange} orientation="vertical">
-      <Box sx={{ borderRight: "1px solid rgba(0, 0, 0, 0.4)" }}>
+      <Box sx={{ borderRight: "1px solid #403d3980" }}>
         <TabsList>
           {tabList?.map((tabs, i) => (
             tabs.isHeader ?

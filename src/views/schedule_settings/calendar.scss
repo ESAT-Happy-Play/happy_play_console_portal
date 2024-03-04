@@ -1,3 +1,5 @@
+@import './../../helper/colors';
+
 .schedule-container {
     display: flex;
     flex-wrap: wrap;
@@ -5,7 +7,7 @@
 
     .calendar-header {
         width: 100%;
-        background: #F4F3FC;
+        background: $background;
         display: flex;
         justify-content: center;
         gap: 25px;
@@ -17,7 +19,7 @@
         flex: 1;
         margin: 0 auto;
         max-width: 550px;
-        background-color: #fff;
+        background-color: white;
         color: #222;
         border-radius: 8px;
         line-height: 1.125em;
@@ -81,7 +83,7 @@
 
                     abbr[title=Saturday],
                     abbr[title=Sunday] {
-                        color: #17A1FA;
+                        color: $sky-blue-higlight;
                     }
                 }
 
@@ -97,31 +99,31 @@
                         margin: 3.64% !important;
                         aspect-ratio: 1;
                         background: none;
-                        color: #CCC5B9;
+                        color: $transparent-font;
 
                         &:enabled {
-                            color: #14A44D;
+                            color: $green;
                         }
 
                         &:enabled:hover {
-                            background: #f8f8fa;
-                            color: #14A44D;
+                            background: $background;
+                            color: $green;
                             cursor: pointer;
                         }
 
                         &--now {
                             font-weight: bold;
-                            border: 2px solid #14A44D;
-                            color: #14A44D;
+                            border: 2px solid $green;
+                            color: $green;
                         }
 
                         &--active {
-                            background: #DC4C64;
+                            background: $red-warn;
                             color: white !important;
 
                             &:hover,
                             &:focus {
-                                background: #DC4C64 !important;
+                                background: $red-warn !important;
                                 color: white !important;
                             }
                         }
@@ -141,11 +143,11 @@
                         border-radius: 6px;
                         margin: 32% !important;
                         color: white;
-                        background-color: #403D39;
+                        background-color: $dark-grey;
                         aspect-ratio: 1;
 
                         span {
-                            background-color: #403D39;
+                            background-color: $dark-grey;
                             aspect-ratio: 1;
                         }
                     }
@@ -163,17 +165,17 @@
                     color: #CCC5B9;
 
                     &--now {
-                        color: #14A44D;
-                        background: #f8f8fa;
+                        color: $green;
+                        background: $background;
                         font-weight: 600;
                     }
 
                     &:enabled {
-                        color: #14A44D;
+                        color: $green;
 
                         &:hover {
                             cursor: pointer;
-                            background: #f8f8fa;
+                            background: $background;
                         }
                     }
                 }
@@ -195,7 +197,7 @@
             margin-bottom: 30px;
 
             h2 {
-                color: #4845d2;
+                color: $violet-main;
                 font-size: 16px;
                 font-weight: 400;
                 text-transform: uppercase;
@@ -208,11 +210,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid #797979a6;
+            border-bottom: 1px solid $transparent-font;
             padding: 5px 10px;
 
             p {
-                color: #4845d2;
+                color: $violet-main;
                 font-size: 16px;
                 font-weight: 600;
                 margin: 0;

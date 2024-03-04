@@ -1,10 +1,12 @@
+@import './../../helper/colors';
+
 .sidebar {
     display: flex;
     flex-direction: column;
     width: 300px;
     min-width: 250px;
     height: 100vh;
-    background-color: #4845D2;
+    background-color: $violet-main;
     color: white;
 
     svg {
@@ -39,12 +41,12 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.50);
 
             &:hover {
-                background-color: #FFDA18;
-                color: #4845D2;
+                background-color: $yellow;
+                color: $violet-main;
                 cursor: pointer;
 
                 & .icon {
-                    color: #4845D2;
+                    color: $violet-main;
                 }
             }
 
@@ -57,7 +59,7 @@
             }
 
             .notif-count {
-                background-color: #DC4C64;
+                background-color: $red-warn;
                 width: 16px;
                 height: 16px;
                 border-radius: 8px;
@@ -78,12 +80,12 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.50);
 
             &:hover {
-                background-color: #FFDA18;
-                color: #4845D2;
+                background-color: $yellow;
+                color: $violet-main;
                 cursor: pointer;
 
                 & .icon {
-                    color: #4845D2;
+                    color: $violet-main;
                 }
             }
 
@@ -107,7 +109,7 @@
             }
 
             .notif-count {
-                background-color: #DC4C64;
+                background-color: $red-warn;
                 width: 16px;
                 height: 16px;
                 border-radius: 8px;
@@ -158,7 +160,7 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: #cecdf3;
-    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: inset 0 0 4px #00000080;
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
