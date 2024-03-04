@@ -9,6 +9,7 @@ import { PermanentAddress } from './PermanentAddress';
 import { PermanentAddressInput } from './PermanentAddressInput';
 import { FormStepper } from './FormStepper';
 import { GroupCheckbox } from './GroupCheckbox';
+import { SpinLoader } from './SpinLoader';
 
 export { MuiInput, MuiInputFlex, MuiLoadingButton, ContentLoader, DragDropUpload, DefaultAddress,
-    CurrentAddress, PermanentAddress, FormStepper, PermanentAddressInput, GroupCheckbox };
+    CurrentAddress, PermanentAddress, FormStepper, PermanentAddressInput, GroupCheckbox, SpinLoader };

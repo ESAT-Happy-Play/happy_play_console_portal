@@ -1,3 +1,21 @@
+.group-type {
+    display: flex;
+    justify-content: center;
+    .group-content {
+        padding: 4px 15px 4px 15px;
+        margin-top: 5px;
+        border-radius: 15px;
+        background: #4845d2;
+        display: flex;
+        gap: 40px;
+        button { color:white; padding: 5px 15px 5px 15px;
+            border-radius: 12px; }
+        .btnActive {
+            color: black;
+            background: white;
+        }
+    }
+}
 .card-roles {
     margin: 10px;
     background: white;
@@ -12,7 +30,7 @@
             .card-title {
                 font-size: 20px;
                 color: #4845d2;
-                font-weight: 600;
+                font-weight: 700;
             }
         }
         .card-body {
@@ -100,8 +118,16 @@
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     padding: 20px;
-                    height: 74vh;
+                    height: 56vh;
                     overflow: auto;
+                }
+
+                .div-role-footer {
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+                    padding: 10px;
+                    background: aliceblue;
                 }
             }
         }

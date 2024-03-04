@@ -19,7 +19,7 @@ const theme = createTheme({
     },
   },
 });
-export const GroupCheckbox = ({parentMenu, childMenuList, callBack}) => {
+export const GroupCheckbox = ({parentMenu, childMenuList, callBack, checkEndabled = true}) => {
 
     const [checkboxList, setcheckboxList] = useState(null);
     const [isSelectAll, setisSelectAll] = useState(true);
@@ -94,7 +94,7 @@ export const GroupCheckbox = ({parentMenu, childMenuList, callBack}) => {
               <div key={index} style={{display:'flex', justifyContent:'space-between'}}>
                 <FormControlLabel
                   label={menu.menuName}
-                  control={<Checkbox id={checkboxList[index].menuCode} checked={checkboxList[index].enabled} onChange={handleChange} />}
+                  control={<Checkbox disabled={checkEndabled} id={checkboxList[index].menuCode} checked={checkboxList[index].enabled} onChange={handleChange} />}
                 />
                 <div>
                   <Button variant="contained" color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
@@ -118,7 +118,7 @@ export const GroupCheckbox = ({parentMenu, childMenuList, callBack}) => {
           <FormControlLabel style={{fontWeight:'600'}}
             label={parentMenu.menuName}
             control={
-                <Checkbox
+                <Checkbox disabled={checkEndabled}
                 indeterminate={isSelectAll !== true}
                 defaultChecked={isSelectAll}
                 onChange={handleSelectAll}
