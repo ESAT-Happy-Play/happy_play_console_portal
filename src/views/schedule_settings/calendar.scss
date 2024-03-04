@@ -20,7 +20,7 @@
         margin: 0 auto;
         max-width: 550px;
         background-color: white;
-        color: #222;
+        color: black;
         border-radius: 8px;
         line-height: 1.125em;
         display: flex;
@@ -63,7 +63,7 @@
             }
 
             button[disabled] {
-                color: #f0f0f0;
+                color: $transparent-font;
             }
 
         }
@@ -162,7 +162,7 @@
                     border-radius: 6px;
                     aspect-ratio: 1.5;
                     background: none;
-                    color: #CCC5B9;
+                    color: $transparent-font;
 
                     &--now {
                         color: $green;

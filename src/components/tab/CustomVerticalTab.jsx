@@ -27,7 +27,7 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
 
   return (
     <Tabs value={value} onChange={handleChange} orientation="vertical">
-      <Box sx={{ borderRight: "1px solid #403d3980" }}>
+      <Box sx={{ borderRight: `1px solid ${COLORS.transparentFont}` }}>
         <TabsList>
           {tabList?.map((tabs, i) => (
             tabs.isHeader ?
@@ -62,7 +62,7 @@ const Tab = styled(BaseTab)`
 
     &.${tabClasses.selected} {
         background-color: ${COLORS.violetMain};
-        color: #fff;
+        color: white;
     }
 
     &.${buttonClasses.disabled} {
@@ -74,7 +74,7 @@ const Tab = styled(BaseTab)`
 
 const HeaderTab = styled(BaseTab)`
     justify-content:center;
-    color: #403d3980;
+    color: ${COLORS.transparentFont};
     font-size: 0.875rem;
     background-color: transparent;
     min-width: 200px;
@@ -98,7 +98,7 @@ const TabPanel = styled(BaseTabPanel)(
 const TabsList = styled(BaseTabsList)`
     border-radius: 12px;
     margin-bottom: 16px;
-    background-color:#fff;
+    background-color:white;
     display: flex;
     flex-direction: column;
     align-items: center;

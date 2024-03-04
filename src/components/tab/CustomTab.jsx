@@ -34,7 +34,7 @@ const CustomTab = ({ tabList, changeEvent = () => { } }) => {
 
 
 const Tab = styled(BaseTab)`
-    color: #fff;
+    color: white;
     cursor: pointer;
     font-size: 0.875rem;
     font-family: "Inter";
@@ -48,11 +48,11 @@ const Tab = styled(BaseTab)`
     justify-content: center;
 
     &:hover {
-        background-color: #ffffff20;
+        background-color: ${COLORS.violetHover};
     }
 
     &.${tabClasses.selected} {
-        background-color: #fff;
+        background-color: white;
         color: black;
     }
 
