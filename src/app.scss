@@ -206,6 +206,7 @@ $defaultPad: 5px;
 
     .div-table {
         margin: 30px 15px 0 15px;
+
         .div-container {
             -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
             box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
@@ -222,6 +223,7 @@ $defaultPad: 5px;
                 border-radius: 10px;
                 padding: 15px;
                 border-bottom: 2px solid #e3e3e3;
+
                 .title {
                     font-weight: 700;
                     margin: 0;
@@ -231,23 +233,30 @@ $defaultPad: 5px;
 
             .div-body {
                 padding: 20px;
+
                 .div-content1 {
-                    h3{ margin: 0px;}
+                    h3 {
+                        margin: 0px;
+                    }
+
                     display: flex;
                     justify-content: space-between;
                     border-bottom: 2px solid #e3e3e3;
                     padding-bottom: 10px;
                 }
+
                 .div-content2 {
                     display: flex;
                     justify-content: space-around;
                     border-bottom: 2px solid #e3e3e3;
+
                     .content1 {
                         width: 100%;
                         border-right: 1px solid #e3e3e3;
                         display: flex;
                         justify-content: center;
                     }
+
                     .content2 {
                         width: 100%;
                         border-left: 1px solid #e3e3e3;
@@ -255,9 +264,11 @@ $defaultPad: 5px;
                         justify-content: center;
                     }
 
-                    .content1, .content2 {
+                    .content1,
+                    .content2 {
                         text-align: center;
                         padding-bottom: 10px;
+
                         h1 {
                             color: #4845d2;
                             font-size: 50px;
@@ -268,12 +279,16 @@ $defaultPad: 5px;
                             display: flex;
                             gap: 25px;
                             margin-top: 15px;
+
                             span {
                                 color: #4845d2;
                                 font-size: 18px;
                                 font-weight: 600;
                             }
-                            p { margin: 0px }
+
+                            p {
+                                margin: 0px
+                            }
                         }
                     }
                 }
@@ -289,8 +304,10 @@ $defaultPad: 5px;
 
                 .div-search {
                     width: 100%;
+
                     .MuiInputBase-root {
                         padding: 0;
+
                         .MuiInputAdornment-root {
                             // background: #edf2f7;
                             padding: 20px;
@@ -305,7 +322,7 @@ $defaultPad: 5px;
                 padding: 20px;
                 width: 100%;
                 box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-                
+
                 table {
                     thead>tr>th {
                         font-weight: 600 !important;
@@ -327,6 +344,7 @@ $defaultPad: 5px;
             }
         }
     }
+
     .input-center-bg {
         .MuiInputBase-sizeSmall {
             input {
@@ -335,17 +353,21 @@ $defaultPad: 5px;
                 border-radius: 25px;
                 color: white;
             }
+
             fieldset {
                 border: none;
             }
+
             .MuiInputAdornment-sizeSmall {
                 margin-left: -45px;
+
                 svg {
                     color: white;
                 }
             }
         }
     }
+
     .input-center {
         .MuiInputBase-sizeSmall {
             input {
@@ -353,13 +375,16 @@ $defaultPad: 5px;
             }
         }
     }
+
     .MuiInputBase-root.MuiInputBase-sizeSmall {
         border-radius: 25px;
         height: 34px;
+
         fieldset {
             top: -6px !important;
         }
     }
+
     .MuiButton-root {
         text-transform: capitalize;
     }
@@ -367,17 +392,6 @@ $defaultPad: 5px;
     .MuiList-root {
         padding: 0px;
     }
-
-    // .MuiListItemButton-root {
-    //     margin-left: -15px;
-    //     justify-content: space-between;
-    //     .MuiListItemText-root {
-    //         flex: none;
-    //         span {
-    //             color: black;
-    //         }
-    //     }
-    // }
 
     .MuiStepIcon-root.Mui-completed {
         color: green;
