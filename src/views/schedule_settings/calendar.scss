@@ -1,0 +1,224 @@
+@import './../../helper/colors';
+
+.schedule-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .calendar-header {
+        width: 100%;
+        background: $background;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .react-calendar {
+        flex: 1;
+        margin: 0 auto;
+        max-width: 550px;
+        background-color: white;
+        color: black;
+        border-radius: 8px;
+        line-height: 1.125em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+
+        .react-calendar__navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &__label {
+                flex-grow: 0 !important;
+                background: black !important;
+                color: white !important;
+                padding: 8px;
+                border-radius: 5px;
+                font-family: "Inter";
+                font-size: 12px;
+            }
+
+            &__arrow {
+                min-width: 44px;
+                padding: 8px;
+                background: none;
+                font-size: 20px;
+                border: none;
+            }
+
+
+            &__prev2-button,
+            &__next2-button {
+                display: none;
+            }
+
+            button:enabled:hover,
+            button:enabled:focus {
+                cursor: pointer;
+            }
+
+            button[disabled] {
+                color: $transparent-font;
+            }
+
+        }
+
+        .react-calendar__viewContainer {
+
+            .react-calendar__month-view {
+                &__weekdays {
+                    text-align: center;
+                    padding: 10px 0px;
+                    margin-bottom: 10px;
+
+                    abbr[title] {
+                        text-decoration: none;
+                        font-size: 12px;
+                    }
+
+                    abbr[title=Saturday],
+                    abbr[title=Sunday] {
+                        color: $sky-blue-higlight;
+                    }
+                }
+
+                &__days {
+                    justify-content: space-evenly;
+
+                    .react-calendar__tile {
+                        font-family: "Inter";
+                        font-size: 14px;
+                        border: none;
+                        border-radius: 6px;
+                        flex-basis: 7% !important;
+                        margin: 3.64% !important;
+                        aspect-ratio: 1;
+                        background: none;
+                        color: $transparent-font;
+
+                        &:enabled {
+                            color: $green;
+                        }
+
+                        &:enabled:hover {
+                            background: $background;
+                            color: $green;
+                            cursor: pointer;
+                        }
+
+                        &--now {
+                            font-weight: bold;
+                            border: 2px solid $green;
+                            color: $green;
+                        }
+
+                        &--active {
+                            background: $red-warn;
+                            color: white !important;
+
+                            &:hover,
+                            &:focus {
+                                background: $red-warn !important;
+                                color: white !important;
+                            }
+                        }
+                    }
+
+                }
+
+                &__weekNumbers {
+                    .react-calendar__tile {
+                        font-family: "Inter";
+                        display: flex;
+                        font-weight: 100;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 12px;
+                        border: none;
+                        border-radius: 6px;
+                        margin: 32% !important;
+                        color: white;
+                        background-color: $dark-grey;
+                        aspect-ratio: 1;
+
+                        span {
+                            background-color: $dark-grey;
+                            aspect-ratio: 1;
+                        }
+                    }
+                }
+            }
+
+            .react-calendar__year-view__months {
+                .react-calendar__tile {
+                    font-family: "Inter";
+                    font-size: 16px;
+                    border: none;
+                    border-radius: 6px;
+                    aspect-ratio: 1.5;
+                    background: none;
+                    color: $transparent-font;
+
+                    &--now {
+                        color: $green;
+                        background: $background;
+                        font-weight: 600;
+                    }
+
+                    &:enabled {
+                        color: $green;
+
+                        &:hover {
+                            cursor: pointer;
+                            background: $background;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    .toggles-container {
+        flex: 0.5;
+        min-width: 150px;
+        max-width: 400px;
+        padding: 10px;
+
+        .toggles-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+
+            h2 {
+                color: $violet-main;
+                font-size: 16px;
+                font-weight: 400;
+                text-transform: uppercase;
+                margin: 0;
+
+            }
+        }
+
+        .draw-time-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid $transparent-font;
+            padding: 5px 10px;
+
+            p {
+                color: $violet-main;
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0;
+            }
+        }
+    }
+}

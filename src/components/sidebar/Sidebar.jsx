@@ -21,7 +21,7 @@ const Sidebar = () => {
   // storeObj.accountObjectId
   // storeObj.branchName
 
-  const { authState } = useSelector((state) => state);
+  // const { authState } = useSelector((state) => state);
   const [selected, setSelected] = useState("");
   // TODO: connect to actual notification number
   const mockNotifCounter = 4;
