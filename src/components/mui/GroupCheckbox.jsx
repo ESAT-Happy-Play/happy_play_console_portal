@@ -96,13 +96,25 @@ export const GroupCheckbox = ({parentMenu, childMenuList, callBack, checkEndable
                   label={menu.menuName}
                   control={<Checkbox disabled={checkEndabled} id={checkboxList[index].menuCode} checked={checkboxList[index].enabled} onChange={handleChange} />}
                 />
-                <div>
-                  <Button variant="contained" color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
-                  <Button id={checkboxList[index].menuCode} onClick={handlebtnWrite} 
-                  variant="contained"
-                  disabled={!checkboxList[index].enabled} 
-                  color={(!checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
-                </div>
+                {
+                  (!checkEndabled) ?
+                  <div>
+                    <Button variant="contained" disabled={(checkboxList[index].readWrite) ? false : true} color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
+                    <Button id={checkboxList[index].menuCode} onClick={handlebtnWrite} 
+                    variant="contained"
+                    disabled={!checkboxList[index].enabled} 
+                    color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
+                  </div>
+                  :
+                  <div>
+                  <Button variant="contained" disabled={(checkboxList[index].readWrite) ? false : true} color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
+                    <Button id={checkboxList[index].menuCode}
+                    variant="contained"
+                    disabled={!checkboxList[index].enabled} 
+                    color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
+                  </div>
+                }
+                
               </div>
             ))
             : <></>
