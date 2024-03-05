@@ -42,7 +42,7 @@ const ScheduleCalendar = () => {
           <h2>{selectedDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</h2><IOSSwitch />
         </div>
         {drawTypeList.map((drawType) =>
-          <div className='draw-time-row'><p>{drawType.name}</p><IOSSwitch size="small" /></div>
+          <div className='draw-time-row' key={drawType.gameTypeId}><p>{drawType.name}</p><IOSSwitch size="small" /></div>
         )}
       </div>
     </div>
