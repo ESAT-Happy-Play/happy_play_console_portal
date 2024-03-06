@@ -33,8 +33,13 @@ export const LoginNewUser = () => {
       setPageLoader(true);
       OTPService.generateLoginOTP(data).then((resp) => {
         if(resp) {
-          let param = StoreExt.getEncrypted(resp.data);
-          window.location.href = `/otp/auth/${param}`;
+          let param = StoreExt.getEncrypted({
+            mobileNumber: data.mobileNumber,
+            referenceId: resp.data.referenceId,
+            userId: resp.data.userId,
+            new: resp.data.new,
+          });
+          window.location.href = `/otp/auth/${btoa(param)}`;
         }
         setPageLoader(false);
       });

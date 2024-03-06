@@ -1,6 +1,5 @@
 import "./registration.scss"
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
 
 import { Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
@@ -12,13 +11,14 @@ import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
+import { StoreExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
 import { OTPService } from "../../services";
-import { setNumberVerified } from '../../redux/reducers/OtpVerifiedStateReducer';
 
 export const RegistrationOTP = () => {
-  const { mobilenum, code } = useParams();
-  const dispatch = useDispatch();
+  const { code } = useParams();
+  const paramObj = StoreExt.getDecrypted(atob(code));
+  console.log(paramObj);
   
   const _MINUTE = 4;
   const _SECONDS = 59;
@@ -31,17 +31,10 @@ export const RegistrationOTP = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-
+      if (seconds > 0) { setSeconds(seconds - 1); }
       if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(interval);
-        } else {
-          setSeconds(_SECONDS);
-          setMinutes(minutes - 1);
-        }
+        if (minutes === 0) { clearInterval(interval); } 
+        else { setSeconds(_SECONDS); setMinutes(minutes - 1); }
       }
     }, 1000);
 
@@ -63,13 +56,21 @@ export const RegistrationOTP = () => {
   const handleSubmit = () => {
     if(otp.length <= 5) { return false; }
     setPageLoader(true);
-    OTPService.verifyOTP({ mobileNumber: mobilenum, otpCode: otp}).then((resp) => {
+    OTPService.verifyOTP({ 
+      referenceId: paramObj.referenceId,
+      mobileNumber: paramObj.mobileNumber, 
+      otpCode: otp}).then((resp) => {
       if (resp) {
         setSuccess(true);
-        dispatch(setNumberVerified(true));
         setTimeout(function() {
           setPageLoader(true);
-          window.location.href = `/register/info/${mobilenum}/${(code !== undefined) ? code : ''}`;
+
+          let param = StoreExt.getEncrypted({
+            mobileNumber: paramObj.mobileNumber,
+            isVerified: resp.data,
+            code: paramObj.code
+          });
+          window.location.href = `/register/info/${btoa(param)}`;
         }, 2000);
       }
       setPageLoader(false);
@@ -90,7 +91,7 @@ export const RegistrationOTP = () => {
           <div className="body">
               <div>
                 <label htmlFor="mobileNumber">Enter Mobile Number</label>
-                <TextField type="text"  defaultValue={mobilenum} className="input-center-bg" fullWidth size="small" 
+                <TextField type="text"  defaultValue={paramObj.mobileNumber} className="input-center-bg" fullWidth size="small" 
                 InputProps={{
                   endAdornment:<InputAdornment position="end">
                     <IconButton onClick={ handleChangeNumber } size="small">

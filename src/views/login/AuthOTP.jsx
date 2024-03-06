@@ -21,8 +21,8 @@ import { OTPService } from "../../services";
 
 export const AuthOTP = () => {
   const { code } = useParams();
-  const [mobilenum, setmobilenum] = useState("00000000000");
-  let loginObj = StoreExt.getStore("auth");
+  const paramObj = StoreExt.getDecrypted(atob(code));
+  // let loginObj = StoreExt.getStore("auth");
 
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
@@ -37,11 +37,6 @@ export const AuthOTP = () => {
   const [success, setSuccess] = useState(false);
   
   useEffect(() => {
-    console.log(code);
-    if(code !== null) {
-      // console.log(StoreExt.getDecodeJWT(code));
-    }
-
     const interval = setInterval(() => {
       if (seconds > 0) { setSeconds(seconds - 1);}
       if (seconds === 0) {
@@ -53,7 +48,7 @@ export const AuthOTP = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [seconds, minutes, code]);
+  }, [seconds, minutes]);
 
   const resendOTP = () => {
     setMinutes(_MINUTE);
@@ -101,7 +96,7 @@ export const AuthOTP = () => {
                   
                   <div>
                     <label htmlFor="mobileNumber">Enter Mobile Number</label>
-                    <TextField type="text"  defaultValue={mobilenum} className="input-center-bg" fullWidth size="small" 
+                    <TextField type="text"  defaultValue={paramObj.mobileNumber} className="input-center-bg" fullWidth size="small" 
                     InputProps={{
                     endAdornment:<InputAdornment position="end">
                         <IconButton onClick={ handleChangeNumber } size="small">

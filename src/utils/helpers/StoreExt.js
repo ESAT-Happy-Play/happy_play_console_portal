@@ -9,7 +9,8 @@ export const StoreExt = {
         return objdata;
     },
     getEncrypted: (obj) => {
-        return CryptoJS.AES.encrypt(JSON.stringify(obj), process.env.REACT_APP_SECRET_PASS).toString();
+        let enc = CryptoJS.AES.encrypt(JSON.stringify(obj), process.env.REACT_APP_SECRET_PASS).toString();
+        return enc;
     },
     getDecrypted: (encryptedTxt) => {
         const storagebytes = CryptoJS.AES.decrypt(encryptedTxt, process.env.REACT_APP_SECRET_PASS);

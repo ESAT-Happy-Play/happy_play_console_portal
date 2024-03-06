@@ -5,13 +5,16 @@ import { useForm } from 'react-hook-form';
 
 import { FirstStep, SecondStep, FinalStep } from "../../components/mui/registration";
 import { ContentLoader, FormStepper } from "../../components/mui";
-import { AddressService, BranchService, UserService } from "../../services";
+import { BranchService, UserService } from "../../services";
 import { UserModel } from "../../utils/models";
 import { StoreExt } from "../../utils/helpers";
 
 export const RegisterDetails = () => {
-  let numbverVerified = StoreExt.getStore("isnumberverified");
-  const { mobilenum, code } = useParams();
+  const { code } = useParams();
+  const paramObj = StoreExt.getDecrypted(atob(code));
+  console.log(paramObj);
+
+
   const [pageLoader, setPageLoader] = useState(false);
 
   let regions = require('../../assets/data/region.json');
@@ -35,7 +38,7 @@ export const RegisterDetails = () => {
 
   const step1Back = () => { 
     setPageLoader(true);
-    window.location.href = `/register/${(code !== undefined) ? code : ''}`;
+    window.location.href = `/register/${paramObj.code}`;
   }
   const step2Back = () => { setstep1(true); setstep2(false); setstep3(false); setstepCount(stepCount - 1); }
   const step3Back = () => { setstep1(false); setstep2(true); setstep3(false); setstepCount(stepCount - 1); }
@@ -71,27 +74,20 @@ export const RegisterDetails = () => {
   }
 
   useEffect(() => {
-    if(numbverVerified !== null) {
-      // set mobile number
-      reset(formValues => ({ ...formValues, 
-        mobileNumber: mobilenum, referralCode: (code !== undefined) ? code : "" }));
-      // // get address
-      // AddressService.getRegionProvinces().then((resp) => {
-      //   if(resp) { setregionProvinceData(resp.data.regions); console.log(resp.data.regions); }
-      // })
-      // get branch by referral code
-      if (code !== undefined) {
-        BranchService.getBranchByReferral(code).then((resp) => {
-          if(resp) { 
-            reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
-            setbranchId(resp.data.branchId);
-          }
-        })
-      } 
-    } else {
-      window.location.href = `/register`;
-    }
-  }, [code, mobilenum, numbverVerified]);
+    // // set mobile number
+    // reset(formValues => ({ ...formValues, 
+    //   mobileNumber: mobilenum, referralCode: (code !== undefined) ? code : "" }));
+
+    // // get branch by referral code
+    // if (code !== undefined) {
+    //   BranchService.getBranchByReferral(code).then((resp) => {
+    //     if(resp) { 
+    //       reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
+    //       setbranchId(resp.data.branchId);
+    //     }
+    //   })
+    // } 
+  }, []);
 
   return (
     <div className="registration">
@@ -99,7 +95,7 @@ export const RegisterDetails = () => {
         <div className="lfContent">
           <div><h3>REGISTRATION</h3></div>
           {
-            (code !== undefined) 
+            (paramObj.code !== "") 
             ? <div className="div-referral">
                 <p> Referral Code <br/> <span>{code}</span> </p>
               </div>
@@ -122,12 +118,7 @@ export const RegisterDetails = () => {
               btnBack={step2Back} 
               handleSubmit={handleSubmit} 
               formSubmit={formSubmit} 
-              register={register} errors={errors} 
-              regionProvince={regionProvinceData}
-              regions={regions}
-              provinces={provinces}
-              municipalities={municipalities}
-              barangays={barangays}
+              register={register} errors={errors}
               showPresAddr={showPresendAddress}
               showPerAddr={showPermanentAddress}
               branchId={branchId}
