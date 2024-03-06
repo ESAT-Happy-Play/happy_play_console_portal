@@ -2,6 +2,56 @@
 
 .hide { display: none !important; }
 
+.tiny-modal-dialog {
+    .MuiPaper-root {
+        width: 280px;
+        text-transform: capitalize;
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+
+            h2 {
+                padding: 15px;
+                margin: 0;
+                color: #4845d2;
+            }
+        }
+
+        .modal-footer {
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+    }
+}
+
+.small-modal-dialog {
+    .MuiPaper-root {
+        width: 380px;
+        text-transform: capitalize;
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+
+            h2 {
+                padding: 15px;
+                margin: 0;
+                color: #4845d2;
+            }
+        }
+
+        .modal-footer {
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+    }
+}
+
 .medium-modal-dialog {
     .MuiPaper-root {
         width: 480px;

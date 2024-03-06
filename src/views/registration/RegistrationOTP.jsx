@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 import { StoreExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
@@ -17,8 +18,8 @@ import { OTPService } from "../../services";
 
 export const RegistrationOTP = () => {
   const { code } = useParams();
+  try { StoreExt.getDecrypted(atob(code)) } catch (e) { window.location.href = `/register`; }
   const paramObj = StoreExt.getDecrypted(atob(code));
-  console.log(paramObj);
   
   const _MINUTE = 4;
   const _SECONDS = 59;
@@ -28,6 +29,9 @@ export const RegistrationOTP = () => {
   const [seconds, setSeconds] = useState(_SECONDS);
   const [pageLoader, setPageLoader] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [otpError, setotpError] = useState(false);
+  const [otpErrorMsg, setotpErrorMsg] = useState(null);
+  const [newOtpRef, setnewOtpRef] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -46,7 +50,11 @@ export const RegistrationOTP = () => {
   const resendOTP = () => {
     setMinutes(_MINUTE);
     setSeconds(_SECONDS);
-  };
+
+    OTPService.generateRegistrationOTP({mobileNumber: paramObj.mobileNumber}).then((resp) => {
+      if(resp) { setnewOtpRef(resp.data); }
+    });
+  }
 
   const handleChangeNumber = () => {
     setPageLoader(true);
@@ -55,24 +63,32 @@ export const RegistrationOTP = () => {
 
   const handleSubmit = () => {
     if(otp.length <= 5) { return false; }
+    setotpError(false);
+
     setPageLoader(true);
     OTPService.verifyOTP({ 
-      referenceId: paramObj.referenceId,
+      referenceId: (newOtpRef !== null) ? newOtpRef : paramObj.referenceId,
       mobileNumber: paramObj.mobileNumber, 
       otpCode: otp}).then((resp) => {
-      if (resp) {
-        setSuccess(true);
-        setTimeout(function() {
-          setPageLoader(true);
+        console.log(resp);
+        if (!resp.status) {
+          if (resp.data.response.status === 400) {
+            setotpErrorMsg(resp.data.response.data.errorMessage);
+            setotpError(true); setSuccess(false);
+          }
+        } else {
+          setSuccess(true);
+          setTimeout(function() {
+            setPageLoader(true);
 
-          let param = StoreExt.getEncrypted({
-            mobileNumber: paramObj.mobileNumber,
-            isVerified: resp.data,
-            code: paramObj.code
-          });
-          window.location.href = `/register/info/${btoa(param)}`;
-        }, 2000);
-      }
+            let param = StoreExt.getEncrypted({
+              mobileNumber: paramObj.mobileNumber,
+              isVerified: resp.data.data,
+              code: paramObj.code
+            });
+            window.location.href = `/register/info/${btoa(param)}`;
+          }, 2000);
+        }
       setPageLoader(false);
     });
   }
@@ -131,6 +147,16 @@ export const RegistrationOTP = () => {
 
                     {
                       (success) ? <div> <CheckCircleIcon style={{ fontSize:'60px', color:'green'}} /> </div> : <></>
+                    }
+
+                    { 
+                      (otpError) 
+                      ? <div> 
+                          <CancelRoundedIcon style={{ fontSize:'60px', color:'red'}} />
+                          <br/>
+                          <span style={{color:'red',fontSize:'13px'}}>{otpErrorMsg}</span> 
+                        </div> 
+                      : <></> 
                     }
                     
                     <br/>  

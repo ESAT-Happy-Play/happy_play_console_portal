@@ -26,7 +26,11 @@ export const OTPService = {
         return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/otp/generate/registration`, data)
         .then((res) => {
             if (!res.status) { 
-                toast.error("Sorry, unsuccessfull gateway communication."); 
+                if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
                 return false; 
             }
             return res.data;
@@ -35,11 +39,7 @@ export const OTPService = {
     verifyOTP: async (data) => {
         return await ApiService.put(`${process.env.REACT_APP_GATEWAY_URL}/api/otp/verifyOTP`, data)
         .then((res) => {
-            if (!res.status) { 
-                toast.error("Sorry, Invalid OTP."); 
-                return false; 
-            }
-            return res.data;
+            return res;
         })
     }
 }
