@@ -9,7 +9,7 @@ import { AddressService, BranchService, UserService } from "../../services";
 import { UserModel } from "../../utils/models";
 import { StoreExt } from "../../utils/helpers";
 
-const RegisterDetails = () => {
+export const RegisterDetails = () => {
   let numbverVerified = StoreExt.getStore("isnumberverified");
   const { mobilenum, code } = useParams();
   const [pageLoader, setPageLoader] = useState(false);
@@ -147,5 +147,3 @@ const RegisterDetails = () => {
     </div>
   );
 };
-
-export default RegisterDetails;

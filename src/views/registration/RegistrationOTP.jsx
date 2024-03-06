@@ -16,7 +16,7 @@ import { ContentLoader } from "../../components/mui";
 import { OTPService } from "../../services";
 import { setNumberVerified } from '../../redux/reducers/OtpVerifiedStateReducer';
 
-const RegistrationOTP = () => {
+export const RegistrationOTP = () => {
   const { mobilenum, code } = useParams();
   const dispatch = useDispatch();
   
@@ -159,5 +159,3 @@ const RegistrationOTP = () => {
     </div>
   );
 };
-
-export default RegistrationOTP;

@@ -2,7 +2,7 @@ import "./404.scss";
 import React from 'react';
 import { Link } from "react-router-dom";
 
-function NotFound() {
+export function NotFound() {
   return (
         <div className="notfound">
             <div className="nfcontent">
@@ -13,5 +13,3 @@ function NotFound() {
         </div>
     )
 }
-
-export default NotFound

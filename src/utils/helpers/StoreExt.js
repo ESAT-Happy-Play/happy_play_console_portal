@@ -8,6 +8,14 @@ export const StoreExt = {
         const objdata = (storagebytes !== null) ? JSON.parse(storagebytes.toString(CryptoJS.enc.Utf8)) : null;
         return objdata;
     },
+    getEncrypted: (obj) => {
+        return CryptoJS.AES.encrypt(JSON.stringify(obj), process.env.REACT_APP_SECRET_PASS).toString();
+    },
+    getDecrypted: (encryptedTxt) => {
+        const storagebytes = CryptoJS.AES.decrypt(encryptedTxt, process.env.REACT_APP_SECRET_PASS);
+        const decryptedResp = JSON.parse(storagebytes.toString(CryptoJS.enc.Utf8));
+        return decryptedResp;
+    },
     getDecodeJWT: (jwtString) => {
         let decodedJWT = jwt_decode(jwtString);
         return decodedJWT;

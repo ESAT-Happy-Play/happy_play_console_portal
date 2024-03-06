@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { Stack, InputAdornment, IconButton } from "@mui/material";
+import { InputAdornment, IconButton } from "@mui/material";
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
@@ -21,7 +20,7 @@ import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui"
 import { ValidateUsername, ValidatePassword } from "../../utils/validations/ValidateLogin";
 import { AuthService, MenuService } from "../../services";
 
-const Login = () => {
+export const Login = () => {
   let loginObj = StoreExt.getStore("auth");
   // let deviceInfo = GetNEStoreObject("deviceInfo");
 
@@ -88,7 +87,7 @@ const Login = () => {
               <img src={require('../../assets/happy-play-logo.png')} className="logo" title="Esat Logo" />
             </div>
             <div className="div-newuser">
-              <a href="#">New User? Login Here</a>
+              <a href="/login/new">New User? Login Here</a>
             </div>
             <div className="div-login-title">
               <h3>Login</h3>
@@ -120,7 +119,7 @@ const Login = () => {
                       }}/>
                   </div>
                   <div className="form-button">
-                    <a href="#">Forgot Password?</a>
+                    <a href="/forgot/password">Forgot Password?</a>
                     <MuiLoadingButton text="Login" variant="contained" type="submit" 
                       loading={ pageLoader } size="medium" color="primary"
                       loadingPosition='end'
@@ -159,5 +158,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;

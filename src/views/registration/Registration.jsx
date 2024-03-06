@@ -9,7 +9,7 @@ import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined
 import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui";
 import { OTPService } from "../../services";
 
-const Registration = () => {
+export const Registration = () => {
   // get url parameter
   const { code } = useParams();
   const [pageLoader, setPageLoader] = useState(false);
@@ -83,5 +83,3 @@ const Registration = () => {
     </div>
   );
 };
-
-export default Registration;

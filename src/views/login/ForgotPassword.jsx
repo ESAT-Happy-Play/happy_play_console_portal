@@ -2,8 +2,8 @@ import "./login.scss";
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+import SendIcon from '@mui/icons-material/Send';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import VerifiedIcon from '@mui/icons-material/Verified';
 
 import { Button } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
@@ -12,10 +12,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { StoreExt } from "../../utils/helpers";
 
 import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui";
-import { OTPService } from "../../services";
+import { AuthService } from "../../services";
 
-export const LoginNewUser = () => {
-  // let loginObj = StoreExt.getStore("auth");
+export const ForgotPassword = () => {
+  let loginObj = StoreExt.getStore("auth");
 
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
@@ -26,18 +26,11 @@ export const LoginNewUser = () => {
   const { errors } = formState;
   
   // Handle for login submit
-  const loginVerify = async (data) => {
+  const handleSendOTP = async (data) => {
     if(!checkTerm) { settermError(true); }
 
     if (checkTerm) {
       setPageLoader(true);
-      OTPService.generateLoginOTP(data).then((resp) => {
-        if(resp) {
-          let param = StoreExt.getEncrypted(resp.data);
-          window.location.href = `/otp/auth/${param}`;
-        }
-        setPageLoader(false);
-      });
     }
   }
 
@@ -62,9 +55,9 @@ export const LoginNewUser = () => {
                 <Button variant="text" size="small" onClick={handleBack}>
                     <KeyboardBackspaceIcon />
                 </Button>
-              <h3>New User Login</h3>
+              <h3>Forgot Password</h3>
             </div>
-            <form onSubmit={ handleSubmit(loginVerify) } noValidate>
+            <form onSubmit={ handleSubmit(handleSendOTP) } noValidate>
               <div className="body">
                   
                   <div>
@@ -85,10 +78,10 @@ export const LoginNewUser = () => {
                   </div>
                   
                   <div className="form-button" style={{justifyContent:'center'}}>
-                    <MuiLoadingButton text="Verify" variant="contained" type="submit" 
+                    <MuiLoadingButton text="Send OTP" variant="contained" type="submit" 
                       loading={ pageLoader } size="medium" color="primary"
                       loadingPosition='end'
-                      icon={ <VerifiedIcon/> } />
+                      icon={ <SendIcon/> } />
                   </div>
                   
               </div>

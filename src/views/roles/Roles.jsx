@@ -86,8 +86,9 @@ export const Roles = () => {
       // update selected role
       setselectedUserType(userType);
       handleListMenusByRoleId(userType.userTypeId, true);
+      
       setisCreateNew(false);
-      // resetRoleForm();
+      setcheckDisabled(true);
       setactionType(0);
     }
 
@@ -111,7 +112,9 @@ export const Roles = () => {
     const handleCompanies = () => {
       CompanyService.getPaginateCompany("", 1, 100)
       .then((resp) => {
-          if (resp) { setcompanies(resp.data.companyList);}
+          if (resp.data !== null) { 
+            setcompanies(resp.data.companyList);
+          }
       });
     }
 
@@ -139,7 +142,7 @@ export const Roles = () => {
           if (resp) { 
             setmenuListDetails(resp.data);
             setlistMenuForSubmit(resp.data);
-            console.log(resp.data);
+            // console.log(resp.data);
 
             if(resp.data[0].companyId !== null) {
               setselectedCompanyId(resp.data[0].companyId);
@@ -208,11 +211,16 @@ export const Roles = () => {
       if(selectedCompanyId === null) { toast.error(`Please select company.`); return false; }
       setPageLoader(true);
       MenuService.updateSecurityGroup({
+        userTypeName: selectedUserType.userTypeName,
         companyId: selectedCompanyId,
         securityGroups: listMenuForSubmit
       }).then((resp) => {
           if (resp) { 
             toast.success(`Updated successfully.`);
+
+            setactionType(0);
+            setisCreateNew(false);
+            setcheckDisabled(true);
           }
           setPageLoader(false);
       });
