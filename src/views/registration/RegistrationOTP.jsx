@@ -70,7 +70,6 @@ export const RegistrationOTP = () => {
       referenceId: (newOtpRef !== null) ? newOtpRef : paramObj.referenceId,
       mobileNumber: paramObj.mobileNumber, 
       otpCode: otp}).then((resp) => {
-        console.log(resp);
         if (!resp.status) {
           if (resp.data.response.status === 400) {
             setotpErrorMsg(resp.data.response.data.errorMessage);

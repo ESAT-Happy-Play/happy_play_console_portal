@@ -116,7 +116,7 @@ export const RegisterDetails = () => {
           {
             (paramObj.code !== "") 
             ? <div className="div-referral">
-                <p> Referral Code <br/> <span>{code}</span> </p>
+                <p> Referral Code <br/> <span>{paramObj.code}</span> </p>
               </div>
             : <></>
           }
