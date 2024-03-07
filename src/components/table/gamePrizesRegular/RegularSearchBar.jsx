@@ -47,7 +47,6 @@ const RegularSearchBar = ({ handleSearch, handleSearchEmpty }) => {
               fontSize: "15px",
               "&.MuiOutlinedInput-notchedOutline": { fontSize: "15px" },
             },
-            shrink: false,
           }}
         />
       </form>

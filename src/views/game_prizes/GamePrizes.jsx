@@ -50,7 +50,7 @@ function GamePrizes() {
       Component: (
         <div className="tab-container">
           <div className="tab-header">
-            <h1>Game Prizes</h1>
+            <h1>Winners</h1>
           </div>
           <CustomVerticalTab tabList={verticalTabs} />
         </div>
