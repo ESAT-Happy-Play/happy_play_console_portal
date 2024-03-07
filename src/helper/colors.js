@@ -7,5 +7,8 @@ export const COLORS = {
     redWarn: "#DC4C64",
     darkGrey: "#403D39",
     transparentFont: "#403d3980",
+    defaultFont: "#403D39",
     violetHover: "#ffffff20",
+    violetBorder: "#4845d280",
+    violetShadow: "#4845d20d"
 }

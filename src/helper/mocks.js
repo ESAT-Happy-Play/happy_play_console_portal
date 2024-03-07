@@ -70,3 +70,88 @@ export const drawTypeList = [
         name: "11 PM"
     }
 ];
+
+export const mechanicsSettings = [
+    {
+        gameName: "Regular",
+        child: [
+            {
+                subTypeName: "Regular",
+                betEntryLimit: 5,
+                betAmountLimit: 10000,
+                uniqueCombination: 70,
+                betPriceLimit: 2000,
+                winningMultiplier: 700,
+                haveQuasi: true
+            },
+            {
+                subTypeName: "Power Win",
+                betEntryLimit: 4,
+                betAmountLimit: 15000,
+                betPrice: 10,
+                uniqueCombination: 75,
+                incrementAmount: 10,
+                consecutiveWins: 3,
+                prizeFloor: 1500000,
+                prizeCeiling: 25080000,
+                winningMultiplier: 700,
+                haveQuasi: false
+            },
+            {
+                subTypeName: "Triple Win",
+                betEntryLimit: 5,
+                betAmountLimit: 15000,
+                betPrice: 10,
+                uniqueCombination: 68,
+                incrementAmount: 11,
+                prizeFloor: 1100400,
+                prizeCeiling: 12333110,
+                haveQuasi: true
+            },
+            {
+                subTypeName: "Magic Win",
+                betEntryLimit: 5,
+                betAmountLimit: 12000,
+                betPrice: 12,
+                uniqueCombination: 65,
+                incrementAmount: 12,
+                prizeFloor: 150000,
+                prizeCeiling: 12333110,
+                haveQuasi: true
+            }
+        ]
+
+    },
+    {
+        gameName: "Jackpot 3.3",
+        child: [
+            {
+                subTypeName: "Jackpot 3.3",
+                betEntryLimit: 5,
+                betAmountLimit: 12000,
+                betPrice: 12,
+                uniqueCombination: 65,
+                incrementAmount: 12,
+                prizeFloor: 150000,
+                prizeCeiling: 12333110,
+                haveQuasi: true
+            }
+        ]
+    },
+    {
+        gameName: "Jackpot 3.4",
+        child: [
+            {
+                subTypeName: "Jackpot 3.4",
+                betEntryLimit: 5,
+                betAmountLimit: 12000,
+                betPrice: 12,
+                uniqueCombination: 65,
+                incrementAmount: 12,
+                prizeFloor: 150000,
+                prizeCeiling: 12333110,
+                haveQuasi: true
+            }
+        ]
+    }
+]
