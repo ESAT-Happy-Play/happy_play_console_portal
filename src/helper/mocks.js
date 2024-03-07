@@ -3,16 +3,16 @@ export const companyGames = [
     gameName: "Regular",
     child: [
       {
-        subGameName: "Regular",
+        subTypeName: "Regular",
       },
       {
-        subGameName: "Power Win",
+        subTypeName: "Power Win",
       },
       {
-        subGameName: "Triple Win",
+        subTypeName: "Triple Win",
       },
       {
-        subGameName: "Magic Win",
+        subTypeName: "Magic Win",
       },
     ],
   },
@@ -75,11 +75,11 @@ export const gamePrizes = [
   {
     gameName: "Regular Game",
     child: [
-      // {
-      //   subGameName: "Regular Game",
-      // },
       {
-        subGameName: "Power Win",
+        subTypeName: "Regular",
+      },
+      {
+        subTypeName: "Power Win",
         prizePool: [
           {
             id: 1,
@@ -113,7 +113,7 @@ export const gamePrizes = [
         ],
       },
       {
-        subGameName: "Tripple Win",
+        subTypeName: "Tripple Win",
         prizePool: [
           {
             id: 3,
@@ -142,7 +142,7 @@ export const gamePrizes = [
         ],
       },
       {
-        subGameName: "Magic Win",
+        subTypeName: "Magic Win",
         prizePool: [
           {
             id: 5,
@@ -209,7 +209,6 @@ export const gamePrizes = [
     gameName: "Jackpot 3.4",
     child: [
       {
-        subGameName: "Power Winzzz sa Jackpot 3.4",
         prizePool: [
           {
             id: 11,
@@ -240,3 +239,49 @@ export const gamePrizes = [
     ],
   },
 ];
+
+export const regularData = {
+  data: [
+    {
+      id: 1,
+      displayName: "Display Name",
+      transactionNumber: "#TransactionID",
+      combination: "3-4-4",
+      amount: "25.00",
+      gameTime: "11PM",
+      date: "May 08, 2023 15:00:00",
+    },
+    {
+      id: 2,
+      displayName: "Display Name",
+      transactionNumber: "#TransactionID",
+      combination: "3-4-4",
+      amount: "25.00",
+      gameTime: "11PM",
+      date: "May 08, 2023 15:00:00",
+    },
+    {
+      id: 3,
+      displayName: "Display Name",
+      transactionNumber: "#TransactionID",
+      combination: "3-4-4",
+      amount: "25.00",
+      gameTime: "11PM",
+      date: "May 08, 2023 15:00:00",
+    },
+    {
+      id: 4,
+      displayName: "Display Name",
+      transactionNumber: "#TransactionID",
+      combination: "3-4-4",
+      amount: "25.00",
+      gameTime: "11PM",
+      date: "May 08, 2023 15:00:00",
+    },
+  ],
+  pageInfo: {
+    total: 3,
+    pageNumber: 0,
+    pageSize: 5,
+  },
+};

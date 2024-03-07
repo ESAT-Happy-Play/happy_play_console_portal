@@ -5,43 +5,44 @@ import CustomTab from "../../components/tab/CustomTab";
 import "./gamePrizes.scss";
 import PrizePool from "./PrizePool";
 import Winners from "./Winners";
+import Regular from "./Regular";
 
 function GamePrizes() {
   const tabs = gamePrizes.map((game) => {
     const verticalTabs = [];
-    if (game.gameName === "Regular Game") {
-      verticalTabs.push({
-        label: "Regular",
-        isHeader: false,
-        Component: <></>,
-      });
-    }
     if (game.child) {
       game.child.forEach((subType) => {
-        verticalTabs.push({
-          label: subType.subGameName,
-          isHeader: true,
-        });
-        verticalTabs.push({
-          label: "Prize Pool",
-          Component: (
-            <PrizePool
-              prizePool={subType.prizePool}
-              gameName={game.gameName}
-              subtypeName={subType.subGameName}
-            />
-          ),
-        });
-        verticalTabs.push({
-          label: "Winners",
-          Component: (
-            <Winners
-              winners={subType.winners}
-              gameName={game.gameName}
-              subtypeName={subType.subGameName}
-            />
-          ),
-        });
+        if (subType.subTypeName === "Regular") {
+          verticalTabs.push({
+            label: subType.subTypeName,
+            Component: <Regular />,
+          });
+        } else {
+          verticalTabs.push({
+            label: subType.subTypeName,
+            isHeader: true,
+          });
+          verticalTabs.push({
+            label: "Prize Pool",
+            Component: (
+              <PrizePool
+                prizePool={subType.prizePool}
+                gameName={game.gameName}
+                subtypeName={subType.subTypeName}
+              />
+            ),
+          });
+          verticalTabs.push({
+            label: "Winners",
+            Component: (
+              <Winners
+                winners={subType.winners}
+                gameName={game.gameName}
+                subtypeName={subType.subTypeName}
+              />
+            ),
+          });
+        }
       });
     }
     return {
