@@ -4,6 +4,7 @@ import { CustomRadioButton } from "../../components/radio/CustomRadioGroup";
 import Button from "@mui/material/Button";
 import HandCoinsIcon from "../../assets/icons/HandCoinsIcon";
 import { getGameLogo } from "../../helper/logos";
+import { FormatAmount } from "../../helper/Helpers";
 
 const Winners = ({ winners, gameName, subtypeName }) => {
   const dateString = "May 08, 2023 14:00:00";
@@ -38,7 +39,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
         <div className="winners-list-header">
           <div className="winners-logo">
             <div>{getGameLogo(gameName, subtypeName)}</div>
-            <h1>{winners[0].amountWon}</h1>
+            <h1>{FormatAmount(winners[0].amountWon)}</h1>
           </div>
           <h2>
             {latestPrizeDate.toLocaleDateString("en-US", {
@@ -69,7 +70,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
         {winnersList.map((winner) => (
           <div className="winners-row" key={winner.id}>
             <h2>#{winner.referenceId}</h2>
-            <p>{winner.amountWon} </p>
+            <p>{FormatAmount(winner.amountWon)} </p>
             {winner.status === "Unclaimed" ? (
               <Button
                 type="submit"

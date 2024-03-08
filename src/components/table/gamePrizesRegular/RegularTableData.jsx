@@ -1,5 +1,6 @@
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import { FormatAmount } from "../../../helper/Helpers";
 
 import { DateExt } from "../../../utils/helpers/DateExt";
 
@@ -17,7 +18,7 @@ function RegularTableData({ data }) {
       </TableCell>
       <TableCell align="center">{data.transactionNumber}</TableCell>
       <TableCell align="center">{data.combination}</TableCell>
-      <TableCell>{data.amount}</TableCell>
+      <TableCell>{FormatAmount(data.amount)}</TableCell>
       <TableCell>{data.gameTime}</TableCell>
       <TableCell>{DateExt.readableDate(data.date)}</TableCell>
     </TableRow>
