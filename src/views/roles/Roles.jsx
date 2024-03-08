@@ -2,6 +2,7 @@ import "./roles.scss";
 import React, { useState, useEffect } from 'react';
 import { TextField, MenuItem, Button  } from "@mui/material";
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
@@ -19,17 +20,22 @@ const theme = createTheme({
 
 export const Roles = () => {
 
-    const formRole = useForm({ defaultValues: { userTypeName: "" } });
+    const formRole = useForm({ defaultValues: { userTypeName: "", companyId: "" } });
     const { register, handleSubmit, formState, reset } = formRole;
     const { errors } = formState;
 
     const [pageLoader, setPageLoader] = useState(false);
     const [defaultMenuList, setdefaultMenuList] = useState(null);
+    const [selectedCompanyId, setselectedCompanyId] = useState(null);
     const [menuListDetails, setmenuListDetails] = useState(null);
     const [listMenuForSubmit, setlistMenuForSubmit] = useState(null);
     const [selectedUserType, setselectedUserType] = useState(null);
-    const [companies, setcompanies] = useState([]);
+    const [companies, setcompanies] = useState(null);
     const [userRoles, setuserRoles] = useState(null);
+
+    const [groupTypeId, setgroupTypeId] = useState(0);
+    const [userTypeId, setuserTypeId] = useState(null);
+    // const [defaultcompanyId, setdefaultcompanyId] = useState(null);
 
     const [checkDisabled, setcheckDisabled] = useState(true);
     const [isCreateNew, setisCreateNew] = useState(false);
@@ -45,17 +51,14 @@ export const Roles = () => {
     // };
 
     const handleCheckCallback = (data) => {
-      if (listMenuForSubmit == null) { setlistMenuForSubmit(data); }
-      else {
-        data.forEach(elem => {
-          let objIndex = listMenuForSubmit.findIndex(obj => obj.menuId === elem.menuId);
-          if (objIndex === -1) {
-            listMenuForSubmit.push(elem);
-          } else {
-            listMenuForSubmit[objIndex] = elem;
-          }
-        });
-      }
+      data.forEach(elem => {
+        let objIndex = listMenuForSubmit.findIndex(obj => obj.menuId === elem.menuId);
+        if (objIndex === -1) {
+          listMenuForSubmit.push(elem);
+        } else {
+          listMenuForSubmit[objIndex] = elem;
+        }
+      });
     };
 
     const handleNewRole = () => {
@@ -64,11 +67,15 @@ export const Roles = () => {
       removeAllClass("li-usertypes-active");
       setactionType(2);
       setcheckDisabled(false);
+
+      setuserTypeId(null);
     }
 
     const handleNewUserType = (event, ID) => {
       removeAllClass("new-active");
       event.target.classList.add("new-active");
+
+      setuserTypeId(ID);
     }
 
     const handleSelectRole = (event, userType) => {
@@ -79,8 +86,9 @@ export const Roles = () => {
       // update selected role
       setselectedUserType(userType);
       handleListMenusByRoleId(userType.userTypeId, true);
+      
       setisCreateNew(false);
-      // resetRoleForm();
+      setcheckDisabled(true);
       setactionType(0);
     }
 
@@ -88,8 +96,9 @@ export const Roles = () => {
       // now add active to curren selected
       removeAllClass("btnActive");
       event.target.classList.add("btnActive");
-      // setgroupTypeId(groupId);
       handleRoleByGroupType(groupId);
+
+      setgroupTypeId(groupId);
     }
 
     const removeAllClass = (className) => {
@@ -103,7 +112,9 @@ export const Roles = () => {
     const handleCompanies = () => {
       CompanyService.getPaginateCompany("", 1, 100)
       .then((resp) => {
-          if (resp) { setcompanies(resp.data.companyList);}
+          if (resp.data !== null) { 
+            setcompanies(resp.data.companyList);
+          }
       });
     }
 
@@ -124,11 +135,19 @@ export const Roles = () => {
       });
     }
 
-    const handleListMenusByRoleId = (userTypeId, setLoading = false) => {
+    const handleListMenusByRoleId = (userTypeId, setLoading = false, companyId = 0) => {
       if (setLoading) { setPageLoader(true); }
-      MenuService.getSecrityGroupeMenu(userTypeId)
+      MenuService.getSecrityGroupeMenu(userTypeId, companyId)
       .then((resp) => {
-          if (resp) { setmenuListDetails(resp.data); }
+          if (resp) { 
+            setmenuListDetails(resp.data);
+            setlistMenuForSubmit(resp.data);
+            // console.log(resp.data);
+
+            if(resp.data[0].companyId !== null) {
+              setselectedCompanyId(resp.data[0].companyId);
+            }
+          }
           if (setLoading) { setPageLoader(false); }
       });
     }
@@ -137,7 +156,10 @@ export const Roles = () => {
       setPageLoader(true);
       MenuService.getSecrityGroupeMenu()
       .then((resp) => {
-          if (resp) { setdefaultMenuList(resp.data); }
+          if (resp) { 
+            setdefaultMenuList(resp.data);
+            setlistMenuForSubmit(resp.data);
+          }
           setPageLoader(false);
       });
     }
@@ -148,21 +170,62 @@ export const Roles = () => {
     }, []);
 
     const handleFilterByCompany = event => {
-      console.log(event.target.getAttribute('data-value'));
-    }
-
-    const resetRoleForm = () => {
-      reset(formValues => ({
-          ...formValues,
-          userTypeName: (selectedUserType !== null) ? selectedUserType.userTypeName : ""
-      }));
+      let companyId = event.target.getAttribute('data-value');
+      if (companyId !== null) {
+        setselectedCompanyId(companyId);
+        // console.log("companyId: " + companyId);
+        handleListMenusByRoleId(selectedUserType.userTypeId, true, companyId);
+      }
     }
 
     // final submit handler
     const submitHandler = async (data) => {
-      console.log(data);
-      console.log(listMenuForSubmit);
+      if (isCreateNew) {
+        if(userTypeId === null) { toast.error(`Role level is required.`); return false; }
+        submitAddRole(data.userTypeName, data.companyId);
+      }
     };
+
+    const submitAddRole = (roleName, companyyId) => {
+      setPageLoader(true);
+      MenuService.addSecurityGroup({
+        groupType: groupTypeId,
+        roleType: userTypeId,
+        companyId: companyyId,
+        userTypeName: roleName,
+        securityGroups: listMenuForSubmit
+      }).then((resp) => {
+          if (resp) { 
+            toast.success(`${roleName} added successfully.`);
+
+            //reload page after 2 sec
+            setTimeout(function() {
+              window.location.reload(false);
+            }, 2000);
+          }
+          setPageLoader(false);
+      });
+    }
+
+    const submitUpdateRole = () => {
+      if(selectedCompanyId === null) { toast.error(`Please select company.`); return false; }
+      setPageLoader(true);
+      MenuService.updateSecurityGroup({
+        userTypeName: selectedUserType.userTypeName,
+        companyId: selectedCompanyId,
+        securityGroups: listMenuForSubmit
+      }).then((resp) => {
+          if (resp) { 
+            toast.success(`Updated successfully.`);
+
+            setactionType(0);
+            setisCreateNew(false);
+            setcheckDisabled(true);
+          }
+          setPageLoader(false);
+      });
+    }
+
     return (
       <>
       <br />
@@ -185,23 +248,33 @@ export const Roles = () => {
             <span className="card-title">Roles List</span>
             <span>Admin</span>
           </div>
+          <form onSubmit={handleSubmit(submitHandler)} noValidate>
           <div className="card-body">
-
+            
             <div className="body-left">
               <div className="search">
-                <TextField type="text" sx={{width:'200px'}} defaultValue="" label="Select Company" 
-                  size="small" onClick={handleFilterByCompany} select>
-                  <MenuItem value=""><em>Select company</em></MenuItem>
-                  { 
-                      (companies.length > 0) ?
-                      companies.map((item, index) => (
-                          <MenuItem key={item.companyId} value={item.companyObjectId}>
-                              {item.companyName}
-                          </MenuItem>
-                      ))
-                      : <MenuItem value=""><em>No data found!</em></MenuItem>
-                  }
-                  </TextField>
+                {
+                  (companies !== null) ?
+                    <TextField type="text" sx={{width:'200px'}} defaultValue=""
+                      label="Select Company" 
+                      size="small" onClick={handleFilterByCompany}
+                      {  ...register("companyId", { required: true } ) }
+                      error={ !!errors.companyId }
+                      select>
+                      <MenuItem value=""><em>Select company</em></MenuItem>
+                      { 
+                          (companies.length > 0) ?
+                          companies.map((item, index) => (
+                              <MenuItem key={item.companyId} data-obj={item.companyObjectId} value={item.companyId}>
+                                  {item.companyName}
+                              </MenuItem>
+                          ))
+                          : <MenuItem value=""><em>No data found!</em></MenuItem>
+                      }
+                      </TextField>
+                    : <></>
+                }
+
               </div>
               <div className="btn-new-role">
                 <Button onClick={handleNewRole} color="success" variant="text">New Role <AddOutlinedIcon /></Button>
@@ -219,19 +292,27 @@ export const Roles = () => {
             </div>
 
             <div className="body-right">
-              <form onSubmit={handleSubmit(submitHandler)} noValidate>
                 <div className="right-head">
                   <div className="stdiv">
                     <span>Role Name</span>
-                    <TextField style={{textAlign:'left'}}
-                      variant="outlined" value={(selectedUserType !== null) ? selectedUserType.userTypeName : ""} size="small"
-                      {  ...register("userTypeName", { required: true } ) }
-                      error={ !!errors.userTypeName }/>
+                    {
+                      (isCreateNew) ?
+                        <TextField style={{textAlign:'left'}}
+                        variant="outlined"  size="small"
+                        {  ...register("userTypeName", { required: true } ) }
+                        error={ !!errors.userTypeName }/>
+                      :
+                       <TextField style={{textAlign:'left'}}
+                      variant="outlined" value={(selectedUserType !== null) ? selectedUserType.userTypeName : ""} 
+                      size="small"/>
+                    }
+                    
                   </div>
                   <div className="nddiv">
                     {
                       (isCreateNew) ?
                         <>
+                          <span style={{color:'red'}}>Required *</span>
                           <span onClick={e => handleNewUserType(e, 0)} className="us-new">Admin-Level</span>
                           <span onClick={e => handleNewUserType(e, 1)} className="us-new">Company-Level</span>
                           <span onClick={e => handleNewUserType(e, 2)} className="us-new">Branch-Level</span>
@@ -280,7 +361,7 @@ export const Roles = () => {
                       <Button type='button' onClick={ e => (setactionType(0),setisCreateNew(false), setcheckDisabled(true))} variant='outlined' size="medium">
                         Cancel
                       </Button>
-                      <Button type='button' variant='contained' color='ochre' size="medium">
+                      <Button type='button' onClick={submitUpdateRole} variant='contained' color='ochre' size="medium">
                         Update <ModeEditOutlineIcon />
                       </Button>
                     </div>
@@ -297,9 +378,9 @@ export const Roles = () => {
                   }
                   
                 </ThemeProvider>
-              </form>
             </div>
           </div>
+          </form>
         </div>
       </div>
       <SpinLoader isLoadingPage={ pageLoader } />

@@ -6,10 +6,11 @@ import { useParams } from "react-router-dom";
 
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 
+import { StoreExt } from "../../utils/helpers";
 import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui";
 import { OTPService } from "../../services";
 
-const Registration = () => {
+export const Registration = () => {
   // get url parameter
   const { code } = useParams();
   const [pageLoader, setPageLoader] = useState(false);
@@ -24,9 +25,14 @@ const Registration = () => {
 
   const registrationHandler = (data) => {
     setPageLoader(true);
-    OTPService.generateOTP(data).then((resp) => {
+    OTPService.generateRegistrationOTP(data).then((resp) => {
       if(resp) {
-        window.location.href = `/register/otp/${data.mobileNumber}/${(code !== undefined) ? code : ''}`;
+        let param = StoreExt.getEncrypted({
+          mobileNumber: data.mobileNumber,
+          referenceId: resp.data,
+          code: (code !== undefined) ? code : ''
+        });
+        window.location.href = `/otp/register/${btoa(param)}`;
       }
       setPageLoader(false);
     });
@@ -83,5 +89,3 @@ const Registration = () => {
     </div>
   );
 };
-
-export default Registration;

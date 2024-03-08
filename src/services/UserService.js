@@ -7,8 +7,11 @@ export const UserService = {
         return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/user/registration`, objData)
         .then((res) => {
             if (!res.status) { 
-                console.log(res);
-                toast.error("Sorry, unsuccessfull gateway communication."); 
+                if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
                 return false; 
             }
             return res.data;

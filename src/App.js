@@ -5,15 +5,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { routes } from "./routes";
 import './assets/fonts/Inter-Regular.otf';
 
-import Login from "./views/login/Login";
 import Layout from "./components/layout/Layout";
 import LayoutWrapper from "./components/layout/LayoutWrapper";
-import Registration from "./views/registration/Registration";
-import RegistrationOTP from "./views/registration/RegistrationOTP";
-import RegisterDetails from "./views/registration/RegisterDetails";
-import NotFound from "./views/404/NotFound";
 
-import {CompanyDetails, BranchDetails} from './views';
+import {Login, LoginNewUser, AuthOTP, ForgotPassword, UpdatePassword, Registration, RegistrationOTP,
+  CompanyDetails, RegisterDetails, BranchDetails, NotFound } from './views';
 
 function App() {
   return (
@@ -22,9 +18,16 @@ function App() {
         <Routes>
           {/* public routes */}
           <Route path="login" element={<Login />} />
+          <Route path="login/new" element={<LoginNewUser />} />
+
+          <Route path="/otp/auth/:code" element={<AuthOTP />} />
+          <Route path="/otp/register/:code" element={<RegistrationOTP />} />
+
+          <Route path="forgot/password" element={<ForgotPassword />} />
+          <Route path="update/password/:code" element={<UpdatePassword />} />
+          
           <Route path="register/:code?" element={<Registration />} />
-          <Route path="register/otp/:mobilenum/:code?" element={<RegistrationOTP />} />
-          <Route path="register/info/:mobilenum/:code?" element={<RegisterDetails />} />
+          <Route path="register/info/:code" element={<RegisterDetails />} />
 
           {/* protected routes */}
           <Route path="/" element={<Layout />}>

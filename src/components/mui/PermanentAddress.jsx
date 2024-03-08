@@ -3,12 +3,13 @@ import { TextField, MenuItem  } from "@mui/material";
 
 export const PermanentAddress = ({ 
     register, 
-    errors, 
-    regionProvince, 
-    regions,
-    provinces,
-    municipalities,
-    barangays }) => {
+    errors }) => {
+
+    let regions = require('../../assets/data/region.json');
+    let provinces = require('../../assets/data/province.json');
+    let municipalities = require('../../assets/data/municipality.json');
+    let barangays = require('../../assets/data/barangay.json');
+
     const [curRegion, setcurRegion] = React.useState(null);
     const [curRegionCode, setcurRegionCode] = React.useState(null);
 
@@ -69,13 +70,6 @@ export const PermanentAddress = ({
                 select>
                 <MenuItem value=""><em>Select region</em></MenuItem>
                 { 
-                    (regionProvince !== null) ?
-                        regionProvince.map((item, index) => (
-                        <MenuItem key={item.regionCode} data-code={item.regionCode} value={item.regionName}>
-                            {item.regionName}
-                        </MenuItem>
-                        ))
-                    : 
                     regions.regions.map((item, index) => (
                         <MenuItem key={item.REGION_CODE} data-code={item.REGION_CODE} value={item.REGION_NAME}>
                             {item.REGION_NAME}
@@ -97,14 +91,6 @@ export const PermanentAddress = ({
                 select>
                 <MenuItem value=""><em>Select province</em></MenuItem>
                 { 
-                    (regionProvince !== null) ? (curRegionCode !== null) ?
-                        regionProvince.filter(m => m.regionCode === curRegionCode)[0].provinces.map((item, index) => (
-                        <MenuItem key={item.provinceCode} data-code={item.provinceCode} value={item.provinceName}>
-                            {item.provinceName}
-                        </MenuItem>
-                        ))
-                    : <MenuItem value="">Loading...</MenuItem>
-                    : 
                     provinces.provinces.filter(m => m.REGION_CODE === curRegionCode).map((item, index) => (
                         <MenuItem key={item.PROVINCE_CODE} data-code={item.PROVINCE_CODE} value={item.PROVINCE_NAME}>
                             {item.PROVINCE_NAME}
@@ -128,14 +114,6 @@ export const PermanentAddress = ({
                 select>
                 <MenuItem value=""><em>Select municipality</em></MenuItem>
                 { 
-                    (regionProvince !== null) ? (curRegionCode !== null) ?
-                        regionProvince.filter(m => m.regionCode === curRegionCode)[0].provinces.map((item, index) => (
-                        <MenuItem key={item.provinceCode} data-code={item.provinceCode} value={item.provinceName}>
-                            {item.provinceName}
-                        </MenuItem>
-                        ))
-                    : <MenuItem value="">Loading...</MenuItem>
-                    : 
                     municipalities.municipalities.filter(m => m.PROVINCE_CODE === curProvinceCode).map((item, index) => (
                         <MenuItem key={item.MUNICIPALITY_CODE} data-code={item.MUNICIPALITY_CODE} value={item.MUNICIPALITY_NAME}>
                             {item.MUNICIPALITY_NAME}
@@ -158,14 +136,6 @@ export const PermanentAddress = ({
                 select>
                 <MenuItem value=""><em>Select barangay</em></MenuItem>
                 { 
-                    (regionProvince !== null) ? (curRegionCode !== null) ?
-                        regionProvince.filter(m => m.regionCode === curRegionCode)[0].provinces.map((item, index) => (
-                        <MenuItem key={item.provinceCode} data-code={item.provinceCode} value={item.provinceName}>
-                            {item.provinceName}
-                        </MenuItem>
-                        ))
-                    : <MenuItem value="">Loading...</MenuItem>
-                    : 
                     barangays.barangays.filter(m => m.MUNICIPALITY_CODE === curMunicipalityCode).map((item, index) => (
                         <MenuItem key={item.BRGY_CODE} data-code={item.BRGY_CODE} value={item.BRGY_NAME}>
                             {item.BRGY_NAME}

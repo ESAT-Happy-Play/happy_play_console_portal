@@ -5,25 +5,23 @@ import { useForm } from 'react-hook-form';
 
 import { FirstStep, SecondStep, FinalStep } from "../../components/mui/registration";
 import { ContentLoader, FormStepper } from "../../components/mui";
-import { AddressService, BranchService, UserService } from "../../services";
+import { BranchService, UserService } from "../../services";
 import { UserModel } from "../../utils/models";
 import { StoreExt } from "../../utils/helpers";
+import { AgreementModal, AlertModal } from "../../components/mui/modals";
 
-const RegisterDetails = () => {
-  let numbverVerified = StoreExt.getStore("isnumberverified");
-  const { mobilenum, code } = useParams();
+export const RegisterDetails = () => {
+  const { code } = useParams();
+  try { StoreExt.getDecrypted(atob(code)) } catch (e) { window.location.href = `/register`; }
+  const paramObj = StoreExt.getDecrypted(atob(code));
+
   const [pageLoader, setPageLoader] = useState(false);
-
-  let regions = require('../../assets/data/region.json');
-  let provinces = require('../../assets/data/province.json');
-  let municipalities = require('../../assets/data/municipality.json');
-  let barangays = require('../../assets/data/barangay.json');
-
+  const [submitLoader, setsubmitLoader] = useState(false);
   const formRegistration = useForm({ defaultValues: UserModel.registration() });
   const { register, handleSubmit, formState, reset } = formRegistration;
   const { errors } = formState;
+  const [formData, setFormData] = React.useState({});
 
-  const [regionProvinceData, setregionProvinceData] = useState(null);
   const [showPresendAddress, setShowPresendAddress] = useState(false);
   const [showPermanentAddress, setShowPermanentAddress] = useState(false);
 
@@ -35,7 +33,7 @@ const RegisterDetails = () => {
 
   const step1Back = () => { 
     setPageLoader(true);
-    window.location.href = `/register/${(code !== undefined) ? code : ''}`;
+    window.location.href = `/register/${paramObj.code}`;
   }
   const step2Back = () => { setstep1(true); setstep2(false); setstep3(false); setstepCount(stepCount - 1); }
   const step3Back = () => { setstep1(false); setstep2(true); setstep3(false); setstepCount(stepCount - 1); }
@@ -52,10 +50,34 @@ const RegisterDetails = () => {
       }
     }
     if (step3) { 
-      UserService.registerUser(data).then((resp) => {
-        console.log(resp);
-      });
+      setFormData(data);
+      handleAgreementOpen();
     }
+  }
+
+  // modal config
+  const [openAgreement, setAgreement] = React.useState(false);
+  const handleAgreementOpen = () => { setAgreement(true); };
+  const handleAgreementClose = () => { setAgreement(false); };
+
+  const handleAgreementOkay = () => {
+    setsubmitLoader(true);
+    UserService.registerUser(formData).then((resp) => {
+      if(resp) { 
+        handleAlertOpen();
+      }
+      setsubmitLoader(false);
+    });
+  }
+
+  // modal config
+  const [openAlert, setAlert] = React.useState(false);
+  const handleAlertOpen = () => { setAlert(true); };
+  const handleAlertClose = () => { setAlert(false); };
+
+  const handleAlertOkay = () => {
+    handleAlertClose();
+    window.location.href = `/register/${paramObj.code}`;
   }
 
   const handleResetPermanentAddr = (data) => {
@@ -71,27 +93,20 @@ const RegisterDetails = () => {
   }
 
   useEffect(() => {
-    if(numbverVerified !== null) {
-      // set mobile number
-      reset(formValues => ({ ...formValues, 
-        mobileNumber: mobilenum, referralCode: (code !== undefined) ? code : "" }));
-      // // get address
-      // AddressService.getRegionProvinces().then((resp) => {
-      //   if(resp) { setregionProvinceData(resp.data.regions); console.log(resp.data.regions); }
-      // })
-      // get branch by referral code
-      if (code !== undefined) {
-        BranchService.getBranchByReferral(code).then((resp) => {
-          if(resp) { 
-            reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
-            setbranchId(resp.data.branchId);
-          }
-        })
-      } 
-    } else {
-      window.location.href = `/register`;
-    }
-  }, [code, mobilenum, numbverVerified]);
+    // set mobile number
+    reset(formValues => ({ ...formValues, 
+      mobileNumber: paramObj.mobileNumber, referralCode: paramObj.code }));
+
+    // get branch by referral code
+    if (paramObj.code !== "") {
+      BranchService.getBranchByReferral(paramObj.code).then((resp) => {
+        if(resp) { 
+          reset(formValues => ({ ...formValues, branchId: resp.data.branchId }));
+          setbranchId(resp.data.branchId);
+        }
+      })
+    } 
+  }, []);
 
   return (
     <div className="registration">
@@ -99,9 +114,9 @@ const RegisterDetails = () => {
         <div className="lfContent">
           <div><h3>REGISTRATION</h3></div>
           {
-            (code !== undefined) 
+            (paramObj.code !== "") 
             ? <div className="div-referral">
-                <p> Referral Code <br/> <span>{code}</span> </p>
+                <p> Referral Code <br/> <span>{paramObj.code}</span> </p>
               </div>
             : <></>
           }
@@ -122,12 +137,7 @@ const RegisterDetails = () => {
               btnBack={step2Back} 
               handleSubmit={handleSubmit} 
               formSubmit={formSubmit} 
-              register={register} errors={errors} 
-              regionProvince={regionProvinceData}
-              regions={regions}
-              provinces={provinces}
-              municipalities={municipalities}
-              barangays={barangays}
+              register={register} errors={errors}
               showPresAddr={showPresendAddress}
               showPerAddr={showPermanentAddress}
               branchId={branchId}
@@ -144,8 +154,10 @@ const RegisterDetails = () => {
         </div>
       </div>
       <ContentLoader isLoadingPage={ pageLoader } />
+      <AgreementModal isOpen={openAgreement} 
+      handleClose={handleAgreementClose} 
+      handleOkay={handleAgreementOkay} isLoading={submitLoader} />
+      <AlertModal isOpen={openAlert} handleOkay={handleAlertOkay} isSuccess={true} />
     </div>
   );
 };
-
-export default RegisterDetails;

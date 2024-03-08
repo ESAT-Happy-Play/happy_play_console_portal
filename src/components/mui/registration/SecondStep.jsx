@@ -24,10 +24,6 @@ export const SecondStep = ({
     formSubmit,
     register,
     errors,
-    regionProvince,
-    regions,
-    provinces,
-    municipalities,
     barangays,
     showPresAddr,
     showPerAddr,
@@ -61,6 +57,7 @@ export const SecondStep = ({
     const [branchList, setbranchList] = React.useState(null);
     const handleGetBranchList = (obj) => {
         BranchService.getBranchByAddress(obj).then((resp) => {
+            console.log("Get list of branches");
             if (resp) { setbranchList(resp.data) }
         });
     }
@@ -97,11 +94,6 @@ export const SecondStep = ({
                                     <CurrentAddress
                                         register={register}
                                         errors={errors}
-                                        regionProvince={regionProvince}
-                                        regions={regions}
-                                        provinces={provinces}
-                                        municipalities={municipalities}
-                                        barangays={barangays}
                                         handleAddressValue={handleGetBranchList}
                                         handleCurrentAddr={handleCurrentAddress} />
                                 </List>
@@ -136,20 +128,10 @@ export const SecondStep = ({
                                                     data={currentAddressData} />
                                                 : <PermanentAddress
                                                     register={register}
-                                                    errors={errors}
-                                                    regionProvince={regionProvince}
-                                                    regions={regions}
-                                                    provinces={provinces}
-                                                    municipalities={municipalities}
-                                                    barangays={barangays} />
+                                                    errors={errors}/>
                                             : <PermanentAddress
                                                 register={register}
-                                                errors={errors}
-                                                regionProvince={regionProvince}
-                                                regions={regions}
-                                                provinces={provinces}
-                                                municipalities={municipalities}
-                                                barangays={barangays} />
+                                                errors={errors}/>
                                     }
 
                                 </List>
@@ -171,7 +153,6 @@ export const SecondStep = ({
                                     error={!!errors.branchId}
                                     fullWidth select>
                                     <MenuItem value=""><em>Select game site</em></MenuItem>
-                                    <MenuItem value="asdad"><em>asdasd</em></MenuItem>
                                     {
                                         (branchList !== null) ?
                                             branchList.map((item, index) => (

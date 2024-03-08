@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
 
 import { COLORS } from '../../helper/colors';
-import { Button, IconButton, TablePagination } from '@mui/material';
+import { IconButton } from '@mui/material';
 
 const LimitCombinationTable = ({ data }) => {
     const [pg, setpg] = useState(0);
@@ -20,6 +20,8 @@ const LimitCombinationTable = ({ data }) => {
 
     return (
         <div>
+            <Box>
+            </Box>
             <CustomTable
                 headers={["Bet Combination", "Applied Limit", "CurrentBets", "Status"]}
                 count={data.length}

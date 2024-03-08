@@ -1,10 +1,9 @@
 const ValidateUsername = () => {
   return {
     name: 'username',
-    label: 'Mobile Number',
     type: 'text',
-    placeholder: 'Enter mobile number',
-    validation: { required: "Mobile number is required" },
+    placeholder: 'Username',
+    validation: { required: true },
     variant: 'outlined',
     size: 'small',
     required: true,
@@ -15,11 +14,10 @@ const ValidateUsername = () => {
 const ValidatePassword = (eye) => {
   return {
     name: 'password',
-    label: 'Password',
     type: (eye) ? "text" : "password",
-    placeholder: 'Enter password',
+    placeholder: 'Password',
     validation: { 
-        required: "Password is required",
+        required: true,
         minLength: {
             value: 5,
             message: "min length is 5"

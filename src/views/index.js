@@ -1,3 +1,16 @@
+import { NotFound } from './404/NotFound';
+
+import { Login } from './login/Login';
+import { LoginNewUser } from './login/LoginNewUser';
+import { AuthOTP } from './login/AuthOTP';
+
+import { ForgotPassword } from './login/ForgotPassword';
+import { UpdatePassword } from './login/UpdatePassword';
+
+import { Registration } from './registration/Registration';
+import { RegistrationOTP } from './registration/RegistrationOTP';
+import { RegisterDetails } from './registration/RegisterDetails';
+
 import { Company } from './company/Company';
 import { CompanyDetails } from './company/CompanyDetails';
 
@@ -6,4 +19,5 @@ import { BranchDetails } from './branch/BranchDetails';
 
 import { Roles } from './roles/Roles';
 
-export { Company, CompanyDetails, Branch, BranchDetails, Roles };
+export { Company, CompanyDetails, Branch, BranchDetails, Roles, Login, LoginNewUser, AuthOTP,
+    ForgotPassword, UpdatePassword, NotFound, Registration, RegistrationOTP, RegisterDetails };
