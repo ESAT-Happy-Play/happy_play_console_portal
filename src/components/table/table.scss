@@ -1,25 +1,27 @@
+@import "../../helper/colors.scss";
+
 table {
-    thead > tr > th {
-        font-weight: 600 !important;
-    }
+  thead > tr > th {
+    font-weight: 600 !important;
+  }
 
-    // tbody > tr {
-    //     cursor: pointer;
-    // }
+  tbody > tr:hover {
+    background-color: #dde5e5;
+  }
 
-    tbody> tr:hover {
-        background-color: #dde5e5;
-    }
-    
-    .btnShow {
-        background: #fec30e !important;
-        color: black;
-        text-transform: capitalize;
-    }
+  tbody > tr:nth-child(even) {
+    background-color: $light-violet;
+  }
 
-    .btnWarning {
-        background: #dd6b20 !important;
-        color: white;
-        text-transform: capitalize;
-    }
+  .btnShow {
+    background: #fec30e !important;
+    color: black;
+    text-transform: capitalize;
+  }
+
+  .btnWarning {
+    background: #dd6b20 !important;
+    color: white;
+    text-transform: capitalize;
+  }
 }

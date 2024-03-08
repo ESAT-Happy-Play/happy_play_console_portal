@@ -1,0 +1,18 @@
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-left: 1px solid gray;
+  height: 100%;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 10px;
+  cursor: pointer;
+}

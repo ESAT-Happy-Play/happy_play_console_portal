@@ -1,0 +1,96 @@
+@import "./../../helper/colors";
+
+.winners-container {
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  .winners-header {
+    width: 100%;
+    color: $violet-main;
+    font-weight: bold;
+    display: flex;
+    justify-content: left;
+    border-radius: 10px;
+  }
+
+  .winners-list-container {
+    padding: 10px;
+    justify-content: center;
+
+    .winners-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      color: $violet-main;
+      border-bottom: 1px solid #797979a6;
+      padding-bottom: 20px;
+
+      h1 {
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 16px;
+        font-weight: 400;
+        text-transform: uppercase;
+        margin: 0;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+      .winners-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 220px;
+      }
+    }
+
+    .winners-filter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .winners-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 10px;
+      gap: 30px;
+
+      p {
+        color: $violet-main;
+        font-size: 12px;
+        margin: 0;
+        width: 80px;
+      }
+
+      h2 {
+        color: $violet-main;
+        margin: 0;
+        width: 150px;
+      }
+
+      .process-button {
+        background-color: $yellow;
+        color: $dark-grey;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 10px;
+      }
+
+      .process-button-disabled {
+        background-color: $light-yellow;
+        color: $dark-grey;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 10px;
+      }
+    }
+  }
+}
