@@ -1,5 +1,5 @@
 import React from 'react';
-import { companyGames, mechanicsSettings } from '../../helper/mocks';
+import { companyGames, mechanicsSettings, mockLimitCombination } from '../../helper/mocks';
 import CustomVerticalTab from '../../components/tab/CustomVerticalTab';
 import { IOSSwitch } from '../../components/switch/IOSSwitch';
 import CustomTab from '../../components/tab/CustomTab';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import BetLimits from './BetLimits';
 import BetPrice from './BetPrice';
 import PrizeCalculations from './PrizeCalculations';
+import LimitCombinationTable from './LimitCombinationTable';
 
 const MechanicsSettings = () => {
 
@@ -20,7 +21,7 @@ const MechanicsSettings = () => {
       },
       {
         label: "Limit Per Combination",
-        Component: <p>No design yet</p>
+        Component: <LimitCombinationTable data={mockLimitCombination} />
       },
       {
         label: "Bet Price",

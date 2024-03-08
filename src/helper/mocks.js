@@ -155,3 +155,42 @@ export const mechanicsSettings = [
         ]
     }
 ]
+
+export const mockLimitCombination = [
+    {
+        id: 1,
+        combination: '3-9-4',
+        limit: 520,
+        current: 120
+    },
+    {
+        id: 2,
+        combination: '3-6-4',
+        limit: 500,
+        current: 290
+    },
+    {
+        id: 3,
+        combination: '1-2-4',
+        limit: 520,
+        current: 500
+    },
+    {
+        id: 4,
+        combination: '2-1-4',
+        limit: 520,
+        current: 314
+    },
+    {
+        id: 5,
+        combination: '2-4-1',
+        limit: 500,
+        current: 500
+    },
+    {
+        id: 6,
+        combination: '6-1-6',
+        limit: 500,
+        current: 100
+    }
+]

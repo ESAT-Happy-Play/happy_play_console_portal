@@ -1,3 +1,4 @@
+import LimitCombinationTable from "./LimitCombinationTable";
 
 export const getTabs = (subType, section) => {
     var tabs = [];
@@ -30,7 +31,7 @@ export const getTabs = (subType, section) => {
         },
         {
             label: "Limit Per Combination",
-            Component: <p>No design yet</p>
+            Component: <LimitCombinationTable />
         },
         {
             label: "Bet Price",
@@ -86,7 +87,7 @@ export const getJackpotSubTabs = (subType) => {
         },
         {
             label: "Limit Per Combination",
-            Component: <p>No design yet</p>
+            Component: <LimitCombinationTable />
         },
         {
             label: "Bet Price",
