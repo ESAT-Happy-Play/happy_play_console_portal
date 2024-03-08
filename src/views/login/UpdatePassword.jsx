@@ -11,6 +11,7 @@ import { InputAdornment, IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+import { Link } from 'react-router-dom';
 import { Button } from "@mui/material";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -36,7 +37,7 @@ export const UpdatePassword = () => {
   const { register, handleSubmit, formState, watch } = formUpdatePassword;
   const { errors } = formState;
 
-  const [msgType, setmsgType] = useState(0);
+  // const [msgType, setmsgType] = useState(0);
   const [eye, setEye] = useState(false);
   const validate_password = ValidateNewPassword(eye);
 
@@ -95,9 +96,7 @@ export const UpdatePassword = () => {
               <img src={require('../../assets/happy-play-logo.png')} className="logo" title="Esat Logo" />
             </div>
             <div className="div-login-new-title">
-                <Button variant="text" size="small">
-                    <KeyboardBackspaceIcon />
-                </Button>
+                <Button component={Link} to="/login" style={{marginTop:'15px'}} variant="text" size="small"><KeyboardBackspaceIcon /></Button>
                 {
                   (paramObj.new) 
                   ? <h3>Set Password</h3>
@@ -181,7 +180,7 @@ export const UpdatePassword = () => {
           </div>
         </div>
         <ContentLoader isLoadingPage={ pageLoader } />
-        <AlertModal isOpen={openAlert} alertType={1} isSuccess={true} msgType={msgType} />
+        <AlertModal isOpen={openAlert} alertType={1} isSuccess={true} msgType={((paramObj.new) ? 0 : 1)} />
       </div>
     </>
   );

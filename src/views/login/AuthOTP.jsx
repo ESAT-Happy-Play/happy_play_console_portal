@@ -118,7 +118,12 @@ export const AuthOTP = () => {
                 <Button onClick={handleChangeNumber} variant="text" size="small">
                     <KeyboardBackspaceIcon />
                 </Button>
-              <h3>New User Login</h3>
+                {
+                  (paramObj.new)
+                  ? <h3>New User Login</h3>
+                  : <h3>Forgot Password</h3>
+                }
+              
             </div>
             
               <div className="body">
