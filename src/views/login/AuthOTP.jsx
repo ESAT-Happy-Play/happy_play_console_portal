@@ -10,6 +10,7 @@ import { Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 import OtpInput from 'react-otp-input';
 import { useParams } from "react-router-dom";
@@ -21,12 +22,16 @@ import { OTPService } from "../../services";
 
 export const AuthOTP = () => {
   const { code } = useParams();
+  try { StoreExt.getDecrypted(atob(code)) } catch (e) { window.location.href = `/login/new`; }
   const paramObj = StoreExt.getDecrypted(atob(code));
-  // let loginObj = StoreExt.getStore("auth");
 
+  const [submitLoader, setsubmitLoader] = useState(false);
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
   const [termError, settermError] = useState(false);
+  const [otpError, setotpError] = useState(false);
+  const [otpErrorMsg, setotpErrorMsg] = useState(null);
+  const [newOtpRef, setnewOtpRef] = useState(null);
 
   const _MINUTE = 4;
   const _SECONDS = 59;
@@ -53,6 +58,10 @@ export const AuthOTP = () => {
   const resendOTP = () => {
     setMinutes(_MINUTE);
     setSeconds(_SECONDS);
+
+    OTPService.generateRegistrationOTP({mobileNumber: paramObj.mobileNumber}).then((resp) => {
+      if(resp) { setnewOtpRef(resp.data); setsubmitLoader(false); }
+    });
   };
 
   const handleChangeNumber = () => {
@@ -63,16 +72,36 @@ export const AuthOTP = () => {
   const handleSubmit = () => {
     if(!checkTerm) { settermError(true); return false; }
     if(otp.length <= 5) { return false; }
-    
+    setotpError(false);
+
     setPageLoader(true);
-    OTPService.verifyOTP().then((resp) => {
-      if (resp) {
-        setSuccess(true);
-        setTimeout(function() {
-          setPageLoader(true);
-          window.location.href = `/`;
-        }, 2000);
-      }
+    OTPService.verifyOTP({ 
+      referenceId: (newOtpRef !== null) ? newOtpRef : paramObj.referenceId,
+      mobileNumber: paramObj.mobileNumber, 
+      otpCode: otp}).then((resp) => {
+        console.log(resp);
+        if (!resp.status) {
+          if (resp.data.response.status === 400) {
+            setotpErrorMsg(resp.data.response.data.errorMessage);
+            setotpError(true); setSuccess(false);
+          }
+        } else {
+          setSuccess(true);
+          setsubmitLoader(true);
+          setTimeout(function() {
+            setPageLoader(true);
+
+            let param = StoreExt.getEncrypted({
+              mobileNumber: paramObj.mobileNumber,
+              isVerified: resp.data.data,
+              referenceId: paramObj.referenceId,
+              userId: paramObj.userId,
+              code: paramObj.code,
+              new: paramObj.new
+            });
+            window.location.href = `/update/password/${btoa(param)}`;
+          }, 2000);
+        }
       setPageLoader(false);
     });
   }
@@ -135,7 +164,17 @@ export const AuthOTP = () => {
                         </div>
 
                         {
-                        (success) ? <div> <CheckCircleIcon style={{ fontSize:'60px', color:'green'}} /> </div> : <></>
+                          (success) ? <div> <CheckCircleIcon style={{ fontSize:'60px', color:'green'}} /> </div> : <></>
+                        }
+
+                        { 
+                          (otpError) 
+                          ? <div> 
+                              <CancelRoundedIcon style={{ fontSize:'60px', color:'red'}} />
+                              <br/>
+                              <span style={{color:'red',fontSize:'13px'}}>{otpErrorMsg}</span> 
+                            </div> 
+                          : <></> 
                         }
                         
                         <br/>  
@@ -147,6 +186,7 @@ export const AuthOTP = () => {
                             loadingPosition='end'
                             style={{marginTop:'10px'}}
                             onClick={handleSubmit }
+                            disabled={submitLoader}
                             endIcon={ <ArrowRightAltOutlinedIcon/> }>
                             Submit
                         </LoadingButton>

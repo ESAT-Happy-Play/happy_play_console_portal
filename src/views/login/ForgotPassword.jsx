@@ -12,10 +12,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { StoreExt } from "../../utils/helpers";
 
 import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui";
-import { AuthService } from "../../services";
+import { OTPService } from "../../services";
 
 export const ForgotPassword = () => {
-  let loginObj = StoreExt.getStore("auth");
 
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
@@ -31,6 +30,18 @@ export const ForgotPassword = () => {
 
     if (checkTerm) {
       setPageLoader(true);
+      OTPService.generateLoginOTP(data).then((resp) => {
+        if(resp) {
+          let param = StoreExt.getEncrypted({
+            mobileNumber: data.mobileNumber,
+            referenceId: resp.data.referenceId,
+            userId: resp.data.userId,
+            new: resp.data.new,
+          });
+          window.location.href = `/otp/auth/${btoa(param)}`;
+        }
+        setPageLoader(false);
+      });
     }
   }
 

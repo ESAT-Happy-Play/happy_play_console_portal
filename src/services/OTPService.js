@@ -16,7 +16,11 @@ export const OTPService = {
         return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/otp/generate/login`, data)
         .then((res) => {
             if (!res.status) { 
-                toast.error("Sorry, unsuccessfull gateway communication."); 
+                if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
                 return false; 
             }
             return res.data;

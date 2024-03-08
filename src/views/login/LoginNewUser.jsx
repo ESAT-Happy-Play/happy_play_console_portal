@@ -15,7 +15,6 @@ import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui"
 import { OTPService } from "../../services";
 
 export const LoginNewUser = () => {
-  // let loginObj = StoreExt.getStore("auth");
 
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
