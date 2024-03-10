@@ -1,0 +1,100 @@
+@import "../../../helper/colors";
+
+.draw-result-container {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.219);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-top: solid 0.5px $yellow;
+  border-bottom: solid 0.5px $yellow;
+}
+
+.jackpot-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  font-size: 24px;
+
+  .result-game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 60px;
+  }
+
+  .result-date-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: linear-gradient(to right, red, $yellow);
+    border-radius: 20px;
+    padding: 5px 8px;
+    height: 35px;
+
+    .time-container {
+      color: $dark-grey;
+      background: white;
+      border-radius: 20px;
+      font-size: 15px;
+      padding: 0px 5px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .jackpot-reel {
+    font-size: 50px;
+    font-weight: bold;
+
+    div {
+      display: flex;
+      width: 500px;
+      padding: 8px 16px;
+      text-align: center;
+      margin-left: 60px;
+      color: $dark-grey;
+      letter-spacing: 30px;
+      background: url("../../../assets/slot-container.png"),
+        url("../../../assets/slot-container.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 0 top, 230px top;
+    }
+  }
+
+  .operator {
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
+
+.game-types-side {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.game-type-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  .amount {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 12px;
+  }
+}
