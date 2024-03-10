@@ -9,7 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { COLORS } from '../../../helper/colors';
-import { TablePagination } from '@mui/material';
+import { Box, Pagination, PaginationItem, TablePagination } from '@mui/material';
+import { red } from '@mui/material/colors';
 
 const CustomTable = ({ headers, style, children, pagination }) => {
     return (
@@ -25,16 +26,14 @@ const CustomTable = ({ headers, style, children, pagination }) => {
                     </StyledTableHead>
                     <TableBody>
                         {children}
-                        {pagination &&
-                            <div style={{ display: 'flex' }}>
-                                <TableRow>
-                                    {pagination}
-                                </TableRow>
-                            </div>
-                        }
                     </TableBody>
                 </Table>
             </TableContainer >
+            {pagination &&
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    {pagination}
+                </Box>
+            }
         </>
     );
 }
@@ -56,10 +55,7 @@ font-family: "Inter";
 
 export const StyledTableRow = styled(TableRow)(`
     gap: 10px;
-   
-    &:nth-of-type(2n+1){
-        background:${COLORS.tableBackground};
-    }
+
     &:hover{
         background:${COLORS.background};
         img{
@@ -76,7 +72,26 @@ export const StyledTableCell = styled(TableCell)(`
     box-shadow: none;
 `);
 
-export const StyledPagination = styled(TablePagination)(`
+export const StyledPagination = styled((props) => {
+
+    return (
+        <>
+            <TablePagination
+                {...props}
+            />
+            <Pagination
+                count={Math.ceil(props.count / props.rowsPerPage)}
+                onChange={props.onPageChange}
+                renderItem={(item) => (
+                    <PaginationItem
+                        sx={[{ '&.Mui-selected': { background: COLORS.violetMain, color: 'white' } }]}
+                        {...item}
+                    />
+                )}
+            />
+        </>
+    )
+})(`
     p{
         font-family: "Inter";
     }
@@ -87,6 +102,9 @@ export const StyledPagination = styled(TablePagination)(`
         padding: 5px 10px !important;
     }
     .MuiTablePagination-selectIcon{
+        display:none;
+    }
+    .MuiTablePagination-actions{
         display:none;
     }
 `);

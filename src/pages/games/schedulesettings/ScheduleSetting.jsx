@@ -144,7 +144,7 @@ const ScheduleSetting = () => {
           <CustomVerticalTab
             changeEvent={fetchDrawTypesData}
             tabList={
-              tabHeaders?.map((label) => ({ label: label, Component: <DrawTypesTable data={drawTypes} /> }))
+              tabHeaders?.map((label) => { console.log(label); return { label: label, Component: <DrawTypesTable data={drawTypes} /> } })
             } />
         </div>
     },

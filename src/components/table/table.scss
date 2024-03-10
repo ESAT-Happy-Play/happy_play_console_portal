@@ -1,15 +1,15 @@
 @import "../../helper/colors.scss";
 
 table {
-  thead > tr > th {
+  thead>tr>th {
     font-weight: 600 !important;
   }
 
-  tbody > tr:hover {
+  tbody>tr:hover {
     background-color: #dde5e5;
   }
 
-  tbody > tr:nth-child(even) {
+  tbody>tr:nth-child(odd) {
     background-color: $light-violet;
   }
 

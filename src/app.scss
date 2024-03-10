@@ -67,8 +67,12 @@ $defaultPad: 5px;
 }
 
 .App {
-    font-family: "Inter";
     color: $defaultFont;
+    font-family: "Inter";
+
+    button {
+        font-family: "Inter";
+    }
 
     .p-15 {
         padding: 15px;
@@ -234,6 +238,7 @@ $defaultPad: 5px;
             }
 
             .div-body {
+                font-family: "Inter";
                 padding: 20px;
 
                 .div-content1 {

@@ -244,8 +244,8 @@ export const regularData = {
     data: [
         {
             id: 1,
-            displayName: "Display Name",
-            transactionNumber: "#TransactionID",
+            displayName: "Display Name1",
+            transactionNumber: "#TransactionID 1",
             combination: "3-4-4",
             amount: 25.0,
             gameTime: "11PM",
@@ -253,8 +253,8 @@ export const regularData = {
         },
         {
             id: 2,
-            displayName: "Display Name",
-            transactionNumber: "#TransactionID",
+            displayName: "Display Name2",
+            transactionNumber: "#TransactionID 2",
             combination: "3-4-4",
             amount: 25.0,
             gameTime: "11PM",
@@ -262,8 +262,8 @@ export const regularData = {
         },
         {
             id: 3,
-            displayName: "Display Name",
-            transactionNumber: "#TransactionID",
+            displayName: "Display Name3",
+            transactionNumber: "#TransactionID 3",
             combination: "3-4-4",
             amount: 25.0,
             gameTime: "11PM",
@@ -271,8 +271,26 @@ export const regularData = {
         },
         {
             id: 4,
-            displayName: "Display Name",
-            transactionNumber: "#TransactionID",
+            displayName: "Display Name 4",
+            transactionNumber: "#TransactionID 4",
+            combination: "3-4-4",
+            amount: 25.0,
+            gameTime: "11PM",
+            date: "May 08, 2023 15:00:00",
+        },
+        {
+            id: 5,
+            displayName: "Display Name 5",
+            transactionNumber: "#TransactionID 5",
+            combination: "3-4-4",
+            amount: 25.0,
+            gameTime: "11PM",
+            date: "May 08, 2023 15:00:00",
+        },
+        {
+            id: 6,
+            displayName: "Display Name 6",
+            transactionNumber: "#TransactionID 6",
             combination: "3-4-4",
             amount: 25.0,
             gameTime: "11PM",
@@ -280,7 +298,7 @@ export const regularData = {
         },
     ],
     pageInfo: {
-        total: 4,
+        total: 6,
         pageNumber: 0,
         pageSize: 5,
     },
@@ -298,7 +316,7 @@ export const mechanicsSettings = [
                 uniqueCombination: 70,
                 betPriceLimit: 2000,
                 winningMultiplier: 700,
-                haveQuasi: true
+                haveQuasi: true,
             },
             {
                 subTypeName: "Power Win",
@@ -370,7 +388,7 @@ export const mechanicsSettings = [
             }
         ]
     }
-]
+];
 
 export const mockLimitCombination = [
     {
@@ -399,13 +417,31 @@ export const mockLimitCombination = [
     },
     {
         id: 5,
-        combination: '2-4-1',
+        combination: '2-4-7',
         limit: 500,
         current: 500
     },
     {
         id: 6,
-        combination: '6-1-6',
+        combination: '9-7-6',
+        limit: 500,
+        current: 100
+    },
+    {
+        id: 7,
+        combination: '2-7-4',
+        limit: 520,
+        current: 520
+    },
+    {
+        id: 8,
+        combination: '2-4-7',
+        limit: 500,
+        current: 500
+    },
+    {
+        id: 9,
+        combination: '9-1-6',
         limit: 500,
         current: 100
     }

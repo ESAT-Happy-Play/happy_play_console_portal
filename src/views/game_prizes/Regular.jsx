@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import RegularSearchBar from "../../components/table/gamePrizesRegular/RegularSearchBar";
+import RegularSearchBar from "../../components/searchbar/RegularSearchBar";
 import RegularTable from "../../components/table/gamePrizesRegular/RegularTable";
 import { regularData } from "../../helper/mocks";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
