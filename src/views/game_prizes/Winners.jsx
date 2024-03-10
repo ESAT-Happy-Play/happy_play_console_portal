@@ -38,7 +38,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
       <div className="winners-list-container">
         <div className="winners-list-header">
           <div className="winners-logo">
-            <div>{getGameLogo(gameName, subtypeName)}</div>
+            <div>{getGameLogo(gameName, subtypeName, 200)}</div>
             <h1>{FormatAmount(winners[0].amountWon)}</h1>
           </div>
           <h2>

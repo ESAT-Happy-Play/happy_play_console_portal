@@ -60,6 +60,16 @@ export function FormatDateTime(stringDate) {
   return yy + "-" + mm + "-" + dd + " " + hr + ":" + min;
 }
 
+export function FormatFullDate(stringDate) {
+  const fullDate = stringDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return fullDate;
+}
+
 export function ChunckArry(arryVal, chunkSize) {
   var chunkArry = [];
   for (var i = 0; i < arryVal.length; i += chunkSize)
