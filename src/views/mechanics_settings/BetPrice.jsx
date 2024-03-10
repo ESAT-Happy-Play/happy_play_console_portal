@@ -4,6 +4,7 @@ import { CustomCard } from '../../components/card/CustomCard';
 import './mechanicsSettings.scss';
 import UpdateDialog from '../../components/Dialog/game/gameMechanics/UpdateDialog';
 import { TextField } from '@mui/material';
+import { FormatInteger } from '../../helper/Helpers';
 
 const BetPrice = ({ subType }) => {
 
@@ -30,14 +31,14 @@ const BetPrice = ({ subType }) => {
             {priceType == "Bet Price Limit" ?
                 <CustomCard
                     header="Bet Price Limit"
-                    body={<h2 className='card-header'>{subType.betPriceLimit}</h2>}
+                    body={<h2 className='card-header'>{FormatInteger(subType.betPriceLimit)}</h2>}
                     description="The maximum bet amount per combination"
                     action={() => handleEdit(subType.betPriceLimit)}
                 />
                 :
                 <CustomCard
                     header="Bet Price"
-                    body={<h2 className='card-header'>{subType.betPrice}</h2>}
+                    body={<h2 className='card-header'>{FormatInteger(subType.betPrice)}</h2>}
                     description="Price amount per bet"
                     action={() => handleEdit(subType.betPrice)}
                 />
