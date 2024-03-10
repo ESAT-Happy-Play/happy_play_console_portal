@@ -21,7 +21,7 @@ const MechanicsSettings = () => {
       },
       {
         label: "Limit Per Combination",
-        Component: <LimitCombinationTable data={mockLimitCombination} />
+        Component: <LimitCombinationTable data={mockLimitCombination} type={subType.subTypeName} />
       },
       {
         label: "Bet Price",

@@ -55,7 +55,7 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                 <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, color: COLORS.green, borderBottom: `1px solid ${COLORS.background}`, paddingY: 1 }}>Success!</DialogTitle>
                 <DialogContent
                     sx={{ width: 300, paddingY: 0 }}>
-                    <p style={{ margin: 0, paddingTop: 10, paddingBottom: 10 }}>{successMessage}</p>
+                    <p style={{ margin: 0, paddingTop: 10, paddingBottom: 10, textAlign: 'center' }}>{successMessage}</p>
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center" }}>
                     <StyledButton onClick={() => setOpenSuccess(false)} sx={{ color: COLORS.violetMain, width: 150, background: COLORS.background }}>Cancel</StyledButton>

@@ -7,7 +7,7 @@ import { CustomRadioButton } from '../../components/radio/CustomRadioGroup';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import UpdateDialog from '../../components/Dialog/game/gameMechanics/UpdateDialog';
 
-const LimitCombinationTable = ({ data }) => {
+const LimitCombinationTable = ({ data, type }) => {
     const [displayList, setDisplayList] = useState(data);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -131,7 +131,7 @@ const LimitCombinationTable = ({ data }) => {
                 onClose={() => setOpenEdit(false)}
                 title="Edit Limit for Combination"
                 isValid={valid}
-                successMessage={`Limit for ${selectedRow?.combination} is updated and will be applied to all upcoming draws for this game type`}
+                successMessage={`Limit for ${selectedRow?.combination} is updated and will be applied to all upcoming draws for ${type}`}
             >
                 <h2 style={{ margin: 0, textAlign: 'center', color: COLORS.violetMain, fontWeight: 600, fontSize: 32, fontFamily: 'Inter' }}>{selectedRow?.combination}</h2>
                 <p style={{ marginTop: 6, marginBottom: 6, fontWeight: 200, fontFamily: 'Inter' }}>Limit Value</p>
