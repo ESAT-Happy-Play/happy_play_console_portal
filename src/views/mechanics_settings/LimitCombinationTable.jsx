@@ -36,7 +36,6 @@ const LimitCombinationTable = ({ data, type }) => {
             return Object.values(row).join('').toLowerCase().includes(searchValue.toLowerCase());
         });
 
-        console.log(search);
         setPage(0);
         setDisplayList(search);
     }, [searchValue, statusFilter]);

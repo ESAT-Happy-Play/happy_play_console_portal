@@ -45,8 +45,6 @@ const MechanicsSettings = () => {
       else
         verticalTabs.push(...getSubTypeTabs(game.child[0]));
 
-      console.log(verticalTabs);
-
       return {
         label: game.gameName,
         Component:
