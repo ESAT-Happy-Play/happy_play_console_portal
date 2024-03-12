@@ -101,7 +101,7 @@ export const SecondStep = ({
                         </List>
                     </div>
 
-                    <div>
+                    <div style={{marginLeft:'28px'}}>
                         <FormControlLabel style={{ marginLeft: '-40px' }}
                             control={
                                 <Checkbox defaultValue={isSamePresent} onChange={e => handleIsSamePresent(e, isSamePresent)} checked={isSamePresent} />

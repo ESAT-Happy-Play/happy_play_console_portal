@@ -79,7 +79,7 @@ $defaultPad: 5px;
     .c-red {
         color: #9d0404;
     }
-
+    
     .row {
         display: flex;
         margin-bottom: 15px;
@@ -395,6 +395,10 @@ $defaultPad: 5px;
 
     .MuiStepIcon-root.Mui-completed {
         color: green;
+    }
+
+    .MuiButton-containedPrimary {
+        background: #4845d2;
     }
 
     .div-otp-input {

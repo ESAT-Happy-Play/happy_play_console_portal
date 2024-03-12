@@ -19,5 +19,8 @@ import { BranchDetails } from './branch/BranchDetails';
 
 import { Roles } from './roles/Roles';
 
+import { SystemUsers } from './system_users/SystemUsers';
+
 export { Company, CompanyDetails, Branch, BranchDetails, Roles, Login, LoginNewUser, AuthOTP,
-    ForgotPassword, UpdatePassword, NotFound, Registration, RegistrationOTP, RegisterDetails };
+    ForgotPassword, UpdatePassword, NotFound, Registration, RegistrationOTP, RegisterDetails,
+    SystemUsers };

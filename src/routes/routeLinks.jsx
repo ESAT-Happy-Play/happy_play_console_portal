@@ -1,6 +1,6 @@
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 
-import {Company, Branch, Roles} from '../views';
+import {Company, Branch, Roles, SystemUsers} from '../views';
 
 import PageLayout from '../components/layout/PageLayout';
 import AboutUs from '../views/about_us/AboutUs';
@@ -24,7 +24,6 @@ import ReportAnIssue from '../views/report_an_issue/ReportAnIssue';
 import Revenue from '../views/revenue_reports/Revenue';
 import ScheduleSettings from '../views/schedule_settings/ScheduleSettings';
 import StoreSettings from '../views/store_settings/StoreSettings';
-import SystemUsers from '../views/system_users/SystemUsers';
 import Terms from '../views/terms_of_use/Terms';
 import TextBlast from '../views/text_blast/TextBlast';
 import TransactionReports from '../views/transaction_reports/TransactionReports';
