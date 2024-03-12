@@ -9,7 +9,9 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { VerifyUserMobile } from './VerifyUserMobile';
 import { SystemUserFilter } from './SystemUserFilter';
 import { SystemUserInfo } from './SystemUserInfo';
-import { SpinLoader} from '../../components/mui';
+
+import { SpinLoader } from '../../components/mui';
+import { CompanyService, UserService } from "../../services";
 
 export const SystemUsers = () => {
     const formRole = useForm({ defaultValues: { mobileNumber: "" } });
@@ -20,15 +22,12 @@ export const SystemUsers = () => {
     const [isCreateInfo, setisCreateInfo] = useState(false);
 
     const [pageLoader, setPageLoader] = useState(false);
-    const [companies, setcompanies] = useState([{
-      companyId: 1,
-      companyObjectId: '1988383',
-      companyName: 'CEO Group'
-    }]);
-    const [systemUsers, setsystemUsers] = useState([
-      { fullName: 'Operator - John Due' },
-      { fullName: 'Agent - Min Dee' }
-    ]);
+    const [companies, setcompanies] = useState(null);
+    const [systemUsers, setsystemUsers] = useState(null);
+
+    const [companyId, setcompanyId] = useState("");
+    const [branchId, setbranchId] = useState("");
+    const [roleId, setroleId] = useState("");
 
     const verifyMobileHandler = (data) => {
       console.log(data);
@@ -36,7 +35,23 @@ export const SystemUsers = () => {
       setisCreateInfo(true);
     }
 
+    const handleCompanies = () => {
+      CompanyService.getPaginateCompany("", 1, 100)
+      .then((resp) => {
+          if (resp.data !== null) { setcompanies(resp.data.companyList); }
+      });
+    }
+
+    const handleUsersList = () => {
+      UserService.usersList(companyId, branchId, roleId)
+      .then((resp) => {
+          if (resp) { setsystemUsers(resp.data); }
+      });
+    }
+
     useEffect(() => {
+      handleCompanies();
+      handleUsersList();
     }, []);
 
     return (
@@ -61,7 +76,7 @@ export const SystemUsers = () => {
                     (systemUsers !== null) ?
                       systemUsers.map((item, index) =>
                         <li className={(index === 0) ? "li-usertypes-active" : ""}
-                        key={index}>{item.fullName}</li>
+                        key={index}>{item.fullname}</li>
                       )
                     : <></>
                   }

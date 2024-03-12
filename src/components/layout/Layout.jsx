@@ -7,25 +7,23 @@ import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 
 import { setCredentials } from "../../redux/reducers/auth/AuthReducer";
-// import { setRoleState } from "../../redux/reducers/RoleStateReducer";
+import { setAccountState } from "../../redux/reducers/AccountStateReducer";
 
-import { GetStoreObject } from "../../helper/Helpers";
+import { StoreExt } from "../../utils/helpers";
 
 const Layout = () => {
   // constants
   const dispatch = useDispatch();
   const location = useLocation();
 
-  let authdata = GetStoreObject("auth");
-  // let userRole = GetStoreObject("role");
+  let authdata = StoreExt.getStore("auth");
+  let accountData = StoreExt.getStore("accountState");
 
-// for auth state
+  // for auth state
   useEffect(() => {
-    if (authdata !== null) {
-      dispatch(setCredentials(authdata))
-      // dispatch(setRoleState(userRole));
-    }
-  }, [dispatch, authdata]);
+    if (authdata !== null) { dispatch(setCredentials(authdata)) }
+    if (accountData !== null) { dispatch(setAccountState(accountData)) }
+  }, [dispatch, authdata, accountData]);
 
 
   return (
