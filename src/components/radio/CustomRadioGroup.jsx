@@ -5,9 +5,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { COLORS } from "../../helper/colors";
 
 const CustomRadioGroup = styled((props) => {
-  const { options, handleRadioChange, size } = props;
+  const { options, handleRadioChange, size, defaultValue } = props;
   return (
-    <RadioGroup row onChange={handleRadioChange}>
+    <RadioGroup row onChange={handleRadioChange} defaultValue={defaultValue}>
       {options.map((option) => (
         <FormControlLabel
           key={option.value}
@@ -44,12 +44,13 @@ const CustomRadioGroup = styled((props) => {
   gap: "16px",
 });
 
-export const CustomRadioButton = ({ options, handleRadioChange, size }) => {
+export const CustomRadioButton = ({ options, handleRadioChange, size, defaultValue }) => {
   return (
     <CustomRadioGroup
       options={options}
       handleRadioChange={handleRadioChange}
       size={size}
+      defaultValue={defaultValue}
     />
   );
 };

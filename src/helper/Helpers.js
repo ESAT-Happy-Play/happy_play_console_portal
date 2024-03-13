@@ -185,3 +185,9 @@ export function FormatAmount(val) {
 
   return formattedWithOptions;
 }
+
+export function FormatInteger(val) {
+  const commaSeparatedInt = val.toLocaleString("en-US");
+
+  return commaSeparatedInt;
+}

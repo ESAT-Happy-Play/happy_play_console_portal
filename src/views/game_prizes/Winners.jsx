@@ -58,6 +58,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
         </div>
         <div className="winners-filter">
           <CustomRadioButton
+            defaultValue="all"
             size="small"
             options={[
               { label: "All", value: "all" },
@@ -74,7 +75,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
             {winner.status === "Unclaimed" ? (
               <Button
                 type="submit"
-                onClick={() => {}}
+                onClick={() => { }}
                 className="process-button"
               >
                 Process{" "}
@@ -83,7 +84,7 @@ const Winners = ({ winners, gameName, subtypeName }) => {
             ) : (
               <Button
                 type="submit"
-                onClick={() => {}}
+                onClick={() => { }}
                 className="process-button-disabled"
                 disabled
               >

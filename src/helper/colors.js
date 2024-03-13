@@ -9,4 +9,10 @@ export const COLORS = {
   transparentFont: "#403d3980",
   violetHover: "#ffffff20",
   maroon: "#33050c",
+  orange: "#E4A11D",
+  defaultFont: "#403D39",
+  violetHover: "#ffffff20",
+  violetBorder: "#4845d280",
+  violetShadow: "#4845d20d",
+  tableBackground: "#f4f3fc80",
 };

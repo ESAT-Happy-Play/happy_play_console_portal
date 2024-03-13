@@ -22,7 +22,10 @@ let listRoutes = {
   system: false
 }
 
-// menus.push("SuperAdmin.Profiles");
+
+
+menus.push("Game.GamePrizes");
+menus.push("Game.MechanicsSettings");
 const buildChildObj = (dataObj, childLinks) => {
   let finalChild = [];
   for (let i = 0; i < childLinks.length; i++) {
