@@ -33,7 +33,6 @@ export const SecondStep = ({
 
     const [currentAddressData, setcurrentAddressData] = React.useState(null);
     const handleCurrentAddress = (obj) => {
-        console.log(obj);
         setcurrentAddressData(obj)
     }
 
@@ -57,7 +56,6 @@ export const SecondStep = ({
     const [branchList, setbranchList] = React.useState(null);
     const handleGetBranchList = (obj) => {
         BranchService.getBranchByAddress(obj).then((resp) => {
-            console.log("Get list of branches");
             if (resp) { setbranchList(resp.data) }
         });
     }

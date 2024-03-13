@@ -59,5 +59,15 @@ export const BranchService = {
             }
             return res;
         })
+    },
+    getBranchByCompany: async (formData) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/branch/search/company`, formData)
+        .then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res.data;
+        })
     }
 }
