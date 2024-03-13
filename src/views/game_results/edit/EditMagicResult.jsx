@@ -58,8 +58,10 @@ const EditMagicResult = ({
       </div>
       <div className="magic-buttons-container">
         <div className="magic-buttons">
-          {buttonLabels.map((button) => (
-            <div className="magic-button-item">{button}</div>
+          {buttonLabels.map((button, index) => (
+            <div className="magic-button-item" key={index}>
+              {button}
+            </div>
           ))}
         </div>
       </div>

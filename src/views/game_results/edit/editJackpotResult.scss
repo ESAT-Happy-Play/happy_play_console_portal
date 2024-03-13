@@ -87,10 +87,11 @@
       background: url("../../../assets/coin.png");
       background-size: contain;
       background-repeat: no-repeat;
+      background-position: center;
       text-align: center;
 
       &:first-child {
-        margin: 0px 80px;
+        flex-basis: 100%;
       }
     }
   }
