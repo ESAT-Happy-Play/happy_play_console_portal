@@ -9,10 +9,9 @@ export const BetsTable = ({ data }) => {
 
     return (
         <CustomTable
-            headers={head}
-            tableRows={
-                data?.length > 1 ? 
-                    data?.map((row, i) => (
+            headers={head}>
+            {data?.length > 1 ?
+                data?.map((row, i) => (
                     <StyledTableRow key={i}>
                         <StyledTableCell align="center" component="th" scope="row">
                             {row.bettorUserId}
@@ -38,11 +37,10 @@ export const BetsTable = ({ data }) => {
                         <StyledTableCell align="center">
                             {row.recruiterNameDisplay}
                         </StyledTableCell>
-                    </StyledTableRow>)) 
-                    : 
-                    <StyledTableRow ><StyledTableCell align="center" colSpan={9}>No available data</StyledTableCell></StyledTableRow>
-                    
-                } />
+                    </StyledTableRow>))
+                :
+                <StyledTableRow ><StyledTableCell align="center" colSpan={9}>No available data</StyledTableCell></StyledTableRow>}
+        </CustomTable>
     );
 };
 

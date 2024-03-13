@@ -1,3 +1,4 @@
+@import './helper/colors';
 $defaultPad: 5px;
 
 @font-face {
@@ -66,18 +67,23 @@ $defaultPad: 5px;
 }
 
 .App {
+    color: $defaultFont;
     font-family: "Inter";
+
+    button {
+        font-family: "Inter";
+    }
 
     .p-15 {
         padding: 15px;
     }
 
     .c-green {
-        color: #08f553;
+        color: $green;
     }
 
     .c-red {
-        color: #9d0404;
+        color: $red-warn;
     }
     
     .row {
@@ -178,10 +184,10 @@ $defaultPad: 5px;
     }
 
     .btn-error {
-        border: #e53e3e;
+        border: $red-warn;
         text-transform: capitalize;
         color: white;
-        background: #e53e3e;
+        background: $red-warn;
 
         &:hover {
             color: black;
@@ -232,6 +238,7 @@ $defaultPad: 5px;
             }
 
             .div-body {
+                font-family: "Inter";
                 padding: 20px;
 
                 .div-content1 {
@@ -434,7 +441,7 @@ $defaultPad: 5px;
             border: none;
             box-shadow: 2px 4px 10px 1px rgb(111 217 111);
             border-radius: 10px;
-            border: 1px solid #008000;
+            border: 1px solid $green;
         }
     }
 }
