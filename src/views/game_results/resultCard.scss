@@ -1,0 +1,138 @@
+@import "./../../helper/colors";
+
+.results-container p {
+  margin: 0;
+}
+
+.results-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.results-container {
+  border-radius: 12px;
+  background-color: white;
+  margin-right: 10px;
+  width: 50%;
+  height: calc(100vh - 170px);
+  overflow-y: auto;
+}
+
+.with-background {
+  background: url("../../assets/maroon-bg.png");
+  background-size: cover;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  gap: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 10px 15px;
+  margin: 0;
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  button {
+    padding: 8px;
+    font-family: "Inter";
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    .button-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+.subheading {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+
+  .date {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: left;
+    color: white;
+
+    p {
+      margin: 0;
+      font-size: 12px;
+      width: 200px;
+    }
+
+    .divider {
+      width: 100%;
+      border-bottom: solid 0.5px rgba(255, 255, 255, 0.623);
+    }
+  }
+
+  .draw-time-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+
+    .draw-time-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      font-size: 10px;
+
+      .draw-time-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: $yellow;
+        width: fit-content;
+        padding: 5px 10px;
+      }
+
+      .first-item {
+        background: linear-gradient(to right, $red, $yellow);
+      }
+
+      b {
+        line-height: 1;
+      }
+      p {
+        line-height: 1;
+        font-weight: 100;
+      }
+    }
+  }
+}
+
+.results-history {
+  color: white;
+  padding: 10px 15px;
+  font-size: 15px;
+
+  p {
+    padding: 15px 0px;
+  }
+}
+
+.results-history-light {
+  color: $violet-main;
+  padding: 10px 15px;
+  font-size: 15px;
+
+  p {
+    padding: 15px 0px;
+  }
+}

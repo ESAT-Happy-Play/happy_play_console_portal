@@ -15,7 +15,7 @@ const PrizePool = ({ prizePool, gameName, subtypeName }) => {
       <div className="prize-container">
         <div className="prize-header">
           <div className="prize-logo">
-            <div>{getGameLogo(gameName, subtypeName)}</div>
+            <div>{getGameLogo(gameName, subtypeName, 200)}</div>
             <h1>{FormatAmount(prizePool[0].prizeAmount)}</h1>
           </div>
           <h2>

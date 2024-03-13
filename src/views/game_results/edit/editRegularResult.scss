@@ -1,0 +1,122 @@
+@import "../../../helper/colors.scss";
+
+.draw-result-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.219);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-top: solid 0.5px $yellow;
+  border-bottom: solid 0.5px $yellow;
+}
+
+.results-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  font-size: 24px;
+  width: 50%;
+
+  .result-date-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: linear-gradient(to right, red, $yellow);
+    border-radius: 20px;
+    padding: 5px 8px;
+
+    .time-container {
+      color: $dark-grey;
+      background: white;
+      border-radius: 20px;
+      font-size: 15px;
+      padding: 0px 5px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .reel {
+    font-size: 50px;
+    font-weight: bold;
+
+    div {
+      width: 200px;
+      padding: 8px 16px;
+      color: $dark-grey;
+      letter-spacing: 30px;
+      background: url("../../../assets/slot-container.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .operator {
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
+
+.magic-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  .magic-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 40%;
+    gap: 5px;
+    margin-top: 10px;
+
+    .magic-button-item {
+      width: 52px;
+      padding: 10px 15px;
+      font-size: 20px;
+      color: black;
+      border-radius: 100%;
+      border: 2px solid lightgray;
+      text-align: center;
+    }
+  }
+}
+
+.magic-buttons-footer {
+  display: flex;
+  gap: 10px;
+  margin: 0px 15px;
+
+  .cancel-button {
+    color: $dark-grey;
+    background: $sky-blue-100;
+    border: solid 1px white;
+  }
+
+  .post-button {
+    color: white;
+    border: none;
+    background: $violet-main;
+  }
+
+  .button-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  button {
+    padding: 8px;
+    font-family: "Inter";
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+}
