@@ -1,0 +1,133 @@
+@import "../../../helper/colors.scss";
+
+.draw-result-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.219);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-top: solid 0.5px $yellow;
+  border-bottom: solid 0.5px $yellow;
+}
+
+.results-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  font-size: 24px;
+  width: 50%;
+
+  .result-date-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: linear-gradient(to right, red, $yellow);
+    border-radius: 20px;
+    padding: 5px 8px;
+
+    .time-container {
+      color: $dark-grey;
+      background: white;
+      border-radius: 20px;
+      font-size: 15px;
+      padding: 0px 5px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .jackpot-reel {
+    font-size: 50px;
+    font-weight: bold;
+
+    div {
+      display: flex;
+      width: 500px;
+      padding: 8px 16px;
+      text-align: center;
+      margin-left: 60px;
+      color: $dark-grey;
+      letter-spacing: 30px;
+      background: url("../../../assets/slot-container.png"),
+        url("../../../assets/slot-container.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 0 top, 230px top;
+    }
+  }
+
+  .operator {
+    font-size: 14px;
+    font-weight: 100;
+  }
+}
+
+.coin-buttons-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  .coin-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 40%;
+    margin-top: 10px;
+
+    .jackpot-button-item {
+      width: 50px;
+      padding: 10px 15px;
+      font-size: 20px;
+      color: black;
+      background: url("../../../assets/coin.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      text-align: center;
+
+      &:first-child {
+        flex-basis: 100%;
+      }
+    }
+  }
+}
+
+.buttons-footer {
+  display: flex;
+  gap: 10px;
+  margin: 0px 15px;
+
+  .cancel-button {
+    color: white;
+    background: none;
+    border: solid 1px white;
+  }
+
+  .post-button {
+    color: $yellow;
+    border: none;
+    background: $yellow;
+  }
+
+  .button-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $dark-grey;
+    gap: 8px;
+  }
+
+  button {
+    padding: 8px;
+    font-family: "Inter";
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+}

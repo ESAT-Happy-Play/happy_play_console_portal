@@ -1,19 +1,29 @@
+import regularLogo from "../assets/regular-logo.png";
 import powerWinLogo from "../assets/power-win-logo.png";
 import trippleWinLogo from "../assets/tripple-win-logo.png";
 import magicWinLogo from "../assets/magic-win-logo.png";
 import jackpot33 from "../assets/jackpot-3.3-logo.png";
 import jackpot34 from "../assets/jackpot-3.4-logo.png";
 
-export const getGameLogo = (gameName, subtypeName) => {
+export const getGameLogo = (gameName, subtypeName, width) => {
   if (gameName === "Regular Game") {
     switch (subtypeName) {
+      case "Regular":
+        return (
+          <img
+            src={regularLogo}
+            alt={subtypeName}
+            style={{ marginRight: "8px" }}
+            width={width}
+          />
+        );
       case "Power Win":
         return (
           <img
             src={powerWinLogo}
             alt={subtypeName}
             style={{ marginRight: "8px" }}
-            width={200}
+            width={width}
           />
         );
       case "Tripple Win":
@@ -22,7 +32,7 @@ export const getGameLogo = (gameName, subtypeName) => {
             src={trippleWinLogo}
             alt={subtypeName}
             style={{ marginRight: "8px" }}
-            width={200}
+            width={width}
           />
         );
       case "Magic Win":
@@ -31,7 +41,7 @@ export const getGameLogo = (gameName, subtypeName) => {
             src={magicWinLogo}
             alt={subtypeName}
             style={{ marginRight: "8px" }}
-            width={200}
+            width={width}
           />
         );
       default:
@@ -45,7 +55,7 @@ export const getGameLogo = (gameName, subtypeName) => {
             src={jackpot33}
             alt={subtypeName}
             style={{ marginRight: "8px" }}
-            width={200}
+            width={width}
           />
         );
       case "Jackpot 3.4":
@@ -54,7 +64,7 @@ export const getGameLogo = (gameName, subtypeName) => {
             src={jackpot34}
             alt={subtypeName}
             style={{ marginRight: "8px" }}
-            width={200}
+            width={width}
           />
         );
       default:
