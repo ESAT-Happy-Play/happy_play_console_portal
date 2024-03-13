@@ -57,8 +57,9 @@ export const Login = () => {
       setPageLoader(true);
       AuthService.authenticate(data).then((authResp) => {
         if (authResp) {
-          dispatch(setCredentials(authResp.data));
           let tokenObj = StoreExt.getDecodeJWT(authResp.data.token);
+          dispatch(setCredentials(authResp.data));
+
           // get current user and menu
           MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then((menuResp) => {
             if(menuResp) {

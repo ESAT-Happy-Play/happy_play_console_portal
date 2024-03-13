@@ -10,7 +10,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { GroupCheckbox, SpinLoader } from '../../components/mui';
-import { CompanyService, MenuService } from "../../services";
+import { CompanyService, MenuService, RoleService } from "../../services";
 
 const theme = createTheme({
   palette: {
@@ -40,7 +40,6 @@ export const Roles = () => {
     const [checkDisabled, setcheckDisabled] = useState(true);
     const [isCreateNew, setisCreateNew] = useState(false);
     const [actionType, setactionType] = useState(0);
-
     
     // const handleCheckAll = (data) => {
     //   console.log(menuListDetails);
@@ -118,12 +117,16 @@ export const Roles = () => {
       });
     }
 
-    const handleRoleByGroupType = (groupId) => {
+    const handleRoleByGroupType = (groupId, compId = null) => {
       setPageLoader(true);
-      MenuService.getRoleByGroupType(groupId)
+      RoleService.getRolesByGroupType({
+        groupType: groupId,
+        companyId: (compId !== null) ? compId : selectedCompanyId
+      })
       .then((resp) => {
           if (resp) {
-            var roleList = resp.data.filter(m => m.userTypeName !== "NewRegister" && m.userTypeName !== "Player");
+            var roleList = resp.data;
+            // var roleList = resp.data.filter(m => m.userTypeName !== "NewRegister" && m.userTypeName !== "Player");
             setuserRoles(roleList);
 
             // default selected menu
@@ -164,17 +167,14 @@ export const Roles = () => {
       });
     }
 
-    useEffect(() => {
-      handleCompanies();
-      handleRoleByGroupType(0);
-    }, []);
-
     const handleFilterByCompany = event => {
       let companyId = event.target.getAttribute('data-value');
       if (companyId !== null) {
+
         setselectedCompanyId(companyId);
         // console.log("companyId: " + companyId);
-        handleListMenusByRoleId(selectedUserType.userTypeId, true, companyId);
+        // handleListMenusByRoleId(selectedUserType.userTypeId, true, companyId);
+        handleRoleByGroupType(groupTypeId, companyId);
       }
     }
 
@@ -226,6 +226,11 @@ export const Roles = () => {
       });
     }
 
+    useEffect(() => {
+      handleCompanies();
+      handleRoleByGroupType(0);
+    }, []);
+
     return (
       <>
       <br />
@@ -243,13 +248,13 @@ export const Roles = () => {
         </div>
       </div>
       <div className="card-roles">
-        <div className="card-container">
+        <div className="card-container" style={{width:'100%'}}>
           <div className="card-head">
             <span className="card-title">Roles List</span>
             <span>Admin</span>
           </div>
           <form onSubmit={handleSubmit(submitHandler)} noValidate>
-          <div className="card-body">
+          <div className="card-body" style={{alignItems:'normal', padding:'0px'}}>
             
             <div className="body-left">
               <div className="search">

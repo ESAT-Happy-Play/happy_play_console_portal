@@ -145,13 +145,13 @@ export const SystemUsers = () => {
       <>
       <br />
       <div className="card-sysusers">
-        <div className="card-container">
+        <div className="card-container" style={{width:'100%'}}>
           <div className="card-head">
             <span className="card-title">System User List</span>
             <SystemUserFilter companies={companies} branches={branchesFilter} roles={rolesFilter} filterCallback={handleFilter} />
           </div>
 
-            <div className="card-body">
+            <div className="card-body" style={{alignItems:'normal', padding:'0px'}}>
               
               <div className="body-left">
                 <div className="search"></div>

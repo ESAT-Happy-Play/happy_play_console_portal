@@ -1,14 +1,14 @@
 import routeLinks from "./routeLinks";
 import { GetStoreObject } from "../helper/Helpers";
 
-let authdata = GetStoreObject("auth");
 let listMenuObj = GetStoreObject("menuList");
 
 let menus = [];
-
 if (listMenuObj !== null) {
   listMenuObj.forEach(item => {
-    menus.push(item.menuCode);
+    if(item.enabled) {
+      menus.push(item.menuCode);
+    }
   });
 }
 
