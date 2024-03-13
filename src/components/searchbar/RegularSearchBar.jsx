@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useState } from "react";
 
-const RegularSearchBar = ({ handleSearch, handleSearchEmpty }) => {
+const RegularSearchBar = ({ handleSearch, searchTitle }) => {
   //declarations
   const [searchVal, setSearchVal] = useState("");
 
@@ -13,7 +13,9 @@ const RegularSearchBar = ({ handleSearch, handleSearchEmpty }) => {
   // onchange trigger
   const handleSearchChange = (e) => {
     setSearchVal(e.target.value);
-    handleSearchEmpty(e, e.target.value);
+    setTimeout(() => {
+      handleSearch(e, e.target.value);
+    }, 1500);
   };
 
   // on search icon trigger
@@ -21,22 +23,16 @@ const RegularSearchBar = ({ handleSearch, handleSearchEmpty }) => {
     handleSearch(e, searchVal);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
-      handleSearch(e, searchVal);
-    }
-  };
 
   return (
     <header>
       <form className="search" onSubmit={handleSubmit}>
         <TextField
           size="small"
-          placeholder="Search Name, Combination, or Transaction #"
+          placeholder={searchTitle}
           variant="outlined"
           fullWidth
           onChange={handleSearchChange}
-          onKeyDown={handleKeyDown}
           InputProps={{
             startAdornment: (
               <InputAdornment onClick={handleSearchSubmit} position="end">
