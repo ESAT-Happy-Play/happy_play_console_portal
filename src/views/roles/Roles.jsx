@@ -131,21 +131,21 @@ export const Roles = () => {
 
             // default selected menu
             setselectedUserType(roleList[0]);
-            handleListMenusByRoleId(roleList[0].userTypeId);
+            handleListMenusByRoleId(roleList[0].userTypeId, false, '', groupId);
             // resetRoleForm();
           }
           setPageLoader(false);
       });
     }
 
-    const handleListMenusByRoleId = (userTypeId, setLoading = false, companyId = 0) => {
+    const handleListMenusByRoleId = (userTypeId, setLoading = false, companyId = '', groupTypeId = '') => {
       if (setLoading) { setPageLoader(true); }
-      MenuService.getSecrityGroupeMenu(userTypeId, companyId)
+      MenuService.getSecrityGroupeMenu(userTypeId, companyId, groupTypeId)
       .then((resp) => {
           if (resp) { 
             setmenuListDetails(resp.data);
             setlistMenuForSubmit(resp.data);
-            // console.log(resp.data);
+            console.log(resp.data);
 
             if(resp.data[0].companyId !== null) {
               setselectedCompanyId(resp.data[0].companyId);
@@ -157,7 +157,7 @@ export const Roles = () => {
 
     const handleListMenus = () => {
       setPageLoader(true);
-      MenuService.getSecrityGroupeMenu()
+      MenuService.getSecrityGroupeMenu('', '', groupTypeId)
       .then((resp) => {
           if (resp) { 
             setdefaultMenuList(resp.data);

@@ -92,29 +92,38 @@ export const GroupCheckbox = ({parentMenu, childMenuList, callBack, checkEndable
           (childMenuList !== null && checkboxList !== null) ?
             childMenuList.map((menu, index) => (
               <div key={index} style={{display:'flex', justifyContent:'space-between'}}>
-                <FormControlLabel
-                  label={menu.menuName}
-                  control={<Checkbox disabled={checkEndabled} id={checkboxList[index].menuCode} checked={checkboxList[index].enabled} onChange={handleChange} />}
-                />
                 {
-                  (!checkEndabled) ?
-                  <div>
-                    <Button variant="contained" disabled={(checkboxList[index].readWrite) ? false : true} color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
-                    <Button id={checkboxList[index].menuCode} onClick={handlebtnWrite} 
-                    variant="contained"
-                    disabled={!checkboxList[index].enabled} 
-                    color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
-                  </div>
-                  :
-                  <div>
-                  <Button variant="contained" disabled={(checkboxList[index].readWrite) ? false : true} color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
-                    <Button id={checkboxList[index].menuCode}
-                    variant="contained"
-                    disabled={!checkboxList[index].enabled} 
-                    color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
-                  </div>
+                  (checkboxList[index] !== undefined) ?
+                  <>
+                    <FormControlLabel
+                      label={menu.menuName}
+                      control={<Checkbox disabled={checkEndabled} id={checkboxList[index].menuCode} checked={checkboxList[index].enabled} onChange={handleChange} />}
+                    />
+                    {
+                      (!checkEndabled) ?
+                      <div>
+                        <Button variant="contained" 
+                        disabled={(!checkboxList[index].enabled)? true : (checkboxList[index].readWrite) ? false : true} 
+                        color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
+                        <Button id={checkboxList[index].menuCode} onClick={handlebtnWrite} 
+                        variant="contained"
+                        disabled={!checkboxList[index].enabled} 
+                        color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
+                      </div>
+                      :
+                      <div>
+                      <Button variant="contained" 
+                      disabled={!checkboxList[index].enabled} 
+                      color="success" size="small" style={{margin:'10px', fontSize:'10px'}}>Read</Button>
+                      <Button id={checkboxList[index].menuCode}
+                        variant="contained"
+                        disabled={!checkboxList[index].enabled} 
+                        color={(checkboxList[index].readWrite) ? "ochre" : "white"} size="small" style={{margin:'10px', fontSize:'10px'}}>Write</Button>
+                      </div>
+                    }
+                  </>
+                  : <></>
                 }
-                
               </div>
             ))
             : <></>
