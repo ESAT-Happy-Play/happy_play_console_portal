@@ -31,9 +31,9 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                 onClose={onClose}
                 sx={[{ '.MuiPaper-root': { borderRadius: 3 } }]}
             >
-                <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, paddingY: 1 }}>{title}</DialogTitle>
+                <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, paddingX: "24px", paddingY: "15px", marginBottom: "24px", borderBottom: `1px solid ${COLORS.transparentFont}` }}>{title}</DialogTitle>
                 <DialogContent
-                    sx={{ width: 400 }}>
+                    sx={{ width: 400, fontSize: 13, paddingX: "24px", paddingY: "32px" }}>
                     {children}
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center" }}>
