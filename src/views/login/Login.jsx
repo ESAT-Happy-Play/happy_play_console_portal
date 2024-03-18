@@ -2,6 +2,7 @@ import "./login.scss";
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { InputAdornment, IconButton } from "@mui/material";
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
@@ -22,7 +23,7 @@ import { AuthService, MenuService } from "../../services";
 
 export const Login = () => {
   let loginObj = StoreExt.getStore("auth");
-  // let deviceInfo = GetNEStoreObject("deviceInfo");
+  let menuObj = StoreExt.getStore("menuList");
 
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
@@ -58,22 +59,20 @@ export const Login = () => {
       AuthService.authenticate(data).then((authResp) => {
         if (authResp) {
           let tokenObj = StoreExt.getDecodeJWT(authResp.data.token);
-
+          dispatch(setCredentials(authResp.data));
           // if not aget and master agent
-          if((tokenObj.role === "Agent") && (tokenObj.role === "Master Agent")) {
+          if((tokenObj.role === "Agent") || (tokenObj.role === "Master Agent")) {
             toast.error("Sorry, you are not allowed to access Happy Play dashboard application.");
+            setPageLoader(false);
           } else {
             // get current user and menu
             MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then((menuResp) => {
               if(menuResp) {
-                dispatch(setCredentials(authResp.data));
                 dispatch(setMenuState(menuResp.data));
-
                 window.location.reload(false);
               }
               setPageLoader(false);
             });
-            window.location.href = '/';
           }
         } else { setPageLoader(false); }
       });
@@ -82,10 +81,10 @@ export const Login = () => {
 
   useEffect(() => {
     // redirect to dashboard if already login
-    if (loginObj !== null) {
+    if (loginObj !== null && menuObj !== null) {
       window.location.href = '/';
     }
-  }, [loginObj]);
+  }, [loginObj, menuObj]);
 
   return (
     <>
