@@ -23,7 +23,6 @@ function StoreSettings() {
               <h1>Configurations</h1>
             </div>
             <CustomVerticalTab
-              changeEvent={console.log}
               tabList={verticalTabs} />
           </div>
       }
