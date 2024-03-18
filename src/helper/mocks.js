@@ -446,3 +446,49 @@ export const mockLimitCombination = [
         current: 100
     }
 ];
+
+export const storeSettings = [
+    {
+        gameName: "Regular",
+        storeLimits: {
+            maxUnitsPrice: 1000,
+            maxUnitsRegular: 20,
+            maxUnitsPowerWin: 20,
+            maxFavorites: 25,
+            hotCombinationsRange: 10,
+            hotCombinationsRefreshUnits: 10
+        },
+        deckLimits: {
+            deckOpenTime: 10,
+            maxDeckUnits: 25
+        }
+    },
+    {
+        gameName: "Jackpot 3.3",
+        storeLimits: {
+            maxUnitsPrice: 1200,
+            maxUnits: 10,
+            maxFavorites: 20,
+            hotCombinationsRange: 15,
+            hotCombinationsRefreshUnits: 10
+        },
+        deckLimits: {
+            deckOpenTime: 5,
+            maxDeckUnits: 25
+        }
+    },
+    {
+        gameName: "Jackpot 3.4",
+        storeLimits: {
+            maxUnitsPrice: 1500,
+            maxUnits: 15,
+            maxFavorites: 25,
+            hotCombinationsRange: 12,
+            hotCombinationsRefreshUnits: 10
+        },
+        deckLimits: {
+            deckOpenTime: 5,
+            maxDeckUnits: 25
+        }
+    },
+]

@@ -31,9 +31,9 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                 onClose={onClose}
                 sx={[{ '.MuiPaper-root': { borderRadius: 3 } }]}
             >
-                <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, paddingY: 1 }}>{title}</DialogTitle>
+                <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, paddingX: "24px", paddingY: "15px", marginBottom: "24px", borderBottom: `1px solid ${COLORS.transparentFont}` }}>{title}</DialogTitle>
                 <DialogContent
-                    sx={{ width: 400 }}>
+                    sx={{ width: 400, fontSize: 13, paddingX: "24px", paddingY: "32px" }}>
                     {children}
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center" }}>
@@ -57,8 +57,8 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                     sx={{ width: 300, paddingY: 0 }}>
                     <p style={{ margin: 0, paddingTop: 10, paddingBottom: 10, textAlign: 'center' }}>{successMessage}</p>
                 </DialogContent>
-                <DialogActions sx={{ justifyContent: "center" }}>
-                    <StyledButton onClick={() => setOpenSuccess(false)} sx={{ color: COLORS.violetMain, width: 150, background: COLORS.background }}>Cancel</StyledButton>
+                <DialogActions sx={{ justifyContent: "center", width: '100%' }}>
+                    <Button onClick={() => setOpenSuccess(false)} sx={{ color: COLORS.violetMain, width: 250, background: COLORS.background, fontFamily: 'Inter', marginBottom: '8px' }}>Close</Button>
                 </DialogActions>
             </Dialog >
         </>
