@@ -12,6 +12,8 @@ if (listMenuObj !== null) {
   });
 }
 
+// console.log(menus);
+
 let listRoutes = {
   home: false,
   administrative: false,

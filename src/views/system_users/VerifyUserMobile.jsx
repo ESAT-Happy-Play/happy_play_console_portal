@@ -8,7 +8,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { MuiInput, MuiLoadingButton } from '../../components/mui';
 
-export const VerifyUserMobile = ({roles, branches, companies, isAvailable, selectCompanyCallback, submitCallback}) => {
+export const VerifyUserMobile = ({roles, branches, companies, hasCompany = false, isAvailable, selectCompanyCallback, submitCallback}) => {
     const formRole = useForm({ defaultValues: { 
             mobileNumber: "", role: "", company: "", branch: ""
         } 
@@ -47,29 +47,34 @@ export const VerifyUserMobile = ({roles, branches, companies, isAvailable, selec
                     <div>
                         <h4>Create New System User</h4>
                         <br/>
-                        <div style={{display:'flex', marginBottom:'15px'}}>
-                            <label style={{margin:'5px 15px 0px 0',width:'70px'}}>Company</label>
-                            {
-                                <TextField type="text" sx={{width:'200px'}} defaultValue=""
-                                label="Select Company" size="small" 
-                                { ...register("company", { required: true }) }
-                                error={ !!errors.company }
-                                helperText={ errors.company?.message }
-                                onClick={handleSelectComapny}
-                                select>
-                                <MenuItem value=""><em>Select Company</em></MenuItem>
-                                { 
-                                    (companies !== null) ?
-                                    companies.map((item, index) => (
-                                        <MenuItem key={item.companyId} data-name={item.companyName} data-obj={item.companyObjectId} value={item.companyId}>
-                                            {item.companyName}
-                                        </MenuItem>
-                                    ))
-                                    : <MenuItem value=""><em>No data found!</em></MenuItem>
+                        {
+                            (!hasCompany) ?
+                            <div style={{display:'flex', marginBottom:'15px'}}>
+                                <label style={{margin:'5px 15px 0px 0',width:'70px'}}>Company</label>
+                                {
+                                    <TextField type="text" sx={{width:'200px'}} defaultValue=""
+                                    label="Select Company" size="small" 
+                                    { ...register("company", { required: true }) }
+                                    error={ !!errors.company }
+                                    helperText={ errors.company?.message }
+                                    onClick={handleSelectComapny}
+                                    select>
+                                    <MenuItem value=""><em>Select Company</em></MenuItem>
+                                    { 
+                                        (companies !== null) ?
+                                        companies.map((item, index) => (
+                                            <MenuItem key={item.companyId} data-name={item.companyName} data-obj={item.companyObjectId} value={item.companyId}>
+                                                {item.companyName}
+                                            </MenuItem>
+                                        ))
+                                        : <MenuItem value=""><em>No data found!</em></MenuItem>
+                                    }
+                                    </TextField>
                                 }
-                                </TextField>
-                            }
-                        </div>
+                            </div>
+                            : <></>
+                        }
+
                         <div style={{display:'flex', marginBottom:'15px'}}>
                             <label style={{margin:'5px 15px 0px 0',width:'70px'}}>Branch</label>
                             {

@@ -19,16 +19,10 @@ function App() {
           {/* public routes */}
           <Route path="login" element={<Login />} />
           <Route path="login/new" element={<LoginNewUser />} />
-
           <Route path="/otp/auth/:code" element={<AuthOTP />} />
-          <Route path="/otp/register/:code" element={<RegistrationOTP />} />
-
           <Route path="forgot/password" element={<ForgotPassword />} />
           <Route path="update/password/:code" element={<UpdatePassword />} />
-          
-          <Route path="register/:code?" element={<Registration />} />
-          <Route path="register/info/:code" element={<RegisterDetails />} />
-
+        
           {/* protected routes */}
           <Route path="/" element={<Layout />}>
             {routes}

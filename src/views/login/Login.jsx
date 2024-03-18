@@ -58,15 +58,23 @@ export const Login = () => {
       AuthService.authenticate(data).then((authResp) => {
         if (authResp) {
           let tokenObj = StoreExt.getDecodeJWT(authResp.data.token);
-          dispatch(setCredentials(authResp.data));
 
-          // get current user and menu
-          MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then((menuResp) => {
-            if(menuResp) {
-              dispatch(setMenuState(menuResp.data));
-              window.location.reload(false);
-            }
-          });
+          // if not aget and master agent
+          if((tokenObj.role === "Agent") && (tokenObj.role === "Master Agent")) {
+            toast.error("Sorry, you are not allowed to access Happy Play dashboard application.");
+          } else {
+            // get current user and menu
+            MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then((menuResp) => {
+              if(menuResp) {
+                dispatch(setCredentials(authResp.data));
+                dispatch(setMenuState(menuResp.data));
+
+                window.location.reload(false);
+              }
+              setPageLoader(false);
+            });
+            window.location.href = '/';
+          }
         } else { setPageLoader(false); }
       });
     }

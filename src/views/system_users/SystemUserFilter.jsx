@@ -2,7 +2,7 @@ import "./sysusers.scss";
 import React from 'react';
 import { TextField, MenuItem  } from "@mui/material";
 
-export const SystemUserFilter = ({companies, branches, roles, filterCallback}) => {
+export const SystemUserFilter = ({companies, hasCompany = false, branches, roles, filterCallback}) => {
 
     const handleSelectFilter = event => {
         let evntType = event.target.getAttribute('data-type');
@@ -16,6 +16,7 @@ export const SystemUserFilter = ({companies, branches, roles, filterCallback}) =
       <>
         <div style={{display:'flex', gap:'15px'}}>
             {
+                (!hasCompany) ?
                 <TextField type="text" sx={{width:'200px'}} defaultValue=""
                 label="Company (All)" size="small" onClick={handleSelectFilter} select>
                 <MenuItem value="" data-type="0"><em>Company All</em></MenuItem>
@@ -29,6 +30,7 @@ export const SystemUserFilter = ({companies, branches, roles, filterCallback}) =
                     : <MenuItem value=""><em>No data found!</em></MenuItem>
                 }
                 </TextField>
+                : <></>
             }
             {
                 <TextField type="text" sx={{width:'200px'}} defaultValue=""

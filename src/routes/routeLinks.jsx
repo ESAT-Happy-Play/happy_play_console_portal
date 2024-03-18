@@ -149,6 +149,15 @@ const routeLinks = [
             icon: <DashboardOutlinedIcon />
           }
         },
+        {
+          path: "/user/approval",
+          element: <Players />,
+          state: "UserAccounts.UserApproval",
+          sidebarProps: {
+            displayText: "User Approval",
+            icon: <DashboardOutlinedIcon />
+          }
+        }
       ]
     },
 
