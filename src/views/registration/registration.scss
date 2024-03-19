@@ -1,0 +1,148 @@
+.registration {
+    display: flex;
+    color: #4845d2;
+
+    .divIam {
+        border-radius: 5px;
+        border: 1px solid;
+        text-align: left;
+        padding-left: 15%;
+    }
+
+    .divTerms {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .divIam,
+    .divTerms {
+        span {
+            color: black;
+            font-size: 14px;
+        }
+
+        .hasError {
+
+            // color: #ee2525;
+            // border: 1px solid;
+            // margin-top: 10px;
+            // border-radius: 5px;
+            .checkRequired {
+                color: red;
+                font-size: 12px;
+            }
+        }
+    }
+
+    .container {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        width: 520px;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+
+        .lfContent {
+            flex: 1;
+            width: 140px;
+            background: rgb(27, 44, 77, 1);
+            background: linear-gradient(274deg, rgba(27, 44, 77, 1) 0%, rgba(45, 68, 117, 1) 39%, rgba(71, 103, 174, 1) 100%);
+
+            h3 {
+                color: #808fb1;
+                font-weight: 900;
+                font-size: 30px;
+                transform: rotate(-90deg);
+                margin: 190px 45px 0px 0px;
+            }
+            .div-referral {
+                position: absolute;
+                bottom: 0;
+                margin-left: 15px;
+                p { 
+                    color: #e0dfdf;
+                    span {
+                        text-transform: uppercase;
+                        color: white;
+                    } 
+                }
+            }
+        }
+
+        .content {
+            flex: 2;
+            text-align: center;
+
+            label { color: black; }
+            h4 { 
+                margin: 0px;
+                color: black;
+            }
+            p {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                a {
+                    text-decoration: none;
+                    color: #848383;
+                    font-size: 12px;
+                }
+            }
+
+            .top {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .logo {
+                    width: 60%;
+                    padding: 0px 10px;
+                }
+            }
+
+            .body {
+                padding: 15px;
+                width: 380px;
+                .div-otp {
+                    .otpmsg { 
+                        color:black;
+                        font-style: italic;
+                        font-size: 14px;
+                    }
+                }
+                .form-input {
+                    text-align: left;
+                    margin-bottom: 5px;
+                    .form-title {
+                        display: flex;
+                        gap: 15px;
+                        margin-bottom: 5px;
+                        .required { color: red; }
+                    }
+                }
+
+                .form-button {
+                    display: flex;
+                    justify-content: center;
+                    gap:15px
+                }
+            }
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .hide {
+            display: none !important;
+        }
+    }
+}

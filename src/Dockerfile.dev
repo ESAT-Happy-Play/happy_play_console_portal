@@ -1,0 +1,11 @@
+FROM node:alpine
+
+WORKDIR /abacos_app
+
+COPY ./package.json /abacos_app
+
+RUN npm install
+
+COPY . /abacos_app
+
+CMD ["npm", "start"]

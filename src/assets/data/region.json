@@ -1,0 +1,106 @@
+{
+    "regions": [
+        {
+            "REGION_CODE": "01",
+            "REGION_NAME": "ARMM Autonomous Region in Muslim Mindanao",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        },
+        {
+            "REGION_CODE": "02",
+            "REGION_NAME": "CAR Cordillera Administrative Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "03",
+            "REGION_NAME": "NCR National Capital Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "04",
+            "REGION_NAME": "Region 1 Ilocos Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "05",
+            "REGION_NAME": "Region 2 Cagayan Valley",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "06",
+            "REGION_NAME": "Region 3 Central Luzon",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "07",
+            "REGION_NAME": "Region 4A  CALABARZON",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "08",
+            "REGION_NAME": "Region 4B MIMAROPA",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "09",
+            "REGION_NAME": "Region 5 Bicol Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "L1"
+        },
+        {
+            "REGION_CODE": "10",
+            "REGION_NAME": "Region 6 Western Visayas",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "V1"
+        },
+        {
+            "REGION_CODE": "11",
+            "REGION_NAME": "Region 7 Central Visayas",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "V1"
+        },
+        {
+            "REGION_CODE": "12",
+            "REGION_NAME": "Region 8 Eastern Visayas",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "V1"
+        },
+        {
+            "REGION_CODE": "13",
+            "REGION_NAME": "Region 9 Zamboanga Peninsula",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        },
+        {
+            "REGION_CODE": "14",
+            "REGION_NAME": "Region 10 Northern Mindanao",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        },
+        {
+            "REGION_CODE": "15",
+            "REGION_NAME": "Region 11 Davao Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        },
+        {
+            "REGION_CODE": "16",
+            "REGION_NAME": "Region 12 SOCCSKSARGEN",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        },
+        {
+            "REGION_CODE": "17",
+            "REGION_NAME": "Region 13 Caraga Region",
+            "COUNTRY_CODE": "PH",
+            "ISLAND_CODE": "M1"
+        }
+    ]
+}

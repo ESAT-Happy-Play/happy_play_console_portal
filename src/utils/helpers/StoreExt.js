@@ -1,0 +1,28 @@
+import CryptoJS from "crypto-js";
+import jwt_decode from "jwt-decode";
+
+export const StoreExt = {
+    getStore: (itemName) => {
+        let storageObj = localStorage.getItem(itemName);
+        const storagebytes = (storageObj !== null) ? CryptoJS.AES.decrypt(storageObj, process.env.REACT_APP_SECRET_PASS) : null;
+        const objdata = (storagebytes !== null) ? JSON.parse(storagebytes.toString(CryptoJS.enc.Utf8)) : null;
+        return objdata;
+    },
+    getEncrypted: (obj) => {
+        let enc = CryptoJS.AES.encrypt(JSON.stringify(obj), process.env.REACT_APP_SECRET_PASS).toString();
+        return enc;
+    },
+    getDecrypted: (encryptedTxt) => {
+        const storagebytes = CryptoJS.AES.decrypt(encryptedTxt, process.env.REACT_APP_SECRET_PASS);
+        const decryptedResp = JSON.parse(storagebytes.toString(CryptoJS.enc.Utf8));
+        return decryptedResp;
+    },
+    getDecodeJWT: (jwtString) => {
+        let decodedJWT = jwt_decode(jwtString);
+        return decodedJWT;
+    },
+    getBasicStore: (name) => {
+        let storageObj = localStorage.getItem(name);
+        return JSON.parse(storageObj);
+    }
+}

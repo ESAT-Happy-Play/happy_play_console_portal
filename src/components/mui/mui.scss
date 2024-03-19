@@ -1,0 +1,30 @@
+.inputFlex {
+    display: flex;
+    margin-bottom: 10px;
+    .div-fchild {
+        padding: 8px;
+        flex: 1;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .div-lchild {
+        flex: 2;
+    }
+}
+
+.form-div {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 10px;
+
+    .form-input {
+        width: 100%;
+
+        input {
+            text-align: left;
+            width: 100%;
+        }
+    }
+}

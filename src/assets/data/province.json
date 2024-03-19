@@ -1,0 +1,688 @@
+{"provinces": [
+    {
+        "PROVINCE_CODE": "01",
+        "PROVINCE_NAME": "Abra",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    },
+    {
+        "PROVINCE_CODE": "02",
+        "PROVINCE_NAME": "Agusan del Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "17"
+    },
+    {
+        "PROVINCE_CODE": "03",
+        "PROVINCE_NAME": "Agusan del Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "17"
+    },
+    {
+        "PROVINCE_CODE": "04",
+        "PROVINCE_NAME": "Aklan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "05",
+        "PROVINCE_NAME": "Albay",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "06",
+        "PROVINCE_NAME": "Antique",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "07",
+        "PROVINCE_NAME": "Aurora",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "08",
+        "PROVINCE_NAME": "Basilan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "01"
+    },
+    {
+        "PROVINCE_CODE": "09",
+        "PROVINCE_NAME": "Bataan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "10",
+        "PROVINCE_NAME": "Batanes",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "05"
+    },
+    {
+        "PROVINCE_CODE": "11",
+        "PROVINCE_NAME": "Batangas",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "07"
+    },
+    {
+        "PROVINCE_CODE": "12",
+        "PROVINCE_NAME": "Benguet",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    },
+    {
+        "PROVINCE_CODE": "13",
+        "PROVINCE_NAME": "Biliran Sub-Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "14",
+        "PROVINCE_NAME": "Bohol",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "11"
+    },
+    {
+        "PROVINCE_CODE": "15",
+        "PROVINCE_NAME": "Bukidnon",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "14"
+    },
+    {
+        "PROVINCE_CODE": "16",
+        "PROVINCE_NAME": "Bulacan Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "17",
+        "PROVINCE_NAME": "Cagayan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "05"
+    },
+    {
+        "PROVINCE_CODE": "18",
+        "PROVINCE_NAME": "Northern Manila District (Camanava)(3rd District)",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "19",
+        "PROVINCE_NAME": "Camarines Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "20",
+        "PROVINCE_NAME": "Camarines Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "21",
+        "PROVINCE_NAME": "Camiguin",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "14"
+    },
+    {
+        "PROVINCE_CODE": "22",
+        "PROVINCE_NAME": "Capiz",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "23",
+        "PROVINCE_NAME": "Catanduanes",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "24",
+        "PROVINCE_NAME": "Cavite Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "07"
+    },
+    {
+        "PROVINCE_CODE": "25",
+        "PROVINCE_NAME": "Cebu Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "11"
+    },
+    {
+        "PROVINCE_CODE": "26",
+        "PROVINCE_NAME": "Compostela Valley",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "15"
+    },
+    {
+        "PROVINCE_CODE": "27",
+        "PROVINCE_NAME": "Davao del Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "15"
+    },
+    {
+        "PROVINCE_CODE": "28",
+        "PROVINCE_NAME": "Davao del Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "15"
+    },
+    {
+        "PROVINCE_CODE": "29",
+        "PROVINCE_NAME": "Davao Oriental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "15"
+    },
+    {
+        "PROVINCE_CODE": "30",
+        "PROVINCE_NAME": "Eastern Samar",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "31",
+        "PROVINCE_NAME": "Guimaras Sub-Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "32",
+        "PROVINCE_NAME": "Ifugao",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    },
+    {
+        "PROVINCE_CODE": "33",
+        "PROVINCE_NAME": "Ilocos Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "04"
+    },
+    {
+        "PROVINCE_CODE": "34",
+        "PROVINCE_NAME": "Ilocos Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "04"
+    },
+    {
+        "PROVINCE_CODE": "35",
+        "PROVINCE_NAME": "Iloilo Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "36",
+        "PROVINCE_NAME": "Isabela",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "05"
+    },
+    {
+        "PROVINCE_CODE": "37",
+        "PROVINCE_NAME": "Kalinga",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    },
+    {
+        "PROVINCE_CODE": "38",
+        "PROVINCE_NAME": "La Union",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "04"
+    },
+    {
+        "PROVINCE_CODE": "39",
+        "PROVINCE_NAME": "Laguna",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "07"
+    },
+    {
+        "PROVINCE_CODE": "40",
+        "PROVINCE_NAME": "Lanao del Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "14"
+    },
+    {
+        "PROVINCE_CODE": "41",
+        "PROVINCE_NAME": "Lanao del Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "01"
+    },
+    {
+        "PROVINCE_CODE": "42",
+        "PROVINCE_NAME": "Southern Manila District (4th District)",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "43",
+        "PROVINCE_NAME": "Leyte Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "44",
+        "PROVINCE_NAME": "Maguindanao",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "01"
+    },
+    {
+        "PROVINCE_CODE": "45",
+        "PROVINCE_NAME": "Makati",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "46",
+        "PROVINCE_NAME": "Malabon",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "47",
+        "PROVINCE_NAME": "Eastern Manila District (2nd District)",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "48",
+        "PROVINCE_NAME": "Capital District (1st District)",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "49",
+        "PROVINCE_NAME": "Marikina",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "50",
+        "PROVINCE_NAME": "Marinduque",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "08"
+    },
+    {
+        "PROVINCE_CODE": "51",
+        "PROVINCE_NAME": "Masbate Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "52",
+        "PROVINCE_NAME": "Mindoro Occidental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "08"
+    },
+    {
+        "PROVINCE_CODE": "53",
+        "PROVINCE_NAME": "Mindoro Oriental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "08"
+    },
+    {
+        "PROVINCE_CODE": "54",
+        "PROVINCE_NAME": "Misamis Occidental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "14"
+    },
+    {
+        "PROVINCE_CODE": "55",
+        "PROVINCE_NAME": "Misamis Oriental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "14"
+    },
+    {
+        "PROVINCE_CODE": "56",
+        "PROVINCE_NAME": "Mountain Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    },
+    {
+        "PROVINCE_CODE": "57",
+        "PROVINCE_NAME": "Muntinlupa",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "58",
+        "PROVINCE_NAME": "Navotas",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "59",
+        "PROVINCE_NAME": "Negros Occidental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "10"
+    },
+    {
+        "PROVINCE_CODE": "60",
+        "PROVINCE_NAME": "Negros Oriental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "11"
+    },
+    {
+        "PROVINCE_CODE": "61",
+        "PROVINCE_NAME": "North Cotabato",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "16"
+    },
+    {
+        "PROVINCE_CODE": "62",
+        "PROVINCE_NAME": "Northern Samar",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "63",
+        "PROVINCE_NAME": "Nueva Ecija",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "64",
+        "PROVINCE_NAME": "Nueva Vizcaya",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "05"
+    },
+    {
+        "PROVINCE_CODE": "65",
+        "PROVINCE_NAME": "Palawan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "08"
+    },
+    {
+        "PROVINCE_CODE": "66",
+        "PROVINCE_NAME": "Pampanga",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "67",
+        "PROVINCE_NAME": "Pangasinan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "04"
+    },
+    {
+        "PROVINCE_CODE": "68",
+        "PROVINCE_NAME": "Paranaque",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "69",
+        "PROVINCE_NAME": "Pasay",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "70",
+        "PROVINCE_NAME": "Pasig",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "71",
+        "PROVINCE_NAME": "Pateros",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "72",
+        "PROVINCE_NAME": "Quezon City",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "73",
+        "PROVINCE_NAME": "Quezon Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "07"
+    },
+    {
+        "PROVINCE_CODE": "74",
+        "PROVINCE_NAME": "Quirino Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "05"
+    },
+    {
+        "PROVINCE_CODE": "75",
+        "PROVINCE_NAME": "Rizal Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "07"
+    },
+    {
+        "PROVINCE_CODE": "76",
+        "PROVINCE_NAME": "Romblon",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "08"
+    },
+    {
+        "PROVINCE_CODE": "77",
+        "PROVINCE_NAME": "San Juan",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "78",
+        "PROVINCE_NAME": "Sarangani",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "16"
+    },
+    {
+        "PROVINCE_CODE": "79",
+        "PROVINCE_NAME": "Siquijor",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "11"
+    },
+    {
+        "PROVINCE_CODE": "80",
+        "PROVINCE_NAME": "Sorsogon Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "09"
+    },
+    {
+        "PROVINCE_CODE": "81",
+        "PROVINCE_NAME": "South Cotabato",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "16"
+    },
+    {
+        "PROVINCE_CODE": "82",
+        "PROVINCE_NAME": "Southern Leyte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "83",
+        "PROVINCE_NAME": "Sultan Kudarat",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "16"
+    },
+    {
+        "PROVINCE_CODE": "84",
+        "PROVINCE_NAME": "Sulu Province",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "01"
+    },
+    {
+        "PROVINCE_CODE": "85",
+        "PROVINCE_NAME": "Surigao del Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "17"
+    },
+    {
+        "PROVINCE_CODE": "86",
+        "PROVINCE_NAME": "Surigao del Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "17"
+    },
+    {
+        "PROVINCE_CODE": "87",
+        "PROVINCE_NAME": "Taguig",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "88",
+        "PROVINCE_NAME": "Tarlac",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "89",
+        "PROVINCE_NAME": "Tawi Tawi ",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "01"
+    },
+    {
+        "PROVINCE_CODE": "90",
+        "PROVINCE_NAME": "Valenzuela",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "03"
+    },
+    {
+        "PROVINCE_CODE": "91",
+        "PROVINCE_NAME": "Western Samar",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "V1",
+        "REGION_CODE": "12"
+    },
+    {
+        "PROVINCE_CODE": "92",
+        "PROVINCE_NAME": "Zambales",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "06"
+    },
+    {
+        "PROVINCE_CODE": "93",
+        "PROVINCE_NAME": "Zamboanga del Norte",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "13"
+    },
+    {
+        "PROVINCE_CODE": "94",
+        "PROVINCE_NAME": "Zamboanga del Sur",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "13"
+    },
+    {
+        "PROVINCE_CODE": "95",
+        "PROVINCE_NAME": "Zamboanga Sibugay",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "13"
+    },
+    {
+        "PROVINCE_CODE": "96",
+        "PROVINCE_NAME": "Davao Occidental",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "15"
+    },
+    {
+        "PROVINCE_CODE": "97",
+        "PROVINCE_NAME": "Dinagat Islands",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "M1",
+        "REGION_CODE": "17"
+    },
+    {
+        "PROVINCE_CODE": "98",
+        "PROVINCE_NAME": "Apayao",
+        "COUNTRY_CODE": "PH",
+        "ISLAND_CODE": "L1",
+        "REGION_CODE": "02"
+    }
+]}

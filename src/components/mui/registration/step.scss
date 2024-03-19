@@ -1,0 +1,12 @@
+    .MuiListItemButton-root {
+        margin-left: -15px;
+        justify-content: space-between;
+
+        .MuiListItemText-root {
+            flex: none;
+
+            span {
+                color: black;
+            }
+        }
+    }

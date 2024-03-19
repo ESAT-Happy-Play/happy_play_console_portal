@@ -1,0 +1,22 @@
+.container {
+    width: 450px;
+    background-color: #ffff;
+    display: flex;
+    flex-direction: column;
+    .header{
+        display: flex;
+        padding: 15px 24px;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0,0,0,0.4);
+        h2 {
+            padding: 6px 0px;
+            font-size: 18px;
+            color: #4845d2;
+            margin:0;
+        }
+    }
+    .body{
+        padding: 15px 24px;
+    }
+}
