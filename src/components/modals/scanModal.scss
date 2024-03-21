@@ -1,0 +1,72 @@
+@import "../../helper/colors.scss";
+
+.modal-background {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100%;
+  height: 100%;
+  transition: all 300ms;
+  background: rgba(0, 0, 0, 0.541);
+
+  .scan-modal-container {
+    background: white;
+    background-size: cover;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    width: 350px;
+    gap: 10px;
+
+    .scan-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: top;
+      margin-bottom: 10px;
+      color: $violet-main;
+
+      p {
+        margin: 0;
+      }
+
+      svg {
+        color: $dark-grey;
+      }
+    }
+
+    .scan-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+
+      .scan-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: top;
+        border-radius: 10px;
+        border: dashed 1px lightgray;
+        padding: 10px;
+        background: $violet-shadow;
+        width: 35%;
+        height: 90px;
+        cursor: pointer;
+
+        p {
+          color: $violet-main;
+          margin: 0;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
