@@ -234,7 +234,7 @@ const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
                 onClose={() => setOpenEdit(false)}
                 title="Edit Limit for Combination"
                 isValid={valid}
-                successMessage={`${selectedCard} is updated and will be applied to all upcoming draws for ${subType.gameName}`}
+                successMessage={`${(selectedCard !== null) ? selectedCard.description : ""} is updated and will be applied to all upcoming draws for ${subType.gameName}`}
             >
                 {getDialogBody()}
             </UpdateDialog>

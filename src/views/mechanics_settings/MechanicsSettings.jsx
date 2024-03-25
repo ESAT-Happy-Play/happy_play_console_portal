@@ -137,7 +137,7 @@ const MechanicsSettings = () => {
         Component: <BetPrice betPriceData={betPrizeConfig} settingId={selectedSettingId} subType={subType} />
       },
       { label: "Prize Calculations", itemId: (subType.id + "90012"),
-        Component: <PrizeCalculations prizeCalcData={prizeCalcDataConfig} subType={subType} />
+        Component: <PrizeCalculations prizeCalcData={prizeCalcDataConfig} settingId={selectedSettingId} subType={subType} />
       }
     ]
   }
