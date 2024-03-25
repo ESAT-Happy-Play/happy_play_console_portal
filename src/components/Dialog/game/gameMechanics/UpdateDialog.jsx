@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,8 +7,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { COLORS } from '../../../../helper/colors';
 import styled from '@emotion/styled';
 
+import EditIcon from '@mui/icons-material/Edit';
+import { MuiLoadingButton } from '../../../mui';
 
-const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, successMessage, isValid }) => {
+const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, successMessage, isValid, isLoading = false, isSuccess = false, dialogCallback }) => {
     /*
         Use for editing values in game tab
         parameters(required):
@@ -19,16 +21,25 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
 
     const handleSubmit = () => {
         onUpdate();
-        onClose();
-        setOpenSuccess(true);
     }
 
+    const handleCallback = () => {
+        setOpenSuccess(false);
+        dialogCallback();
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            onClose();
+            setOpenSuccess(true);
+        }
+    }, [isSuccess]);
 
     return (
         <>
             <Dialog
                 open={isOpen}
-                onClose={onClose}
+                // onClose={onClose}
                 sx={[{ '.MuiPaper-root': { borderRadius: 3 } }]}
             >
                 <DialogTitle sx={{ fontFamily: 'Inter', fontWeight: 700, fontSize: 18, paddingX: "24px", paddingY: "15px", marginBottom: "24px", borderBottom: `1px solid ${COLORS.transparentFont}` }}>{title}</DialogTitle>
@@ -37,13 +48,13 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                     {children}
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center" }}>
-                    <StyledButton onClick={onClose}>Cancel</StyledButton>
-                    <StyledButton
-                        disabled={!isValid}
-                        type="submit"
-                        onClick={handleSubmit}
-                        sx={[{ background: COLORS.orange, color: 'white' }, { '&:hover': { background: 'orange' } }]}
-                    >Update</StyledButton>
+                    <StyledButton disabled={isLoading} onClick={onClose}>Cancel</StyledButton>
+                    <MuiLoadingButton text="Update" onClick={handleSubmit} loading={ isLoading }
+                        disabled={!isValid} type="submit"
+                        loadingPosition='end'
+                        icon={ <EditIcon/> }
+                        sx={[{ background: COLORS.orange, color: 'white' }, { '&:hover': { background: 'orange' } }]}/>
+
                 </DialogActions>
             </Dialog>
             {/* SuccessModal */}
@@ -58,7 +69,7 @@ const UpdateDialog = ({ title, onUpdate = () => { }, isOpen, onClose, children, 
                     <p style={{ margin: 0, paddingTop: 10, paddingBottom: 10, textAlign: 'center' }}>{successMessage}</p>
                 </DialogContent>
                 <DialogActions sx={{ justifyContent: "center", width: '100%' }}>
-                    <Button onClick={() => setOpenSuccess(false)} sx={{ color: COLORS.violetMain, width: 250, background: COLORS.background, fontFamily: 'Inter', marginBottom: '8px' }}>Close</Button>
+                    <Button onClick={handleCallback} sx={{ color: COLORS.violetMain, width: 250, background: COLORS.background, fontFamily: 'Inter', marginBottom: '8px' }}>Close</Button>
                 </DialogActions>
             </Dialog >
         </>

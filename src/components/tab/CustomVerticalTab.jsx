@@ -18,11 +18,15 @@ Use to create Vertical tab, require the ff:
 */
 
 const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
-  const [value, setValue] = React.useState(tabList[0].isHeader ? 1 : 0);
+  let defaultVal = (tabList[0].itemId !== undefined) 
+    ? tabList.filter(obj => !obj.isHeader)[0].itemId : 0;
+
+  const [value, setValue] = React.useState(defaultVal);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     changeEvent(newValue);
+    // console.log(newValue);
   };
 
   return (
@@ -31,14 +35,14 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
         <TabsList>
           {tabList?.map((tabs, i) => (
             tabs.isHeader ?
-              <HeaderTab key={i} disabled>{tabs.label}</HeaderTab>
+              <HeaderTab key={i} value={ (tabs.itemId !== undefined) ? tabs.itemId : i } disabled>{tabs.label}</HeaderTab>
               :
-              <Tab key={i} value={i}>{tabs.label}</Tab>
+              <Tab key={i} value={ (tabs.itemId !== undefined) ? tabs.itemId : i }>{tabs.label}</Tab>
           ))}
         </TabsList>
       </Box>
-      {tabList?.map(({ Component }, i) => (
-        <TabPanel key={i} value={i}>
+      {tabList?.map(({ Component, itemId }, i) => (
+        <TabPanel key={i} value={ (itemId !== undefined) ? itemId : i }>
           {Component}
         </TabPanel>
       ))}

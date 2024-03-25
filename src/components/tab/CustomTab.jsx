@@ -6,8 +6,7 @@ import { buttonClasses } from '@mui/base/Button';
 import { COLORS } from '../../helper/colors';
 
 const CustomTab = ({ tabList, changeEvent = () => { } }) => {
-
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState((tabList[0].itemId !== undefined) ? tabList[0].itemId : 0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -18,13 +17,13 @@ const CustomTab = ({ tabList, changeEvent = () => { } }) => {
     <Tabs value={value} onChange={handleChange} >
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <TabsList>
-          {tabList?.map(({ label }, i) => (
-            <Tab key={i} value={i}>{label}</Tab>
+          {tabList?.map(({ label, itemId }, i) => (
+            <Tab key={i} value={ (itemId !== undefined) ? itemId : i }>{label}</Tab>
           ))}
         </TabsList>
       </Box>
-      {tabList?.map(({ Component }, i) => (
-        <TabPanel key={i} value={i}>
+      {tabList?.map(({ Component, itemId }, i) => (
+        <TabPanel key={i} value={(itemId !== undefined) ? itemId : i}>
           {Component}
         </TabPanel>
       ))}

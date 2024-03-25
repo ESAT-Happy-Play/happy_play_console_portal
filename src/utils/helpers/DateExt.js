@@ -4,6 +4,16 @@ export const DateExt = {
         const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
         return dt.toLocaleDateString('en-us', options);
     },
+    todaysDate: (format = 0) => {
+        let dt = (new Date());
+        var mm = ('0' + (dt.getMonth()+1)).slice(-2);
+        var dd = ('0' + (dt.getDate())).slice(-2);
+        var yy = dt.getFullYear();
+
+        // 0 = YYYY-MM-DD
+        // 1 = MM-DD-YYYY
+        return (format === 0) ? (yy + '-' + mm + '-' + dd) : (mm + '-' + dd + '-' + yy);
+    },
     formatDate: (stringDate, format = 0) => {
         let dt = (new Date(stringDate));
         var mm = ('0' + (dt.getMonth()+1)).slice(-2);

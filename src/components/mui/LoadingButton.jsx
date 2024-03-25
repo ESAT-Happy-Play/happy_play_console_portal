@@ -11,11 +11,15 @@ export const MuiLoadingButton = ({
     loadingPosition='end',
     icon,
     style,
-    disabled = false
+    disabled = false,
+    sx,
+    onClick
   }) => {
   return (
     <>
         <LoadingButton 
+            onClick={onClick}
+            sx={sx}
             disabled={disabled}
             type={type}
             loading={ loading } 

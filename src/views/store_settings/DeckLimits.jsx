@@ -6,10 +6,16 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { COLORS } from '../../helper/colors';
 
-const DeckLimits = ({ deckLimits, gameName }) => {
+import { toast } from 'react-toastify';
+
+import { GameService } from "../../services";
+
+const DeckLimits = ({ deckLimits, settingId, gameName }) => {
+    const [isSuccess, setisSuccess] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
 
     //Update Modal states
-    const [selectedCard, setSelectedCard] = useState();
+    const [selectedCard, setSelectedCard] = useState(null);
     const [openEdit, setOpenEdit] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
     const [valid, setValid] = useState(true);
@@ -22,13 +28,31 @@ const DeckLimits = ({ deckLimits, gameName }) => {
     }
 
     const handleArrowValues = (increment) => {
-        if (selectedValue + increment > 0)
+        if (selectedValue + increment > 0) {
             setSelectedValue(selectedValue + increment);
+            setSelectedValue(selectedValue + increment);
+        }
+    }
+
+    const handleUpdateSubmit = () => {
+        deckLimits[selectedCard.name] = selectedValue;
+
+        setisLoading(true);
+        GameService.createDeckLimits(deckLimits, settingId).then((res) => {
+            if(res) { setisSuccess(true); }
+            else { toast.error(`Unable to update ${selectedCard.name} setting.`); }
+            setisLoading(false);
+        });
+    }
+
+    const handleUpdateCallback = () => {
+        setisSuccess(false);
     }
 
     const getDialogBody = () => {
         var body;
-        switch (selectedCard) {
+        var cardDesc = (selectedCard !== null) ? selectedCard.description : "";
+        switch (cardDesc) {
             case "Deck Betting Open Time":
                 body =
                     <>
@@ -67,21 +91,27 @@ const DeckLimits = ({ deckLimits, gameName }) => {
                 header="Deck Betting Open Time"
                 body={<h2 className='card-header'>{deckLimits?.deckOpenTime} min</h2>}
                 description={`Open deck betting on the first [n] minutes of the draw for ${gameName}`}
-                action={() => handleEdit(deckLimits?.deckOpenTime, "Deck Betting Open Time")}
+                action={() => handleEdit(deckLimits?.deckOpenTime, { name: "deckOpenTime", description: "Deck Betting Open Time" })}
             />
             <CustomCard
                 header="Max Deck Units"
                 body={<h2 className='card-header'>{deckLimits?.maxDeckUnits}</h2>}
                 description={`Number of units that can be stored in the deck for ${gameName}`}
-                action={() => handleEdit(deckLimits?.maxDeckUnits, "Max Deck Units")}
+                action={() => handleEdit(deckLimits?.maxDeckUnits, { name: "maxDeckUnits", description: "Max Deck Units" })}
             />
 
             <UpdateDialog
                 isOpen={openEdit}
+
+                onUpdate={handleUpdateSubmit}
+                dialogCallback={handleUpdateCallback}
+                isLoading={isLoading}
+                isSuccess={isSuccess}
+
                 onClose={() => setOpenEdit(false)}
-                title={selectedCard}
+                title={(selectedCard !== null) ? selectedCard.description : ""}
                 isValid={valid}
-                successMessage={`${selectedCard} for ${gameName} is updated and will be applied immediately`}
+                successMessage={`${(selectedCard !== null) ? selectedCard.description : ""} for ${gameName} is updated and will be applied immediately`}
             >
                 {getDialogBody()}
             </UpdateDialog>

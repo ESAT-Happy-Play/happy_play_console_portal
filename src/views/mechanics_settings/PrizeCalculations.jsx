@@ -9,14 +9,17 @@ import { Box, IconButton, TextField } from '@mui/material';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { COLORS } from '../../helper/colors';
+import { toast } from 'react-toastify';
 
-const PrizeCalculations = ({ subType }) => {
+import { GameService } from "../../services";
+
+const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
     var tabs = [];
-    var keys = Object.keys(subType);
 
-
+    const [isSuccess, setisSuccess] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
     //Update Modal states
-    const [selectedCard, setSelectedCard] = useState();
+    const [selectedCard, setSelectedCard] = useState(null);
     const [openEdit, setOpenEdit] = useState(false);
     const [selectedValue, setSelectedValue] = useState();
     const [valid, setValid] = useState(true);
@@ -29,82 +32,104 @@ const PrizeCalculations = ({ subType }) => {
     }
 
     const handleArrowValues = (increment) => {
-        if (selectedValue + increment > 0)
-            setSelectedValue(selectedValue + increment);
+        if (selectedValue + increment > 0) {
+            setSelectedValue(parseInt(selectedValue) + parseInt(increment));
+        }
     }
 
     const handleValidation = (value) => {
+        setSelectedValue(value.target.value);
         if (value.target.value < 1)
             setValid(false);
         else
             setValid(true);
     }
+
     const handleCeilValidation = (value) => {
-        if (value.target.value < subType.prizeFloor)
+        setSelectedValue(value.target.value);
+        if (value.target.value < prizeCalcData.pooling.prizeFloor)
             setValid(false);
         else
             setValid(true);
     }
 
-    if (keys.includes("incrementAmount"))
+    const handleUpdateSubmit = () => {
+
+        if (selectedCard.name === "prizeFloor" || selectedCard.name === "prizeCeiling" || selectedCard.name === "incrementAmount") {
+            prizeCalcData.pooling[selectedCard.name] = selectedValue;
+        } else if (selectedCard.name === "minAmount" || selectedCard.name === "winPerBet") {
+            prizeCalcData.winningMultiplier[selectedCard.name] = selectedValue;
+        } else {
+            prizeCalcData[selectedCard.name] = selectedValue;
+        }
+
+        setisLoading(true);
+        GameService.createPrizeCalculation(prizeCalcData, settingId).then((res) => {
+            if(res) { setisSuccess(true); }
+            else { toast.error(`Unable to update ${selectedCard.name} setting.`); }
+            setisLoading(false);
+        });
+    }
+
+    const handleUpdateCallback = () => {
+        setisSuccess(false);
+    }
+
+    if (prizeCalcData !== null) {
         tabs.push(
             <CustomCard
                 header="Increment Amount in %"
-                body={<h2 className='card-header'>{subType.incrementAmount}</h2>}
+                body={<h2 className='card-header'>{prizeCalcData.pooling.incrementAmount}</h2>}
                 description="Percentage of bets to be added to the Prize"
-                action={() => handleEdit(subType.incrementAmount, "Increment Amount")}
+                action={() => handleEdit(prizeCalcData.pooling.incrementAmount, {name: "incrementAmount", description: "Increment Amount"})}
             />);
 
-    if (keys.includes("prizeFloor"))
         tabs.push(
             <CustomCard
                 header="Prize Floor"
-                body={<h2 className='card-header'>{FormatInteger(subType.prizeFloor)}</h2>}
+                body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeFloor)}</h2>}
                 description="Starting Prize Pool"
-                action={() => handleEdit(subType.prizeFloor, "Prize Floor")}
+                action={() => handleEdit(prizeCalcData.pooling.prizeFloor, {name: "prizeFloor", description: "Prize Floor"})}
             />);
 
-    if (keys.includes("prizeCeiling"))
         tabs.push(
             <CustomCard
                 header="Prize Ceiling"
-                body={<h2 className='card-header'>{FormatInteger(subType.prizeCeiling)}</h2>}
+                body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeCeiling)}</h2>}
                 description="Maximum Prize Pool"
-                action={() => handleEdit(subType.prizeCeiling, "Prize Ceiling")}
+                action={() => handleEdit(prizeCalcData.pooling.prizeCeiling, {name: "prizeCeiling", description: "Prize Ceiling"})}
             />);
 
-    if (keys.includes("consecutiveWins"))
         tabs.push(
             <CustomCard
                 header="Consecutive Wins"
-                body={<h2 className='card-header'>{subType.consecutiveWins}</h2>}
+                body={<h2 className='card-header'>{prizeCalcData.consecutiveWins}</h2>}
                 description="Winning condition for achieving the prize."
-                action={() => handleEdit(subType.consecutiveWins, "Consecutive Wins")}
+                action={() => handleEdit(prizeCalcData.consecutiveWins, {name: "consecutiveWins", description: "Consecutive Wins"})}
             />);
 
-    if (keys.includes("winningMultiplier"))
         tabs.push(
             <CustomCard
                 header="Winning Multiplier"
-                body={<h2 className='card-header'>{FormatInteger(subType.winningMultiplier)}</h2>}
+                body={<h2 className='card-header'>{FormatInteger(prizeCalcData.winningMultiplier.winPerBet)}</h2>}
                 description="Equivalent winner prize per 1 peso"
-                action={() => handleEdit(subType.winningMultiplier, "Winning Multiplier")}
+                action={() => handleEdit(prizeCalcData.winningMultiplier.winPerBet, {name: "winPerBet", description: "Winning Multiplier"})}
             />);
 
-    if (keys.includes("haveQuasi"))
         tabs.push(
             <CustomCard
                 header="Enable Quasi Winnings"
-                body={<IOSSwitch checked={subType.haveQuasi} />}
+                body={<IOSSwitch checked={prizeCalcData.enableQuasi} />}
                 description="The maximum bet amount per combination"
-                action={() => handleEdit(subType.haveQuasi, "Quasi Winnings")}
+                action={() => handleEdit(prizeCalcData.enableQuasi, {name: "enableQuasi", description: "Quasi Winnings"})}
             />);
-
+    }
 
     const getDialogBody = () => {
 
         var body;
-        switch (selectedCard) {
+        var cardDesc = (selectedCard !== null) ? selectedCard.description : "";
+        switch (cardDesc) {
             case "Consecutive Wins":
                 body =
                     <>
@@ -122,7 +147,7 @@ const PrizeCalculations = ({ subType }) => {
             case "Prize Floor":
                 body =
                     <>
-                        <p style={{ marginTop: 6, marginBottom: 6, fontWeight: 200, fontFamily: 'Inter', textAlign: 'center' }}>Starting Prize Amount for {subType.subTypeName}</p>
+                        <p style={{ marginTop: 6, marginBottom: 6, fontWeight: 200, fontFamily: 'Inter', textAlign: 'center' }}>Starting Prize Amount for {subType.gameName}</p>
                         <TextField
                             size="small"
                             defaultValue={selectedValue}
@@ -137,7 +162,7 @@ const PrizeCalculations = ({ subType }) => {
             case "Prize Ceiling":
                 body =
                     <>
-                        <p style={{ marginTop: 6, marginBottom: 6, fontWeight: 200, fontFamily: 'Inter', textAlign: 'center' }}>Max Prize Amount for {subType.subTypeName}</p>
+                        <p style={{ marginTop: 6, marginBottom: 6, fontWeight: 200, fontFamily: 'Inter', textAlign: 'center' }}>Max Prize Amount for {subType.gameName}</p>
                         <TextField
                             size="small"
                             defaultValue={selectedValue}
@@ -196,14 +221,20 @@ const PrizeCalculations = ({ subType }) => {
 
     return (
         <div className="cards-container">
-            {tabs}
+            {
+                (prizeCalcData !== null) ? tabs : <>Loading...Please wait.</>
+            }
 
             <UpdateDialog
                 isOpen={openEdit}
+                onUpdate={handleUpdateSubmit}
+                dialogCallback={handleUpdateCallback}
+                isLoading={isLoading}
+                isSuccess={isSuccess}
                 onClose={() => setOpenEdit(false)}
                 title="Edit Limit for Combination"
                 isValid={valid}
-                successMessage={`${selectedCard} is updated and will be applied to all upcoming draws for ${subType.subTypeName}`}
+                successMessage={`${selectedCard} is updated and will be applied to all upcoming draws for ${subType.gameName}`}
             >
                 {getDialogBody()}
             </UpdateDialog>

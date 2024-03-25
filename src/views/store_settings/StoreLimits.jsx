@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import { CustomCard } from '../../components/card/CustomCard';
 import UpdateDialog from '../../components/Dialog/game/gameMechanics/UpdateDialog';
 import { TextField } from '@mui/material';
+import { toast } from 'react-toastify';
 
-const StoreLimits = ({ storeLimits, gameName }) => {
+import { GameService } from "../../services";
 
+const StoreLimits = ({ storeLimits, settingId, gameName }) => {
+
+    const [isSuccess, setisSuccess] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
+    
     var keys = Object.keys(storeLimits);
 
     const additionalDetails = (e) => {
         switch (e) {
             case "maxUnitsPrice":
                 return {
+                    name: "maxUnitsPrice",
                     header: `Max quantity per unit in ${gameName}`,
                     description: `Max quantity per unit in ${gameName}`,
                     editModalHeader: "Update Max Quantity per Unit",
@@ -19,6 +26,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "maxUnits":
                 return {
+                    name: "maxUnits",
                     header: `Max units for ${gameName}`,
                     description: `Max units for ${gameName}`,
                     editModalHeader: `Update Max Units for ${gameName}`,
@@ -27,6 +35,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "maxUnitsRegular":
                 return {
+                    name: "maxUnitsRegular",
                     header: `Max units for Regular`,
                     description: `Max units for Regular`,
                     editModalHeader: `Update Max Units for Regular`,
@@ -35,6 +44,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "maxUnitsPowerWin":
                 return {
+                    name: "maxUnitsPowerWin",
                     header: `Max units for Power Win`,
                     description: `Max units for Power Win`,
                     editModalHeader: `Update Max Units for Power Win`,
@@ -43,14 +53,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "maxFavorites":
                 return {
-                    header: `Max units for Favorites`,
-                    description: `Number of combinations allowed to be favorited at a time for ${gameName}`,
-                    editModalHeader: `Update Max Units for Favorites`,
-                    editModalDescription: `Number of combinations allowed to be favorited at a time for ${gameName}`,
-                    successMessage: "Max Units for favorites is updated and will be applied immediately"
-                };
-            case "maxFavorites":
-                return {
+                    name: "maxFavorites",
                     header: `Max units for Favorites`,
                     description: `Number of combinations allowed to be favorited at a time for ${gameName}`,
                     editModalHeader: `Update Max Units for Favorites`,
@@ -59,6 +62,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "hotCombinationsRange":
                 return {
+                    name: "hotCombinationsRange",
                     header: "Hot Combination Range",
                     description: `Bottom percantage from Limit per Combination in which the Hot Combinations will be taken from for ${gameName}`,
                     editModalHeader: " Update Hot Combination Range",
@@ -67,6 +71,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                 };
             case "hotCombinationsRefreshUnits":
                 return {
+                    name: "hotCombinationsRefreshUnits",
                     header: "Hot Combination Refresh Units",
                     description: `Number of hot combination units to be shown every refresh for ${gameName}`,
                     editModalHeader: " Update Hot Combination Refresh Units",
@@ -91,10 +96,27 @@ const StoreLimits = ({ storeLimits, gameName }) => {
     }
 
     const handleValidation = (value) => {
+        setSelectedValue(value.target.value);
+
         if (value.target.value < 1)
             setValid(false);
         else
             setValid(true);
+    }
+
+    const handleUpdateSubmit = () => {
+        storeLimits[selectedCard.name] = selectedValue;
+
+        setisLoading(true);
+        GameService.createStoreLimits(storeLimits, settingId).then((res) => {
+            if(res) { setisSuccess(true); }
+            else { toast.error(`Unable to update ${selectedCard.name} setting.`); }
+            setisLoading(false);
+        });
+    }
+
+    const handleUpdateCallback = () => {
+        setisSuccess(false);
     }
 
     return (
@@ -105,7 +127,7 @@ const StoreLimits = ({ storeLimits, gameName }) => {
                     return (
                         <CustomCard
                             header={x?.header}
-                            body={<h2 className='card-header'>{storeLimits[e]}</h2>}
+                            body={<h2 className='card-header'>{ storeLimits[e] }</h2>}
                             description={x?.description}
                             action={() => handleEdit(storeLimits[e], x)}
                             key={i}
@@ -116,6 +138,10 @@ const StoreLimits = ({ storeLimits, gameName }) => {
             <UpdateDialog
                 isOpen={openEdit}
                 onClose={() => setOpenEdit(false)}
+                onUpdate={handleUpdateSubmit}
+                dialogCallback={handleUpdateCallback}
+                isLoading={isLoading}
+                isSuccess={isSuccess}
                 title={selectedCard?.editModalHeader}
                 isValid={valid}
                 successMessage={selectedCard?.successMessage}
