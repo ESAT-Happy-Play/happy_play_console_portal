@@ -6,7 +6,7 @@ import jackpot33 from "../assets/jackpot-3.3-logo.png";
 import jackpot34 from "../assets/jackpot-3.4-logo.png";
 
 export const getGameLogo = (gameName, subtypeName, width) => {
-  if (gameName === "Regular Game") {
+  if (gameName === "Regular Game" || gameName === "Regular") {
     switch (subtypeName) {
       case "Regular":
         return (
