@@ -12,11 +12,10 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 
 import { ConstArrayExt } from "../../../utils/helpers";
 import { DragDropUpload } from "../../../components/mui";
-import Selfie from '../Selfie';
 
 import './step.scss';
 
-export const FinalStep = ({ btnBack, handleSubmit, formSubmit, register, errors, isrequired = false }) => {
+export const FinalStep = ({ btnBack, handleSubmit, formSubmit, register, errors, isrequired = false, reset }) => {
 
     const [frontIdOpen, setfrontIdOpen] = React.useState(false);
     const handleFrontIdClick = () => {
@@ -27,6 +26,15 @@ export const FinalStep = ({ btnBack, handleSubmit, formSubmit, register, errors,
     const handleSelfieClick = () => {
         setselfieOpen(!selfieOpen);
     };
+
+    const handleUploadCallback = (data, uploadType) => {
+        if (uploadType === 0) {
+            reset(formValues => ({ ...formValues, frontIdPath: data }));
+        }
+        else {
+            reset(formValues => ({ ...formValues, selfiePath: data }));
+        }
+    }
 
     return (
         <>
@@ -105,7 +113,7 @@ export const FinalStep = ({ btnBack, handleSubmit, formSubmit, register, errors,
                             <Collapse in={frontIdOpen} timeout="auto">
                                 <List component="div">
                                     <input type="hidden" {...register("frontIdPath", { required: false })} />
-                                    <DragDropUpload />
+                                    <DragDropUpload callBack={handleUploadCallback} />
                                 </List>
                             </Collapse>
                         </List>
@@ -121,7 +129,7 @@ export const FinalStep = ({ btnBack, handleSubmit, formSubmit, register, errors,
                             <Collapse in={selfieOpen} timeout="auto">
                                 <List component="div">
                                     <input type="hidden" {...register("selfiePath", { required: false })} />
-                                    <Selfie />
+                                    <DragDropUpload callBack={handleUploadCallback} uploadType={1} />
                                 </List>
                             </Collapse>
                         </List>

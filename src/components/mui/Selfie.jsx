@@ -11,22 +11,24 @@ const videoConstraints = {
   height: 400,
   facingMode: 'user',
 }
-const Selfie = () => {
+const Selfie = ({ imageCalback }) => {
   const [picture, setPicture] = useState(null)
   const webcamRef = React.useRef(null)
   const capture = React.useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
     setPicture(pictureSrc)
+    imageCalback(pictureSrc);
   });
 
   return (
     <div style={{display:'flex', justifyContent:'center', border:'2px dashed rgb(72, 69, 210);',borderRadius:'10px', padding:'5px 0 0 0'}}>
       <div>
-        <div style={{position:'absolute',bottom:'10px',right:'55px',zIndex:'999'}}>
+        <div style={{position:'absolute',bottom:'8px',right:'25px',zIndex:'999'}}>
             {picture !== null ? (
                 <Button onClick={(e) => { 
                     e.preventDefault()
                     setPicture(null) 
+                    imageCalback(null)
                     }} color='primary' variant='contained' >
                     Retake <CameraFrontIcon />
                 </Button>

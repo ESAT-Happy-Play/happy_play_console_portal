@@ -2,6 +2,7 @@ import "./registration.scss"
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { FirstStep, SecondStep, FinalStep } from "../../components/mui/registration";
 import { ContentLoader, FormStepper } from "../../components/mui";
@@ -51,6 +52,16 @@ export const RegisterDetails = () => {
     }
     if (step3) { 
       setFormData(data);
+      if(data.frontIdPath === "") {
+        toast.error("Sorry, Please upload your Valid ID."); 
+        return false;
+      }
+
+      if(data.selfiePath === "") {
+        toast.error("Sorry, Please upload your Selfie image."); 
+        return false;
+      }
+
       handleAgreementOpen();
     }
   }
@@ -145,7 +156,7 @@ export const RegisterDetails = () => {
               resetAddr={handleResetPermanentAddr} />
           </div>
           <div className={(step3) ? "elemShow" : "elemHide"}>
-            <FinalStep btnBack={step3Back} handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} errors={errors} isrequired={step3} />
+            <FinalStep btnBack={step3Back} handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} reset={reset} errors={errors} isrequired={step3} />
           </div>
           <p>
             <a href="#">Terms Of Use</a>
