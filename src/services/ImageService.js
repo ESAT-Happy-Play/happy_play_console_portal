@@ -1,17 +1,28 @@
-import axios from 'axios';
-// import https from 'https';
+import { toast } from 'react-toastify';
+import ApiService from './ApiService';
 
 export const ImageService = {
-    uploadImage: async (image) => {
-        const imageBuffer = image.buffer;
-        const response = await axios.post(`https://files.esat-apps.com/image.php`, imageBuffer, {
-            headers: {
-            'Content-Type': 'application/octet-stream',
-            },
-            // httpsAgent: new https.Agent({
-            //     rejectUnauthorized: false,
-            // }),
-        });
-        return response.data;
+    uploadBase64Image: async (base64image) => {
+        // { "base64Image": "" }
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/Upload/base64image`,  { 
+            base64Image: base64image
+        }).then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res.data;
+        })
+    },
+    getImage: async (fileName) => {
+        // { "base64Image": "" }
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/Upload/${fileName}`)
+        .then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res.data;
+        })
     }
 }

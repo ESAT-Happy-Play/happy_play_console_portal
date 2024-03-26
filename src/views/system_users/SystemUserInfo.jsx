@@ -45,6 +45,15 @@ export const SystemUserInfo = ({paramObj, callback}) => {
         }
         if (step3) { 
             setFormData(data);
+            if(data.frontIdPath === "") {
+                toast.error("Sorry, Please upload your Valid ID."); 
+                return false;
+            }
+
+            if(data.selfiePath === "") {
+                toast.error("Sorry, Please upload your Selfie image."); 
+                return false;
+            }
             handleConfirmOpen()
         }
     }
@@ -151,7 +160,7 @@ export const SystemUserInfo = ({paramObj, callback}) => {
                     resetAddr={handleResetPermanentAddr} />
                 </div>
                 <div className={(step3) ? "elemShow" : "elemHide"}>
-                <FinalStep btnBack={step3Back} handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} errors={errors} isrequired={step3} />
+                <FinalStep btnBack={step3Back} handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} reset={reset} errors={errors} isrequired={step3} />
                 </div>
                 <br/><br/>
             </div>

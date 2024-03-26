@@ -45,6 +45,9 @@ export const SysUserPage = ({paramCompanyObjId, paramCompanyId}) => {
       .then((resp) => { if (resp) { 
         setbranchesFilter(resp.data);
         setbranches(resp.data);
+
+        console.log("Okay");
+        console.log(resp.data);
        } });
     }
 
@@ -117,6 +120,8 @@ export const SysUserPage = ({paramCompanyObjId, paramCompanyId}) => {
       handleUsersList();
       handleBranchList();
       handleRoles();
+
+      console.log("Let say");
     }, []);
 
     return (

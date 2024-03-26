@@ -22,6 +22,7 @@ export const SystemUsers = () => {
   const handleGetCompany = () => {
     if (compObj !== null) {
       setcompanyData(compObj.data);
+      console.log(compObj.data);
     } else {
       setPageLoader(true);
       CompanyService.getCompanyDetails(tokenObj.companyId).then((resp) => {

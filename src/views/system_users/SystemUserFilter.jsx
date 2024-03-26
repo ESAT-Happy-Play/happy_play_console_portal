@@ -3,7 +3,7 @@ import React from 'react';
 import { TextField, MenuItem  } from "@mui/material";
 
 export const SystemUserFilter = ({companies, hasCompany = false, branches, roles, filterCallback}) => {
-
+    console.log(branches);
     const handleSelectFilter = event => {
         let evntType = event.target.getAttribute('data-type');
         let evntVal = event.target.getAttribute('data-value');
