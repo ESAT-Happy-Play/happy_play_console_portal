@@ -15,6 +15,9 @@ import { logOut } from '../../redux/reducers/auth/AuthReducer';
 import { removeAppState } from '../../redux/reducers/AppStateReducer';
 import { removeMenuState } from '../../redux/reducers/MenuStateReducer';
 import { removeAccountState } from '../../redux/reducers/AccountStateReducer';
+import { removeCompanyState } from '../../redux/reducers/CompanyStateReducer';
+import { removeGameState } from '../../redux/reducers/GamesStateReducer';
+
 import MessageDialog from "../Dialog/MessageDialog";
 
 import "./sidebar.scss"
@@ -38,6 +41,8 @@ const Sidebar = () => {
     dispatch(removeAppState());
     dispatch(removeMenuState());
     dispatch(removeAccountState());
+    dispatch(removeGameState());
+    dispatch(removeCompanyState());
 
     window.location.href = '/login';
   };

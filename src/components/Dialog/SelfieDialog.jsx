@@ -54,7 +54,7 @@ const SelfieDialog = ({ isOpen, onClose, callBack }) => {
             <DialogActions sx={{ display:'block' }}>
                 <MuiLoadingButton text="Save Image" variant="contained" disabled={submitDisabled}
                         loading={ submitLoading } size="medium" onClick={handleUploadSelfie}
-                        sx={[{ background: COLORS.green, color: 'white', marginLeft:'15px' }, { '&:hover': { background: 'green' } }]}
+                        sx={[{ background: COLORS.green, textTransform:'capitalize', color: 'white', marginLeft:'15px' }, { '&:hover': { background: 'green' } }]}
                         loadingPosition='end'
                         icon={ <CheckIcon/> } />
             </DialogActions>

@@ -6,16 +6,19 @@ import './scheduleSettings.scss';
 // import { companyGames } from '../../helper/mocks';
 import ScheduleCalendar from './ScheduleCalendar';
 
+import { CompanyGameList } from "../../utils/common/CompanyGameList";
 import { ContentLoader } from "../../components/mui";
 import { StoreExt, DateExt } from "../../utils/helpers";
-import { GameService, DrawTypeService, CloseDateService } from "../../services";
+import { DrawTypeService, CloseDateService } from "../../services";
 
 const ScheduleSettings = () => {
   let loginObj = StoreExt.getStore("auth");
   let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
 
+  const [pageLoader, setPageLoader] = useState(true);
   const [companyGames, setcompanyGames] = useState(null);
-  const [pageLoader, setPageLoader] = useState(false);
+  const [companyGuid, setcompanyGuid] = useState(tokenObj.companyId);
+
   const [drawTypes, setDrawTypes] = useState(null);
   const [closingDates, setClosingDates] = useState(null);
   const [selectedGameId, setselectedGameId] = useState(null);
@@ -30,52 +33,8 @@ const ScheduleSettings = () => {
     getCloseDates(newValue);
   }
 
-  const listGames = () => {
-    setPageLoader(true);
-    GameService.getCompanyGameSettings(tokenObj.companyId).then((res) => {
-      if(res.status) {
-        let gameIds = res.data.map(m => m.gameId);
-        GameService.getAllGameList().then((res1) => {
-          let listOfCompanyGames = res1.data.filter((item) => gameIds.includes(item.id));
-
-          let objCompanies = [];
-          listOfCompanyGames.forEach(item => {
-            // push parent
-            if(item.gameMechanics.isParent) {
-              objCompanies.push({
-                gameName: item.name,
-                id: item.id,
-                child: [{ gameName: item.name, id: item.id }]
-              });
-            } else {
-              let parentCompany = objCompanies.filter(obj => obj.id === item.gameMechanics.parentId);
-              if (parentCompany.length > 0) {
-                let parentIndex = objCompanies.findIndex(obj => obj.id === parentCompany[0].id);
-
-                //Update child
-                objCompanies[parentIndex].child.push({ gameName: item.name, id: item.id });
-              }
-            }
-          });
-
-          setcompanyGames(objCompanies);
-
-          // for new load default company
-          getDrawTypeList(objCompanies[0].id);
-          setselectedGameId(objCompanies[0].id);
-          
-          // init needed data
-          getDrawTypeList(objCompanies[0].id);
-          getCloseDates(objCompanies[0].id);
-
-          setPageLoader(false);
-        });
-      } else { setPageLoader(false); }
-    });
-  }
-
   const getDrawTypeList = (gameId) => {
-    DrawTypeService.getDrawTypes(tokenObj.companyId, gameId).then((res) => {
+    DrawTypeService.getDrawTypes(companyGuid, gameId).then((res) => {
       if(res) { setDrawTypes(res.data); }
     });
   }
@@ -89,7 +48,7 @@ const ScheduleSettings = () => {
       endD = DateExt.todaysDate();
     }
 
-    CloseDateService.getClosedDateByCompany(tokenObj.companyId, gameId, startD, endD).then((res) => {
+    CloseDateService.getClosedDateByCompany(companyGuid, gameId, startD, endD).then((res) => {
       if(res) { 
         setClosingDates(res.data.filter(obj => obj.game == gameId));
       }
@@ -102,8 +61,42 @@ const ScheduleSettings = () => {
     getCloseDates(selectedGameId, ftDate, ftDate); 
   }
 
+  const handleCloseCallback = (data, clickType, selectedDate) => {
+    setPageLoader(true);
+    let dataparam = {
+      companyId: data.companyId,
+      date: DateExt.formatDate(selectedDate),
+      isWholeday: true,
+      status: 1,
+      closedDrawType: data.id,
+      game: selectedGameId
+    };
+
+    CloseDateService.createCloseDate(dataparam).then((res) => {
+      closingDates.push(dataparam);
+      setPageLoader(false);
+    });
+  }
+
+  const handleListGames = async () => {
+    await CompanyGameList.getGameList().then((res) => {
+      setcompanyGuid(res.companyId);
+
+      if (res.gameList.length > 0) {
+        setcompanyGames(res.gameList);
+        // for new load default company
+        setselectedGameId(res.gameList[0].id);
+        
+        // init needed data
+        getDrawTypeList(res.gameList[0].id);
+        getCloseDates(res.gameList[0].id);
+      }
+      setPageLoader(false);
+    });
+  }
+
   useEffect(() => {
-    listGames();
+    handleListGames();
   }, []);
 
   const tabs = (companyGames !== null) ?
@@ -124,12 +117,12 @@ const ScheduleSettings = () => {
                   return { 
                     label: subtype.gameName, 
                     itemId: subtype.id, 
-                    Component: <ScheduleCalendar drawTypes={ drawTypes } closeDates={closingDates} selectDateCallback={handleSelectDate} /> 
+                    Component: <ScheduleCalendar drawTypes={ drawTypes } closeDates={closingDates} selectDateCallback={handleSelectDate} closeDateCallback={handleCloseCallback} /> 
                   } }) 
                   ?? [{ 
                     label: game.gameName, 
                     itemId: game.id, 
-                    Component: <ScheduleCalendar drawTypes={ drawTypes } closeDates={closingDates} selectDateCallback={handleSelectDate} /> 
+                    Component: <ScheduleCalendar drawTypes={ drawTypes } closeDates={closingDates} selectDateCallback={handleSelectDate} closeDateCallback={handleCloseCallback} /> 
                   }],
                 { label: "Draw Time", itemId: 10112, isHeader: true },
                 { label: "Draw Time", itemId: 10113, Component: <p>No design yet</p> }

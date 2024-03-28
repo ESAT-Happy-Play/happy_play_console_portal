@@ -11,5 +11,15 @@ export const CloseDateService = {
             }
             return res;
         })
-    }
+    },
+    createCloseDate: async (data) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/game/closed-dates`, data)
+        .then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res;
+        })
+    },
 }

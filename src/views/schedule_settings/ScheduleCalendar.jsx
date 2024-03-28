@@ -4,7 +4,7 @@ import './calendar.scss';
 // import { drawTypeList } from '../../helper/mocks';
 import { IOSSwitch } from '../../components/switch/IOSSwitch';
 
-const ScheduleCalendar = ({ drawTypes, closeDates, selectDateCallback }) => {
+const ScheduleCalendar = ({ drawTypes, closeDates, selectDateCallback, closeDateCallback }) => {
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -27,8 +27,7 @@ const ScheduleCalendar = ({ drawTypes, closeDates, selectDateCallback }) => {
   }
 
   const handleDrawTypeClick = (data, clickType) => {
-    console.log(data);
-    console.log("Click Type : " + clickType);
+    closeDateCallback(data, clickType, selectedDate);
   }
 
   return (
@@ -52,20 +51,22 @@ const ScheduleCalendar = ({ drawTypes, closeDates, selectDateCallback }) => {
           <div className='toggles-container'>
             <div className='toggles-header'>
               <h2>{selectedDate.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}</h2>
-              <IOSSwitch onClick={ e => handleDrawTypeClick(null, 1) }
-              checked={(drawTypes.filter((item) => closeDates.map(m => m.id).includes(item.id)).length > 0) ? true : false } />
+              <IOSSwitch
+              checked={(drawTypes.filter((item) => closeDates.map(m => m.id).includes(item.id)).length > 0) ? false : true } />
             </div>
-            {
-              (drawTypes.length > 0) ?
-              drawTypes.map((drawType) =>
-                <div className='draw-time-row' key={drawType.id}>
-                  <p>{drawType.gameDrawTypeName}</p>
-                  <IOSSwitch onClick={ e => handleDrawTypeClick(drawType, 0) }
-                  checked={(closeDates.find(m => m.id == drawType.id) !== undefined) ? true : false } size="small" />
-                </div>
-              )
-              : <div>No available draw time.</div>
-            }
+            <div style={{maxHeight:'480px', overflow:'auto'}}>
+              {
+                (drawTypes.length > 0) ?
+                drawTypes.map((drawType) =>
+                  <div className='draw-time-row' key={drawType.id}>
+                    <p>{drawType.gameDrawTypeName}</p>
+                    <IOSSwitch onClick={ e => handleDrawTypeClick(drawType, 0) }
+                    checked={(closeDates.find(m => m.closedDrawType == drawType.id) !== undefined) ? false : true } size="small" />
+                  </div>
+                )
+                : <div>No available draw time.</div>
+              }
+            </div>
           </div>
         </>
         : <div style={{padding:'25px'}}>Loading...Please wait.</div>

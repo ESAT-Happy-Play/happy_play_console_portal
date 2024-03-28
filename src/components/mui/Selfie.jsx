@@ -25,7 +25,7 @@ const Selfie = ({ imageCalback }) => {
       <div>
         <div style={{position:'absolute',bottom:'8px',right:'25px',zIndex:'999'}}>
             {picture !== null ? (
-                <Button onClick={(e) => { 
+                <Button sx={{textTransform:'capitalize',}} onClick={(e) => { 
                     e.preventDefault()
                     setPicture(null) 
                     imageCalback(null)
@@ -33,7 +33,7 @@ const Selfie = ({ imageCalback }) => {
                     Retake <CameraFrontIcon />
                 </Button>
                 ) : (
-                <Button onClick={(e) => { 
+                <Button sx={{textTransform:'capitalize',}} onClick={(e) => { 
                     e.preventDefault()
                     capture() 
                     }} color='primary' variant='contained' >
