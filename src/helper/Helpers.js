@@ -78,6 +78,17 @@ export function ChunckArry(arryVal, chunkSize) {
   return chunkArry;
 }
 
+export function BuildChildObj(dataObj, childLinks) {
+  let finalChild = [];
+  for (let i = 0; i < childLinks.length; i++) {
+    finalChild.push(dataObj.child.find(item => item.state === childLinks[i]));
+  }
+  dataObj.child.splice(0, dataObj.child.length);
+  dataObj.child = finalChild;
+
+  return dataObj;
+}
+
 export function FormatTime(time) {
   if (time !== null) {
     time = time

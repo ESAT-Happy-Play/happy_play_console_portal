@@ -9,6 +9,10 @@
     background-color: $violet-main;
     color: white;
 
+    .sideIcon > svg {
+        color: #4845d2;
+    }
+
     svg {
         color: white;
     }

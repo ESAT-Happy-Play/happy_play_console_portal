@@ -58,7 +58,7 @@ const Sidebar = () => {
             route.child ? (
               <SidebarItemCollapse item={route} key={index} selected={selected == route.sidebarProps.displayText} setSelected={setSelected} />
             ) : (
-              <SidebarItem item={route} key={index} />
+              <SidebarItem item={route} hasIcon={true} key={index} />
             )
           ) : null
         ))

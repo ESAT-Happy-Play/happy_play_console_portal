@@ -1,14 +1,15 @@
 import { ListItemButton, ListItemIcon } from "@mui/material";
+import { ListItemText, Typography } from "@mui/material";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const SidebarItem = ({ item }) => {
+const SidebarItem = ({ item, hasIcon = false }) => {
   const { appState } = useSelector((state) => state.appState);
   let isSelected = (appState === item.state) ? true : false;
 
   return (
-    item.sidebarProps && item.path ? (
+    item.sidebarProps && item.path && !hasIcon ? (
       <ListItemButton sx={
         {
           "&: hover": {
@@ -30,7 +31,36 @@ const SidebarItem = ({ item }) => {
         }} component={Link} to={item.path} >
         {item.sidebarProps.displayText}
       </ListItemButton>
-    ) : null
+    ) : (
+
+      <ListItemButton
+        sx={{
+          "&: hover": {
+            backgroundColor: "#FFDA18",
+            fontWeight: "bold"
+          },
+          flexGrow: 0,
+          gap: "5px",
+          background: (isSelected) ? "white" : null,
+          color: (isSelected) ? "#4845d2" : "white",
+        }}
+        component={Link} to={item.path}
+      >
+        <div className={(isSelected) ? "sideIcon" : ""}>{item.sidebarProps.icon}</div>
+        <ListItemText disableTypography
+          primary={
+            <Typography sx={{
+              "fontSize": "14px",
+              fontFamily: "Inter",
+              fontWeight: (isSelected) ? "bold" : "normal",
+            }}>
+              {item.sidebarProps.displayText}
+            </Typography>
+          }
+        />
+      </ListItemButton>
+
+    )
   );
 };
 

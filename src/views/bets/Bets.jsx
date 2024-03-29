@@ -8,7 +8,6 @@ import BetsTable from "./BetsTable";
 import { CompanyGameList } from "../../utils/common/CompanyGameList";
 import { StoreExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
-import { GameService } from "../../services";
 
 function Bets() {
   let loginObj = StoreExt.getStore("auth");
