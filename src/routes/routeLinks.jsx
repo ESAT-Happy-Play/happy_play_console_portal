@@ -197,7 +197,7 @@ const routeLinks = [
           }
         },
         {
-          path: "/promotions",
+          path: "/game/promotions",
           element: <Promotions />,
           state: "Game.Promotions",
           sidebarProps: {
@@ -205,7 +205,7 @@ const routeLinks = [
           }
         },
         {
-          path: "/bets",
+          path: "/game/bets",
           element: <Bets />,
           state: "Game.Bets",
           sidebarProps: {
@@ -364,6 +364,109 @@ const routeLinks = [
           }
         },
       ]
-    }
+    },
+
+    // Accounting
+    {
+      path: "/deposits",
+      element: <Home />,
+      state: "Accounting.Deposits",
+      sidebarProps: {
+        displayText: "Deposits",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/withdrawals",
+      element: <Home />,
+      state: "Accounting.Withdrawals",
+      sidebarProps: {
+        displayText: "Withdrawals",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/bets",
+      element: <Home />,
+      state: "Accounting.Bets",
+      sidebarProps: {
+        displayText: "Bets",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/assets",
+      element: <Home />,
+      state: "Accounting.Assets",
+      sidebarProps: {
+        displayText: "Assets",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/wallet/settings",
+      element: <Home />,
+      state: "Accounting.WalletSettings",
+      sidebarProps: {
+        displayText: "WalletSettings",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/report/issue",
+      element: <Home />,
+      state: "Accounting.ReportAnIssue",
+      sidebarProps: {
+        displayText: "ReportAnIssue",
+        icon: <HomeIcon />
+      },
+    },
+
+    // Support
+    {
+      path: "/tickets",
+      element: <Home />,
+      state: "Support.Tickets",
+      sidebarProps: {
+        displayText: "Tickets",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/livechat",
+      element: <Home />,
+      state: "Support.LiveChat",
+      sidebarProps: {
+        displayText: "LiveChat",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/behavior",
+      element: <Home />,
+      state: "Support.Behavior",
+      sidebarProps: {
+        displayText: "Behavior",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/support/users",
+      element: <Home />,
+      state: "Support.Users",
+      sidebarProps: {
+        displayText: "Users",
+        icon: <HomeIcon />
+      },
+    },
+    {
+      path: "/faqs",
+      element: <Home />,
+      state: "Support.FAQs",
+      sidebarProps: {
+        displayText: "FAQs",
+        icon: <HomeIcon />
+      },
+    },
   ];
 export default routeLinks;

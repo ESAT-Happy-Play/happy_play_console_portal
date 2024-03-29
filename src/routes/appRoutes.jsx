@@ -13,8 +13,6 @@ if (listMenuObj !== null) {
   });
 }
 
-console.log(menus);
-
 let finalRoutes = [];
 finalRoutes.push(routeLinks[0]);
 
@@ -44,12 +42,14 @@ if (loginObj !== null) {
       if (listRoutes.reports) { finalRoutes.push(BuildChildObj(routeLinks[5], menus.filter(str => str.includes("Reports.")))); }
       if (listRoutes.system) { finalRoutes.push(BuildChildObj(routeLinks[6], menus.filter(str => str.includes("System.")))); }
     }
-  } else if (loginObj.groupType === 1) {
-    // 1 - Accounting menu
-
   } else {
+    // 1 - Accounting menu
     //  2 - Support menu
-
+    console.log(menus);
+    let routelist = routeLinks.filter((item) => menus.includes(item.state));
+    routelist.forEach(item => {
+      finalRoutes.push(item);
+    });
   }
 }
 
