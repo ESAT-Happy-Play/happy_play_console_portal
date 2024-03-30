@@ -1,12 +1,21 @@
 import HomeIcon from '@mui/icons-material/Home';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
 import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DesktopMacIcon from '@mui/icons-material/DesktopMac';
+
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import ChatIcon from '@mui/icons-material/Chat';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import WalletIcon from '@mui/icons-material/Wallet';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 import {Company, Branch, Roles, SystemUsers} from '../views';
 
@@ -373,7 +382,7 @@ const routeLinks = [
       state: "Accounting.Deposits",
       sidebarProps: {
         displayText: "Deposits",
-        icon: <HomeIcon />
+        icon: <MonetizationOnIcon />
       },
     },
     {
@@ -382,7 +391,7 @@ const routeLinks = [
       state: "Accounting.Withdrawals",
       sidebarProps: {
         displayText: "Withdrawals",
-        icon: <HomeIcon />
+        icon: <CreditCardIcon />
       },
     },
     {
@@ -391,7 +400,7 @@ const routeLinks = [
       state: "Accounting.Bets",
       sidebarProps: {
         displayText: "Bets",
-        icon: <HomeIcon />
+        icon: <VideogameAssetIcon />
       },
     },
     {
@@ -400,7 +409,7 @@ const routeLinks = [
       state: "Accounting.Assets",
       sidebarProps: {
         displayText: "Assets",
-        icon: <HomeIcon />
+        icon: <EqualizerIcon />
       },
     },
     {
@@ -408,8 +417,8 @@ const routeLinks = [
       element: <Home />,
       state: "Accounting.WalletSettings",
       sidebarProps: {
-        displayText: "WalletSettings",
-        icon: <HomeIcon />
+        displayText: "Wallet Settings",
+        icon: <WalletIcon />
       },
     },
     {
@@ -417,8 +426,8 @@ const routeLinks = [
       element: <Home />,
       state: "Accounting.ReportAnIssue",
       sidebarProps: {
-        displayText: "ReportAnIssue",
-        icon: <HomeIcon />
+        displayText: "Report An Issue",
+        icon: <ReportProblemIcon />
       },
     },
 
@@ -429,7 +438,7 @@ const routeLinks = [
       state: "Support.Tickets",
       sidebarProps: {
         displayText: "Tickets",
-        icon: <HomeIcon />
+        icon: <ConfirmationNumberIcon />
       },
     },
     {
@@ -437,8 +446,8 @@ const routeLinks = [
       element: <Home />,
       state: "Support.LiveChat",
       sidebarProps: {
-        displayText: "LiveChat",
-        icon: <HomeIcon />
+        displayText: "Live Chat",
+        icon: <ChatIcon />
       },
     },
     {
@@ -447,7 +456,7 @@ const routeLinks = [
       state: "Support.Behavior",
       sidebarProps: {
         displayText: "Behavior",
-        icon: <HomeIcon />
+        icon: <PsychologyIcon />
       },
     },
     {
@@ -456,7 +465,7 @@ const routeLinks = [
       state: "Support.Users",
       sidebarProps: {
         displayText: "Users",
-        icon: <HomeIcon />
+        icon: <GroupsIcon />
       },
     },
     {
@@ -465,7 +474,7 @@ const routeLinks = [
       state: "Support.FAQs",
       sidebarProps: {
         displayText: "FAQs",
-        icon: <HomeIcon />
+        icon: <LiveHelpIcon />
       },
     },
   ];

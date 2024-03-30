@@ -17,7 +17,6 @@ let finalRoutes = [];
 finalRoutes.push(routeLinks[0]);
 
 if (loginObj !== null) {
-  console.log(loginObj.groupType);
   // 0 - Dashboard menu
   if (loginObj.groupType === 0) {
     let listRoutes = {
@@ -45,7 +44,6 @@ if (loginObj !== null) {
   } else {
     // 1 - Accounting menu
     //  2 - Support menu
-    console.log(menus);
     let routelist = routeLinks.filter((item) => menus.includes(item.state));
     routelist.forEach(item => {
       finalRoutes.push(item);

@@ -1,127 +1,50 @@
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-// import GamesOutlinedIcon from '@mui/icons-material/GamesOutlined';
+import HomeIcon from '@mui/icons-material/Home';
+import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
+import GroupsIcon from '@mui/icons-material/Groups';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import SettingsIcon from '@mui/icons-material/Settings';
+import DesktopMacIcon from '@mui/icons-material/DesktopMac';
 
-import Diversity3OutlinedIcon from '@mui/icons-material/Diversity3Outlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-
-import QueryBuilderOutlinedIcon from '@mui/icons-material/QueryBuilderOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import MoneyOutlinedIcon from '@mui/icons-material/MoneyOutlined';
-import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
-import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
-
-import SmsIcon from '@mui/icons-material/Sms';
-import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
-import LiveTvOutlinedIcon from '@mui/icons-material/LiveTvOutlined';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import ChatIcon from '@mui/icons-material/Chat';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import PsychologyIcon from '@mui/icons-material/Psychology';
 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import WalletIcon from '@mui/icons-material/Wallet';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
-import PersonIcon from '@mui/icons-material/Person';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
-import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 
 const NavIcon = ({ sideBarSate }) => {
     switch (sideBarSate) {
         case "Home.Home":
-            return <DashboardOutlinedIcon />
-        case "Admin.Dashboard":
-            return <DashboardOutlinedIcon />
-
-        case "History.GameBets":
-            return <PaymentsOutlinedIcon />
-        case "History.GameResult":
-            return <PostAddOutlinedIcon />
-
-        case "Wallet.SendCredits":
-            return <WalletOutlinedIcon />
-
-        case "Wallet.CreditRequests":
-            return <WalletOutlinedIcon />
-
-        case "Wallet.Withdraw":
-            return <WalletOutlinedIcon />
-
-        case "Wallet.WithdrawalRequests":
-            return <WalletOutlinedIcon />
-
-        case "Profile.ProfileInformation":
-            return <PersonIcon />
-        case "Profile.ResetPassword":
-            return <VisibilityOutlinedIcon />
-
-        case "SuperAdmin.SuperAdmin":
-            return <LockOutlinedIcon />
-        case "SuperAdmin.Company":
-            return <ApartmentOutlinedIcon />
-        case "SuperAdmin.Branch":
-            return <HomeWorkOutlinedIcon />
-        case "SuperAdmin.Profiles":
-            return <AssignmentIndIcon />
-        case "SuperAdmin.Games":
-            return <DashboardOutlinedIcon />
-
-        case "UserAccount.SystemUsers":
-            return <Diversity3OutlinedIcon />
-        case "UserAccount.Operators":
-            return <AccountCircleIcon />
-        case "UserAccount.UserApproval":
-            return <VerifiedOutlinedIcon />
-        case "UserAccount.UserVerification":
-            return <VerifiedOutlinedIcon />
-        case "UserAccount.MasterAgents":
-            return <PersonAddAltOutlinedIcon />
-        case "UserAccount.Agents":
-            return <PeopleOutlinedIcon />
-        case "UserAccount.Players":
-            return <PersonOutlineOutlinedIcon />
-
-        case "Game.GameScheduleSettings":
-            return <QueryBuilderOutlinedIcon />
-        case "Game.GameMechanicsSettings":
-            return <SettingsOutlinedIcon />
-        case "Game.Price&Prizes":
-            return <MoneyOutlinedIcon />
-        case "Game.GameBets":
-            return <PaymentsOutlinedIcon />
-        case "Game.GameResult":
-            return <PostAddOutlinedIcon />
-
-        case "Postings.TextBlast":
-            return <SmsIcon />
-        case "Postings.Announcements":
-            return <CampaignOutlinedIcon />
-        case "Postings.LiveStreaming":
-            return <LiveTvOutlinedIcon />
-
-        case "Reporting.SalesReport":
+            return <HomeIcon />
+        case "Accounting.Deposits":
             return <MonetizationOnIcon />
-        case "Reporting.TransactionReport":
-            return <PointOfSaleIcon />
-        case "Reporting.UserActivityReport":
-            return <AcUnitOutlinedIcon />
-            
-        case "Support.IssuesAndConcern":
-            return <MonetizationOnIcon />
-        case "Support.ReportProblem":
-            return <MonetizationOnIcon />
-        case "Support.Cases":
-            return <MonetizationOnIcon />
-        case "Support.Violations":
-            return <MonetizationOnIcon />
-        case "Support.AccountActions":
-            return <MonetizationOnIcon />
+        case "Accounting.Withdrawals":
+            return <CreditCardIcon />
+        case "Accounting.Bets":
+            return <VideogameAssetIcon />
+        case "Accounting.Assets":
+            return <EqualizerIcon />
+        case "Accounting.WalletSettings":
+            return <WalletIcon />
+        case "Accounting.ReportAnIssue":
+            return <ReportProblemIcon />
+        case "Support.Tickets":
+            return <ConfirmationNumberIcon />
+        case "Support.Behavior":
+            return <PsychologyIcon />
+        case "Support.Users":
+            return <GroupsIcon />
+        case "Support.FAQs":
+            return <LiveHelpIcon />
         default:
-            return <DashboardOutlinedIcon />
+            return <SettingsApplicationsIcon />
     }
 }
 
