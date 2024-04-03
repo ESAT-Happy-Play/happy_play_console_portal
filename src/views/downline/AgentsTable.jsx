@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { Box } from '@mui/material';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import { ContentLoader } from "../../components/mui";
+import { DateExt } from "../../utils/helpers";
 
 import { UserService } from "../../services";
 import UserProfile from './UserProfile';
@@ -17,6 +18,8 @@ const AgentsTable = () => {
     const [searchValue, setSearchValue] = useState("");
     const [isUserDetails, setisUserDetails] = useState(false);
     const [selectedUser, setselectedUser] = useState(null);
+    const [agentCount, setagentCount] = useState(null);
+    const [playerCount, setplayerCount] = useState(null);
 
     const initDownlineAgents = () => {
         setPageLoader(true);
@@ -54,6 +57,9 @@ const AgentsTable = () => {
 
     const handeClickRows = (data) => {
         setPageLoader(true);
+
+        setagentCount(data.agentsCount);
+        setplayerCount(data.playersCount);
         UserService.getUsersByObjectID(data.accountObjectId).then((resp) => {
             if(resp) {
                 setPageLoader(false);
@@ -71,7 +77,7 @@ const AgentsTable = () => {
         <>
             {
                 (isUserDetails) ? 
-                <UserProfile objData={selectedUser} hasDownline={true} callBack={handeBackToList} />
+                <UserProfile objData={selectedUser} agentCount={agentCount} playerCount={playerCount} hasDownline={true} callBack={handeBackToList} />
                 :
                 <div style={{ paddingLeft: 20, paddingRight: 20 }}>
                     <Box display="flex" justifyContent="space-between">
@@ -107,7 +113,7 @@ const AgentsTable = () => {
                                                 : <span style={{color:'red',background:'#f6aca3', padding:'1px', borderRadius:'3px'}}>Inactive</span>
                                             }
                                         </StyledTableCell>
-                                        <StyledTableCell align="center" >{row.createdOn}</StyledTableCell>
+                                        <StyledTableCell align="center" >{DateExt.readableDate(row.createdOn)}</StyledTableCell>
                                         <StyledTableCell align="center" >
                                             <Button variant="outlined" size='small' onClick={e => handeClickRows(row)}>
                                                 View &nbsp; <InfoIcon sx={{fontSize:'14px'}} />

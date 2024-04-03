@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { Box } from '@mui/material';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import { ContentLoader } from "../../components/mui";
+import { DateExt } from "../../utils/helpers";
 
 import { UserService } from "../../services";
 import UserProfile from './UserProfile';
@@ -107,7 +108,7 @@ const PlayersTable = () => {
                                                     : <span style={{color:'red',background:'#f6aca3', padding:'1px', borderRadius:'3px'}}>Inactive</span>
                                                 }
                                             </StyledTableCell>
-                                            <StyledTableCell align="center" >{row.createdOn}</StyledTableCell>
+                                            <StyledTableCell align="center" >{DateExt.readableDate(row.createdOn)}</StyledTableCell>
                                             <StyledTableCell align="center" >
                                                 <Button variant="outlined" size='small' onClick={e => handeClickRows(row)}>
                                                     View &nbsp; <InfoIcon sx={{fontSize:'14px'}} />

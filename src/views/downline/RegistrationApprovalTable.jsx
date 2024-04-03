@@ -8,10 +8,14 @@ import { DateExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
 
 import InfoIcon from '@mui/icons-material/Info';
-import { UserService } from "../../services";
+import { UserService, ImageService } from "../../services";
 import UserDetails from './UserDetails';
 
 const RegistrationApprovalTable = ({ data }) => {
+    
+    const [selfieImage, setselfieImage] = React.useState(null);
+    const [validIdImage, setvalidIdImage] = React.useState(null);
+
     const [pageLoader, setPageLoader] = useState(false);
     const [displayList, setDisplayList] = useState(null);
     const [page, setPage] = useState(0);
@@ -46,12 +50,27 @@ const RegistrationApprovalTable = ({ data }) => {
         setPage(0);
     };
 
+    const initImages = (fileName, requestType = 0) => {
+        ImageService.getImage(fileName).then((res) => {
+            if(res) {
+                if (requestType === 0) { setvalidIdImage(res.data) }
+                if (requestType === 1) { setselfieImage(res.data) }
+            }
+        })
+    }
+
     const handleRowClick = (data) => {
         setPageLoader(true);
         UserService.getUsersByObjectID(data.accountObjectId).then((res) => {
             if (res) { 
                 setselectedUser(res.data);
                 setisOpenApproval(true);
+                if (res.data.frontIdPath !== null) {
+                    initImages(res.data.frontIdPath);
+                }
+                if (res.data.selfiePath !== null) {
+                    initImages(res.data.selfiePath, 1);
+                }
             }
             setPageLoader(false);
         })
@@ -108,7 +127,7 @@ const RegistrationApprovalTable = ({ data }) => {
             <ApprovalDialog title="View Invitee" isOpen={isOpenApproval} 
                 onClose={e => setisOpenApproval(false)}
                 objData={selectedUser} onTriggerClick={handleDialogCallback}>
-                <UserDetails objData={selectedUser} />
+                <UserDetails objData={selectedUser} selfieImage={selfieImage} validIdImage={validIdImage} />
             </ApprovalDialog>
 
             <ContentLoader isLoadingPage={ pageLoader } />

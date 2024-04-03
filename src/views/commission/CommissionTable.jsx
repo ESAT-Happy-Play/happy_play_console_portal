@@ -3,6 +3,9 @@ import { Card } from '../../components/card/Card';
 import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import { Box } from '@mui/material';
+import { Button } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
+
 import CommonDialog from '../../components/dialog/CommonDialog';
 
 import PercentRoundedIcon from '@mui/icons-material/PercentRounded';
@@ -77,7 +80,7 @@ function CommissionTable() {
                     </Box>
                     <CustomTable
                         // headAlign="left"
-                        headers={["TXN No.", "Game Type", "Game Time", "Source", "Comm'n Amt", "Comm'n Type", "Date"]}
+                        headers={["TXN No.", "Game Type", "Game Time", "Source", "Comm'n Amt", "Comm'n Type", "Date", ""]}
                         pagination={
                             <StyledPagination
                                 rowsPerPageOptions={[5, 10, 25]}
@@ -91,7 +94,7 @@ function CommissionTable() {
                         { (displayList !== null) ?
                             displayList.slice(page * rowsPerPage, page *
                                 rowsPerPage + rowsPerPage).map((row, i) => (
-                                    <StyledTableRow style={{cursor:'pointer'}} onClick={() => handleClickRow(row) } key={i}>
+                                    <StyledTableRow key={i}>
                                         <StyledTableCell align="center" >{row.transNo}</StyledTableCell>
                                         <StyledTableCell align="center" >{row.gameType}</StyledTableCell>
                                         <StyledTableCell align="center" >{row.gameTime}</StyledTableCell>
@@ -99,6 +102,11 @@ function CommissionTable() {
                                         <StyledTableCell align="center" >{row.comAmt}</StyledTableCell>
                                         <StyledTableCell align="center" >{row.comType}</StyledTableCell>
                                         <StyledTableCell align="center" >{row.date}</StyledTableCell>
+                                        <StyledTableCell align="center" >
+                                            <Button sx={{border:'none'}} variant="outlined" size='small' onClick={e => handleClickRow(row)}>
+                                                <InfoIcon style={{fontSize:'large'}} />
+                                            </Button>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                 )
                                 ) :

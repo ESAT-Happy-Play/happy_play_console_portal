@@ -7,9 +7,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import ImageIcon from '@mui/icons-material/Image';
 
-const UserDetails = ({objData}) => {
-    
+const UserDetails = ({objData, selfieImage, validIdImage}) => {
     const [currentAddressOpen, setcurrentAddressOpen] = React.useState(true);
     const handleCurrentAddressClick = () => {
         setcurrentAddressOpen(!currentAddressOpen);
@@ -152,6 +152,21 @@ const UserDetails = ({objData}) => {
                 <div>
                     <label>Type of ID</label>
                     <TextField defaultValue={objData.firstName} size='small' fullWidth />
+                </div>
+                <div className='divInput'>
+                    <p>Front ID Picture</p>
+                    {
+                        (validIdImage !== null) ? <img src={validIdImage} style={{width:'100%', borderRadius:'25px'}} alt="frontId" />
+                        : <ImageIcon sx={{fontSize:'130px'}} />
+                    }
+                </div>
+                <div className='divInput'>
+                    <p>Selfie</p>
+                    {
+                        (selfieImage !== null) ? <img src={selfieImage} style={{width:'100%', borderRadius:'25px'}} alt="selfie" />
+                        : <ImageIcon sx={{fontSize:'130px'}} />
+                    }
+                    
                 </div>
             </form>
             :<div>Loading... Please wait.</div>

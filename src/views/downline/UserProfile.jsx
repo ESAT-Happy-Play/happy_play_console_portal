@@ -12,7 +12,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import ImageIcon from '@mui/icons-material/Image';
 import { UserService, ImageService } from "../../services";
 
-const UserProfile = ({objData, callBack, hasDownline = false}) => {
+const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, hasDownline = false}) => {
     
     const [downlineCounts, setdownlineCounts] = React.useState(null);
     const [validIdImage, setvalidIdImage] = React.useState(null);
@@ -37,19 +37,18 @@ const UserProfile = ({objData, callBack, hasDownline = false}) => {
     const initImages = (fileName, requestType = 0) => {
         ImageService.getImage(fileName).then((res) => {
             if(res) {
-                // if (requestType === 0) { setvalidIdImage() }
-                // if (requestType === 1) { setselfieImage() }
-                // if (requestType === 2) { setprofileImage() }
-                console.log(res);
+                if (requestType === 0) { setvalidIdImage(res.data) }
+                if (requestType === 1) { setselfieImage(res.data) }
+                if (requestType === 2) { setprofileImage(res.data) }
             }
         })
     }
 
     useEffect(() => {
         if(objData !== null) {
-            if(hasDownline) {
-                initDownlineCounts(objData.accountObjectId);
-            }
+            // if(hasDownline) {
+            //     initDownlineCounts(objData.accountObjectId);
+            // }
             
             if(objData.profilePath !== null) {
                 initImages(objData.profilePath, 2);
@@ -82,7 +81,7 @@ const UserProfile = ({objData, callBack, hasDownline = false}) => {
                 <div className='divinfoProfile' style={{marginTop:'-55px'}}>
                     <div className='divImgInfo'>
                         {
-                            (profileImage !== null) ? <img src="/default-profile.jpg" alt="img" />
+                            (profileImage !== null) ? <img src={profileImage} alt="img" />
                             : <ImageIcon sx={{fontSize:'130px'}} />
                         }
                         <div>
@@ -108,13 +107,13 @@ const UserProfile = ({objData, callBack, hasDownline = false}) => {
                             <div className='divAgentInfo'>
                                 <div className='divCounts'>
                                     <p style={{fontSize:'25px', color:'#4845d2'}}>
-                                        {(downlineCounts !== null) ? downlineCounts.agentsCount : 0 }
+                                        {(agentCount !== null) ? agentCount : 0 }
                                     </p>
                                     <p>No. of Agents</p>
                                 </div>
                                 <div className='divCounts'>
                                     <p style={{fontSize:'25px', color:'#4845d2'}}>
-                                        {(downlineCounts !== null) ? downlineCounts.playersCount : 0 }
+                                        {(playerCount !== null) ? playerCount : 0 }
                                     </p>
                                     <p>No. of Players</p>
                                 </div>
@@ -270,14 +269,14 @@ const UserProfile = ({objData, callBack, hasDownline = false}) => {
                             <div className='divInput'>
                                 <p>Front ID Picture</p>
                                 {
-                                    (validIdImage !== null) ? <img src="/default-profile.jpg" alt="frontId" />
+                                    (validIdImage !== null) ? <img src={validIdImage} style={{width:'100%', borderRadius:'25px'}} alt="frontId" />
                                     : <ImageIcon sx={{fontSize:'130px'}} />
                                 }
                             </div>
                             <div className='divInput'>
                                 <p>Selfie</p>
                                 {
-                                    (selfieImage !== null) ? <img src="/default-profile.jpg" alt="selfie" />
+                                    (selfieImage !== null) ? <img src={selfieImage} style={{width:'100%', borderRadius:'25px'}} alt="selfie" />
                                     : <ImageIcon sx={{fontSize:'130px'}} />
                                 }
                                 

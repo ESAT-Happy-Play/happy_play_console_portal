@@ -3,6 +3,9 @@ import { Card } from '../../components/card/Card';
 import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import { Box } from '@mui/material';
+import { Button } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
+
 import CommonDialog from '../../components/dialog/CommonDialog';
 import PercentRoundedIcon from '@mui/icons-material/PercentRounded';
 
@@ -70,7 +73,7 @@ export const Transactions = () => {
                 </Box>
                 <CustomTable
                     // headAlign="left"
-                    headers={["Transaction No.", "Amount", "Status", "Source", "Transaction Type", "Date"]}
+                    headers={["Transaction No.", "Amount", "Status", "Source", "Transaction Type", "Date", ""]}
                     pagination={
                         <StyledPagination
                             rowsPerPageOptions={[5, 10, 25]}
@@ -84,13 +87,18 @@ export const Transactions = () => {
                     { (displayList !== null) ?
                         displayList.slice(page * rowsPerPage, page *
                             rowsPerPage + rowsPerPage).map((row, i) => (
-                                <StyledTableRow onClick={() => handleClickRow(row) } style={{cursor:'pointer'}} key={i}>
+                                <StyledTableRow key={i}>
                                     <StyledTableCell align="center" >{row.transNo}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.amnt}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.status}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.source}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.transType}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.date}</StyledTableCell>
+                                    <StyledTableCell align="center" >
+                                        <Button sx={{border:'none'}} variant="outlined" size='small' onClick={e => handleClickRow(row)}>
+                                            <InfoIcon style={{fontSize:'large'}} />
+                                        </Button>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             )
                             ) :

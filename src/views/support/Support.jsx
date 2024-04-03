@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CommonDialog from '../../components/dialog/CommonDialog';
 import {Button, TextField, IconButton} from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import CloseIcon from '@mui/icons-material/Close';
@@ -53,6 +54,10 @@ export const Support = () => {
       setPage(0);
   };
 
+  const handleClickRow = (data) => {
+      console.log(data);
+  }
+
   return (
     <>
       <Card 
@@ -72,7 +77,7 @@ export const Support = () => {
                 </Box>
                 <CustomTable
                     // headAlign="left"
-                    headers={["Report Title", "Ticket Description", "Attachment ct.", "Date"]}
+                    headers={["Report Title", "Ticket Description", "Attachment ct.", "Date", ""]}
                     pagination={
                         <StyledPagination
                             rowsPerPageOptions={[5, 10, 25]}
@@ -86,11 +91,16 @@ export const Support = () => {
                     { (displayList !== null) ?
                         displayList.slice(page * rowsPerPage, page *
                             rowsPerPage + rowsPerPage).map((row, i) => (
-                                <StyledTableRow style={{cursor:'pointer'}} key={i}>
+                                <StyledTableRow key={i}>
                                     <StyledTableCell align="center" >{row.reportTitle}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.description}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.attachementCount}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.date}</StyledTableCell>
+                                    <StyledTableCell align="center" >
+                                        <Button sx={{border:'none'}} variant="outlined" size='small' onClick={e => handleClickRow(row)}>
+                                            <InfoIcon style={{fontSize:'large'}} />
+                                        </Button>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             )
                             ) :
