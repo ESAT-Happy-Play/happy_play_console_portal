@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useState } from "react";
 
-const RegularSearchBar = ({ handleSearch, searchTitle }) => {
+const RegularSearchBar = ({ handleSearch, searchTitle, headerWidth = null }) => {
   //declarations
   const [searchVal, setSearchVal] = useState("");
 
@@ -25,7 +25,7 @@ const RegularSearchBar = ({ handleSearch, searchTitle }) => {
 
 
   return (
-    <header>
+    <header style={{width:(headerWidth !== null) ? headerWidth : ''}}>
       <form className="search" onSubmit={handleSubmit}>
         <TextField
           size="small"

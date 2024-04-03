@@ -17,7 +17,7 @@ const SidebarItem = ({ item }) => {
           },
 
           padding: "8px 15px",
-          marginLeft: "10%",
+          // marginLeft: "10%",
           borderLeft: (item.child === null) ? "2px solid rgba(255, 255, 255, 0.5)" : null,
           fontSize: "14px",
           fontFamily: "Inter",
@@ -29,7 +29,7 @@ const SidebarItem = ({ item }) => {
           zIndex: 1
         }} component={Link} to={item.path} >
 
-        {item.sidebarProps.icon} &nbsp; {item.sidebarProps.displayText}
+        <div className={(isSelected) ? "sideIcon" : ""}>{item.sidebarProps.icon}</div> &nbsp; {item.sidebarProps.displayText}
       </ListItemButton>
     ) : null
   );

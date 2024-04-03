@@ -1,0 +1,71 @@
+.divinfoProfile {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 2px solid #e3e3e3;
+
+    .divImgInfo {
+        display: flex;
+        gap: 25px;
+        p { font-size: 16px; margin: 10px; }
+        img {
+            border-radius: 50%;
+            height: 150px;
+            width: 150px;
+            object-fit: cover;
+        }
+    }
+    .divAgentInfo {
+        display: flex;
+        gap: 15px;
+        padding-top: 65px;
+        .divCounts {
+            border: 1px solid black;
+            padding: 10px;
+            height: 80px;
+            border-radius: 10px;
+            text-align: center;
+            width: 150px;
+            p { margin: 0; font-size: 16px; }
+        }
+    }
+}
+
+.divuserprofile {
+    display: flex;
+    justify-content: space-between;
+    .infoContent {
+        width: 100%;
+        padding: 15px;
+        .infoHead {
+            h4 { margin: 0;}
+            text-align: center;
+        }
+        .divDetails {
+            margin-top: 15px;
+            .divInput {
+                margin-bottom: 10px;
+                .MuiTextField-root {
+                    margin-top: 5px;
+                }
+                img {
+                    padding: 15px;
+                    object-fit: cover;
+                    height: 230px;
+                    border-radius: 25px;
+                }
+            }
+
+            nav {
+                margin-bottom: 15px;
+                .divInputDrp {
+                    display: flex;
+                    gap: 5px;
+                    .MuiTextField-root {
+                        margin: 5px 0 8px 0px;
+                    }
+                }
+            }
+        }
+    }
+}

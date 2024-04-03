@@ -1,4 +1,10 @@
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import HomeIcon from '@mui/icons-material/Home';
+import PercentRoundedIcon from '@mui/icons-material/PercentRounded';
+import PaidIcon from '@mui/icons-material/Paid';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 import { Home, Commission, Downline, Gross, Performance, Support, Transactions } from '../views';
  
@@ -9,7 +15,7 @@ const routeLinks = [
       state: "Home.Home",
       sidebarProps: {
         displayText: "Dashboard",
-        icon: <DashboardOutlinedIcon />
+        icon: <HomeIcon />
       },
     },
     {
@@ -18,7 +24,7 @@ const routeLinks = [
       state: "Commission.Commission",
       sidebarProps: {
         displayText: "Commission",
-        icon: <DashboardOutlinedIcon />
+        icon: <PercentRoundedIcon />
       },
     },
     {
@@ -27,7 +33,7 @@ const routeLinks = [
       state: "Gross.Gross",
       sidebarProps: {
         displayText: "Gross",
-        icon: <DashboardOutlinedIcon />
+        icon: <PaidIcon />
       },
     },
     {
@@ -36,25 +42,25 @@ const routeLinks = [
       state: "Downline.Downline",
       sidebarProps: {
         displayText: "Downline",
-        icon: <DashboardOutlinedIcon />
+        icon: <PeopleAltIcon />
       },
     },
-    {
-      path: "/performance",
-      element: <Performance />,
-      state: "Performance.Performance",
-      sidebarProps: {
-        displayText: "Performance",
-        icon: <DashboardOutlinedIcon />
-      },
-    },
+    // {
+    //   path: "/performance",
+    //   element: <Performance />,
+    //   state: "Performance.Performance",
+    //   sidebarProps: {
+    //     displayText: "Performance",
+    //     icon: <EqualizerIcon />
+    //   },
+    // },
     {
       path: "/transactions",
       element: <Transactions />,
       state: "Transactions.Transactions",
       sidebarProps: {
         displayText: "Transactions",
-        icon: <DashboardOutlinedIcon />
+        icon: <ReceiptIcon />
       },
     },
     {
@@ -63,7 +69,7 @@ const routeLinks = [
       state: "Support.Support",
       sidebarProps: {
         displayText: "Report A Problem",
-        icon: <DashboardOutlinedIcon />
+        icon: <ReportProblemIcon />
       },
     },
   ];

@@ -78,7 +78,10 @@ export const UserService = {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/user/request/approval`)
         .then((res) => {
             if (!res.status) { 
-                if (res.data.response.status === 400) {
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
                     toast.error(res.data.response.data.errorMessage); 
                 } else {
                     toast.error("Sorry, unsuccessfull gateway communication."); 
@@ -129,7 +132,10 @@ export const UserService = {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/user/accountObjectId?AccountObjctId=${userAccountObjId}`)
         .then((res) => {
             if (!res.status) { 
-                if (res.data.response.status === 400) {
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
                     toast.error(res.data.response.data.errorMessage); 
                 } else {
                     toast.error("Sorry, unsuccessfull gateway communication."); 
@@ -142,8 +148,12 @@ export const UserService = {
     getDownlineAgents: async () => {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/user/downline/agents`)
         .then((res) => {
+            console.log(res);
             if (!res.status) { 
-                if (res.data.response.status === 400) {
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
                     toast.error(res.data.response.data.errorMessage); 
                 } else {
                     toast.error("Sorry, unsuccessfull gateway communication."); 
@@ -157,7 +167,27 @@ export const UserService = {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/user/downline/players`)
         .then((res) => {
             if (!res.status) { 
-                if (res.data.response.status === 400) {
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
+    getDownlineCounts: async (accountObjectId) => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/user/downline/counts/${accountObjectId}`)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
                     toast.error(res.data.response.data.errorMessage); 
                 } else {
                     toast.error("Sorry, unsuccessfull gateway communication."); 

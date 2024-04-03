@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
-
+import { Button } from "@mui/material";
 import { Box } from '@mui/material';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import ApprovalDialog from '../../components/dialog/ApprovalDialog';
 import { DateExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
 
+import InfoIcon from '@mui/icons-material/Info';
 import { UserService } from "../../services";
 import UserDetails from './UserDetails';
 
@@ -51,7 +52,6 @@ const RegistrationApprovalTable = ({ data }) => {
             if (res) { 
                 setselectedUser(res.data);
                 setisOpenApproval(true);
-                console.log(res.data);
             }
             setPageLoader(false);
         })
@@ -83,17 +83,25 @@ const RegistrationApprovalTable = ({ data }) => {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />}
             >
-                { (displayList !== null) ?
-                    displayList.slice(page * rowsPerPage, page *
-                        rowsPerPage + rowsPerPage).map((row, i) => (
-                            <StyledTableRow key={i} onClick={e => handleRowClick(row)} style={{cursor:'pointer'}}>
-                                <StyledTableCell align="center" >{row.fullname}</StyledTableCell>
-                                <StyledTableCell align="center" >{row.contactNumber}</StyledTableCell>
-                                <StyledTableCell align="center" >{DateExt.readableDate(row.createdOn)}</StyledTableCell>
-                            </StyledTableRow>
-                        )
-                    ) :
-                    <StyledTableRow><StyledTableCell align="center" colSpan={3}>No available data</StyledTableCell></StyledTableRow>
+                { 
+                    (displayList !== null) ?
+                        (displayList.length > 0) ?
+                        displayList.slice(page * rowsPerPage, page *
+                            rowsPerPage + rowsPerPage).map((row, i) => (
+                                <StyledTableRow key={i}>
+                                    <StyledTableCell align="center" >{row.fullname}</StyledTableCell>
+                                    <StyledTableCell align="center" >{row.contactNumber}</StyledTableCell>
+                                    <StyledTableCell align="center" >{DateExt.readableDate(row.createdOn)}</StyledTableCell>
+                                    <StyledTableCell align="center" >
+                                        <Button variant="outlined" size='small' onClick={e => handleRowClick(row)}>
+                                            View &nbsp; <InfoIcon sx={{fontSize:'14px'}} />
+                                        </Button>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            )
+                        ) :
+                        <StyledTableRow><StyledTableCell align="center" colSpan={3}>No available data</StyledTableCell></StyledTableRow>
+                    : <></>
                 }
             </CustomTable>
 

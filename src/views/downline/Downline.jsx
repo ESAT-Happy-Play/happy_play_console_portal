@@ -1,6 +1,8 @@
+import './downline.scss';
 import React, { useEffect, useState } from 'react';
 import CustomVerticalTab from '../../components/tab/CustomVerticalTab';
 import { Card } from '../../components/card/Card';
+import { ContentLoader } from "../../components/mui";
 
 import RegistrationApprovalTable from './RegistrationApprovalTable';
 import AgentsTable from './AgentsTable';
@@ -9,6 +11,7 @@ import PlayersTable from './PlayersTable';
 import { UserService } from "../../services";
 
 export const Downline = () => {
+  const [pageLoader, setPageLoader] = useState(false);
   const [approvalData, setapprovalData] = useState(null);
 
   const [header, setheader] = useState(1);
@@ -25,8 +28,10 @@ export const Downline = () => {
   const handeTabChange = (newVal) => { setheader(newVal); }
 
   const handleForApproval = () => {
+    setPageLoader(true);
     UserService.getUsersForApprove().then((res) => {
       if (res) { setapprovalData(res.data.listData); }
+      setPageLoader(false);
     })
   }
 
@@ -35,6 +40,7 @@ export const Downline = () => {
   }, []);
   
   return (
+    <>
       <Card 
         style={{width:"98%", margin:'10px'}} 
         bodystyle={{padding:'0px'}}
@@ -50,5 +56,7 @@ export const Downline = () => {
           </div>
         }
       />
+      <ContentLoader isLoadingPage={ pageLoader } />
+    </>
   )
 }

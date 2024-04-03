@@ -1,0 +1,98 @@
+.commission_container {
+    padding: 20px;
+    display: flex;
+
+    .withdrawlist {
+        width: 270px;
+        background: white;
+        border-radius: 15px;
+        height: 90vh;
+        .div-balance {
+            text-align: center;
+            padding: 15px;
+            svg {
+                background: #4845d2;
+                color: white;
+                border-radius: 5px;
+                font-size: 25px;
+                margin-top: 15px;
+            }
+            .p-balance {
+                font-size: 25px;
+                font-weight: 700;
+                font-family: 'Inter';
+                color: #7187f7;
+                margin: 0;
+            }
+        }
+    }
+
+    .withdrawItem {
+        padding: 5px;
+        margin: 10px;
+        border-bottom: 2px solid #e3e3e3;
+        .listData {
+            display: flex;
+            justify-content: space-between;
+            .span-title { font-size: 14px; font-weight: 600; }
+            .span-desc { font-size: 12px;}
+        }
+    }
+
+    .paymentType {
+        background: #f4f3fc;
+        width: 300px;
+        .paymentItem {
+            display: flex;
+            padding: 15px;
+            margin: 25px;
+            border: 1px solid white;
+            border-radius: 5px;
+            gap: 10px;
+            background: white;
+            cursor: pointer;
+            img {
+                height: 25px;
+                border-radius: 5px;
+            }
+        }
+        .itemActive {
+            border: 1px solid #4845d2;
+        }
+    }
+
+    .paymentForm {
+        padding: 5px;
+        margin: 15px;
+        width: 70%;
+        color: black;
+        .p-balance {
+            text-align: center;
+            font-size: 18px;
+            background: #f4f3fc;
+            padding: 5px;
+            font-family: 'Inter';
+        }
+        .div-amount {
+            display: flex;
+            gap: 30px;
+            .amt-item {
+                background-color: #f4f3fc;
+                padding: 10px 25px 10px 25px;
+                border-radius: 25px;
+                cursor: pointer;
+            }
+            .amt-item-active {
+                background-color: #6880f6;
+                color: white;
+            }
+        }
+
+        .paymentForm-Footer {
+            display: flex;
+            padding: 20px;
+            gap: 15px;
+            justify-content: center;
+        }
+    }
+}
