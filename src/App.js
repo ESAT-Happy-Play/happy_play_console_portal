@@ -8,7 +8,8 @@ import './assets/fonts/Inter-Regular.otf';
 import Layout from "./components/layout/Layout";
 
 import { Login, LoginNewUser, AuthOTP, ForgotPassword, UpdatePassword, Registration, RegistrationOTP, 
-  NotFound, RegisterDetails } from './views';
+  NotFound, RegisterDetails, Profile } from './views';
+import LayoutWrapper from "./components/layout/LayoutWrapper";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
 
           {/* protected routes */}
           <Route path="/" element={<Layout />}>
+            <Route exact path="/profile" element= { <LayoutWrapper state="Profile.Profile"><Profile /></LayoutWrapper> } />
             {routes}
           </Route>
           <Route path='*' element={<NotFound />} />

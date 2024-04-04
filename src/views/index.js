@@ -18,8 +18,9 @@ import { Gross } from './gross/Gross';
 import { Performance } from './performance/Performance';
 import { Support } from './support/Support';
 import { Transactions } from './transactions/Transactions';
+import { Profile } from './profile/Profile';
 
 export { Login, LoginNewUser, AuthOTP, ForgotPassword, UpdatePassword, NotFound, Registration, 
     RegistrationOTP, RegisterDetails, Home, Commission, Downline, Gross, Performance, Support,
-    Transactions
+    Transactions, Profile
  };

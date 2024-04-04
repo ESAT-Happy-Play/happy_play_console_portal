@@ -1,0 +1,33 @@
+.div-profile-conainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+    .div-profilecontent {
+        width: 80%;
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .profile-form-button {
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        }
+
+        .profile-form-input {
+            font-family: "Inter";
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid #d6d6d6;
+            padding: 15px 0 10px 0px;
+            .spanFixW {
+                width: 200px;
+            }
+        }
+    }
+}

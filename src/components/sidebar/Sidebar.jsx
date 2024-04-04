@@ -31,6 +31,10 @@ const Sidebar = () => {
     window.location.href = '/login';
   };
 
+  const handleProfile = () => {
+    window.location.href = '/profile';
+  }
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -55,7 +59,7 @@ const Sidebar = () => {
             <p className="notif-count">{mockNotifCounter}</p>
           }
         </div>
-        <div className="profile">
+        <div className="profile" onClick={handleProfile}>
           <AccountCircleRoundedIcon className='icon' />
           <div>
             <h2>Username</h2>
