@@ -7,7 +7,7 @@ let listMenuObj = GetStoreObject("menuList");
 let menus = [];
 if (listMenuObj !== null) {
   listMenuObj.forEach(item => {
-    if(item.enabled) {
+    if (item.enabled) {
       menus.push(item.menuCode);
     }
   });
@@ -15,6 +15,10 @@ if (listMenuObj !== null) {
 
 let finalRoutes = [];
 finalRoutes.push(routeLinks[0]);
+menus.push("Support.Tickets");
+menus.push("Support.LiveChat");
+menus.push("Support.Behavior");
+menus.push("Support.Users");
 
 if (loginObj !== null) {
   // 0 - Dashboard menu
