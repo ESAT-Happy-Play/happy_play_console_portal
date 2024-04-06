@@ -2,6 +2,7 @@ import appRoutes from "../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import SidebarItemCollapse from "./SidebarItemCollapse";
 import React, { useState } from 'react';
+import { useSelector } from "react-redux";
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
@@ -11,6 +12,8 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import "./sidebar.scss";
 
 const Sidebar = () => {
+  const { appState } = useSelector((state) => state.appState);
+  
   const [selected, setSelected] = useState("");
   // TODO: connect to actual notification number
   const mockNotifCounter = 4;
@@ -43,7 +46,8 @@ const Sidebar = () => {
             <p className="notif-count">{mockNotifCounter}</p>
           }
         </div>
-        <div className="profile" onClick={handleProfile}>
+        <div className={(appState === "Profile.Profile") ? "profile foot-active" : "profile" } 
+        onClick={handleProfile}>
           <AccountCircleRoundedIcon className='icon' />
           <div>
             <h2>Username</h2>

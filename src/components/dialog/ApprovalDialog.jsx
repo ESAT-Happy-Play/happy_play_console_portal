@@ -17,6 +17,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 import { MuiLoadingButton } from "../../components/mui";
+import { StoreExt } from "../../utils/helpers";
 import { UserService } from "../../services";
 
 const ApprovalDialog = ({ 
@@ -26,6 +27,9 @@ const ApprovalDialog = ({
     children,
     objData }) => {
     
+    let loginObj = StoreExt.getStore("auth");
+    let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
+
     const [submitLoading, setsubmitLoading] = useState(false);
     const formApprove = useForm({ defaultValues: {
         accountInfoId: (objData !== null) ? objData.accountObjectId : "",
@@ -54,7 +58,8 @@ const ApprovalDialog = ({
         let userType = event.target.getAttribute('data-value');
         if (userType === "4") {
             sethasCommission(true);
-        } else {
+        }
+        if (userType === "5") {
             sethasCommission(false);
         }
     }
@@ -166,17 +171,30 @@ const ApprovalDialog = ({
                         sx={{ width: 400 }}>
                         <div>
                             <label>Role *</label>
-                            <TextField 
-                                onClick={selectRoleEvent}
-                                { ...register("userTypeId", { required: true } ) }
-                                error={ !!errors.userTypeId }
-                                defaultValue="" variant="outlined" size="small" fullWidth select>
-                                <MenuItem value='' data-value=""><em>Select Role</em></MenuItem>
-                                <MenuItem value="4" data-value="4">Agent</MenuItem>
-                                <MenuItem value="5" data-value="5">Player</MenuItem>
-                            </TextField>
+                            {
+                                ((tokenObj.role !== "Agent")) ?
+                                    <TextField 
+                                        onClick={selectRoleEvent}
+                                        { ...register("userTypeId", { required: true } ) }
+                                        error={ !!errors.userTypeId }
+                                        defaultValue="" variant="outlined" size="small" fullWidth select>
+                                        <MenuItem value='' data-value=""><em>Select Role</em></MenuItem>
+                                        <MenuItem value="4" data-value="4">Agent</MenuItem>
+                                    </TextField>
+                                :
+                                    <TextField 
+                                        onClick={selectRoleEvent}
+                                        { ...register("userTypeId", { required: true } ) }
+                                        error={ !!errors.userTypeId }
+                                        defaultValue="" variant="outlined" size="small" fullWidth select>
+                                        <MenuItem value='' data-value=""><em>Select Role</em></MenuItem>
+                                        <MenuItem value="4" data-value="4">Agent</MenuItem>
+                                        <MenuItem value="5" data-value="5">Player</MenuItem>   
+                                    </TextField>
+                            }
+                            
                         </div>
-                        <div>
+                        <div style={{display:(!hasCommission) ? 'none' : 'block'}}>
                             <label>Commission Share *</label>
                             <TextField disabled={!hasCommission} 
                                 { ...register("commission", { required: hasCommission } ) }
