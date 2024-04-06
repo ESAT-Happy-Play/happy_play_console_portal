@@ -20,18 +20,17 @@ const TicketsFilterModal = ({
   onClose,
   onSubmit,
   initFilters,
-  handleResetFilters,
+  handleResetFilters
 }) => {
   const [dateInterval, setDateInterval] = useState(initFilters?.dateInterval ?? "1D");
-  const [company, setCompany] = useState(initFilters?.company ?? "");
-  const [branch, setBranch] = useState(initFilters?.branch ?? "");
-  const [priority, setPriority] = useState(initFilters?.priority ?? "");
-  const [status, setStatus] = useState(initFilters?.status ?? []);
-  const [assignedTo, setAssignedTo] = useState(initFilters?.assignedTo ?? "");
-  const [department, setDepartment] = useState(initFilters?.department ?? "");
+  const [company, setCompany] = useState(initFilters?.company?.value ?? "");
+  const [branch, setBranch] = useState(initFilters?.branch?.value ?? "");
+  const [priority, setPriority] = useState(initFilters?.priority?.value ?? "");
+  const [status, setStatus] = useState(initFilters?.status?.value ?? []);
+  const [assignedTo, setAssignedTo] = useState(initFilters?.assignedTo?.value ?? "");
+  const [department, setDepartment] = useState(initFilters?.department?.value ?? "");
 
   const dateIntervals = ["1D", "1W", "1M", "1Y", "Custom"];
-
 
   const selectBorderStyle = {
     borderRadius: "25px",
@@ -138,18 +137,38 @@ const TicketsFilterModal = ({
   const handleSubmit = () => {
     var newFilters = [];
 
-    if (company)
-      newFilters.push({ key: "company", label: company.name, value: company.id });
+    if (company != "")
+      newFilters.push({ key: "company", label: mockCompanies[company - 1].name, value: company, id: mockCompanies[company - 1].id });
 
-    if (branch)
-      newFilters.push({ key: "branch", label: branch.name, value: branch.id });
+    if (branch != "")
+      newFilters.push({ key: "branch", label: mockBranches[branch - 1].name, value: branch, id: mockBranches[branch - 1].id });
 
-    if (status)
-      newFilters.push({ key: "status", label: status.name, value: status.id });
+    if (status != "")
+      newFilters.push({ key: "status", label: mockStatus[status - 1].name, value: status, id: mockStatus[status - 1].id });
+
+    if (priority != "")
+      newFilters.push({ key: "priority", label: mockPriority[priority - 1].name, value: priority, id: mockPriority[priority - 1].id });
+
+    if (assignedTo != "")
+      newFilters.push({ key: "assignedTo", label: "Assigned to " + mockUsers[assignedTo - 1].name, value: assignedTo, id: mockUsers[assignedTo - 1].id });
+
+    if (department != "")
+      newFilters.push({ key: "department", label: mockDepartments[department - 1].name, value: department, id: mockDepartments[department - 1].id });
 
     onSubmit(newFilters);
     onClose();
   }
+
+  const resetFilters = () => {
+    setCompany('');
+    setBranch('');
+    setStatus('');
+    setPriority('');
+    setAssignedTo('');
+    setDepartment('');
+    setDateInterval('1D');
+    handleResetFilters();
+  };
 
   useEffect(() => {
     if (!drawTypeList.some((item) => item.name === "ALL")) {
@@ -163,209 +182,207 @@ const TicketsFilterModal = ({
   return (
     <>
       {open && (
-        <div className="filter-modal-container">
-          <div
-            className="filter-container"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="filter-header">
-              <p>Filters</p>
-              <Close onClick={onClose} sx={{ cursor: "pointer" }} />
-            </div>
-            <div className="dropdown">
-              <p>Company</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  value={company}
-                  onChange={(e) => { setCompany(e.target.value) }}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Company Name
-                        </p>
-                      );
-                    }
-                    return selected.name;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockCompanies.map((company, index) => (
-                    <MenuItem value={company} key={company.id}>
-                      {company.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="dropdown">
-              <p>Branch</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  value={branch}
-                  onChange={(e) => { setBranch(e.target.value) }}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Branch Name
-                        </p>
-                      );
-                    }
-                    return selected.name;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockBranches.map((branch, index) => (
-                    <MenuItem value={branch} key={branch.id}>
-                      {branch.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="dropdown">
-              <p>Status</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  onChange={(e) => { setStatus(e.target.value) }}
-                  value={status}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Select Status
-                        </p>
-                      );
-                    }
-                    return selected.name;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockStatus.map((status, index) => (
-                    <MenuItem value={status} key={status.id}>
-                      {status.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="dropdown">
-              <p>Priority Level</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  onChange={(e) => { setPriority(e.target.value) }}
-                  value={priority}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Select Priority Level
-                        </p>
-                      );
-                    }
-                    return selected;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockPriority.map((priority, index) => (
-                    <MenuItem value={priority.name} key={priority.id}>
-                      {priority.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="dropdown">
-              <p>Assigned To</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  onChange={(e) => { setAssignedTo(e.target.value) }}
-                  value={assignedTo}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Select Assigned
-                        </p>
-                      );
-                    }
-                    return selected;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockUsers.map((assigned, index) => (
-                    <MenuItem value={assigned.name} key={assigned.id}>
-                      {assigned.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="dropdown">
-              <p>Department</p>
-              <FormControl fullWidth size="small">
-                <Select
-                  displayEmpty
-                  onChange={(e) => { setDepartment(e.target.value) }}
-                  value={department}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return (
-                        <p style={{ fontSize: "12px", color: "lightgray" }}>
-                          Select Department
-                        </p>
-                      );
-                    }
-                    return selected;
-                  }}
-                  sx={selectBorderStyle}
-                >
-                  {mockDepartments.map((department, index) => (
-                    <MenuItem value={department.name} key={department.id}>
-                      {department.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="date-interval-container">
-              {dateIntervals.map((date, index) => (
-                <div
-                  key={index}
-                  onClick={() => setDateInterval(date)}
-                  className={
-                    dateInterval === date ? "date-interval-selected" : ""
-                  }
-                >
-                  {" "}
-                  {date}{" "}
-                </div>
-              ))}
-            </div>
-            <div className="date-interval-display">
-              {displayDateRange(dateInterval)}
-            </div>
-            <div className="modal-buttons">
-              <Button
-                onClick={handleResetFilters}
-                className="reset-button"
-                size="small"
-              >
-                Reset Filters
-              </Button>
-              <Button onClick={() => handleSubmit()} className="apply-button" size="small">
-                Apply Filters
-                <CheckIcon />
-              </Button>
-            </div>
+        <div
+          className="filter-container"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="filter-header">
+            <p>Filters</p>
+            <Close onClick={onClose} sx={{ cursor: "pointer" }} />
           </div>
-        </div >
+          <div className="dropdown">
+            <p>Company</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                value={company}
+                onChange={(e) => { setCompany(e.target.value) }}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Company Name
+                      </p>
+                    );
+                  }
+                  return mockCompanies[selected - 1]?.name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockCompanies.map((company, index) => (
+                  <MenuItem value={index + 1} key={company.id}>
+                    {company.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="dropdown">
+            <p>Branch</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                value={branch}
+                onChange={(e) => { setBranch(e.target.value) }}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Branch Name
+                      </p>
+                    );
+                  }
+                  return mockBranches[selected - 1]?.name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockBranches.map((branch, index) => (
+                  <MenuItem value={index + 1} key={branch.id}>
+                    {branch.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="dropdown">
+            <p>Status</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                onChange={(e) => { setStatus(e.target.value) }}
+                value={status}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Select Status
+                      </p>
+                    );
+                  }
+                  return mockStatus[selected - 1]?.name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockStatus.map((status, index) => (
+                  <MenuItem value={index + 1} key={status.id}>
+                    {status.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="dropdown">
+            <p>Priority Level</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                onChange={(e) => { setPriority(e.target.value) }}
+                value={priority}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Select Priority Level
+                      </p>
+                    );
+                  }
+                  return mockPriority[selected - 1]?.name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockPriority.map((priority, index) => (
+                  <MenuItem value={index + 1} key={priority.id}>
+                    {priority.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="dropdown">
+            <p>Assigned To</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                onChange={(e) => { setAssignedTo(e.target.value) }}
+                value={assignedTo}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Select Assigned
+                      </p>
+                    );
+                  }
+                  return mockUsers[selected - 1].name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockUsers.map((assigned, index) => (
+                  <MenuItem value={index + 1} key={assigned.id}>
+                    {assigned.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="dropdown">
+            <p>Department</p>
+            <FormControl fullWidth size="small">
+              <Select
+                displayEmpty
+                onChange={(e) => { setDepartment(e.target.value) }}
+                value={department}
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return (
+                      <p style={{ fontSize: "12px", color: "lightgray" }}>
+                        Select Department
+                      </p>
+                    );
+                  }
+                  return mockDepartments[selected - 1]?.name;
+                }}
+                sx={selectBorderStyle}
+              >
+                {mockDepartments.map((department, index) => (
+                  <MenuItem value={index - 1} key={department.id}>
+                    {department.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="date-interval-container">
+            {dateIntervals.map((date, index) => (
+              <div
+                key={index + 1}
+                onClick={() => setDateInterval(date)}
+                className={
+                  dateInterval === date ? "date-interval-selected" : ""
+                }
+              >
+                {" "}
+                {date}{" "}
+              </div>
+            ))}
+          </div>
+          <div className="date-interval-display">
+            {displayDateRange(dateInterval)}
+          </div>
+          <div className="modal-buttons">
+            <Button
+              onClick={resetFilters}
+              className="reset-button"
+              size="small"
+            >
+              Reset Filters
+            </Button>
+            <Button onClick={() => handleSubmit()} className="apply-button" size="small">
+              Apply Filters
+              <CheckIcon />
+            </Button>
+          </div>
+        </div>
       )}
     </>
   );

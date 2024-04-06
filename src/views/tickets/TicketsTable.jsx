@@ -1,10 +1,11 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
-import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
-
+import CustomTable, { StyledPagination, StyledTableCell } from '../../components/table/customTable/CustomTable';
+import { styled } from '@mui/material/styles';
 import { COLORS } from '../../helper/colors';
-import { Box, Chip, IconButton, TextField } from '@mui/material';
+import { Box, Chip, IconButton, TableRow, TextField } from '@mui/material';
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import InfoIcon from '@mui/icons-material/Info';
 import FileExportIcon from "../../assets/icons/FileExportIcon";
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import CloseIcon from '@mui/icons-material/Close';
@@ -26,7 +27,14 @@ const TicketsTable = ({ data, type }) => {
     const [valid, setValid] = useState(true);
     const [showFilterModal, setShowFilterModal] = useState(false);
 
-    const priorityLevel = ["Low", "High", "Critical"]
+    const priorityLevel = ["Low", "High", "Critical"];
+    const filterSummary = useMemo(() => {
+        var summary = {};
+        filters.forEach((filter) => {
+            summary[filter.key] = filter;
+        })
+        return summary;
+    }, [filters])
 
     useEffect(() => {
         var search = data.filter((row) => {
@@ -56,7 +64,6 @@ const TicketsTable = ({ data, type }) => {
     };
 
     const handleFilter = (value) => {
-        console.log(value);
         setFilters(value);
     };
 
@@ -65,10 +72,11 @@ const TicketsTable = ({ data, type }) => {
     };
 
     const handleResetFilters = () => {
-        setFilters([])
+        setFilters([]);
     };
 
     const handleDelete = (chipToDelete) => () => {
+        setShowFilterModal(false);
         setFilters((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
 
@@ -76,14 +84,6 @@ const TicketsTable = ({ data, type }) => {
         setSelectedRow(value);
         setValid(true);
         setOpenEdit(true);
-    }
-
-    const handleValidation = (value) => {
-        console.log(value.target.value);
-        if (value.target.value < 1)
-            setValid(false);
-        else
-            setValid(true);
     }
 
     return (
@@ -102,20 +102,31 @@ const TicketsTable = ({ data, type }) => {
                     <FileExportIcon size={20} />
                     Export
                 </div>
-                <Box marginLeft="auto" display="flex">
+                <Box marginLeft="auto" display="flex" alignItems="center" gap='2px'>
                     {filters.map((filter, index) =>
                         <Chip
+                            sx={{ color: COLORS.violetMain, height: '22px', background: COLORS.tableBackground }}
                             key={index}
                             color='primary'
                             label={filter.label}
                             onDelete={handleDelete(filter)}
-                            deleteIcon={<CloseIcon />}
+                            deleteIcon={<CloseIcon sx={{ color: `${COLORS.violetMain} !important`, width: '16px' }} />}
                         />
                     )}
-                    <div className="filter-button" onClick={toggleFilter}>
+                    <Box position='relative' display='flex' alignItems='center' sx={{ '&:hover': { cursor: 'pointer' } }} onClick={toggleFilter}>
                         Filters
                         <FilterListIcon />
-                    </div>
+                        {
+                            showFilterModal &&
+                            <TicketsFilterModal
+                                open={showFilterModal}
+                                onClose={() => toggleFilter(null)}
+                                onSubmit={handleFilter}
+                                initFilters={filterSummary}
+                                handleResetFilters={handleResetFilters}
+                            />
+                        }
+                    </Box>
                 </Box>
             </Box>
             <CustomTable
@@ -135,7 +146,7 @@ const TicketsTable = ({ data, type }) => {
 
                     displayList.slice(page * rowsPerPage, page *
                         rowsPerPage + rowsPerPage).map((row, i) => (
-                            <StyledTableRow key={i}>
+                            <StyledTableRow key={i} sx={{ background: `${row.priority == 3 ? COLORS.transparentRed : null} !important` }} onClick={() => handleEdit(row)}>
                                 <StyledTableCell align="center" >{row.fullName}</StyledTableCell>
                                 <StyledTableCell align="center" >{row.title}</StyledTableCell>
                                 <StyledTableCell align="center" >{row.description}</StyledTableCell>
@@ -143,7 +154,7 @@ const TicketsTable = ({ data, type }) => {
                                 <StyledTableCell align="center" sx={{ color: row.priority == 2 ? COLORS.yellow : row.priority == 3 ? COLORS.redWarn : null }}>{priorityLevel[row.priority - 1]}</StyledTableCell>
                                 <StyledTableCell align="center" >{row.date}</StyledTableCell>
                                 <StyledTableCell align="center" sx={{ width: 20 }}>
-                                    <IconButton onClick={() => handleEdit(row)}><img src={require('./../../assets/icons/table-edit.png')} style={{ opacity: 0, width: 16, height: 16 }} /></IconButton>
+                                    <IconButton><InfoIcon className='icon-show' sx={{ color: row.priority == 3 ? COLORS.redWarn : COLORS.violetMain, opacity: 0 }} /></IconButton>
                                 </StyledTableCell>
                             </StyledTableRow>
                         )
@@ -156,16 +167,22 @@ const TicketsTable = ({ data, type }) => {
                 setOpen={setOpenEdit}
                 ticket={selectedRow}
             />
-
-            <TicketsFilterModal
-                open={showFilterModal}
-                onClose={() => toggleFilter(null)}
-                onSubmit={handleFilter}
-                initFilters={filters}
-                handleResetFilters={handleResetFilters}
-            />
-        </div>
+        </div >
     );
 }
+const StyledTableRow = styled(TableRow)(`
+    gap: 10px;
+
+    &:hover{
+        cursor:pointer;
+        background:${COLORS.background};
+        .icon-show{
+            opacity:1 !important;
+        }
+        .MuiTableCell-root:{
+            background: black !important;
+        }
+    }
+`);
 
 export default TicketsTable;

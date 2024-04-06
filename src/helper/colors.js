@@ -5,6 +5,7 @@ export const COLORS = {
   yellow: "#FFDA18",
   skyBlueHighlight: "#17A1FA",
   redWarn: "#DC4C64",
+  transparentRed: "#DC4C6440",
   darkGrey: "#403D39",
   transparentFont: "#403d3980",
   violetHover: "#ffffff20",
@@ -14,5 +15,5 @@ export const COLORS = {
   violetHover: "#ffffff20",
   violetBorder: "#4845d280",
   violetShadow: "#4845d20d",
-  tableBackground: "#f4f3fc80",
+  tableBackground: "#f4f3fc",
 };
