@@ -8,6 +8,7 @@ import { BranchService } from './BranchService';
 import { ImageService } from './ImageService';
 import { UserService } from './UserService';
 import { RoleService } from './RoleService';
+import { AccountSettingService } from './AccountSettingService';
 
 export { AuthService, MenuService, AccountService, CompanyService, OTPService, AddressService,
-BranchService, ImageService, UserService, RoleService };
+BranchService, ImageService, UserService, RoleService, AccountSettingService };

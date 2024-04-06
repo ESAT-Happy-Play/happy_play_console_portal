@@ -7,6 +7,14 @@ import { COLORS } from '../../utils/common_helpers/colors';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
 
+import MessageDialog from "../dialog/MessageDialog";
+
+import { useDispatch } from "react-redux";
+import { logOut } from '../../redux/reducers/auth/AuthReducer';
+import { removeAppState } from '../../redux/reducers/AppStateReducer';
+import { removeMenuState } from '../../redux/reducers/MenuStateReducer';
+import { removeAccountState } from '../../redux/reducers/AccountStateReducer';
+
 /*
 Use to create Vertical tab, require the ff:
   -Tablist
@@ -20,9 +28,12 @@ Use to create Vertical tab, require the ff:
 */
 
 const ProfileVerticalTab = ({ tabList, changeEvent = () => { } }) => {
+  const dispatch = useDispatch();
+
   let defaultVal = (tabList[0].itemId !== undefined) 
     ? tabList.filter(obj => !obj.isHeader)[0].itemId : 0;
 
+  const [openConfirmLogoutSubmit, setConfirmLogoutSubmit] = React.useState(false);
   const [value, setValue] = React.useState(defaultVal);
 
   const handleChange = (event, newValue) => {
@@ -31,7 +42,17 @@ const ProfileVerticalTab = ({ tabList, changeEvent = () => { } }) => {
     // console.log(newValue);
   };
 
+  const handleLogoutOkay = async () => {
+    dispatch(logOut());
+    dispatch(removeAppState());
+    dispatch(removeMenuState());
+    dispatch(removeAccountState());
+
+    window.location.href = '/login';
+  };
+
   return (
+    <>
     <Tabs value={value} onChange={handleChange} orientation="vertical">
       <Box sx={{ borderRight: `1px solid ${COLORS.transparentFont}` }}>
         <TabsList>
@@ -45,7 +66,7 @@ const ProfileVerticalTab = ({ tabList, changeEvent = () => { } }) => {
           <br/>
           <br/>
           <br/>
-          <Button variant="text">Logout &nbsp; <LogoutIcon style={{fontSize:'15px'}} /></Button>
+          <Button onClick={() => setConfirmLogoutSubmit(true)} variant="text">Logout &nbsp; <LogoutIcon style={{fontSize:'15px'}} /></Button>
         </TabsList>
       </Box>
       {tabList?.map(({ Component, itemId }, i) => (
@@ -54,6 +75,15 @@ const ProfileVerticalTab = ({ tabList, changeEvent = () => { } }) => {
         </TabPanel>
       ))}
     </Tabs>
+
+    <MessageDialog
+        isOpenMessage={ openConfirmLogoutSubmit } 
+        handleCloseMessage={ () => setConfirmLogoutSubmit(false) } 
+        handleOkay={ handleLogoutOkay } 
+        title={ "Logout" } 
+        content={ "Are you sure you want to logout?" }
+        color={ "error" } />
+    </>
   )
 }
 

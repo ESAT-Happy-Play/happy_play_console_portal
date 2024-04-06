@@ -22,6 +22,9 @@ export const ConstArrayExt = {
     getBloodTypes: () => {
         return ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
     },
+    getCivilStatuses: () => {
+        return ["Single", "Married", "Widowed", "Divorced"];
+    },
     getNatureOfWorkList: () => {
         return [
             "Lawyer",

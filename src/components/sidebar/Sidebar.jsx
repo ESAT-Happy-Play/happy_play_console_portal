@@ -10,26 +10,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 import "./sidebar.scss";
 
-import { useSelector, useDispatch } from "react-redux";
-import { logOut } from '../../redux/reducers/auth/AuthReducer';
-import { removeAppState } from '../../redux/reducers/AppStateReducer';
-import { removeMenuState } from '../../redux/reducers/MenuStateReducer';
-import { removeAccountState } from '../../redux/reducers/AccountStateReducer';
-
 const Sidebar = () => {
-  const dispatch = useDispatch()
   const [selected, setSelected] = useState("");
   // TODO: connect to actual notification number
   const mockNotifCounter = 4;
-
-  const handleLogout = async () => {
-    dispatch(logOut());
-    dispatch(removeAppState());
-    dispatch(removeMenuState());
-    dispatch(removeAccountState());
-
-    window.location.href = '/login';
-  };
 
   const handleProfile = () => {
     window.location.href = '/profile';
@@ -66,10 +50,6 @@ const Sidebar = () => {
             <p>Your Profile</p>
           </div>
           <ArrowForwardIosIcon className='icon' />
-        </div>
-        <div className="notifications" onClick={handleLogout}>
-          <ExitToAppIcon className='icon' />
-          <p>Logout</p>
         </div>
         <div className="trademark">
           <h2>Web Dashboard</h2>
