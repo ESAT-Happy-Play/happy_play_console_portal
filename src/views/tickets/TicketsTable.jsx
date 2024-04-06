@@ -3,20 +3,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '../../components/table/customTable/CustomTable';
 
 import { COLORS } from '../../helper/colors';
-import { Box, IconButton, TextField } from '@mui/material';
+import { Box, Chip, IconButton, TextField } from '@mui/material';
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import FileExportIcon from "../../assets/icons/FileExportIcon";
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
-import UpdateDialog from '../../components/Dialog/game/gameMechanics/UpdateDialog';
+import CloseIcon from '@mui/icons-material/Close';
 import FilterListIcon from "@mui/icons-material/FilterList";
-import FilterModal from '../../components/modals/FilterModal';
 import TicketDetail from './TicketDetail';
+import TicketsFilterModal from '../../components/modals/TicketsFilterModal';
 
 const TicketsTable = ({ data, type }) => {
     const [displayList, setDisplayList] = useState(data);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState([]);
     const [searchValue, setSearchValue] = useState("");
 
     //Update modal states
@@ -29,7 +29,6 @@ const TicketsTable = ({ data, type }) => {
     const priorityLevel = ["Low", "High", "Critical"]
 
     useEffect(() => {
-        console.log(filters)
         var search = data.filter((row) => {
             return Object.values(row).join('').toLowerCase().includes(searchValue.toLowerCase());
         });
@@ -57,6 +56,7 @@ const TicketsTable = ({ data, type }) => {
     };
 
     const handleFilter = (value) => {
+        console.log(value);
         setFilters(value);
     };
 
@@ -65,7 +65,11 @@ const TicketsTable = ({ data, type }) => {
     };
 
     const handleResetFilters = () => {
-        setFilters({})
+        setFilters([])
+    };
+
+    const handleDelete = (chipToDelete) => () => {
+        setFilters((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
 
     const handleEdit = (value) => {
@@ -98,7 +102,16 @@ const TicketsTable = ({ data, type }) => {
                     <FileExportIcon size={20} />
                     Export
                 </div>
-                <Box marginLeft="auto">
+                <Box marginLeft="auto" display="flex">
+                    {filters.map((filter, index) =>
+                        <Chip
+                            key={index}
+                            color='primary'
+                            label={filter.label}
+                            onDelete={handleDelete(filter)}
+                            deleteIcon={<CloseIcon />}
+                        />
+                    )}
                     <div className="filter-button" onClick={toggleFilter}>
                         Filters
                         <FilterListIcon />
@@ -144,11 +157,11 @@ const TicketsTable = ({ data, type }) => {
                 ticket={selectedRow}
             />
 
-            <FilterModal
+            <TicketsFilterModal
                 open={showFilterModal}
                 onClose={() => toggleFilter(null)}
-                onSubmit={() => toggleFilter(null)}
-                filters={filters}
+                onSubmit={handleFilter}
+                initFilters={filters}
                 handleResetFilters={handleResetFilters}
             />
         </div>

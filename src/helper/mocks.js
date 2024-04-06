@@ -1094,6 +1094,22 @@ export const mockStatus = [
   },
 ];
 
+export const mockPriority = [
+  {
+    id: 1,
+    name: "Low"
+  },
+  {
+    id: 2,
+    name: "High"
+  },
+  {
+    id: 3,
+    name: "Critical"
+  },
+];
+
+
 export const mockUsers = [
   {
     id: 1,

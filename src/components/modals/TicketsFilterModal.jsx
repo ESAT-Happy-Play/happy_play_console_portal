@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./customFilterModal.scss";
+import "./ticketFilterModal.scss";
 import { FormatFullDate } from "../../helper/Helpers";
 import { Close } from "@mui/icons-material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { COLORS } from "../../helper/colors";
-import { drawTypeList, mockCompanies, mockBranches, mockDepartments, mockStatus, mockUsers, } from "../../helper/mocks";
+import { drawTypeList, mockCompanies, mockBranches, mockDepartments, mockStatus, mockUsers, mockPriority, } from "../../helper/mocks";
 import { TextField, InputAdornment } from "@mui/material";
 import TollIcon from "@mui/icons-material/Toll";
 import { CustomRadioButton } from "../radio/CustomRadioGroup";
@@ -15,7 +15,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
-const FilterModal = ({
+const TicketsFilterModal = ({
   open,
   onClose,
   onSubmit,
@@ -23,18 +23,20 @@ const FilterModal = ({
   handleResetFilters,
 }) => {
   const [dateInterval, setDateInterval] = useState(initFilters?.dateInterval ?? "1D");
-  const [company, setCompany] = useState(initFilters?.company ?? null);
-  const [branch, setBranch] = useState(initFilters?.branch ?? null);
-  const [priority, setPriority] = useState(initFilters?.priority ?? null);
-  const [status, setStatus] = useState(initFilters?.status ?? null);
-  const [assignedTo, setAssignedTo] = useState(initFilters?.assignedTo ?? null);
-  const [department, setDepartment] = useState(initFilters?.department ?? null);
+  const [company, setCompany] = useState(initFilters?.company ?? "");
+  const [branch, setBranch] = useState(initFilters?.branch ?? "");
+  const [priority, setPriority] = useState(initFilters?.priority ?? "");
+  const [status, setStatus] = useState(initFilters?.status ?? []);
+  const [assignedTo, setAssignedTo] = useState(initFilters?.assignedTo ?? "");
+  const [department, setDepartment] = useState(initFilters?.department ?? "");
 
   const dateIntervals = ["1D", "1W", "1M", "1Y", "Custom"];
 
 
   const selectBorderStyle = {
     borderRadius: "25px",
+    fontSize: "12px",
+    height: "25px",
     ".MuiOutlinedInput-notchedOutline": {
       borderColor: COLORS.violetMain,
     },
@@ -43,7 +45,7 @@ const FilterModal = ({
     },
     "&:hover .MuiOutlinedInput-notchedOutline": {
       borderColor: COLORS.violetMain,
-    },
+    }
   };
 
   const datePickerStyle = {
@@ -133,6 +135,22 @@ const FilterModal = ({
     return return_string;
   };
 
+  const handleSubmit = () => {
+    var newFilters = [];
+
+    if (company)
+      newFilters.push({ key: "company", label: company.name, value: company.id });
+
+    if (branch)
+      newFilters.push({ key: "branch", label: branch.name, value: branch.id });
+
+    if (status)
+      newFilters.push({ key: "status", label: status.name, value: status.id });
+
+    onSubmit(newFilters);
+    onClose();
+  }
+
   useEffect(() => {
     if (!drawTypeList.some((item) => item.name === "ALL")) {
       drawTypeList.unshift({
@@ -159,12 +177,22 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setCompany}
-                  placeholder="Company Name"
+                  value={company}
+                  onChange={(e) => { setCompany(e.target.value) }}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Company Name
+                        </p>
+                      );
+                    }
+                    return selected.name;
+                  }}
                   sx={selectBorderStyle}
                 >
                   {mockCompanies.map((company, index) => (
-                    <MenuItem value={company.id} key={company.id}>
+                    <MenuItem value={company} key={company.id}>
                       {company.name}
                     </MenuItem>
                   ))}
@@ -176,12 +204,22 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setBranch}
-                  placeholder="Branch Name"
+                  value={branch}
+                  onChange={(e) => { setBranch(e.target.value) }}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Branch Name
+                        </p>
+                      );
+                    }
+                    return selected.name;
+                  }}
                   sx={selectBorderStyle}
                 >
                   {mockBranches.map((branch, index) => (
-                    <MenuItem value={branch.id} key={branch.id}>
+                    <MenuItem value={branch} key={branch.id}>
                       {branch.name}
                     </MenuItem>
                   ))}
@@ -193,12 +231,22 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setStatus}
-                  placeholder="Branch Name"
+                  onChange={(e) => { setStatus(e.target.value) }}
+                  value={status}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Select Status
+                        </p>
+                      );
+                    }
+                    return selected.name;
+                  }}
                   sx={selectBorderStyle}
                 >
                   {mockStatus.map((status, index) => (
-                    <MenuItem value={status.id} key={status.id}>
+                    <MenuItem value={status} key={status.id}>
                       {status.name}
                     </MenuItem>
                   ))}
@@ -210,12 +258,22 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setStatus}
-                  placeholder="Priority Level"
+                  onChange={(e) => { setPriority(e.target.value) }}
+                  value={priority}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Select Priority Level
+                        </p>
+                      );
+                    }
+                    return selected;
+                  }}
                   sx={selectBorderStyle}
                 >
-                  {mockStatus.map((priority, index) => (
-                    <MenuItem value={priority.id} key={priority.id}>
+                  {mockPriority.map((priority, index) => (
+                    <MenuItem value={priority.name} key={priority.id}>
                       {priority.name}
                     </MenuItem>
                   ))}
@@ -227,12 +285,22 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setAssignedTo}
-                  placeholder="Assigned To"
+                  onChange={(e) => { setAssignedTo(e.target.value) }}
+                  value={assignedTo}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Select Assigned
+                        </p>
+                      );
+                    }
+                    return selected;
+                  }}
                   sx={selectBorderStyle}
                 >
                   {mockUsers.map((assigned, index) => (
-                    <MenuItem value={assigned.id} key={assigned.id}>
+                    <MenuItem value={assigned.name} key={assigned.id}>
                       {assigned.name}
                     </MenuItem>
                   ))}
@@ -244,13 +312,23 @@ const FilterModal = ({
               <FormControl fullWidth size="small">
                 <Select
                   displayEmpty
-                  onChange={setDepartment}
-                  placeholder="Assigned To"
+                  onChange={(e) => { setDepartment(e.target.value) }}
+                  value={department}
+                  renderValue={(selected) => {
+                    if (selected.length === 0) {
+                      return (
+                        <p style={{ fontSize: "12px", color: "lightgray" }}>
+                          Select Department
+                        </p>
+                      );
+                    }
+                    return selected;
+                  }}
                   sx={selectBorderStyle}
                 >
-                  {mockDepartments.map((assigned, index) => (
-                    <MenuItem value={assigned.id} key={assigned.id}>
-                      {assigned.name}
+                  {mockDepartments.map((department, index) => (
+                    <MenuItem value={department.name} key={department.id}>
+                      {department.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -281,7 +359,7 @@ const FilterModal = ({
               >
                 Reset Filters
               </Button>
-              <Button onClick={onSubmit} className="apply-button" size="small">
+              <Button onClick={() => handleSubmit()} className="apply-button" size="small">
                 Apply Filters
                 <CheckIcon />
               </Button>
@@ -293,4 +371,4 @@ const FilterModal = ({
   );
 };
 
-export default FilterModal;
+export default TicketsFilterModal;
