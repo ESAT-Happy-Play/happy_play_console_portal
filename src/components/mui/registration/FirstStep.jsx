@@ -1,14 +1,35 @@
 import { TextField, MenuItem, Button  } from "@mui/material";
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
-
+import { useState } from 'react'
 import { ConstArrayExt } from "../../../utils/helpers";
 
+
 export const FirstStep = ({btnBack, handleSubmit, formSubmit, register, errors}) => {
+    
+    const [message, setHelperText] = useState("");
+    const [ageError,setAgeError] = useState("");
+
+    const ageVerify = (value) => {
+        let age = new Date().getFullYear() - new Date(value).getFullYear();
+        if( age <= 21){
+            setAgeError(true);
+            setHelperText("Must be at least 21 years old");
+        }
+        setAgeError(false);
+        setHelperText("");
+    }
+
+    const nextStep = (e) => {
+        
+        console.log();
+    };
+
+
     return (
     <>
         <div className="body">
-            <form onSubmit={handleSubmit(formSubmit)} noValidate>
+            <form onSubmit={handleSubmit(formSubmit)} onChange={nextStep}>
                 <div className="form-input">
                     <div className="form-title">
                         <label>First Name</label>
@@ -50,9 +71,10 @@ export const FirstStep = ({btnBack, handleSubmit, formSubmit, register, errors})
                         <span className="required">*</span>
                     </div>
                     <TextField type="date" size="small" 
-                    {  ...register("birthDate", { required: true } ) }
-                    error={ !!errors.birthDate }
-                    helperText={ errors.birthDate?.message }
+                    {  ...register("birthDate", { required: true} ) }
+                    onChange={ageVerify}
+                    error={ageError}
+                    helperText={message}
                     fullWidth/>
                 </div>
 
@@ -95,7 +117,7 @@ export const FirstStep = ({btnBack, handleSubmit, formSubmit, register, errors})
                 <br/>
                 <div className="form-button">
                     <Button onClick={btnBack} variant="outlined" fullWidth><KeyboardBackspaceOutlinedIcon /> Back</Button>
-                    <Button type="submit" color="primary" variant="contained" fullWidth>
+                    <Button id="firstStep" type="submit" color="primary" variant="contained" fullWidth>
                         Next <ArrowRightAltOutlinedIcon/>
                     </Button>
                 </div>

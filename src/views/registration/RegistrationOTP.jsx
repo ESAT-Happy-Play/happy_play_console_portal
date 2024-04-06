@@ -48,8 +48,8 @@ export const RegistrationOTP = () => {
   }, [seconds, minutes]);
 
   const resendOTP = () => {
-    setMinutes(_MINUTE);
-    setSeconds(_SECONDS);
+    setMinutes(0);
+    setSeconds(30);
 
     OTPService.generateRegistrationOTP({mobileNumber: paramObj.mobileNumber}).then((resp) => {
       if(resp) { setnewOtpRef(resp.data); }
@@ -74,6 +74,8 @@ export const RegistrationOTP = () => {
           if (resp.data.response.status === 400) {
             setotpErrorMsg(resp.data.response.data.errorMessage);
             setotpError(true); setSuccess(false);
+            setMinutes(0);
+            setSeconds(30);
           }
         } else {
           setSuccess(true);

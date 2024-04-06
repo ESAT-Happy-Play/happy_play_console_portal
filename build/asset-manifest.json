@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "http://happyplay-web.esat-apps.com/static/css/main.b4b5d058.css",
+    "main.js": "http://happyplay-web.esat-apps.com/static/js/main.447f4ae5.js",
+    "static/media/Inter-SemiBoldItalic.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-SemiBoldItalic.e38e27f283c11f08ebd7.otf",
+    "static/media/Inter-Bold.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Bold.29a77b7e0aa49b534323.otf",
+    "static/media/Inter-Italic.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Italic.78529c1946e52095fabb.otf",
+    "static/media/Inter-SemiBold.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-SemiBold.3aa40e610d938943736b.otf",
+    "static/media/Inter-Medium.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Medium.16eda82a3c37a6edda09.otf",
+    "static/media/Inter-Black.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Black.b2a2b192860f79c0b89c.otf",
+    "static/media/Inter-Light.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Light.f70b465fac229d73e982.otf",
+    "static/media/Inter-Regular.otf": "http://happyplay-web.esat-apps.com/static/media/Inter-Regular.a416f4674fad5f019461.otf",
+    "static/media/happy-play-logo.png": "http://happyplay-web.esat-apps.com/static/media/happy-play-logo.bd47a76b53d9eaf05cce.png",
+    "static/media/maya.png": "http://happyplay-web.esat-apps.com/static/media/maya.1dd2526d5333ef9d98db.png",
+    "static/media/visa.jpg": "http://happyplay-web.esat-apps.com/static/media/visa.7104eb73a31d37907a86.jpg",
+    "static/media/over-the-counter.png": "http://happyplay-web.esat-apps.com/static/media/over-the-counter.357ead35e41683f2f722.png",
+    "static/media/gcash.png": "http://happyplay-web.esat-apps.com/static/media/gcash.5d34fce0d60bb4a92822.png",
+    "static/media/grabpay.jpg": "http://happyplay-web.esat-apps.com/static/media/grabpay.b6bd88d0fc85d82da8e6.jpg",
+    "index.html": "http://happyplay-web.esat-apps.com/index.html",
+    "main.b4b5d058.css.map": "http://happyplay-web.esat-apps.com/static/css/main.b4b5d058.css.map",
+    "main.447f4ae5.js.map": "http://happyplay-web.esat-apps.com/static/js/main.447f4ae5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b4b5d058.css",
+    "static/js/main.447f4ae5.js"
+  ]
+}

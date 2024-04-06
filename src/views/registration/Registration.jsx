@@ -57,7 +57,7 @@ export const Registration = () => {
                   focused={true}
                   className="input-center"
                   name="mobileNumber"
-                  type="number"
+                  type="tel"
                   validation= {{ required: "Mobile number is required.",
                       minLength: { value: 11, message: "min length is 11" }
                   }}
