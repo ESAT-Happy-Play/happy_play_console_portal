@@ -808,47 +808,101 @@ export const mockBetsHistory = [
 ];
 
 export const storeSettings = [
-    {
-        gameName: "Regular",
-        storeLimits: {
-            maxUnitsPrice: 1000,
-            maxUnitsRegular: 20,
-            maxUnitsPowerWin: 20,
-            maxFavorites: 25,
-            hotCombinationsRange: 10,
-            hotCombinationsRefreshUnits: 10
-        },
-        deckLimits: {
-            deckOpenTime: 10,
-            maxDeckUnits: 25
-        }
+  {
+    gameName: "Regular",
+    storeLimits: {
+      maxUnitsPrice: 1000,
+      maxUnitsRegular: 20,
+      maxUnitsPowerWin: 20,
+      maxFavorites: 25,
+      hotCombinationsRange: 10,
+      hotCombinationsRefreshUnits: 10,
     },
-    {
-        gameName: "Jackpot 3.3",
-        storeLimits: {
-            maxUnitsPrice: 1200,
-            maxUnits: 10,
-            maxFavorites: 20,
-            hotCombinationsRange: 15,
-            hotCombinationsRefreshUnits: 10
-        },
-        deckLimits: {
-            deckOpenTime: 5,
-            maxDeckUnits: 25
-        }
+    deckLimits: {
+      deckOpenTime: 10,
+      maxDeckUnits: 25,
     },
-    {
-        gameName: "Jackpot 3.4",
-        storeLimits: {
-            maxUnitsPrice: 1500,
-            maxUnits: 15,
-            maxFavorites: 25,
-            hotCombinationsRange: 12,
-            hotCombinationsRefreshUnits: 10
-        },
-        deckLimits: {
-            deckOpenTime: 5,
-            maxDeckUnits: 25
-        }
+  },
+  {
+    gameName: "Jackpot 3.3",
+    storeLimits: {
+      maxUnitsPrice: 1200,
+      maxUnits: 10,
+      maxFavorites: 20,
+      hotCombinationsRange: 15,
+      hotCombinationsRefreshUnits: 10,
     },
-]
+    deckLimits: {
+      deckOpenTime: 5,
+      maxDeckUnits: 25,
+    },
+  },
+  {
+    gameName: "Jackpot 3.4",
+    storeLimits: {
+      maxUnitsPrice: 1500,
+      maxUnits: 15,
+      maxFavorites: 25,
+      hotCombinationsRange: 12,
+      hotCombinationsRefreshUnits: 10,
+    },
+    deckLimits: {
+      deckOpenTime: 5,
+      maxDeckUnits: 25,
+    },
+  },
+];
+
+export const mockSupportUsersList = [
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Inactive",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+];
+
+export const mockSupportUser = {
+  firstName: "Support",
+  middleName: "Middle",
+  lastName: "User",
+  birthday: "Birthday",
+  mobileNumber: "0999-999-9999",
+  nationality: "Nationality",
+  placeOfBirth: "Place of Birth",
+  currentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  permanentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  gameSite: "Game Site",
+  sourceOfIncome: "Source of Income",
+  natureOfWork: "Nature of Work",
+  typeOfID: "National ID",
+  idPicture: null,
+  selfiePicture: null,
+  isActive: true,
+  isFullyVerified: true,
+  lastActivity: "2 hrs ago",
+};
