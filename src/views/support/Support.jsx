@@ -4,13 +4,10 @@ import CustomTable, { StyledPagination, StyledTableCell, StyledTableRow } from '
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import { Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import CommonDialog from '../../components/dialog/CommonDialog';
-import {Button, TextField, IconButton} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
 
-import AttachmentIcon from '@mui/icons-material/Attachment';
-import CloseIcon from '@mui/icons-material/Close';
-import { DragDropTicketUpload } from '../../components/mui/DragDropTicketUpload';
+import {Button} from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import AddTicketDialog from '../../components/dialog/AddTicketDialog';
 
 export const Support = () => {
   const [isCreateNew, setisCreateNew] = useState(false);
@@ -18,7 +15,7 @@ export const Support = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
-
+  
   const initSupportTable = () => {
       setDisplayList([
           {
@@ -111,40 +108,8 @@ export const Support = () => {
         }
         />
 
-        <CommonDialog title="Create Report" 
-            isOpen={isCreateNew} onClose={e => setisCreateNew(false)} modalWidth="550px">
-              <form noValidate>
-                <div className='divInput'>
-                  <span>Report Title</span>
-                  <TextField placeholder="Enter report title" variant="outlined" size='small' fullWidth />
-                </div>
-                <div className='divInput'>
-                  <span>Report Description</span>
-                  <TextField placeholder="Enter report description" 
-                  multiline={true} variant="outlined" rows={5} fullWidth />
-                </div>
-                <div className='divInput'>
-                  <span>Attachement</span>
-                  <div className='divAttachments'>
-                      <div className='attachIcondata'>
-                        <AttachmentIcon /> test-attachemet.jpg
-                      </div>
-                      <IconButton>
-                          <CloseIcon />
-                      </IconButton>
-                  </div>
-                  <DragDropTicketUpload />
-                </div>
-                <div className='divInput'>
-                  <span>Date</span>
-                  <TextField type='date' variant="outlined" size='small' fullWidth />
-                </div>
-                <br/>
-                <div className='divInput' style={{display:'flex',justifyContent:'center'}}>
-                  <Button variant="contained" size='medium'>Create Report <AddIcon /></Button>
-                </div>
-              </form>
-        </CommonDialog>
+        <AddTicketDialog title="Create Report" 
+            isOpen={isCreateNew} onClose={e => setisCreateNew(false)} modalWidth="550px" />
     </>
   )
 }
