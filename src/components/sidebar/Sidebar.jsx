@@ -22,6 +22,10 @@ const Sidebar = () => {
     window.location.href = '/profile';
   }
 
+  const goToNotificatoins = () => {
+    window.location.href = '/notifications';
+  }
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -39,7 +43,8 @@ const Sidebar = () => {
         ))
       }
       <div className="foot">
-        <div className="notifications">
+        <div className={(appState === "Notifications.Notifications") ? "notifications foot-active" : "notifications" }
+        onClick={goToNotificatoins}>
           <NotificationsIcon className='icon' />
           <p>Notifications</p>
           {mockNotifCounter > 0 &&

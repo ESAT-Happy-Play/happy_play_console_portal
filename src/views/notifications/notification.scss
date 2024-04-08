@@ -1,0 +1,77 @@
+.notif-container {
+    padding: 50px;
+    font-family: 'Inter';
+    .notif-head {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        .span {
+            font-weight: 600;
+        }
+        .head-action {
+            display: flex;
+            gap: 5px;
+            .MuiButton-text {
+                color: #696969;
+            }
+            .btn-active {
+                color: black !important;
+                text-decoration: underline;
+            }
+            .div-devider {
+                content: "";
+                border: 2px solid #d6d6d6;
+                height: 15px;
+                margin-top: 10px;
+            }
+        }
+    }
+    .notif-body {
+        cursor: pointer;
+        .notif-content {
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            p { 
+                margin: 0; font-size: 15px; 
+            }
+            .p-center { 
+                margin-top: 25px;
+            }
+            .div-first {
+                display: flex;
+                gap: 10px;
+                padding: 10px 10px 5px 10px;
+                svg {
+                    font-size: 50px;
+                    padding: 10px;
+                    color: black;
+                    background: white;
+                    border: 1px solid green;
+                    border-radius: 5px;
+                }
+            }
+            .div-last {
+                padding: 0 10px 0px 0px;
+                display: flex;
+                gap: 10px;
+                width: 100px;
+                svg {
+                    font-size: 15px;
+                    color: green;
+                    margin-top: 30px;
+                }
+            }
+        }
+        .notif-active {
+            background: #deebeb;
+            .div-first {
+                svg {
+                    background: #abd9c3;
+                }
+            }
+        }
+    }
+}

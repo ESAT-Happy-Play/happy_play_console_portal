@@ -130,27 +130,27 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                         <div className='divDetails'>
                             <div className='divInput'>
                                 <label>First Name</label>
-                                <TextField size='small' defaultValue={ objData.firstName } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.firstName } fullWidth />
                             </div>
 
                             <div className='divInput'>
                                 <label>Middle Name</label>
-                                <TextField size='small' defaultValue={ objData.middleName } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.middleName } fullWidth />
                             </div>
 
                             <div className='divInput'>
                                 <label>Last Name</label>
-                                <TextField size='small' defaultValue={ objData.lastName } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.lastName } fullWidth />
                             </div>
 
                             <div className='divInput'>
                                 <label>Birthday</label>
-                                <TextField size='small' defaultValue={ objData.birthDate } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.birthDate } fullWidth />
                             </div>
 
                             <div className='divInput'>
                                 <label>Nationality</label>
-                                <TextField size='small' defaultValue={ objData.nationality } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.nationality } fullWidth />
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                         <div className='divDetails'>
                             <div className='divInput'>
                                 <label>Place Of Birth</label>
-                                <TextField size='small' defaultValue={ objData.placeOfBirth } fullWidth />
+                                <TextField disabled size='small' defaultValue={ objData.placeOfBirth } fullWidth />
                             </div>
 
                             <List component="nav">
@@ -175,29 +175,29 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                                         <div className='divInputDrp' style={{marginTop:'15px'}}>
                                             <div>
                                                 <label>Region</label>
-                                                <TextField size='small' defaultValue={ objData.presentRegion } fullWidth />
+                                                <TextField disabled size='small' defaultValue={ objData.presentRegion } fullWidth />
                                             </div>
 
                                             <div>
                                                 <label>Province</label>
-                                                <TextField size='small' defaultValue={ objData.presentProvince } fullWidth />
+                                                <TextField disabled size='small' defaultValue={ objData.presentProvince } fullWidth />
                                             </div>
                                         </div>
                                         <div className='divInputDrp'>
                                             <div>
                                                 <label>Municipality</label>
-                                                <TextField size='small' defaultValue={ objData.presentMunicipality } fullWidth />
+                                                <TextField disabled size='small' defaultValue={ objData.presentMunicipality } fullWidth />
                                             </div>
 
                                             <div>
                                                 <label>Barangay</label>
-                                                <TextField size='small' defaultValue={ objData.presentBarangay } fullWidth />
+                                                <TextField disabled size='small' defaultValue={ objData.presentBarangay } fullWidth />
                                             </div>
                                         </div>
                                         <div className='divInputDrp'>
                                             <div>
                                                 <label>Street/Sitio</label>
-                                                <TextField size='small' defaultValue={ objData.presentStreetOrPurok } fullWidth />
+                                                <TextField disabled size='small' defaultValue={ objData.presentStreetOrPurok } fullWidth />
                                             </div>
                                         </div>
                                     </List>
@@ -215,29 +215,29 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                                         <div className='divInputDrp' style={{marginTop:'15px'}}>
                                             <div>
                                                 <label>Region</label>
-                                                <TextField size='small' defaultValue={objData.permanentRegion} fullWidth />
+                                                <TextField disabled size='small' defaultValue={objData.permanentRegion} fullWidth />
                                             </div>
 
                                             <div>
                                                 <label>Province</label>
-                                                <TextField size='small' defaultValue={objData.permanentProvince} fullWidth />
+                                                <TextField disabled size='small' defaultValue={objData.permanentProvince} fullWidth />
                                             </div>
                                         </div>
                                         <div className='divInputDrp'>
                                             <div>
                                                 <label>Municipality</label>
-                                                <TextField size='small' defaultValue={objData.permanentMunicipality} fullWidth />
+                                                <TextField disabled size='small' defaultValue={objData.permanentMunicipality} fullWidth />
                                             </div>
 
                                             <div>
                                                 <label>Barangay</label>
-                                                <TextField size='small' defaultValue={objData.permanentBarangay} fullWidth />
+                                                <TextField disabled size='small' defaultValue={objData.permanentBarangay} fullWidth />
                                             </div>
                                         </div>
                                         <div className='divInputDrp'>
                                             <div>
                                                 <label>Street/Sitio</label>
-                                                <TextField size='small' defaultValue={objData.permanentStreetOrPurok} fullWidth />
+                                                <TextField disabled size='small' defaultValue={objData.permanentStreetOrPurok} fullWidth />
                                             </div>
                                         </div>
                                     </List>
@@ -245,7 +245,7 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                             </List>
                             <div className='divInput'>
                                 <label>Game Site</label>
-                                <TextField size='small' defaultValue={objData.branch} fullWidth />
+                                <TextField disabled size='small' defaultValue={objData.branch} fullWidth />
                             </div>
                         </div>
                     </div>
@@ -256,15 +256,15 @@ const UserProfile = ({objData, agentCount = null, playerCount = null, callBack, 
                         <div className='divDetails'>
                             <div className='divInput'>
                                 <label>Source Of Income</label>
-                                <TextField size='small' defaultValue={objData.sourceOfIncome} fullWidth />
+                                <TextField disabled size='small' defaultValue={objData.sourceOfIncome} fullWidth />
                             </div>
                             <div className='divInput'>
                                 <label>Nature of Work</label>
-                                <TextField size='small' defaultValue={objData.natureOfWork} fullWidth />
+                                <TextField disabled size='small' defaultValue={objData.natureOfWork} fullWidth />
                             </div>
                             <div className='divInput'>
                                 <label>Type of ID</label>
-                                <TextField size='small' defaultValue={objData.validId} fullWidth />
+                                <TextField disabled size='small' defaultValue={objData.validId} fullWidth />
                             </div>
                             <div className='divInput'>
                                 <p>Front ID Picture</p>

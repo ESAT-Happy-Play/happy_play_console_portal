@@ -9,6 +9,7 @@ import { ImageService } from './ImageService';
 import { UserService } from './UserService';
 import { RoleService } from './RoleService';
 import { AccountSettingService } from './AccountSettingService';
+import { SupportService } from './SupportService';
 
 export { AuthService, MenuService, AccountService, CompanyService, OTPService, AddressService,
-BranchService, ImageService, UserService, RoleService, AccountSettingService };
+BranchService, ImageService, UserService, RoleService, AccountSettingService, SupportService };

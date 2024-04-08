@@ -66,7 +66,7 @@ const routeLinks = [
     {
       path: "/support",
       element: <Support />,
-      state: "Support.Support",
+      state: "Support.ReportAnIssue",
       sidebarProps: {
         displayText: "Report A Problem",
         icon: <ReportProblemIcon />

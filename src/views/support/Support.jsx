@@ -7,22 +7,30 @@ import AddIcon from '@mui/icons-material/Add';
 
 import {Button} from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-import AddTicketDialog from '../../components/dialog/AddTicketDialog';
+import { ContentLoader } from "../../components/mui";
+import { AddTicketDialog, UpdateTicketDialog } from '../../components/dialog/Suppot';
+
+import { StoreExt, DateExt } from "../../utils/helpers";
+import { SupportService } from '../../services'
 
 export const Support = () => {
+  let authdata = StoreExt.getStore("auth");
+
+  const [pageLoader, setPageLoader] = useState(false);
   const [isCreateNew, setisCreateNew] = useState(false);
+  const [isUpdateTicket, setisUpdateTicket] = useState(false);
   const [displayList, setDisplayList] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchValue, setSearchValue] = useState("");
+  const [selectedValue, setselectedValue] = useState(null);
   
   const initSupportTable = () => {
-      setDisplayList([
-          {
-              id: 1, reportTitle: "Report Title", description: "This is a test description. Please ignore.", 
-              attachementCount: 2, date: "February 1, 2024"
-          }
-      ]);
+    setPageLoader(true);
+    SupportService.searchTicket(authdata.id).then((resp) => {
+        if (resp) { setDisplayList(resp.cases) }
+        setPageLoader(false);
+    });
   }
 
   useEffect(() => {
@@ -52,7 +60,8 @@ export const Support = () => {
   };
 
   const handleClickRow = (data) => {
-      console.log(data);
+      setisUpdateTicket(true);
+      setselectedValue(data);
   }
 
   return (
@@ -89,10 +98,10 @@ export const Support = () => {
                         displayList.slice(page * rowsPerPage, page *
                             rowsPerPage + rowsPerPage).map((row, i) => (
                                 <StyledTableRow key={i}>
-                                    <StyledTableCell align="center" >{row.reportTitle}</StyledTableCell>
+                                    <StyledTableCell align="center" >{row.title}</StyledTableCell>
                                     <StyledTableCell align="center" >{row.description}</StyledTableCell>
-                                    <StyledTableCell align="center" >{row.attachementCount}</StyledTableCell>
-                                    <StyledTableCell align="center" >{row.date}</StyledTableCell>
+                                    <StyledTableCell align="center" >{row.attachmentCount}</StyledTableCell>
+                                    <StyledTableCell align="center" >{DateExt.readableDate(row.createdOn)}</StyledTableCell>
                                     <StyledTableCell align="center" >
                                         <Button sx={{border:'none'}} variant="outlined" size='small' onClick={e => handleClickRow(row)}>
                                             <InfoIcon style={{fontSize:'large'}} />
@@ -110,6 +119,11 @@ export const Support = () => {
 
         <AddTicketDialog title="Create Report" 
             isOpen={isCreateNew} onClose={e => setisCreateNew(false)} modalWidth="550px" />
+
+        <UpdateTicketDialog title="Update Report" 
+            isOpen={isUpdateTicket} onClose={e => setisUpdateTicket(false)} objData={selectedValue} modalWidth="550px" />
+
+        <ContentLoader isLoadingPage={ pageLoader } />
     </>
   )
 }

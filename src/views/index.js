@@ -19,8 +19,9 @@ import { Performance } from './performance/Performance';
 import { Support } from './support/Support';
 import { Transactions } from './transactions/Transactions';
 import { Profile } from './profile/Profile';
+import { Notifications } from './notifications/Notifications';
 
 export { Login, LoginNewUser, AuthOTP, ForgotPassword, UpdatePassword, NotFound, Registration, 
     RegistrationOTP, RegisterDetails, Home, Commission, Downline, Gross, Performance, Support,
-    Transactions, Profile
+    Transactions, Profile, Notifications
  };

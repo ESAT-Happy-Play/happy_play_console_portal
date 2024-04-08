@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useDropzone } from "react-dropzone";
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
-import {Button, TextField, IconButton} from '@mui/material';
+import {IconButton} from '@mui/material';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import CloseIcon from '@mui/icons-material/Close';
-import AddIcon from '@mui/icons-material/Add';
 
-import { ContentLoader } from "../../components/mui";
 import { ImageService } from '../../services'
 
-export const DragDropTicketUpload = ({ callBack, removedCallback }) => {
+export const DragDropTicketUpload = ({ callBack, removedCallback, oldAttachments = null }) => {
     const [pageLoader, setPageLoader] = useState(false);
 
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
         accept: "image/*",
+        disabled: pageLoader,
         onDrop: async (acceptedFiles) => {
             for (let i = 0; i < acceptedFiles.length; i++) {
                 files.push(Object.assign(acceptedFiles[i], {
@@ -38,10 +37,10 @@ export const DragDropTicketUpload = ({ callBack, removedCallback }) => {
                     fileReader.readAsDataURL(file);
                 })
             }
-
+            setPageLoader(true);
             let imagesResponse = await Promise.all(acceptedFiles.map( obj => { return uploadImage(obj) } ));
+            setPageLoader(false);
             callBack(imagesResponse);
-            console.log(imagesResponse);
         }
     });
 
@@ -69,6 +68,21 @@ export const DragDropTicketUpload = ({ callBack, removedCallback }) => {
     <section >
         <span>Attachements</span>
         {
+            (oldAttachments !== null) ? 
+            oldAttachments.map((item, index) => (
+                <div key={index} className='divAttachments'>
+                    <div className='attachIcondata'>
+                        <AttachmentIcon style={{fontSize:'18px'}} /> {item.fileName.split("|")[0]}
+                    </div>
+                    {/* <IconButton>
+                        <CloseIcon style={{fontSize:'15px'}} />
+                    </IconButton> */}
+                </div>
+            ))
+            : <></>
+        }
+        
+        {
             files.map((item, index) => (
                 <div key={index} className='divAttachments'>
                     <div className='attachIcondata'>
@@ -81,7 +95,11 @@ export const DragDropTicketUpload = ({ callBack, removedCallback }) => {
             ))
         }
         
-        <div style={{textAlign:'center', border:'2px solid #4845d2', borderStyle:'dashed', borderRadius:'10px', padding:'15px', marginBottom:'10px'}}>   
+        {
+            (pageLoader) ? <div>Loading... Please wait.</div> : <></>
+        }
+        
+        <div style={{textAlign:'center', border:'2px solid #4845d2', borderStyle:'dashed', borderRadius:'10px', padding:'15px', marginBottom:'10px', opacity:(pageLoader) ? '0.09' : '1'}}>   
             <div style={{ display:'flex', justifyContent:'space-evenly'}}>
                 <div style={{cursor:'pointer'}} {...getRootProps({ className: "dropzone" })}>
                     <input {...getInputProps()} />
@@ -98,8 +116,6 @@ export const DragDropTicketUpload = ({ callBack, removedCallback }) => {
                 {thumbs}
             </div>
         </div>
-
-        <ContentLoader isLoadingPage={ pageLoader } />
     </section>
   )
 }
