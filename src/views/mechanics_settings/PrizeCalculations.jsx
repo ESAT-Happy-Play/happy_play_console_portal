@@ -65,7 +65,7 @@ const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
 
         setisLoading(true);
         GameService.createPrizeCalculation(prizeCalcData, settingId).then((res) => {
-            if(res) { setisSuccess(true); }
+            if (res) { setisSuccess(true); }
             else { toast.error(`Unable to update ${selectedCard.name} setting.`); }
             setisLoading(false);
         });
@@ -76,36 +76,39 @@ const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
     }
 
     if (prizeCalcData !== null) {
-        tabs.push(
-            <CustomCard
-                header="Increment Amount in %"
-                body={<h2 className='card-header'>{prizeCalcData.pooling.incrementAmount}</h2>}
-                description="Percentage of bets to be added to the Prize"
-                action={() => handleEdit(prizeCalcData.pooling.incrementAmount, {name: "incrementAmount", description: "Increment Amount"})}
-            />);
 
-        tabs.push(
-            <CustomCard
-                header="Prize Floor"
-                body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeFloor)}</h2>}
-                description="Starting Prize Pool"
-                action={() => handleEdit(prizeCalcData.pooling.prizeFloor, {name: "prizeFloor", description: "Prize Floor"})}
-            />);
+        if (!!prizeCalcData.pooling) {
+            tabs.push(
+                <CustomCard
+                    header="Increment Amount in %"
+                    body={<h2 className='card-header'>{prizeCalcData.pooling.incrementAmount}</h2>}
+                    description="Percentage of bets to be added to the Prize"
+                    action={() => handleEdit(prizeCalcData.pooling.incrementAmount, { name: "incrementAmount", description: "Increment Amount" })}
+                />);
 
-        tabs.push(
-            <CustomCard
-                header="Prize Ceiling"
-                body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeCeiling)}</h2>}
-                description="Maximum Prize Pool"
-                action={() => handleEdit(prizeCalcData.pooling.prizeCeiling, {name: "prizeCeiling", description: "Prize Ceiling"})}
-            />);
+            tabs.push(
+                <CustomCard
+                    header="Prize Floor"
+                    body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeFloor)}</h2>}
+                    description="Starting Prize Pool"
+                    action={() => handleEdit(prizeCalcData.pooling.prizeFloor, { name: "prizeFloor", description: "Prize Floor" })}
+                />);
+
+            tabs.push(
+                <CustomCard
+                    header="Prize Ceiling"
+                    body={<h2 className='card-header'>{FormatInteger(prizeCalcData.pooling.prizeCeiling)}</h2>}
+                    description="Maximum Prize Pool"
+                    action={() => handleEdit(prizeCalcData.pooling.prizeCeiling, { name: "prizeCeiling", description: "Prize Ceiling" })}
+                />);
+        }
 
         tabs.push(
             <CustomCard
                 header="Consecutive Wins"
                 body={<h2 className='card-header'>{prizeCalcData.consecutiveWins}</h2>}
                 description="Winning condition for achieving the prize."
-                action={() => handleEdit(prizeCalcData.consecutiveWins, {name: "consecutiveWins", description: "Consecutive Wins"})}
+                action={() => handleEdit(prizeCalcData.consecutiveWins, { name: "consecutiveWins", description: "Consecutive Wins" })}
             />);
 
         tabs.push(
@@ -113,7 +116,7 @@ const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
                 header="Winning Multiplier"
                 body={<h2 className='card-header'>{FormatInteger(prizeCalcData.winningMultiplier.winPerBet)}</h2>}
                 description="Equivalent winner prize per 1 peso"
-                action={() => handleEdit(prizeCalcData.winningMultiplier.winPerBet, {name: "winPerBet", description: "Winning Multiplier"})}
+                action={() => handleEdit(prizeCalcData.winningMultiplier.winPerBet, { name: "winPerBet", description: "Winning Multiplier" })}
             />);
 
         tabs.push(
@@ -121,7 +124,7 @@ const PrizeCalculations = ({ prizeCalcData, settingId, subType }) => {
                 header="Enable Quasi Winnings"
                 body={<IOSSwitch checked={prizeCalcData.enableQuasi} />}
                 description="The maximum bet amount per combination"
-                action={() => handleEdit(prizeCalcData.enableQuasi, {name: "enableQuasi", description: "Quasi Winnings"})}
+                action={() => handleEdit(prizeCalcData.enableQuasi, { name: "enableQuasi", description: "Quasi Winnings" })}
             />);
     }
 

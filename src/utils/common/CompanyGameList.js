@@ -13,36 +13,9 @@ export const CompanyGameList = {
         if (gameList !== null) {
             return gameList;
         } else {
-            let gameIds = await GameService.getCompanyGameSettings(tokenObj.companyId).then((res) => {
-                if(res.status) { return res.data.map(m => m.gameId); }
+            let allGames = await GameService.getCompanyGameDetail(tokenObj.companyId).then((res) => {
+                if (res.status) { return res.data; }
                 else { return []; }
-            });
-
-            let allGames = await GameService.getAllGameList().then((res1) => {
-                if(res1.status) {
-                    let listOfCompanyGames = res1.data.filter((item) => gameIds.includes(item.id));
-
-                    let objCompanies = [];
-                    listOfCompanyGames.forEach(item => {
-                        // push parent
-                        if(item.gameMechanics.isParent) {
-                            objCompanies.push({
-                                gameName: item.name,
-                                id: item.id,
-                                child: [{ gameName: item.name, id: item.id }]
-                            });
-                        } else {
-                        let parentCompany = objCompanies.filter(obj => obj.id === item.gameMechanics.parentId);
-                            if (parentCompany.length > 0) {
-                                let parentIndex = objCompanies.findIndex(obj => obj.id === parentCompany[0].id);
-
-                                //Update child
-                                objCompanies[parentIndex].child.push({ gameName: item.name, id: item.id });
-                            }
-                        }
-                    });
-                    return objCompanies;
-                } else { return []; }
             });
 
             store.dispatch(setGameState({
