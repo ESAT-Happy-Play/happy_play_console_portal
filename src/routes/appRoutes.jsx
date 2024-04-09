@@ -15,10 +15,6 @@ if (listMenuObj !== null) {
 
 let finalRoutes = [];
 finalRoutes.push(routeLinks[0]);
-menus.push("Support.Tickets");
-menus.push("Support.LiveChat");
-menus.push("Support.Behavior");
-menus.push("Support.Users");
 
 if (loginObj !== null) {
   // 0 - Dashboard menu
