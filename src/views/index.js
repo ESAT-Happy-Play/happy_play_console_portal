@@ -21,6 +21,9 @@ import { Roles } from './roles/Roles';
 
 import { SystemUsers } from './system_users/SystemUsers';
 
+import { Profile } from './profile/Profile';
+import { Notifications } from './notifications/Notifications';
+
 export { Company, CompanyDetails, Branch, BranchDetails, Roles, Login, LoginNewUser, AuthOTP,
     ForgotPassword, UpdatePassword, NotFound, Registration, RegistrationOTP, RegisterDetails,
-    SystemUsers };
+    SystemUsers, Profile, Notifications };

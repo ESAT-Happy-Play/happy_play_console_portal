@@ -19,6 +19,9 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+
 const NavIcon = ({ sideBarSate }) => {
     switch (sideBarSate) {
         case "Home.Home":
@@ -43,6 +46,10 @@ const NavIcon = ({ sideBarSate }) => {
             return <GroupsIcon />
         case "Support.FAQs":
             return <LiveHelpIcon />
+        case "Notifications.Notifications":
+            return <NotificationsIcon />
+        case "Profile.Profile":
+            return <AccountCircleRoundedIcon />
         default:
             return <SettingsApplicationsIcon />
     }

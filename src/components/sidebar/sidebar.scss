@@ -125,6 +125,16 @@
             }
         }
 
+        .foot-active {
+            background-color: $yellow;
+            color: $violet-main;
+            cursor: pointer;
+
+            & .icon {
+                color: $violet-main;
+            }
+        }
+        
         .trademark {
             display: flex;
             flex-direction: column;
