@@ -1,4 +1,4 @@
-import './depositDetail.scss';
+import './withdrawalDetail.scss';
 import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,38 +16,39 @@ import MenuItem from "@mui/material/MenuItem";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import CustomTab from '../../../components/tab/CustomTab';
-import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
 import dayjs from 'dayjs';
 
 
-const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
-    const formDeposit = useForm({ defaultValues: deposit });
-    const { register, handleSubmit, formState, reset } = formDeposit;
+const WithdrawalDetail = ({ isOpen, handleClose, handleSubmition, withdrawal }) => {
+    const formWithdrawal = useForm({ defaultValues: withdrawal });
+    const { register, handleSubmit, formState, reset } = formWithdrawal;
     const { errors } = formState;
-    const [status, setStatus] = useState(deposit?.status ?? "");
+    const [status, setStatus] = useState(withdrawal?.status ?? "");
     const [date, setDate] = useState(dayjs('2022-04-17'));
-    const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
+    const [paymentMethod, setPaymentMethod] = useState(withdrawal?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
         handleSubmition(data);
     };
 
-    const handleSearch = (event, value) => {
-        console.log(value);
-    };
-
     const datePickerStyle = {
         width: '250px',
-        'input': { paddingY: '0', height: '34px', fontSize: "12px" },
+        'input': { paddingY: '0', height: '34px', fontSize: "14px" },
         'button': { background: COLORS.violetMain, borderRadius: '50px', borderTopLeftRadius: '0', borderBottomLeftRadius: '0', color: 'white', paddingY: 0, paddingX: '15px', height: '34px' },
         '.MuiInputBase-root': { borderRadius: '50px', paddingRight: '13px' }
     };
 
-    const tabs = [
-        {
-            label: 'Create Deposit',
-            Component:
+    return (
+        <Dialog
+            open={isOpen}
+            onClose={handleClose}
+        >
+            <DialogTitle>
+                <Box display='flex' alignItems='center' justifyContent='space-between'>
+                    <p style={{ color: COLORS.violetMain, margin: 0 }}>Update Withdrawal</p>
+                    <Close onClick={handleClose} sx={{ cursor: "pointer" }} />
+                </Box></DialogTitle>
+            <DialogContent>
                 <Box
                     component='form'
                     display='flex'
@@ -80,7 +81,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
                             <h2 className='field-header'>Amount</h2>
                             <TextField
                                 size="small"
-                                placeholder="Example deposit"
+                                placeholder="Example Withdrawal"
                                 {
                                 ...register("amount", { required: true })
                                 }
@@ -163,60 +164,25 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
                                     sx={datePickerStyle}
                                     {
                                     ...register("date", { required: true })
-                                    } />
+                                    }
+                                />
                             </LocalizationProvider>
                         </Box>
                     </Box>
                     <Box display="flex" justifyContent="space-evenly">
-
+                        <Button onClick={handleClose} className="cancel-button"
+                            sx={{ minWidth: 180, color: COLORS.violetMain }}>Close</Button>
                         <Button
+                            variant='outlined'
                             type="submit"
                             className="add-button"
-                            sx={{ minWidth: 180, background: COLORS.violetMain, color: "white" }}
-                        >Create Deposit <AddIcon /></Button>
+                            sx={{ minWidth: 180, color: COLORS.orange, borderColor: COLORS.orange }}
+                        >Update Withdrawal <EditOutlinedIcon /></Button>
                     </Box>
                 </Box>
-        },
-        {
-            label: 'Lookup Reference',
-            Component: <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-                <Box>
-                    <h2 className='field-header'>Display Name</h2>
-                    <RegularSearchBar
-                        handleSearch={handleSearch}
-                        searchTitle="Search Reference Number"
-                    />
-                </Box>
-
-                <Button
-                    type="submit"
-                    className="add-button"
-                    sx={{ width: 150, background: COLORS.violetMain, color: "white" }}
-                >Search <AddIcon /></Button>
-            </Box>
-        }
-    ]
-
-    return (
-        <>
-            <Dialog
-                open={isOpen}
-                onClose={handleClose}
-            >
-                <DialogTitle>
-                    <Box display='flex' alignItems='center' justifyContent='space-between'>
-                        <p style={{ color: COLORS.violetMain, margin: 0 }}> Create Deposit</p>
-                        <Close onClick={handleClose} sx={{ cursor: "pointer" }} />
-                    </Box></DialogTitle>
-                <DialogContent>
-                    <CustomTab
-                        tabList={tabs}
-                    />
-
-                </DialogContent>
-            </Dialog >
-        </>
+            </DialogContent>
+        </Dialog >
     )
 }
 
-export default DepositCreate;
+export default WithdrawalDetail;

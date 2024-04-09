@@ -48,6 +48,7 @@ import UserStatus from "../views/user_status/UserStatus";
 import UserVerification from "../views/user_verification/UserVerification";
 import SupportUsers from "../views/support/users/SupportUsers";
 import Deposits from "../views/accounting/deposits/Deposits";
+import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
 
 const routeLinks = [
   {
@@ -389,7 +390,7 @@ const routeLinks = [
   },
   {
     path: "/withdrawals",
-    element: <Home />,
+    element: <Withdrawals />,
     state: "Accounting.Withdrawals",
     sidebarProps: {
       displayText: "Withdrawals",

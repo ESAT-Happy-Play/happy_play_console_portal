@@ -1,4 +1,4 @@
-import './depositDetail.scss';
+import './withdrawalDetail.scss';
 import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -21,13 +21,13 @@ import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
 import dayjs from 'dayjs';
 
 
-const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
-    const formDeposit = useForm({ defaultValues: deposit });
-    const { register, handleSubmit, formState, reset } = formDeposit;
+const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmition }) => {
+    const formWithdrawals = useForm({ defaultValues: withdrawals });
+    const { register, handleSubmit, formState, reset } = formWithdrawals;
     const { errors } = formState;
-    const [status, setStatus] = useState(deposit?.status ?? "");
+    const [status, setStatus] = useState(withdrawals?.status ?? "");
     const [date, setDate] = useState(dayjs('2022-04-17'));
-    const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
+    const [paymentMethod, setPaymentMethod] = useState(withdrawals?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
         handleSubmition(data);
@@ -46,7 +46,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
 
     const tabs = [
         {
-            label: 'Create Deposit',
+            label: 'Create Withdrawals',
             Component:
                 <Box
                     component='form'
@@ -80,7 +80,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
                             <h2 className='field-header'>Amount</h2>
                             <TextField
                                 size="small"
-                                placeholder="Example deposit"
+                                placeholder="Example Withdrawals"
                                 {
                                 ...register("amount", { required: true })
                                 }
@@ -173,7 +173,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
                             type="submit"
                             className="add-button"
                             sx={{ minWidth: 180, background: COLORS.violetMain, color: "white" }}
-                        >Create Deposit <AddIcon /></Button>
+                        >Create Withdrawals <AddIcon /></Button>
                     </Box>
                 </Box>
         },
@@ -191,9 +191,9 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
                 <Button
                     type="submit"
                     className="add-button"
-                    sx={{ width: 150, background: COLORS.violetMain, color: "white" }}
+                    sx={{ minWidth: 180, background: COLORS.violetMain, color: "white" }}
                 >Search <AddIcon /></Button>
-            </Box>
+            </Box >
         }
     ]
 
@@ -205,7 +205,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
             >
                 <DialogTitle>
                     <Box display='flex' alignItems='center' justifyContent='space-between'>
-                        <p style={{ color: COLORS.violetMain, margin: 0 }}> Create Deposit</p>
+                        <p style={{ color: COLORS.violetMain, margin: 0 }}> Create Withdrawals</p>
                         <Close onClick={handleClose} sx={{ cursor: "pointer" }} />
                     </Box></DialogTitle>
                 <DialogContent>
@@ -219,4 +219,4 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
     )
 }
 
-export default DepositCreate;
+export default WithdrawalCreate;

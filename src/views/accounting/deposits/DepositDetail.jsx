@@ -171,12 +171,12 @@ const DepositDetail = ({ isOpen, handleClose, handleSubmition, deposit }) => {
                     </Box>
                     <Box display="flex" justifyContent="space-evenly">
                         <Button onClick={handleClose} className="cancel-button"
-                            sx={{ width: 180, color: COLORS.violetMain }}>Close</Button>
+                            sx={{ minWidth: 180, color: COLORS.violetMain }}>Close</Button>
                         <Button
                             variant='outlined'
                             type="submit"
                             className="add-button"
-                            sx={{ width: 180, color: COLORS.orange, borderColor: COLORS.orange }}
+                            sx={{ minWidth: 180, color: COLORS.orange, borderColor: COLORS.orange }}
                         >Update Deposit <EditOutlinedIcon /></Button>
                     </Box>
                 </Box>
