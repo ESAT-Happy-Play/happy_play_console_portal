@@ -16,22 +16,24 @@ import MenuItem from "@mui/material/MenuItem";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 
 
-const DepositDetail = ({ isOpen, handleClose, deposit }) => {
+const DepositDetail = ({ isOpen, handleClose, handleSubmition, deposit }) => {
     const formDeposit = useForm({ defaultValues: deposit });
     const { register, handleSubmit, formState, reset } = formDeposit;
     const { errors } = formState;
     const [status, setStatus] = useState(deposit?.status ?? "");
+    const [date, setDate] = useState(dayjs('2022-04-17'));
     const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
-        console.log(data);
+        handleSubmition(data);
     };
 
     const datePickerStyle = {
         width: '250px',
-        'input': { paddingY: '0', height: '34px', fontSize: "12px" },
+        'input': { paddingY: '0', height: '34px', fontSize: "14px" },
         'button': { background: COLORS.violetMain, borderRadius: '50px', borderTopLeftRadius: '0', borderBottomLeftRadius: '0', color: 'white', paddingY: 0, paddingX: '15px', height: '34px' },
         '.MuiInputBase-root': { borderRadius: '50px', paddingRight: '13px' }
     };
@@ -156,7 +158,14 @@ const DepositDetail = ({ isOpen, handleClose, deposit }) => {
                         <Box>
                             <h2 className='field-header'>Date</h2>
                             <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
-                                <DatePicker sx={datePickerStyle} />
+                                <DatePicker
+                                    value={date}
+                                    onChange={(newDate) => setDate(newDate)}
+                                    sx={datePickerStyle}
+                                    {
+                                    ...register("date", { required: true })
+                                    }
+                                />
                             </LocalizationProvider>
                         </Box>
                     </Box>

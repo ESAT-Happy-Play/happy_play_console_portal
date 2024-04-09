@@ -18,17 +18,19 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import CustomTab from '../../../components/tab/CustomTab';
 import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
+import dayjs from 'dayjs';
 
 
-const DepositCreate = ({ isOpen, handleClose, deposit }) => {
+const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
     const formDeposit = useForm({ defaultValues: deposit });
     const { register, handleSubmit, formState, reset } = formDeposit;
     const { errors } = formState;
     const [status, setStatus] = useState(deposit?.status ?? "");
+    const [date, setDate] = useState(dayjs('2022-04-17'));
     const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
-        console.log(data);
+        handleSubmition(data);
     };
 
     const handleSearch = (event, value) => {
@@ -155,7 +157,13 @@ const DepositCreate = ({ isOpen, handleClose, deposit }) => {
                         <Box>
                             <h2 className='field-header'>Date</h2>
                             <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
-                                <DatePicker sx={datePickerStyle} />
+                                <DatePicker
+                                    value={date}
+                                    onChange={(newDate) => setDate(newDate)}
+                                    sx={datePickerStyle}
+                                    {
+                                    ...register("date", { required: true })
+                                    } />
                             </LocalizationProvider>
                         </Box>
                     </Box>
@@ -190,22 +198,24 @@ const DepositCreate = ({ isOpen, handleClose, deposit }) => {
     ]
 
     return (
-        <Dialog
-            open={isOpen}
-            onClose={handleClose}
-        >
-            <DialogTitle>
-                <Box display='flex' alignItems='center' justifyContent='space-between'>
-                    <p style={{ color: COLORS.violetMain, margin: 0 }}> Create Deposit</p>
-                    <Close onClick={handleClose} sx={{ cursor: "pointer" }} />
-                </Box></DialogTitle>
-            <DialogContent>
-                <CustomTab
-                    tabList={tabs}
-                />
+        <>
+            <Dialog
+                open={isOpen}
+                onClose={handleClose}
+            >
+                <DialogTitle>
+                    <Box display='flex' alignItems='center' justifyContent='space-between'>
+                        <p style={{ color: COLORS.violetMain, margin: 0 }}> Create Deposit</p>
+                        <Close onClick={handleClose} sx={{ cursor: "pointer" }} />
+                    </Box></DialogTitle>
+                <DialogContent>
+                    <CustomTab
+                        tabList={tabs}
+                    />
 
-            </DialogContent>
-        </Dialog >
+                </DialogContent>
+            </Dialog >
+        </>
     )
 }
 

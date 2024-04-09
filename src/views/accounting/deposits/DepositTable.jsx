@@ -3,7 +3,12 @@ import CustomTable, { StyledPagination, StyledTableCell } from '../../../compone
 import { styled } from '@mui/material/styles';
 import { COLORS } from '../../../helper/colors';
 import { Box, Chip, IconButton, TableRow, TextField } from '@mui/material';
-import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import { DialogContentText } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import FileExportIcon from "../../../assets/icons/FileExportIcon";
 import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
@@ -23,6 +28,7 @@ const DepositsTable = ({ data }) => {
     //Update modal states
     const [selectedRow, setSelectedRow] = useState();
     const [openEdit, setOpenEdit] = useState(false);
+    const [openSuccess, setOpenSuccess] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false);
 
     const priorityLevel = ["Low", "High", "Critical"];
@@ -76,6 +82,12 @@ const DepositsTable = ({ data }) => {
     const handleCloseEdit = () => {
         setSelectedRow(null);
         setOpenEdit(false);
+    }
+
+    const handleSubmit = (data) => {
+        setOpenSuccess(true);
+        console.log(data);
+        handleCloseEdit();
     }
 
     const handleDelete = (chipToDelete) => () => {
@@ -163,8 +175,23 @@ const DepositsTable = ({ data }) => {
                 <DepositDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
+                    handleSubmition={handleSubmit}
                     deposit={selectedRow}
                 />}
+            {openSuccess &&
+                <Dialog
+                    open={openSuccess}
+                    onClose={() => setOpenSuccess(false)}
+                >
+                    <DialogTitle style={{ color: '#38A169', fontWeight: 'bold' }}>Success</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>Successfully updated deposit!</DialogContentText>
+                    </DialogContent>
+                    <DialogActions sx={{ justifyContent: "center" }}>
+                        <Button onClick={() => setOpenSuccess(false)} className="cancel-button">Close</Button>
+                    </DialogActions>
+                </Dialog>
+            }
         </div >
     );
 }
