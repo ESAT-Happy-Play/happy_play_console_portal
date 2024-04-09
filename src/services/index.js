@@ -13,7 +13,8 @@ import { DrawTypeService } from './DrawTypeService';
 import { CloseDateService } from './CloseDateService';
 import { AccountSettingService } from './AccountSettingService';
 import { SupportService } from './SupportService';
+import { DrawService } from './DrawService';
 
 export { AuthService, MenuService, AccountService, CompanyService, OTPService, AddressService,
 BranchService, ImageService, UserService, RoleService, GameService, DrawTypeService, CloseDateService,
-AccountSettingService, SupportService };
+AccountSettingService, SupportService, DrawService };

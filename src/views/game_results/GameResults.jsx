@@ -14,7 +14,7 @@ import EditMagicResult from "./edit/EditMagicResult";
 import { StoreExt, DateExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
 import { CompanyGameList } from "../../utils/common/CompanyGameList";
-import { GameService } from '../../services'
+import { GameService, DrawService } from '../../services'
 
 function GameResults() {
   let loginObj = StoreExt.getStore("auth");
@@ -24,6 +24,7 @@ function GameResults() {
   const [pageLoader, setPageLoader] = useState(true);
   const [companyGames, setcompanyGames] = useState(null);
   const [pendingDrawResults, setpendingDrawResults] = useState(null);
+  const [lastDrawResult, setlastDrawResult] = useState(null);
 
   const resultsHistory = ["4-3-3", "4-3-3", "4-3-3", "4-3-3"];
   const [isEditing, setIsEditing] = useState(false);
@@ -39,9 +40,6 @@ function GameResults() {
   const handlePendingDrawResult = (companyGameId) => {
     return new Promise((resolve, reject)=> {
       GameService.getDrawBacklogs(companyGameId).then((resp) => {
-
-        console.log(resp.data);
-
         if(resp.status && resp.data.length > 0) {
           let pendingDraws = [];
           let lastDate = resp.data[0].date;
@@ -62,6 +60,14 @@ function GameResults() {
     });
   }
 
+  const handleLastDrawResult = (companyGameId) => {
+    return new Promise((resolve, reject)=> {
+      DrawService.getLatestDraw(companyGameId).then((res) => {
+        return resolve(res);
+      })
+    });
+  }
+
   const handleListGames = async () => {
     setPageLoader(true);
     await CompanyGameList.getGameList().then((res) => {
@@ -71,6 +77,11 @@ function GameResults() {
         // int pending draw result
         handlePendingDrawResult(res.gameList[0].id).then((resp) => {
           setpendingDrawResults(resp);
+        });
+
+        // init latest draw result
+        handleLastDrawResult(res.gameList[0].id).then((resp) => {
+          setlastDrawResult(resp.data);
         });
       }
       setPageLoader(false);
@@ -101,8 +112,9 @@ function GameResults() {
             drawResult={
               game.gameName === "Regular" ? (
                 <DrawResultRegular
-                  drawResult={"A29"}
+                  // drawResult={"A29"}
                   operatorName={"Operator Name"}
+                  lastDrawResult={lastDrawResult}
                 />
               ) : (
                 <DrawResultJackpot

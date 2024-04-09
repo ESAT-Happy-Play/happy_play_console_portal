@@ -2,7 +2,8 @@ import React from "react";
 import "./drawResultDialog.scss";
 import EditIcon from "../../../assets/icons/EditIcon";
 
-import { DateExt } from "../../../utils/helpers";
+import { DateExt, StoreExt } from "../../../utils/helpers";
+import { DrawService } from "../../../services";
 
 const DrawResultDialog = ({
   open,
@@ -13,22 +14,32 @@ const DrawResultDialog = ({
   gameName,
   theme,
   pendingResultData,
-  newResult
+  newResult,
+  drawType = 0
 }) => {
-  // let loginObj = StoreExt.getStore("auth");
+  let loginObj = StoreExt.getStore("auth");
   // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
 
   const handleOnSubmitDrawResult = () => {
+    let drwTime = pendingResultData[0].drawTime.split(":")[0];
+    let ampm = DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1];
+
     let objPayload = {
+      resultDate: DateExt.formatDate(pendingResultData[0].date),
       companyId: pendingResultData[0].companyId,
-      result: newResult,
-      companyGame: pendingResultData[0].companyGame,
-      gameSchedule: pendingResultData[0].gameDrawType
+      companyGameId: pendingResultData[0].companyGame,
+      drawScheduleId: pendingResultData[0].gameDrawType,
+      drawSchedule: (parseInt(drwTime) === 0) ? 12 : parseInt(drwTime) + ampm,
+      drawResult: newResult.split("").join("-"),
+      drawResultType: drawType,
+      operatorName: loginObj.fullname
     }
 
-    console.log(objPayload);
-
-    onSubmit();
+    DrawService.postDrawResult(objPayload).then((res) => {
+      if (res) {
+        onSubmit();
+      }
+    });
   }
 
   return (

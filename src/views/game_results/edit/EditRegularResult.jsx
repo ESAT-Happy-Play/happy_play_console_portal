@@ -14,8 +14,8 @@ const EditRegularResult = ({
 }) => {
 
   const [newResult, setnewResult] = useState(drawResult);
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+  // const dateString = "May 08, 2023 14:00:00";
+  // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
     "A",
     "2",
@@ -58,7 +58,7 @@ const EditRegularResult = ({
                     (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
                     : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
                   }
-                  {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
+                  { DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1] }
                 </div>
               </>
               : <>Loading...</>
