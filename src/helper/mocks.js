@@ -906,3 +906,234 @@ export const mockSupportUser = {
   isFullyVerified: true,
   lastActivity: "2 hrs ago",
 };
+
+export const mockCompanies = [
+  {
+    id: 1,
+    name: "Company 1"
+  },
+  {
+    id: 2,
+    name: "Company 2"
+  },
+  {
+    id: 3,
+    name: "Company 3"
+  },
+  {
+    id: 4,
+    name: "Company 4"
+  },
+  {
+    id: 5,
+    name: "Company 5"
+  },
+];
+
+export const mockBranches = [
+  {
+    id: 1,
+    name: "Branch 1"
+  },
+  {
+    id: 2,
+    name: "Branch 2"
+  },
+  {
+    id: 3,
+    name: "Branch 3"
+  },
+  {
+    id: 4,
+    name: "Branch 4"
+  },
+  {
+    id: 5,
+    name: "Branch 5"
+  },
+];
+
+export const mockStatus = [
+  {
+    id: 1,
+    name: "New"
+  },
+  {
+    id: 2,
+    name: "Pending"
+  },
+  {
+    id: 3,
+    name: "Acknowledged"
+  },
+  {
+    id: 4,
+    name: "Solution Sent"
+  },
+  {
+    id: 5,
+    name: "More Infro"
+  },
+  {
+    id: 6,
+    name: "Closed"
+  },
+];
+
+export const mockDeposits = [
+  {
+    id: 1,
+    referenceId: "0000000001",
+    name: "Juan Name",
+    amount: 7600.0,
+    status: 1,
+    paymentMethod: 2,
+    date: "January 14, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 2,
+    referenceId: "0000000002",
+    name: "Juan Name 1",
+    amount: 3450.0,
+    status: 1,
+    paymentMethod: 3,
+    date: "January 16, 2024",
+    company: 2,
+    branch: 2
+  },
+  {
+    id: 3,
+    referenceId: "0000000003",
+    name: "Juan Name 2",
+    amount: 100.0,
+    status: 2,
+    paymentMethod: 2,
+    date: "January 19, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 4,
+    referenceId: "0000000004",
+    name: "Juan Namez",
+    amount: 100.0,
+    status: 3,
+    paymentMethod: 2,
+    date: "January 20, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 5,
+    referenceId: "0000000005",
+    name: "Juan Namex",
+    amount: 100.0,
+    status: 4,
+    paymentMethod: 2,
+    date: "January 20, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 6,
+    referenceId: "0000000006",
+    name: "Namecasd asd",
+    amount: 5600.0,
+    status: 2,
+    paymentMethod: 4,
+    date: "January 21, 2024",
+    company: 1,
+    branch: 3
+  },
+  {
+    id: 7,
+    referenceId: "0000000007",
+    name: "Full Name",
+    amount: 670.0,
+    status: 1,
+    paymentMethod: 1,
+    date: "January 22, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 8,
+    referenceId: "0000000008",
+    name: "Juan asda ",
+    amount: 45500.0,
+    status: 1,
+    paymentMethod: 1,
+    date: "January 22, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 9,
+    referenceId: "0000000009",
+    name: "asdasd Name",
+    amount: 101230.0,
+    status: 4,
+    paymentMethod: 2,
+    date: "January 26, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 10,
+    referenceId: "0000000010",
+    name: "Juan dfgdfg",
+    amount: 167800.0,
+    status: 1,
+    paymentMethod: 1,
+    date: "January 28, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 11,
+    referenceId: "0000000011",
+    name: "Juan Name",
+    amount: 146500.0,
+    status: 1,
+    paymentMethod: 1,
+    date: "January 28, 2024",
+    company: 1,
+    branch: 1
+  },
+  {
+    id: 12,
+    referenceId: "0000000012",
+    name: "Juan Name",
+    amount: 11230.0,
+    status: 1,
+    paymentMethod: 1,
+    date: "January 30, 2024",
+    company: 1,
+    branch: 1
+  },
+];
+
+export const mockPaymentMethod = [
+  {
+    id: 1,
+    name: "Mastercard"
+  },
+  {
+    id: 2,
+    name: "GCash"
+  },
+  {
+    id: 3,
+    name: "Cash"
+  },
+  {
+    id: 4,
+    name: "Visa"
+  },
+  {
+    id: 5,
+    name: "Paypal"
+  },
+];

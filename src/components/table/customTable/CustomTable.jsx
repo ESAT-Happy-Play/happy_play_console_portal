@@ -97,7 +97,6 @@ export const StyledPagination = styled((props) => {
     }
     .MuiTablePagination-select{
         font-family: "Inter";
-        background: ${COLORS.tableBackground};
         color :${COLORS.violetMain};
         padding: 5px 10px !important;
     }

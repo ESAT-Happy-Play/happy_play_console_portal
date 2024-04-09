@@ -47,6 +47,7 @@ import TransactionReports from "../views/transaction_reports/TransactionReports"
 import UserStatus from "../views/user_status/UserStatus";
 import UserVerification from "../views/user_verification/UserVerification";
 import SupportUsers from "../views/support/users/SupportUsers";
+import Deposits from "../views/accounting/deposits/Deposits";
 
 const routeLinks = [
   {
@@ -379,7 +380,7 @@ const routeLinks = [
   // Accounting
   {
     path: "/deposits",
-    element: <Home />,
+    element: <Deposits />,
     state: "Accounting.Deposits",
     sidebarProps: {
       displayText: "Deposits",

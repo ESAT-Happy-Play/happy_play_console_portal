@@ -6,6 +6,7 @@ export const COLORS = {
   yellow: "#FFDA18",
   skyBlueHighlight: "#17A1FA",
   redWarn: "#DC4C64",
+  transparentRed: "#DC4C6440",
   lightRed: "#f6d2d8",
   darkGrey: "#403D39",
   transparentFont: "#403d3980",
