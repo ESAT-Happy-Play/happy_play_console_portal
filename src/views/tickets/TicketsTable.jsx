@@ -23,8 +23,6 @@ const TicketsTable = ({ data, type }) => {
     //Update modal states
     const [selectedRow, setSelectedRow] = useState();
     const [openEdit, setOpenEdit] = useState(false);
-    const [updateValue, setUpdateValue] = useState();
-    const [valid, setValid] = useState(true);
     const [showFilterModal, setShowFilterModal] = useState(false);
 
     const priorityLevel = ["Low", "High", "Critical"];
@@ -75,6 +73,11 @@ const TicketsTable = ({ data, type }) => {
         setFilters([]);
     };
 
+    const handleCloseEdit = () => {
+        setSelectedRow(null);
+        setOpenEdit(false);
+    }
+
     const handleDelete = (chipToDelete) => () => {
         setShowFilterModal(false);
         setFilters((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -82,7 +85,6 @@ const TicketsTable = ({ data, type }) => {
 
     const handleEdit = (value) => {
         setSelectedRow(value);
-        setValid(true);
         setOpenEdit(true);
     }
 
@@ -162,11 +164,13 @@ const TicketsTable = ({ data, type }) => {
                     <StyledTableRow ><StyledTableCell align="center" colSpan={9}>No available data</StyledTableCell></StyledTableRow>
                 }
             </CustomTable>
-            <TicketDetail
-                isOpen={openEdit}
-                setOpen={setOpenEdit}
-                ticket={selectedRow}
-            />
+            {openEdit &&
+                <TicketDetail
+                    isOpen={openEdit}
+                    handleClose={handleCloseEdit}
+                    ticket={selectedRow}
+                    isEditing={true}
+                />}
         </div >
     );
 }

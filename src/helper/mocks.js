@@ -861,8 +861,8 @@ export const mockTicketList = [
     attachment: 1,
     date: "May 08, 2023 15:00:00",
     priority: 1,
-    status: 1,
-    assignedTo: 1,
+    status: 2,
+    assignedTo: 4,
     department: 1
   },
   {
@@ -872,8 +872,8 @@ export const mockTicketList = [
     attachment: 2,
     date: "May 08, 2023 15:00:00",
     priority: 2,
-    status: 1,
-    assignedTo: 1,
+    status: 3,
+    assignedTo: 5,
     department: 1
   },
   {
@@ -884,7 +884,7 @@ export const mockTicketList = [
     date: "May 08, 2023 15:00:00",
     priority: 2,
     status: 1,
-    assignedTo: 1,
+    assignedTo: 5,
     department: 1
   },
   {
@@ -917,7 +917,7 @@ export const mockTicketList = [
     date: "May 08, 2023 15:00:00",
     priority: 1,
     status: 1,
-    assignedTo: 1,
+    assignedTo: 2,
     department: 1
   },
   {
@@ -939,7 +939,7 @@ export const mockTicketList = [
     date: "May 08, 2023 15:00:00",
     priority: 2,
     status: 1,
-    assignedTo: 1,
+    assignedTo: 7,
     department: 1
   },
   {
