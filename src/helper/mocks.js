@@ -1176,3 +1176,57 @@ export const mockDepartments = [
   }
 ];
 
+export const mockSupportUsersList = [
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Inactive",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+];
+
+export const mockSupportUser = {
+  firstName: "Support",
+  middleName: "Middle",
+  lastName: "User",
+  birthday: "Birthday",
+  mobileNumber: "0999-999-9999",
+  nationality: "Nationality",
+  placeOfBirth: "Place of Birth",
+  currentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  permanentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  gameSite: "Game Site",
+  sourceOfIncome: "Source of Income",
+  natureOfWork: "Nature of Work",
+  typeOfID: "National ID",
+  idPicture: null,
+  selfiePicture: null,
+  isActive: true,
+  isFullyVerified: true,
+  lastActivity: "2 hrs ago",
+};
+

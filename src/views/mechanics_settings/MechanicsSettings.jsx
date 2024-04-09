@@ -112,7 +112,7 @@ const MechanicsSettings = () => {
         Component: (betLimitConfig !== null) ? <BetLimits bitLimitData={betLimitConfig} settingId={selectedGameId} subType={subType} /> : <>Loading...Please wait.</>
       },
       { label: "Limit Per Combination", itemId: (subType.id + "90010"), 
-        Component: <LimitCombinationTable data={mockLimitCombination} type={subType.gameName} />
+        Component: <LimitCombinationTable data={[]} type={subType.gameName} settingId={selectedGameId} subType={subType} />
       },
       { label: "Bet Price", itemId: (subType.id + "90011"),
         Component: <BetPrice betPriceData={betPrizeConfig} settingId={selectedGameId} subType={subType} />

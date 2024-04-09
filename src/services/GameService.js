@@ -12,6 +12,16 @@ export const GameService = {
             return res;
         })
     },
+    getCompanyGameDetail: async (companyId) => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/game/mechanics/${companyId}`)
+        .then((res) => {
+            if (!res.status) { 
+                toast.error("Sorry, unsuccessfull gateway communication."); 
+                return false; 
+            }
+            return res;
+        })
+    },
     getCompanyGameSettings: async (companyId) => {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/game/company-settings?companyId=${companyId}`)
         .then((res) => {
@@ -138,6 +148,15 @@ export const GameService = {
         //     maxDeckUnits: 0
         // }
         return await ApiService.patch(`${process.env.REACT_APP_GATEWAY_URL}/api/game/company-settings/${companySettingId}/deck-limits`, data)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res;
+        })
+    },
+    getCombinationLimit: async (data) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/gamelimit/combinations`, data)
         .then((res) => {
             if (!res.status) { 
                 return false; 

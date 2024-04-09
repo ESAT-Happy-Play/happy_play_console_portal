@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CustomTab from "../../components/tab/CustomTab";
 import "./bets.scss";
-// import { mockBetsHistory } from "../../helper/mocks";
+import { mockBetsHistory } from "../../helper/mocks";
 import CustomVerticalTab from "../../components/tab/CustomVerticalTab";
 import BetsTable from "./BetsTable";
 
@@ -71,7 +71,7 @@ function Bets() {
           {game.child ? (
             <CustomVerticalTab changeEvent={handleVerticalChange} tabList={verticalTabs} />
           ) : (
-            <BetsTable data={[]} gameName={game.gameName} />
+            <BetsTable data={mockBetsHistory} gameName={game.gameName} />
           )}
         </div>
       ),

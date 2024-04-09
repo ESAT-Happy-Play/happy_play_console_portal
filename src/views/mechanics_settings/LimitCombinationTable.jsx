@@ -6,19 +6,44 @@ import { Box, IconButton, TextField } from '@mui/material';
 import { CustomRadioButton } from '../../components/radio/CustomRadioGroup';
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
 import UpdateDialog from '../../components/Dialog/game/gameMechanics/UpdateDialog';
+import { GameService } from "../../services";
 
-const LimitCombinationTable = ({ data, type }) => {
+const LimitCombinationTable = ({ data, type, settingId, subType }) => {
     const [displayList, setDisplayList] = useState(data);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchValue, setSearchValue] = useState("");
+    const [totalCount, setTotalCount] = useState(0);
+    const [offset, setOffset] = useState(0);
 
     //Update modal states
     const [selectedRow, setSelectedRow] = useState();
     const [openEdit, setOpenEdit] = useState(false);
     const [updateValue, setUpdateValue] = useState();
     const [valid, setValid] = useState(true);
+
+
+    const initDisplayList = () => {
+        requestDisplayList();
+    }
+
+    const requestDisplayList = () => {
+        const requestData = {
+            "companyGameId": subType.id,
+            "start": page * rowsPerPage,
+            "size": 1000,
+            "search": ""
+        };
+
+        GameService.getCombinationLimit(requestData).then((res) => {
+            if (res) {
+                setTotalCount(res.data.totalCount);
+                setDisplayList(res.data.combinations);
+                setOffset(res.data.offset);
+            }
+        });
+    }
 
     useEffect(() => {
         var statusData = [];
@@ -37,11 +62,10 @@ const LimitCombinationTable = ({ data, type }) => {
         });
 
         setPage(0);
-        setDisplayList(search);
+        // setDisplayList(search);
+
+        initDisplayList();
     }, [searchValue, statusFilter]);
-
-
-
 
     // On click search
     const handleSearch = (event, value) => {
@@ -100,7 +124,7 @@ const LimitCombinationTable = ({ data, type }) => {
                     <StyledPagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={displayList.length}
+                        count={totalCount}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

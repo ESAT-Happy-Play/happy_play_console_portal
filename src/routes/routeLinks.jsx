@@ -1,21 +1,21 @@
-import HomeIcon from '@mui/icons-material/Home';
-import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
-import GroupsIcon from '@mui/icons-material/Groups';
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import SettingsIcon from '@mui/icons-material/Settings';
-import DesktopMacIcon from '@mui/icons-material/DesktopMac';
+import HomeIcon from "@mui/icons-material/Home";
+import CandlestickChartIcon from "@mui/icons-material/CandlestickChart";
+import GroupsIcon from "@mui/icons-material/Groups";
+import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DesktopMacIcon from "@mui/icons-material/DesktopMac";
 
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import ChatIcon from '@mui/icons-material/Chat';
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import ChatIcon from "@mui/icons-material/Chat";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import PsychologyIcon from "@mui/icons-material/Psychology";
 
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import WalletIcon from '@mui/icons-material/Wallet';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import WalletIcon from "@mui/icons-material/Wallet";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 import { Company, Branch, Roles, SystemUsers } from '../views';
 
@@ -47,6 +47,7 @@ import TransactionReports from '../views/transaction_reports/TransactionReports'
 import UserStatus from '../views/user_status/UserStatus';
 import UserVerification from '../views/user_verification/UserVerification';
 import Tickets from '../views/tickets/Tickets';
+import SupportUsers from '../views/support/users/SupportUsers';
 
 const routeLinks = [
   {
@@ -462,7 +463,7 @@ const routeLinks = [
   },
   {
     path: "/support/users",
-    element: <Home />,
+    element: <SupportUsers />,
     state: "Support.Users",
     sidebarProps: {
       displayText: "Users",

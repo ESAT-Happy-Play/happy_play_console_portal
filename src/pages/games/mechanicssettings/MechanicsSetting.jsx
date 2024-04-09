@@ -44,7 +44,6 @@ const MechanicsSetting = () => {
     "Regular", "Jackpot 3.3", "Jackpot 3.4"
   ]
 
-
   const getOverallGameLimit = async () => {
     let url = `${process.env.REACT_APP_API_URL}/gamesettings/overallgamelimits?gametype=01`;
     let response = await GETFetch(url);
@@ -62,7 +61,8 @@ const MechanicsSetting = () => {
   }
 
   const getLimitPerCombination = async (gameType) => {
-    let url = `${process.env.REACT_APP_API_URL}/gamesettings/limitspercombination?gametype=${gameType}`;
+  console.log("test!");
+  let url = `${process.env.REACT_APP_API_URL}/gamesettings/limitspercombination?gametype=${gameType}`;
     let response = await GETFetch(url);
     if (response.status) {
       if (!!response.data.limitsPerCombo)
