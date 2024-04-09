@@ -14,6 +14,8 @@ import { logOut } from '../../redux/reducers/auth/AuthReducer';
 import { removeAppState } from '../../redux/reducers/AppStateReducer';
 import { removeMenuState } from '../../redux/reducers/MenuStateReducer';
 import { removeAccountState } from '../../redux/reducers/AccountStateReducer';
+import { removeGameState } from '../../redux/reducers/GamesStateReducer';
+import { removeCompanyState } from '../../redux/reducers/CompanyStateReducer';
 
 /*
 Use to create Vertical tab, require the ff:
@@ -47,6 +49,8 @@ const ProfileVerticalTab = ({ tabList, changeEvent = () => { } }) => {
     dispatch(removeAppState());
     dispatch(removeMenuState());
     dispatch(removeAccountState());
+    dispatch(removeGameState());
+    dispatch(removeCompanyState());
 
     window.location.href = '/login';
   };

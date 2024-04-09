@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import ResultCard from "./ResultCard";
 import CustomTab from "../../components/tab/CustomTab";
-import { companyGames } from "../../helper/mocks";
+// import { companyGames } from "../../helper/mocks";
 import "./gameResults.scss";
 import { COLORS } from "../../helper/colors";
 import DrawResultRegular from "./draw_results/DrawResultRegular";
@@ -11,14 +11,80 @@ import EditRegularResult from "./edit/EditRegularResult";
 import EditJackpotResult from "./edit/EditJackpotResult";
 import EditMagicResult from "./edit/EditMagicResult";
 
+import { StoreExt, DateExt } from "../../utils/helpers";
+import { ContentLoader } from "../../components/mui";
+import { CompanyGameList } from "../../utils/common/CompanyGameList";
+import { GameService } from '../../services'
+
 function GameResults() {
+  let loginObj = StoreExt.getStore("auth");
+  let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
+  // tokenObj.companyId
+
+  const [pageLoader, setPageLoader] = useState(true);
+  const [companyGames, setcompanyGames] = useState(null);
+  const [pendingDrawResults, setpendingDrawResults] = useState(null);
+
   const resultsHistory = ["4-3-3", "4-3-3", "4-3-3", "4-3-3"];
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingMagic, setIsEditingMagic] = useState(false);
 
-  const tabs = companyGames.map((game) => {
+  const handleChangeGame = async (newValue) => {
+    setPageLoader(true);
+    let drawResults = await handlePendingDrawResult(newValue);
+    setpendingDrawResults(drawResults);
+    setPageLoader(false);
+  }
+
+  const handlePendingDrawResult = (companyGameId) => {
+    return new Promise((resolve, reject)=> {
+      GameService.getDrawBacklogs(companyGameId).then((resp) => {
+
+        console.log(resp.data);
+
+        if(resp.status && resp.data.length > 0) {
+          let pendingDraws = [];
+          let lastDate = resp.data[0].date;
+          resp.data.filter(obj => obj.date === lastDate).map((item) => {
+            pendingDraws.push({
+              id: item.id, 
+              companyId: item.companyId,
+              companyGame: item.companyGame,
+              date: item.date,
+              drawTime: item.drawTime,
+              endCutOff: item.endCutOff,
+              gameDrawType: item.gameDrawType
+            });
+          })
+          return resolve(pendingDraws.sort((a, b) => a.id - b.id));
+        }
+      })
+    });
+  }
+
+  const handleListGames = async () => {
+    setPageLoader(true);
+    await CompanyGameList.getGameList().then((res) => {
+      if (res.gameList.length > 0) {
+        setcompanyGames(res.gameList);
+
+        // int pending draw result
+        handlePendingDrawResult(res.gameList[0].id).then((resp) => {
+          setpendingDrawResults(resp);
+        });
+      }
+      setPageLoader(false);
+    });
+  }
+
+  useEffect(() => {
+    handleListGames();
+  }, []);
+
+  const tabs = (companyGames !== null) ? companyGames.map((game) => {
     return {
       label: game.gameName,
+      itemId: game.id,
       Component: (
         <div className="game-results-container">
           <ResultCard
@@ -31,6 +97,7 @@ function GameResults() {
             postButtonColor={COLORS.yellow}
             hasBackground={true}
             hasSubHeading={true}
+            pendingResultData={pendingDrawResults}
             drawResult={
               game.gameName === "Regular" ? (
                 <DrawResultRegular
@@ -51,6 +118,7 @@ function GameResults() {
                   drawResult={"A29"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
+                  pendingResultData={pendingDrawResults}
                   onClickPost={() => setIsEditing((prev) => !prev)}
                   onClickCancel={() => setIsEditing((prev) => !prev)}
                 />
@@ -59,6 +127,7 @@ function GameResults() {
                   drawResult={"A29 SHS"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
+                  pendingResultData={pendingDrawResults}
                   onClickPost={() => setIsEditing((prev) => !prev)}
                   onClickCancel={() => setIsEditing((prev) => !prev)}
                 />
@@ -100,11 +169,17 @@ function GameResults() {
         </div>
       ),
     };
-  });
+  }) : <></>;
 
   return (
     <div className="container">
-      <CustomTab tabList={tabs} />
+      {
+        (companyGames !== null) 
+        ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
+        : <div style={{ padding:'25px' }}>Loading...Please wait.</div>
+      }
+
+      <ContentLoader isLoadingPage={ pageLoader } />
     </div>
   );
 }

@@ -10,6 +10,8 @@ const EditMagicResult = ({
   onClickPost,
   onClickCancel,
 }) => {
+
+  const [newResult, setnewResult] = useState(drawResult);
   const dateString = "May 08, 2023 14:00:00";
   const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
@@ -34,6 +36,12 @@ const EditMagicResult = ({
     setShowConfirmDialog((prev) => !prev);
   };
 
+  const handleClickNumber = (resultNumber) => {
+    let nwResult = newResult;
+    if (newResult.length > 2) { nwResult = ""; }
+    setnewResult(nwResult + resultNumber);
+  }
+
   return (
     <>
       <div className="magic-result-container">
@@ -45,7 +53,7 @@ const EditMagicResult = ({
             </div>
           </div>
           <div className="magic-reel">
-            {drawResult.split("").map((result, index) => (
+            {newResult.split("").map((result, index) => (
               <div className="magic-reel-item" key={index}>
                 {result}
               </div>
@@ -59,7 +67,7 @@ const EditMagicResult = ({
       <div className="magic-buttons-container">
         <div className="magic-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="magic-button-item" key={index}>
+            <div className="magic-button-item" onClick={e => handleClickNumber(button) } key={index}>
               {button}
             </div>
           ))}
@@ -85,7 +93,7 @@ const EditMagicResult = ({
         }}
         combination={
           <div className="magic-reel">
-            {drawResult.split("").map((result, index) => (
+            {newResult.split("").map((result, index) => (
               <div className="magic-reel-item" key={index}>
                 {result}
               </div>

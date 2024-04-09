@@ -4,6 +4,11 @@ export const DateExt = {
         const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
         return dt.toLocaleDateString('en-us', options);
     },
+    readableDateShort: (stringDate) => {
+        let dt = (new Date(stringDate));
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return dt.toLocaleDateString('en-us', options);
+    },
     todaysDate: (format = 0) => {
         let dt = (new Date());
         var mm = ('0' + (dt.getMonth()+1)).slice(-2);

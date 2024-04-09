@@ -1,7 +1,8 @@
 import React from "react";
 import "./drawResultDialog.scss";
 import EditIcon from "../../../assets/icons/EditIcon";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
+
+import { DateExt } from "../../../utils/helpers";
 
 const DrawResultDialog = ({
   open,
@@ -11,9 +12,24 @@ const DrawResultDialog = ({
   width,
   gameName,
   theme,
+  pendingResultData,
+  newResult
 }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+  // let loginObj = StoreExt.getStore("auth");
+  // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
+
+  const handleOnSubmitDrawResult = () => {
+    let objPayload = {
+      companyId: pendingResultData[0].companyId,
+      result: newResult,
+      companyGame: pendingResultData[0].companyGame,
+      gameSchedule: pendingResultData[0].gameDrawType
+    }
+
+    console.log(objPayload);
+
+    onSubmit();
+  }
 
   return (
     <>
@@ -40,10 +56,18 @@ const DrawResultDialog = ({
                   }
                 >
                   You are about to post the {gameName} games result for{" "}
-                  <b>
-                    {FormatFullDate(latestPrizeDate)} {"-"}
-                    {FormatTimeAmPm(latestPrizeDate)}
-                  </b>
+                  {
+                    (pendingResultData !== null) && (pendingResultData.length > 0) ? 
+                    <b>
+                      { DateExt.readableDateShort(pendingResultData[0].date) } {"-"}
+                      { 
+                        (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
+                        : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
+                      }
+                      {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
+                    </b>
+                    : <>Loading...</>
+                  }
                 </p>
               </div>
               <div className="combination-result">{combination}</div>
@@ -77,7 +101,7 @@ const DrawResultDialog = ({
                 className={
                   theme === "light" ? "confirm-button-light" : "confirm-button"
                 }
-                onClick={onSubmit}
+                onClick={handleOnSubmitDrawResult}
               >
                 <div
                   className={
