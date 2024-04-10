@@ -93,13 +93,9 @@ const TicketsTable = ({ data, type }) => {
             <Box display="flex" alignItems="center" gap={1}>
                 <RegularSearchBar
                     handleSearch={handleSearch}
-                    searchTitle="Search Combination"
+                    searchTitle="Search Name, Ticket Title, or Priority Level"
                 />
 
-                <div className="buttons">
-                    <QrCodeScannerIcon />
-                    Scan Ticket QR
-                </div>
                 <div className="buttons">
                     <FileExportIcon size={20} />
                     Export
