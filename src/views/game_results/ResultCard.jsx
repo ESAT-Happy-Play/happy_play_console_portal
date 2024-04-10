@@ -43,7 +43,10 @@ const ResultCard = ({
       >
         <p style={{ color: headerTitleColor }}>{headerTitle}</p>
         {postButtonLabel && !isEditing && (
-          <button
+          <button disabled={
+              (pendingResultData !== null) && (pendingResultData !== undefined)
+              ? (pendingResultData.length > 0) ? false : true : true 
+            }
             style={{
               color: postButtonLabelColor ?? "white",
               backgroundColor: postButtonColor,
@@ -60,7 +63,7 @@ const ResultCard = ({
       {hasSubHeading && (
         <div className="subheading">
           {
-            (pendingResultData !== null) ?
+            (pendingResultData !== null) && (pendingResultData !== undefined) && (pendingResultData.length > 0) ?
             <>
               <div className="date">
                 <p>Pending: {DateExt.readableDateShort(pendingResultData[0].date)}</p>
@@ -83,7 +86,20 @@ const ResultCard = ({
                 </div>
                 <OpenInFullIcon sx={{ color: "white" }} />
               </div>
-            </> : <></>
+            </> : <>
+                <div className="date">
+                  <p>Pending: {DateExt.readableDateShort(new Date())}</p>
+                  <div className="divider"></div>
+                </div>
+                <div className="draw-time-row">
+                <div className="draw-time-list">
+                    <div className={`draw-time-item first-item`}>
+                      <p>No pending draw found!</p>
+                    </div>
+                </div>
+                <OpenInFullIcon sx={{ color: "white" }} />
+              </div>
+            </>
           }
         </div>
       )}

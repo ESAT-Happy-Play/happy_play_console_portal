@@ -1,12 +1,13 @@
 import React from "react";
 import "./drawResultRegular.scss";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
 import { getGameLogo } from "../../../helper/logos";
 import CrownIcon from "../../../assets/icons/CrownIcon.png";
 
+import { DateExt } from "../../../utils/helpers";
+
 const DrawResultRegular = ({ operatorName, lastDrawResult }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+  // const dateString = "May 08, 2023 14:00:00";
+  // const latestPrizeDate = new Date(dateString);
   return (
     <div className="draw-result-container">
       <div className="results-side">
@@ -14,7 +15,7 @@ const DrawResultRegular = ({ operatorName, lastDrawResult }) => {
           {
             (lastDrawResult !== null) ?
             <>
-              <p>{lastDrawResult.resultDate}</p>
+              <p>{DateExt.readableDateShort(lastDrawResult.resultDate)}</p>
               <div className="time-container">
                 {lastDrawResult.drawSchedule}
               </div>
@@ -23,7 +24,13 @@ const DrawResultRegular = ({ operatorName, lastDrawResult }) => {
           }
         </div>
         <div className="reel">
-          <div>{ (lastDrawResult !== null) ? lastDrawResult.drawResult.split("-").join("") : "777"}</div>
+          <div>
+            { 
+              (lastDrawResult !== null) 
+              ? lastDrawResult.drawResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
+              : ("0-0-0").split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
+            }
+          </div>
         </div>
         <div className="operator">
           <p>Posted By: {operatorName}</p>

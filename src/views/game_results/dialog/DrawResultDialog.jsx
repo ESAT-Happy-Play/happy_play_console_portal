@@ -108,6 +108,8 @@ const DrawResultDialog = ({
               >
                 Cancel
               </button>
+
+              
               <button
                 className={
                   theme === "light" ? "confirm-button-light" : "confirm-button"

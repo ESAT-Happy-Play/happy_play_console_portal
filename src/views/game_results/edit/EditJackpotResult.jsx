@@ -47,9 +47,15 @@ const EditJackpotResult = ({
 
   const handleClickNumber = (resultNumber) => {
     let nwResult = newResult;
-    if (newResult.length === 3) { nwResult = nwResult + " "; }
-    if (nwResult.length > 6) { nwResult = ""; }
-    setnewResult(nwResult + resultNumber);
+    console.log((nwResult.match(/-/g) || []).length);
+    if ((nwResult.match(/-/g) || []).length === 5) { nwResult = ""; }
+
+    if (nwResult === "") {
+      setnewResult(resultNumber);
+    } else {
+      setnewResult(nwResult + "-" + resultNumber);
+    }
+    
   }
 
   return (
@@ -73,7 +79,7 @@ const EditJackpotResult = ({
             }
           </div>
           <div className="jackpot-reel">
-            <div>{newResult}</div>
+            <div>{newResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')}</div>
           </div>
           <div className="operator">
             {getGameLogo(gameType, gameSubType, 100)}

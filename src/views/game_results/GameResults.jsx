@@ -18,13 +18,14 @@ import { GameService, DrawService } from '../../services'
 
 function GameResults() {
   let loginObj = StoreExt.getStore("auth");
-  let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
-  // tokenObj.companyId
+  // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
+  // // tokenObj.companyId
 
   const [pageLoader, setPageLoader] = useState(true);
   const [companyGames, setcompanyGames] = useState(null);
   const [pendingDrawResults, setpendingDrawResults] = useState(null);
   const [lastDrawResult, setlastDrawResult] = useState(null);
+  const [lastMagicDrawResult, setlastMagicDrawResult] = useState(null);
 
   const resultsHistory = ["4-3-3", "4-3-3", "4-3-3", "4-3-3"];
   const [isEditing, setIsEditing] = useState(false);
@@ -32,8 +33,14 @@ function GameResults() {
 
   const handleChangeGame = async (newValue) => {
     setPageLoader(true);
+    // init all pending draws
     let drawResults = await handlePendingDrawResult(newValue);
     setpendingDrawResults(drawResults);
+
+    // init very latest dra result
+    let latestResult = await handleLastDrawResult(newValue);
+    setlastDrawResult(latestResult.data);
+
     setPageLoader(false);
   }
 
@@ -60,9 +67,9 @@ function GameResults() {
     });
   }
 
-  const handleLastDrawResult = (companyGameId) => {
+  const handleLastDrawResult = (companyGameId, drawResultType = 0) => {
     return new Promise((resolve, reject)=> {
-      DrawService.getLatestDraw(companyGameId).then((res) => {
+      DrawService.getLatestDraw(companyGameId, drawResultType).then((res) => {
         return resolve(res);
       })
     });
@@ -70,22 +77,38 @@ function GameResults() {
 
   const handleListGames = async () => {
     setPageLoader(true);
-    await CompanyGameList.getGameList().then((res) => {
-      if (res.gameList.length > 0) {
-        setcompanyGames(res.gameList);
+    let companyGameList = await CompanyGameList.getGameList();
 
-        // int pending draw result
-        handlePendingDrawResult(res.gameList[0].id).then((resp) => {
-          setpendingDrawResults(resp);
-        });
+    let allPendingDraw = await handlePendingDrawResult(companyGameList.gameList[0].id);
+    
+    let lastDrawResults = await Promise.all([
+      handleLastDrawResult(companyGameList.gameList[0].id),
+      handleLastDrawResult(companyGameList.gameList[0].id, 1)
+    ]);
+    
+    setcompanyGames(companyGameList.gameList);
+    setpendingDrawResults(allPendingDraw);
+    setlastDrawResult(lastDrawResults[0].data);
+    setlastMagicDrawResult(lastDrawResults[1].data);
 
-        // init latest draw result
-        handleLastDrawResult(res.gameList[0].id).then((resp) => {
-          setlastDrawResult(resp.data);
-        });
-      }
-      setPageLoader(false);
-    });
+    setPageLoader(false);
+
+    // await CompanyGameList.getGameList().then((res) => {
+    //   if (res.gameList.length > 0) {
+    //     setcompanyGames(res.gameList);
+
+    //     // int pending draw result
+    //     handlePendingDrawResult(res.gameList[0].id).then((resp) => {
+    //       setpendingDrawResults(resp);
+    //     });
+
+    //     // init latest draw result
+    //     handleLastDrawResult(res.gameList[0].id).then((resp) => {
+    //       setlastDrawResult(resp.data);
+    //     });
+    //   }
+    //   setPageLoader(false);
+    // });
   }
 
   useEffect(() => {
@@ -112,14 +135,13 @@ function GameResults() {
             drawResult={
               game.gameName === "Regular" ? (
                 <DrawResultRegular
-                  // drawResult={"A29"}
-                  operatorName={"Operator Name"}
+                  operatorName={loginObj.fullname}
                   lastDrawResult={lastDrawResult}
                 />
               ) : (
                 <DrawResultJackpot
-                  drawResult={"A29 SHS"}
-                  operatorName={"Operator Name"}
+                  lastDrawResult={lastDrawResult}
+                  operatorName={loginObj.fullname}
                   gameName={game.gameName}
                 />
               )
@@ -136,7 +158,7 @@ function GameResults() {
                 />
               ) : (
                 <EditJackpotResult
-                  drawResult={"A29 SHS"}
+                  drawResult={"0-0-0-0-0-0"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
                   pendingResultData={pendingDrawResults}
@@ -158,16 +180,19 @@ function GameResults() {
               borderColor="lightGray"
               postButtonLabel="Post Magic Result"
               postButtonColor={COLORS.violetMain}
+              pendingResultData={pendingDrawResults}
               drawResult={
                 <MagicResult
-                  drawResult={"A29"}
-                  operatorName={"Operator Name"}
+                  // drawResult={"A29"}
+                  lastDrawResult={lastMagicDrawResult}
+                  operatorName={loginObj.fullname}
                 />
               }
               editDrawResult={
                 <EditMagicResult
                   drawResult={"A29"}
-                  operatorName={"Operator Name"}
+                  operatorName={loginObj.fullname}
+                  pendingResultData={pendingDrawResults}
                   onClickPost={() => setIsEditingMagic((prev) => !prev)}
                   onClickCancel={() => setIsEditingMagic((prev) => !prev)}
                 />
