@@ -24,15 +24,21 @@ function GameResults() {
   const [pageLoader, setPageLoader] = useState(true);
   const [companyGames, setcompanyGames] = useState(null);
   const [pendingDrawResults, setpendingDrawResults] = useState(null);
+  const [currentBetSchedule, setcurrentBetSchedule] = useState(null);
+
   const [lastDrawResult, setlastDrawResult] = useState(null);
   const [lastMagicDrawResult, setlastMagicDrawResult] = useState(null);
+  const [resultHistory, setresultHistory] = useState(null);
+  const [magicResultHistory, setmagicResultHistory] = useState(null);
 
-  const resultsHistory = ["4-3-3", "4-3-3", "4-3-3", "4-3-3"];
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingMagic, setIsEditingMagic] = useState(false);
 
+  const [selectedCompanyGameId, setselectedCompanyGameId] = useState("");
+
   const handleChangeGame = async (newValue) => {
     setPageLoader(true);
+    setselectedCompanyGameId(newValue);
     // init all pending draws
     let drawResults = await handlePendingDrawResult(newValue);
     setpendingDrawResults(drawResults);
@@ -41,6 +47,10 @@ function GameResults() {
     let latestResult = await handleLastDrawResult(newValue);
     setlastDrawResult(latestResult.data);
 
+    // init results history
+    let resultHistory = await handleResultHistory(newValue);
+    setresultHistory(resultHistory.data.data);
+    
     setPageLoader(false);
   }
 
@@ -62,6 +72,8 @@ function GameResults() {
             });
           })
           return resolve(pendingDraws.sort((a, b) => a.id - b.id));
+        } else {
+          return resolve([]);
         }
       })
     });
@@ -75,40 +87,94 @@ function GameResults() {
     });
   }
 
+  const handleCurretBet = (companyGameId) => {
+    return new Promise((resolve, reject)=> {
+      DrawService.getCurrentBetSchedule(companyGameId).then((res) => {
+        if (res.success) {
+          let item = res.data;
+          return resolve([{
+            id: item.id, 
+            companyId: item.companyId,
+            companyGame: item.companyGame,
+            date: item.date,
+            drawTime: item.endCutOff, // please update for Api final
+            endCutOff: item.endCutOff,
+            gameDrawType: item.gameDrawType
+          }]);
+        } else {
+          return resolve([]);
+        }
+      })
+    });
+  }
+
+  const handleResultHistory = (companyGameId, magicResult = false) => {
+    return new Promise((resolve, reject)=> {
+      DrawService.getDrawResultHistory(companyGameId, magicResult).then((res) => {
+        return resolve(res);
+      })
+    });
+  }
+
+  const handleRegularResultLoad = async () => {
+    setPageLoader(true);
+    let allPendingDraw = await handlePendingDrawResult(selectedCompanyGameId);
+    setpendingDrawResults(allPendingDraw);
+
+    if (allPendingDraw.length > 0) {
+      setselectedCompanyGameId(selectedCompanyGameId);
+      let allResults = await Promise.all([
+        handleLastDrawResult(selectedCompanyGameId),
+        handleResultHistory(selectedCompanyGameId)
+      ]);
+
+      setlastDrawResult(allResults[0].data);
+      setresultHistory(allResults[1].data.data);
+    }
+    setPageLoader(false);
+  }
+
+  const handleMagicResultLoad = async () => {
+    setPageLoader(true);
+    let allResults = await Promise.all([
+      handleLastDrawResult(selectedCompanyGameId, 1),
+      handleResultHistory(selectedCompanyGameId, true),
+      handleCurretBet(selectedCompanyGameId)
+    ]);
+
+    setlastMagicDrawResult(allResults[0].data);
+    setmagicResultHistory(allResults[1].data.data);
+    setcurrentBetSchedule(allResults[2]);
+    setPageLoader(false);
+  }
+
   const handleListGames = async () => {
     setPageLoader(true);
     let companyGameList = await CompanyGameList.getGameList();
 
     let allPendingDraw = await handlePendingDrawResult(companyGameList.gameList[0].id);
-    
-    let lastDrawResults = await Promise.all([
-      handleLastDrawResult(companyGameList.gameList[0].id),
-      handleLastDrawResult(companyGameList.gameList[0].id, 1)
-    ]);
-    
     setcompanyGames(companyGameList.gameList);
     setpendingDrawResults(allPendingDraw);
-    setlastDrawResult(lastDrawResults[0].data);
-    setlastMagicDrawResult(lastDrawResults[1].data);
 
+    if (allPendingDraw.length > 0) {
+      setselectedCompanyGameId(companyGameList.gameList[0].id);
+      let allResults = await Promise.all([
+        handleLastDrawResult(companyGameList.gameList[0].id),
+        handleLastDrawResult(companyGameList.gameList[0].id, 1),
+        handleResultHistory(companyGameList.gameList[0].id),
+        handleResultHistory(companyGameList.gameList[0].id, true),
+        handleCurretBet(companyGameList.gameList[0].id)
+      ]);
+
+      setlastDrawResult(allResults[0].data);
+      setlastMagicDrawResult(allResults[1].data);
+
+      setresultHistory(allResults[2].data.data);
+      setmagicResultHistory(allResults[3].data.data);
+      setcurrentBetSchedule(allResults[4]);
+    }
+    
     setPageLoader(false);
-
-    // await CompanyGameList.getGameList().then((res) => {
-    //   if (res.gameList.length > 0) {
-    //     setcompanyGames(res.gameList);
-
-    //     // int pending draw result
-    //     handlePendingDrawResult(res.gameList[0].id).then((resp) => {
-    //       setpendingDrawResults(resp);
-    //     });
-
-    //     // init latest draw result
-    //     handleLastDrawResult(res.gameList[0].id).then((resp) => {
-    //       setlastDrawResult(resp.data);
-    //     });
-    //   }
-    //   setPageLoader(false);
-    // });
   }
 
   useEffect(() => {
@@ -149,25 +215,31 @@ function GameResults() {
             editDrawResult={
               game.gameName === "Regular" ? (
                 <EditRegularResult
-                  drawResult={"A29"}
+                  drawResult={"AAA"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
                   pendingResultData={pendingDrawResults}
-                  onClickPost={() => setIsEditing((prev) => !prev)}
+                  onClickPost={() => {
+                    setIsEditing((prev) => !prev);
+                    handleRegularResultLoad();
+                  }}
                   onClickCancel={() => setIsEditing((prev) => !prev)}
                 />
               ) : (
                 <EditJackpotResult
-                  drawResult={"0-0-0-0-0-0"}
+                  drawResult={"7-7-7-A-A-A"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
                   pendingResultData={pendingDrawResults}
-                  onClickPost={() => setIsEditing((prev) => !prev)}
+                  onClickPost={() => {
+                    setIsEditing((prev) => !prev);
+                    handleRegularResultLoad();
+                  }}
                   onClickCancel={() => setIsEditing((prev) => !prev)}
                 />
               )
             }
-            resultsHistory={resultsHistory}
+            resultsHistory={resultHistory}
             isEditing={isEditing}
             onClickPost={() => setIsEditing((prev) => !prev)}
           />
@@ -190,14 +262,17 @@ function GameResults() {
               }
               editDrawResult={
                 <EditMagicResult
-                  drawResult={"A29"}
+                  drawResult={"AAA"}
                   operatorName={loginObj.fullname}
-                  pendingResultData={pendingDrawResults}
-                  onClickPost={() => setIsEditingMagic((prev) => !prev)}
+                  pendingResultData={currentBetSchedule}
+                  onClickPost={() => {
+                    setIsEditingMagic((prev) => !prev);
+                    handleMagicResultLoad();
+                  }}
                   onClickCancel={() => setIsEditingMagic((prev) => !prev)}
                 />
               }
-              resultsHistory={resultsHistory}
+              resultsHistory={magicResultHistory}
               resultsHistoryTheme="light"
               isEditing={isEditingMagic}
               onClickPost={() => setIsEditingMagic((prev) => !prev)}

@@ -1,9 +1,11 @@
 import React from "react";
 import "./resultHistory.scss";
-import { FormatFullDate, FormatTimeAmPm } from "../../helper/Helpers";
+// import { FormatFullDate, FormatTimeAmPm } from "../../helper/Helpers";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-const ResultHistory = ({ result, winners, theme }) => {
+import { DateExt, ConstArrayExt } from "../../utils/helpers";
+
+const ResultHistory = ({ resultDate, drawTime, result, winners, theme }) => {
   const dateString = "May 08, 2023 14:00:00";
   const mockDate = new Date(dateString);
   return (
@@ -15,9 +17,9 @@ const ResultHistory = ({ result, winners, theme }) => {
       }
     >
       <div className={theme === "light" ? "date-time-light" : "date-time"}>
-        <div>{FormatFullDate(mockDate)} </div>
+        <div>{DateExt.readableDateShort(resultDate)}</div>
         <div className="history-time-container">
-          {FormatTimeAmPm(mockDate).replace(/\s+/g, "")}
+          {ConstArrayExt.getConvertToTime(parseInt(drawTime.split(":")[0]))}
         </div>
       </div>
       <div className={theme === "light" ? "draw-result-light" : "draw-result"}>

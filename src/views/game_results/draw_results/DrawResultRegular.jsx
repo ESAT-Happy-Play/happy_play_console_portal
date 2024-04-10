@@ -6,8 +6,6 @@ import CrownIcon from "../../../assets/icons/CrownIcon.png";
 import { DateExt } from "../../../utils/helpers";
 
 const DrawResultRegular = ({ operatorName, lastDrawResult }) => {
-  // const dateString = "May 08, 2023 14:00:00";
-  // const latestPrizeDate = new Date(dateString);
   return (
     <div className="draw-result-container">
       <div className="results-side">

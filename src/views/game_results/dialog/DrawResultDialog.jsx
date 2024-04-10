@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import "./drawResultDialog.scss";
 import EditIcon from "../../../assets/icons/EditIcon";
 
-import { DateExt, StoreExt } from "../../../utils/helpers";
+import { CircleSpinnerOverlay } from 'react-spinner-overlay';
+import { DateExt, StoreExt, ConstArrayExt } from "../../../utils/helpers";
 import { DrawService } from "../../../services";
 
 const DrawResultDialog = ({
@@ -18,32 +19,34 @@ const DrawResultDialog = ({
   drawType = 0
 }) => {
   let loginObj = StoreExt.getStore("auth");
+  const [onSubmitLoading, setonSubmitLoading] = useState(false);
   // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
 
   const handleOnSubmitDrawResult = () => {
     let drwTime = pendingResultData[0].drawTime.split(":")[0];
-    let ampm = DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1];
+    // let ampm = DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1];
 
     let objPayload = {
       resultDate: DateExt.formatDate(pendingResultData[0].date),
       companyId: pendingResultData[0].companyId,
       companyGameId: pendingResultData[0].companyGame,
-      drawScheduleId: pendingResultData[0].gameDrawType,
-      drawSchedule: (parseInt(drwTime) === 0) ? 12 : parseInt(drwTime) + ampm,
+      drawScheduleId: pendingResultData[0].id,
+      drawSchedule: (parseInt(drwTime) === 0) ? "12 PM" : ConstArrayExt.getConvertToTime(parseInt(drwTime)),
       drawResult: newResult.split("").join("-"),
       drawResultType: drawType,
       operatorName: loginObj.fullname
     }
 
+    setonSubmitLoading(true);
     DrawService.postDrawResult(objPayload).then((res) => {
-      if (res) {
-        onSubmit();
-      }
+      if (res) { onSubmit(); }
+      setonSubmitLoading(false);
     });
   }
 
   return (
     <>
+      <CircleSpinnerOverlay loading={onSubmitLoading} overlayColor="rgba(0,153,255,0.2)" />
       {open && (
         <div className="custom-dialog-container">
           <div
@@ -109,7 +112,7 @@ const DrawResultDialog = ({
                 Cancel
               </button>
 
-              
+
               <button
                 className={
                   theme === "light" ? "confirm-button-light" : "confirm-button"

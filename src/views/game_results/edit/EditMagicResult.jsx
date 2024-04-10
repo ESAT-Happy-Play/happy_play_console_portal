@@ -3,7 +3,7 @@ import "./editMagicResult.scss";
 import EditIcon from "../../../assets/icons/EditIcon";
 import DrawResultDialog from "../dialog/DrawResultDialog";
 
-import { DateExt } from "../../../utils/helpers";
+import { DateExt, ConstArrayExt } from "../../../utils/helpers";
 
 const EditMagicResult = ({
   drawResult,
@@ -55,10 +55,9 @@ const EditMagicResult = ({
                 <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
                 <div className="magic-time-container">
                   { 
-                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
-                    : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
+                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
+                    : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0])) 
                   }
-                  { DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1] }
                 </div>
               </>
               : <>Loading...</>

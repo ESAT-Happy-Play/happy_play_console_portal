@@ -1,13 +1,13 @@
 import React from "react";
 import "./resultCard.scss";
 import EditIcon from "../../assets/icons/EditIcon";
-import { FormatFullDate } from "../../helper/Helpers";
-import { drawTypeList } from "../../helper/mocks";
+// import { FormatFullDate } from "../../helper/Helpers";
+// import { drawTypeList } from "../../helper/mocks";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import ResultHistory from "./ResultHistory";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-import { DateExt } from "../../utils/helpers";
+import { DateExt, ConstArrayExt } from "../../utils/helpers";
 
 const ResultCard = ({
   headerTitle,
@@ -78,9 +78,9 @@ const ResultCard = ({
                         index === 0 ? "first-item" : ""
                       }`}
                     >
-                      <b>{ (parseInt(drawType.drawTime.split(":")[0]) === 0) ? 12 
-                      : parseInt(drawType.drawTime.split(":")[0]) }</b>
-                      <p>{ DateExt.formatTime(drawType.endCutOff).split(" ")[1] }</p>
+                      <b>{ (parseInt(drawType.drawTime.split(":")[0]) === 0) ? "12 PM" 
+                      : ConstArrayExt.getConvertToTime(parseInt(drawType.drawTime.split(":")[0])) }</b>
+                      {/* <p>{ DateExt.formatTime(drawType.endCutOff).split(" ")[1] }</p> */}
                     </div>
                   ))}
                 </div>
@@ -126,14 +126,18 @@ const ResultCard = ({
                 </div>
               </div>
             )}
-            {resultsHistory.map((result, index) => (
+            {
+            (resultsHistory !== null) ? resultsHistory.map((result, index) => (
               <ResultHistory
-                winners={76}
-                result={result}
+                winners={result.noOfWinners}
+                result={result.result}
+                drawTime={result.drawTime}
+                resultDate={result.drawDate}
                 key={index}
                 theme={resultsHistoryTheme}
               />
-            ))}
+            )) : <></>
+            }
           </>
         ) : (
           <></>

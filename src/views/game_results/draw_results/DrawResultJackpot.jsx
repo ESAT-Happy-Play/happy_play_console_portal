@@ -40,12 +40,16 @@ const DrawResultJackpot = ({ operatorName, gameName, lastDrawResult }) => {
             { 
               (lastDrawResult !== null) 
               ? lastDrawResult.drawResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
-              : ("0-0-0-0-0-0").split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
+              : ("7-7-7-A-A-A").split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
             }
           </div>
         </div>
         <div className="operator">
-          <p>Posted By: {operatorName}</p>
+          <p>Posted By: 
+            {
+              (lastDrawResult !== null) ? operatorName : ""
+            }
+          </p>
         </div>
       </div>
     </div>

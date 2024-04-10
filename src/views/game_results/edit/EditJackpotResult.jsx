@@ -117,13 +117,13 @@ const EditJackpotResult = ({
         }}
         combination={
           <div className="jackpot-reel">
-            <div>{newResult}</div>
+            <div>{newResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')}</div>
           </div>
         }
         gameName={gameType}
       />
     </>
-  );
+  );  
 };
 
 export default EditJackpotResult;
