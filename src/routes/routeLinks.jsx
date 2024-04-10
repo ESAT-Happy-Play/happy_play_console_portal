@@ -51,6 +51,7 @@ import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
 import Assets from "../views/accounting/assets/Assets";
 import WalletSettings from "../views/accounting/walletSettings/WalletSettings";
 import ReportAnIssue from "../views/accounting/reportIssue/ReportAnIssue";
+import BetsSupport from "../views/accounting/bets/BetsSupport";
 
 const routeLinks = [
   {
@@ -401,7 +402,7 @@ const routeLinks = [
   },
   {
     path: "/bets",
-    element: <Home />,
+    element: <BetsSupport />,
     state: "Accounting.Bets",
     sidebarProps: {
       displayText: "Bets",

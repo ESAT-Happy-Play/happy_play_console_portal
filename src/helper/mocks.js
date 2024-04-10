@@ -1309,3 +1309,86 @@ export const mockReports = [
     date: "January 31, 2024"
   },
 ];
+
+export const mockBets = [
+  {
+    id: 1,
+    betNumber: "0000000001",
+    companyName: "Companyasda 1",
+    amount: 121232.9,
+    isClaimed: 1,
+    status: 1,
+    tax: 20,
+    date: "January 11, 2024"
+  },
+  {
+    id: 2,
+    betNumber: "0000000002",
+    companyName: "Company 2",
+    amount: 12312.9,
+    isClaimed: 0,
+    status: 2,
+    tax: 20,
+    date: "January 12, 2024"
+  },
+  {
+    id: 3,
+    betNumber: "0000000003",
+    companyName: "Company 3",
+    amount: 32132.9,
+    isClaimed: 1,
+    status: 1,
+    tax: 20,
+    date: "January 12, 2024"
+  },
+  {
+    id: 4,
+    betNumber: "0000000004",
+    companyName: "Company 4",
+    amount: 1123312.9,
+    isClaimed: 0,
+    status: 3,
+    tax: 20,
+    date: "January 12, 2024"
+  },
+  {
+    id: 5,
+    betNumber: "0000000005",
+    companyName: "Company 5",
+    amount: 121232.9,
+    isClaimed: 1,
+    status: 2,
+    tax: 20,
+    date: "January 12, 2024"
+  },
+  {
+    id: 6,
+    betNumber: "0000000006",
+    companyName: "Company 6",
+    amount: 1123312.9,
+    isClaimed: 0,
+    status: 3,
+    tax: 20,
+    date: "January 13, 2024"
+  },
+  {
+    id: 7,
+    betNumber: "0000000007",
+    companyName: "Company 7",
+    amount: 12312.9,
+    isClaimed: 1,
+    status: 1,
+    tax: 20,
+    date: "January 13, 2024"
+  },
+  {
+    id: 8,
+    betNumber: "0000000008",
+    companyName: "Company 8",
+    amount: 12312.9,
+    isClaimed: 1321.00,
+    status: 1,
+    tax: 20,
+    date: "January 15, 2024"
+  },
+];

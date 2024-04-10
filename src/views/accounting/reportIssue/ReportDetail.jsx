@@ -65,7 +65,7 @@ const ReportDetail = ({ isOpen, handleClose, handleSubmition, isEditing, report 
                             <h2 className='field-header'>Report Title</h2>
                             <TextField
                                 size="small"
-                                placeholder="Enter your Company Name"
+                                placeholder="Enter your Report Title"
                                 {
                                 ...register("title", { required: true })
                                 }
@@ -84,7 +84,7 @@ const ReportDetail = ({ isOpen, handleClose, handleSubmition, isEditing, report 
                             <TextField
                                 multiline
                                 rows={4}
-                                placeholder="Enter your comment here"
+                                placeholder="Enter your description"
                                 {
                                 ...register("description", "")
                                 }
