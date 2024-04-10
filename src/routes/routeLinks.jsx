@@ -49,6 +49,7 @@ import UserVerification from "../views/user_verification/UserVerification";
 import SupportUsers from "../views/support/users/SupportUsers";
 import Deposits from "../views/accounting/deposits/Deposits";
 import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
+import Assets from "../views/accounting/assets/Assets";
 
 const routeLinks = [
   {
@@ -408,7 +409,7 @@ const routeLinks = [
   },
   {
     path: "/assets",
-    element: <Home />,
+    element: <Assets />,
     state: "Accounting.Assets",
     sidebarProps: {
       displayText: "Assets",

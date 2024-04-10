@@ -1137,3 +1137,81 @@ export const mockPaymentMethod = [
     name: "Paypal"
   },
 ];
+
+export const mockAssets = [
+  {
+    id: 1,
+    assetNumber: "000000001",
+    name: "Company 1 Branch 2",
+    type: 1,
+    amount: 11320.0,
+    date: "January 20, 2024"
+  },
+  {
+    id: 2,
+    assetNumber: "000000002",
+    name: "Company 2 Branch 2",
+    type: 2,
+    amount: 34500.0,
+    date: "January 20, 2024"
+  },
+  {
+    id: 3,
+    assetNumber: "000000003",
+    name: "Company 1 Branch 3",
+    type: 1,
+    amount: 13214.0,
+    date: "January 21, 2024"
+  },
+  {
+    id: 4,
+    assetNumber: "000000004",
+    name: "Company 2 Branch 1",
+    type: 2,
+    amount: 3453.0,
+    date: "January 22, 2024"
+  },
+  {
+    id: 5,
+    assetNumber: "000000005",
+    name: "Company 1 Branch 5",
+    type: 2,
+    amount: 645.0,
+    date: "January 22, 2024"
+  },
+  {
+    id: 6,
+    assetNumber: "000000006",
+    name: "Company 31 Branch 2",
+    type: 2,
+    amount: 3453.0,
+    date: "January 30, 2024"
+  },
+  {
+    id: 7,
+    assetNumber: "000000007",
+    name: "Company 7 Branch 2",
+    type: 2,
+    amount: 1000.0,
+    date: "January 30, 2024"
+  },
+  {
+    id: 8,
+    assetNumber: "000000008",
+    name: "Company 2 Branch 2",
+    type: 1,
+    amount: 234.0,
+    date: "January 30, 2024"
+  },
+];
+
+export const assetTypes = [
+  {
+    id: 1,
+    name: "Physical Cash"
+  },
+  {
+    id: 2,
+    name: "Credits"
+  }
+];
