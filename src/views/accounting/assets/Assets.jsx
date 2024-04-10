@@ -67,4 +67,4 @@ const Assets = () => {
     )
 }
 
-export default Assets
+export default Assets;

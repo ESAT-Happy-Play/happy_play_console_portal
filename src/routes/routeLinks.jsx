@@ -50,6 +50,7 @@ import SupportUsers from "../views/support/users/SupportUsers";
 import Deposits from "../views/accounting/deposits/Deposits";
 import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
 import Assets from "../views/accounting/assets/Assets";
+import WalletSettings from "../views/accounting/walletSettings/WalletSettings";
 
 const routeLinks = [
   {
@@ -418,7 +419,7 @@ const routeLinks = [
   },
   {
     path: "/wallet/settings",
-    element: <Home />,
+    element: <WalletSettings />,
     state: "Accounting.WalletSettings",
     sidebarProps: {
       displayText: "Wallet Settings",

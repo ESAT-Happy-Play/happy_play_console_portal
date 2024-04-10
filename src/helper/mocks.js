@@ -1215,3 +1215,17 @@ export const assetTypes = [
     name: "Credits"
   }
 ];
+
+export const mockWalletSettings = {
+  depositSettings: {
+    initialMinimum: 5,
+    subsequentMinimum: 10001,
+    maximumDeposit: 25000
+  },
+  withdrawalSettings: {
+    initialMinimum: 5,
+    subsequentMinimum: 10001,
+    maximumWithdrawal: 25000,
+    dailyMaximum: 30000
+  }
+}
