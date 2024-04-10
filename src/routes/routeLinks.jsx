@@ -37,7 +37,6 @@ import Performance from "../views/performance_reports/Performance";
 import Players from "../views/players/Players";
 import PrivacyPolicy from "../views/privacy_policy/PrivacyPolicy";
 import Promotions from "../views/promotions/Promotions";
-import ReportAnIssue from "../views/report_an_issue/ReportAnIssue";
 import Revenue from "../views/revenue_reports/Revenue";
 import ScheduleSettings from "../views/schedule_settings/ScheduleSettings";
 import StoreSettings from "../views/store_settings/StoreSettings";
@@ -51,6 +50,7 @@ import Deposits from "../views/accounting/deposits/Deposits";
 import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
 import Assets from "../views/accounting/assets/Assets";
 import WalletSettings from "../views/accounting/walletSettings/WalletSettings";
+import ReportAnIssue from "../views/accounting/reportIssue/ReportAnIssue";
 
 const routeLinks = [
   {
@@ -428,7 +428,7 @@ const routeLinks = [
   },
   {
     path: "/report/issue",
-    element: <Home />,
+    element: <ReportAnIssue />,
     state: "Accounting.ReportAnIssue",
     sidebarProps: {
       displayText: "Report An Issue",

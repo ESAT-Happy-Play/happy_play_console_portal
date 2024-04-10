@@ -1228,4 +1228,84 @@ export const mockWalletSettings = {
     maximumWithdrawal: 25000,
     dailyMaximum: 30000
   }
-}
+};
+
+export const mockReports = [
+  {
+    id: 1,
+    title: "Report 1",
+    description: "This is description 1",
+    attachment: 2,
+    date: "January 20, 2024"
+  },
+  {
+    id: 2,
+    title: "Report 2",
+    description: "This is description 2",
+    attachment: 2,
+    date: "January 21, 2024"
+  },
+  {
+    id: 3,
+    title: "Report 3",
+    description: "This is description 3",
+    attachment: 1,
+    date: "January 22, 2024"
+  },
+  {
+    id: 4,
+    title: "Report 4",
+    description: "This is description 4",
+    attachment: 1,
+    date: "January 22, 2024"
+  },
+  {
+    id: 5,
+    title: "Report 5",
+    description: "This is description 5",
+    attachment: 2,
+    date: "January 22, 2024"
+  },
+  {
+    id: 6,
+    title: "Report 6",
+    description: "This is description 6",
+    attachment: 1,
+    date: "January 25, 2024"
+  },
+  {
+    id: 7,
+    title: "Report 7",
+    description: "This is description 7",
+    attachment: 3,
+    date: "January 25, 2024"
+  },
+  {
+    id: 8,
+    title: "Report 8",
+    description: "This is description 8",
+    attachment: 2,
+    date: "January 25, 2024"
+  },
+  {
+    id: 9,
+    title: "Report 9",
+    description: "This is description 9",
+    attachment: 2,
+    date: "January 28, 2024"
+  },
+  {
+    id: 10,
+    title: "Report 10",
+    description: "This is description 10",
+    attachment: 2,
+    date: "January 29, 2024"
+  },
+  {
+    id: 11,
+    title: "Report 11",
+    description: "This is description 10",
+    attachment: 2,
+    date: "January 31, 2024"
+  },
+];
