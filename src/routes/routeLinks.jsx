@@ -53,7 +53,7 @@ import Deposits from "../views/accounting/deposits/Deposits";
 import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
 import Assets from "../views/accounting/assets/Assets";
 import WalletSettings from "../views/accounting/walletSettings/WalletSettings";
-import ReportAnIssue from "../views/accounting/reportIssue/ReportAnIssue";
+import SupportReport from "../views/accounting/reportIssue/SupportReport";
 import BetsSupport from "../views/accounting/bets/BetsSupport";
 
 const routeLinks = [
@@ -432,7 +432,7 @@ const routeLinks = [
   },
   {
     path: "/report/issue",
-    element: <ReportAnIssue />,
+    element: <SupportReport />,
     state: "Accounting.ReportAnIssue",
     sidebarProps: {
       displayText: "Report An Issue",

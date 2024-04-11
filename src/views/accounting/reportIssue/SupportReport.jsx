@@ -1,4 +1,4 @@
-import './reportAnIssue.scss';
+import './supportReport.scss';
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { Button } from '@mui/material';
@@ -12,7 +12,7 @@ import ReportDetail from './ReportDetail';
 import ReportsTable from './ReportsTable';
 
 
-const ReportAnIssue = () => {
+const SupportReport = () => {
     const [openCreate, setOpenCreate] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
 
@@ -67,4 +67,4 @@ const ReportAnIssue = () => {
     )
 }
 
-export default ReportAnIssue;
+export default SupportReport;
