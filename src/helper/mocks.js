@@ -816,12 +816,12 @@ export const storeSettings = [
       maxUnitsPowerWin: 20,
       maxFavorites: 25,
       hotCombinationsRange: 10,
-      hotCombinationsRefreshUnits: 10,
+      hotCombinationsRefreshUnits: 10
     },
     deckLimits: {
       deckOpenTime: 10,
-      maxDeckUnits: 25,
-    },
+      maxDeckUnits: 25
+    }
   },
   {
     gameName: "Jackpot 3.3",
@@ -830,12 +830,12 @@ export const storeSettings = [
       maxUnits: 10,
       maxFavorites: 20,
       hotCombinationsRange: 15,
-      hotCombinationsRefreshUnits: 10,
+      hotCombinationsRefreshUnits: 10
     },
     deckLimits: {
       deckOpenTime: 5,
-      maxDeckUnits: 25,
-    },
+      maxDeckUnits: 25
+    }
   },
   {
     gameName: "Jackpot 3.4",
@@ -844,68 +844,182 @@ export const storeSettings = [
       maxUnits: 15,
       maxFavorites: 25,
       hotCombinationsRange: 12,
-      hotCombinationsRefreshUnits: 10,
+      hotCombinationsRefreshUnits: 10
     },
     deckLimits: {
       deckOpenTime: 5,
-      maxDeckUnits: 25,
-    },
+      maxDeckUnits: 25
+    }
   },
 ];
 
-export const mockSupportUsersList = [
+export const mockTicketList = [
   {
-    name: "Full Name",
-    type: "Ticket",
-    status: "Active",
-    registrationDate: "January 14, 2024",
+    fullName: "Ricky Hooper",
+    description: "Where are my pants?",
+    title: "Ticket 1",
+    attachment: 1,
+    date: "May 08, 2023 15:00:00",
+    priority: 1,
+    status: 2,
+    assignedTo: 4,
+    department: 1
   },
   {
-    name: "Full Name",
-    type: "Ticket",
-    status: "Inactive",
-    registrationDate: "January 14, 2024",
+    fullName: "Eleni Mays",
+    description: "I don't even care.",
+    title: "Ticket 1",
+    attachment: 2,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 3,
+    assignedTo: 5,
+    department: 1
   },
   {
-    name: "Full Name",
-    type: "Ticket",
-    status: "Active",
-    registrationDate: "January 14, 2024",
+    fullName: "Kathaleen Dodson",
+    description: "The syntax {D1,D2,...,Dn} denotes a tuple whose arguments are D1, D2, ... Dn.",
+    title: "Ticket 1",
+    attachment: 3,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 5,
+    department: 1
   },
+  {
+    fullName: "Richard Curtis",
+    description: "Do you have any idea why this is not working?",
+    title: "Ticket 1",
+    attachment: 4,
+    date: "May 08, 2023 15:00:00",
+    priority: 3,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Graig Solis",
+    description: "Haskell features a type system with type inference and lazy evaluation.",
+    title: "Ticket 1",
+    attachment: 5,
+    date: "May 08, 2023 15:00:00",
+    priority: 1,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Leoma Osborne",
+    description: "Where are my pants?",
+    title: "Ticket 1",
+    attachment: 6,
+    date: "May 08, 2023 15:00:00",
+    priority: 1,
+    status: 1,
+    assignedTo: 2,
+    department: 1
+  },
+  {
+    fullName: "Talisha Pruitt",
+    description: "Tuples are containers for a fixed number of Erlang data types.",
+    title: "Ticket 1",
+    attachment: 7,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Jules Mathews",
+    description: "Haskell features a type system with type inference and lazy evaluation.",
+    title: "Ticket 1",
+    attachment: 8,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 7,
+    department: 1
+  },
+  {
+    fullName: "Charles Guy",
+    description: "It is also a garbage-collected runtime system.",
+    title: "Ticket 1",
+    attachment: 9,
+    date: "May 08, 2023 15:00:00",
+    priority: 3,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Deangelo Fleming",
+    description: "Haskell features a type system with type inference and lazy evaluation.",
+    title: "Ticket 1",
+    attachment: 10,
+    date: "May 08, 2023 15:00:00",
+    priority: 1,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Loria Gilbert",
+    description: "She spent her earliest years reading classic literature, and writing poetry.",
+    title: "Ticket 1",
+    attachment: 11,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Antonetta Floyd",
+    description: "The sequential subset of Erlang supports eager evaluation, single assignment, and dynamic typing.",
+    title: "Ticket 1",
+    attachment: 12,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Ramon Watts",
+    description: "Messages can be sent to and received from ports, but these messages must obey the so-called \"port protocol.\"",
+    title: "Ticket 1",
+    attachment: 13,
+    date: "May 08, 2023 15:00:00",
+    priority: 3,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Mikel Atkins",
+    description: "The sequential subset of Erlang supports eager evaluation, single assignment, and dynamic typing.",
+    title: "Ticket 1",
+    attachment: 14,
+    date: "May 08, 2023 15:00:00",
+    priority: 1,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  },
+  {
+    fullName: "Micheal Rios",
+    description: "She spent her earliest years reading classic literature, and writing poetry.",
+    title: "Ticket 1",
+    attachment: 15,
+    date: "May 08, 2023 15:00:00",
+    priority: 2,
+    status: 1,
+    assignedTo: 1,
+    department: 1
+  }
 ];
-
-export const mockSupportUser = {
-  firstName: "Support",
-  middleName: "Middle",
-  lastName: "User",
-  birthday: "Birthday",
-  mobileNumber: "0999-999-9999",
-  nationality: "Nationality",
-  placeOfBirth: "Place of Birth",
-  currentAddress: {
-    region: "Region",
-    province: "Province",
-    municipality: "Municipality",
-    barangay: "Barangay",
-    street: "Street/Sitio",
-  },
-  permanentAddress: {
-    region: "Region",
-    province: "Province",
-    municipality: "Municipality",
-    barangay: "Barangay",
-    street: "Street/Sitio",
-  },
-  gameSite: "Game Site",
-  sourceOfIncome: "Source of Income",
-  natureOfWork: "Nature of Work",
-  typeOfID: "National ID",
-  idPicture: null,
-  selfiePicture: null,
-  isActive: true,
-  isFullyVerified: true,
-  lastActivity: "2 hrs ago",
-};
 
 export const mockCompanies = [
   {
@@ -979,6 +1093,142 @@ export const mockStatus = [
     name: "Closed"
   },
 ];
+
+export const mockPriority = [
+  {
+    id: 1,
+    name: "Low"
+  },
+  {
+    id: 2,
+    name: "High"
+  },
+  {
+    id: 3,
+    name: "Critical"
+  },
+];
+
+
+export const mockUsers = [
+  {
+    id: 1,
+    name: "Julian Oliver"
+  },
+  {
+    id: 2,
+    name: "Mariella Roach"
+  },
+  {
+    id: 3,
+    name: "Kassie Goff"
+  },
+  {
+    id: 4,
+    name: "Raye Holmes"
+  },
+  {
+    id: 5,
+    name: "Kattie Flynn"
+  },
+  {
+    id: 6,
+    name: "Rickie Baxter"
+  },
+  {
+    id: 7,
+    name: "Jame Albert"
+  },
+  {
+    id: 8,
+    name: "Yun Dyer"
+  },
+  {
+    id: 9,
+    name: "Amberly Salazar"
+  },
+  {
+    id: 10,
+    name: "Arlie Warner"
+  }
+];
+
+export const mockDepartments = [
+  {
+    id: 1,
+    name: "Department 1"
+  },
+  {
+    id: 2,
+    name: "Department 2"
+  },
+  {
+    id: 3,
+    name: "Department 3"
+  },
+  {
+    id: 4,
+    name: "Department 4"
+  },
+  {
+    id: 5,
+    name: "Department 5"
+  }
+];
+
+export const mockSupportUsersList = [
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Inactive",
+    registrationDate: "January 14, 2024",
+  },
+  {
+    name: "Full Name",
+    type: "Ticket",
+    status: "Active",
+    registrationDate: "January 14, 2024",
+  },
+];
+
+export const mockSupportUser = {
+  firstName: "Support",
+  middleName: "Middle",
+  lastName: "User",
+  birthday: "Birthday",
+  mobileNumber: "0999-999-9999",
+  nationality: "Nationality",
+  placeOfBirth: "Place of Birth",
+  currentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  permanentAddress: {
+    region: "Region",
+    province: "Province",
+    municipality: "Municipality",
+    barangay: "Barangay",
+    street: "Street/Sitio",
+  },
+  gameSite: "Game Site",
+  sourceOfIncome: "Source of Income",
+  natureOfWork: "Nature of Work",
+  typeOfID: "National ID",
+  idPicture: null,
+  selfiePicture: null,
+  isActive: true,
+  isFullyVerified: true,
+  lastActivity: "2 hrs ago",
+};
 
 export const mockDeposits = [
   {

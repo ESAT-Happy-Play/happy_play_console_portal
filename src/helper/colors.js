@@ -17,5 +17,5 @@ export const COLORS = {
   violetHover: "#ffffff20",
   violetBorder: "#4845d280",
   violetShadow: "#4845d20d",
-  tableBackground: "#f4f3fc80",
+  tableBackground: "#f4f3fc",
 };
