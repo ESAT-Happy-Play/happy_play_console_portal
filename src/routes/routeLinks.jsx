@@ -19,6 +19,7 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 import { Company, Branch, Roles, SystemUsers } from '../views';
 
+
 import PageLayout from '../components/layout/PageLayout';
 import AboutUs from '../views/about_us/AboutUs';
 import ActivityReports from '../views/activity_reports/ActivityReports';
@@ -48,6 +49,12 @@ import UserStatus from '../views/user_status/UserStatus';
 import UserVerification from '../views/user_verification/UserVerification';
 import Tickets from '../views/tickets/Tickets';
 import SupportUsers from '../views/support/users/SupportUsers';
+import Deposits from "../views/accounting/deposits/Deposits";
+import Withdrawals from "../views/accounting/withdrawals/Withdrawals";
+import Assets from "../views/accounting/assets/Assets";
+import WalletSettings from "../views/accounting/walletSettings/WalletSettings";
+import SupportReport from "../views/accounting/reportIssue/SupportReport";
+import BetsSupport from "../views/accounting/bets/BetsSupport";
 
 const routeLinks = [
   {
@@ -380,7 +387,7 @@ const routeLinks = [
   // Accounting
   {
     path: "/deposits",
-    element: <Home />,
+    element: <Deposits />,
     state: "Accounting.Deposits",
     sidebarProps: {
       displayText: "Deposits",
@@ -389,7 +396,7 @@ const routeLinks = [
   },
   {
     path: "/withdrawals",
-    element: <Home />,
+    element: <Withdrawals />,
     state: "Accounting.Withdrawals",
     sidebarProps: {
       displayText: "Withdrawals",
@@ -398,7 +405,7 @@ const routeLinks = [
   },
   {
     path: "/bets",
-    element: <Home />,
+    element: <BetsSupport />,
     state: "Accounting.Bets",
     sidebarProps: {
       displayText: "Bets",
@@ -407,7 +414,7 @@ const routeLinks = [
   },
   {
     path: "/assets",
-    element: <Home />,
+    element: <Assets />,
     state: "Accounting.Assets",
     sidebarProps: {
       displayText: "Assets",
@@ -416,7 +423,7 @@ const routeLinks = [
   },
   {
     path: "/wallet/settings",
-    element: <Home />,
+    element: <WalletSettings />,
     state: "Accounting.WalletSettings",
     sidebarProps: {
       displayText: "Wallet Settings",
@@ -425,7 +432,7 @@ const routeLinks = [
   },
   {
     path: "/report/issue",
-    element: <Home />,
+    element: <SupportReport />,
     state: "Accounting.ReportAnIssue",
     sidebarProps: {
       displayText: "Report An Issue",
