@@ -71,7 +71,8 @@ function GameResults() {
               gameDrawType: item.gameDrawType
             });
           })
-          return resolve(pendingDraws.sort((a, b) => a.id - b.id));
+          // return resolve(pendingDraws.sort((a, b) => a.id - b.id));
+          return resolve(pendingDraws);
         } else {
           return resolve([]);
         }
