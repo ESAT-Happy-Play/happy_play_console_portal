@@ -17,36 +17,37 @@ import EqualizerIcon from "@mui/icons-material/Equalizer";
 import WalletIcon from "@mui/icons-material/Wallet";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
-import { Company, Branch, Roles, SystemUsers } from "../views";
+import { Company, Branch, Roles, SystemUsers } from '../views';
 
-import PageLayout from "../components/layout/PageLayout";
-import AboutUs from "../views/about_us/AboutUs";
-import ActivityReports from "../views/activity_reports/ActivityReports";
-import Agents from "../views/agents/Agents";
-import Annoucements from "../views/annoucements/Annoucements";
-import Bets from "../views/bets/Bets";
-import GamePrizes from "../views/game_prizes/GamePrizes";
-import GameResults from "../views/game_results/GameResults";
-import Games from "../views/games/Games";
-import Growth from "../views/growth_reports/Growth";
-import Home from "../views/home/Home";
-import Livestream from "../views/livestream/Livestream";
-import MasterAgents from "../views/master_agents/MasterAgents";
-import MechanicsSettings from "../views/mechanics_settings/MechanicsSettings";
-import Performance from "../views/performance_reports/Performance";
-import Players from "../views/players/Players";
-import PrivacyPolicy from "../views/privacy_policy/PrivacyPolicy";
-import Promotions from "../views/promotions/Promotions";
-import ReportAnIssue from "../views/report_an_issue/ReportAnIssue";
-import Revenue from "../views/revenue_reports/Revenue";
-import ScheduleSettings from "../views/schedule_settings/ScheduleSettings";
-import StoreSettings from "../views/store_settings/StoreSettings";
-import Terms from "../views/terms_of_use/Terms";
-import TextBlast from "../views/text_blast/TextBlast";
-import TransactionReports from "../views/transaction_reports/TransactionReports";
-import UserStatus from "../views/user_status/UserStatus";
-import UserVerification from "../views/user_verification/UserVerification";
-import SupportUsers from "../views/support/users/SupportUsers";
+import PageLayout from '../components/layout/PageLayout';
+import AboutUs from '../views/about_us/AboutUs';
+import ActivityReports from '../views/activity_reports/ActivityReports';
+import Agents from '../views/agents/Agents';
+import Annoucements from '../views/annoucements/Annoucements';
+import Bets from '../views/bets/Bets';
+import GamePrizes from '../views/game_prizes/GamePrizes';
+import GameResults from '../views/game_results/GameResults';
+import Games from '../views/games/Games';
+import Growth from '../views/growth_reports/Growth';
+import Home from '../views/home/Home';
+import Livestream from '../views/livestream/Livestream';
+import MasterAgents from '../views/master_agents/MasterAgents';
+import MechanicsSettings from '../views/mechanics_settings/MechanicsSettings';
+import Performance from '../views/performance_reports/Performance';
+import Players from '../views/players/Players';
+import PrivacyPolicy from '../views/privacy_policy/PrivacyPolicy';
+import Promotions from '../views/promotions/Promotions';
+import ReportAnIssue from '../views/report_an_issue/ReportAnIssue';
+import Revenue from '../views/revenue_reports/Revenue';
+import ScheduleSettings from '../views/schedule_settings/ScheduleSettings';
+import StoreSettings from '../views/store_settings/StoreSettings';
+import Terms from '../views/terms_of_use/Terms';
+import TextBlast from '../views/text_blast/TextBlast';
+import TransactionReports from '../views/transaction_reports/TransactionReports';
+import UserStatus from '../views/user_status/UserStatus';
+import UserVerification from '../views/user_verification/UserVerification';
+import Tickets from '../views/tickets/Tickets';
+import SupportUsers from '../views/support/users/SupportUsers';
 
 const routeLinks = [
   {
@@ -55,7 +56,7 @@ const routeLinks = [
     state: "Home.Home",
     sidebarProps: {
       displayText: "Dashboard",
-      icon: <HomeIcon />,
+      icon: <HomeIcon />
     },
   },
   // Administrative 1
@@ -65,7 +66,7 @@ const routeLinks = [
     state: "Administrative",
     sidebarProps: {
       displayText: "Administrative",
-      icon: <CandlestickChartIcon />,
+      icon: <CandlestickChartIcon />
     },
     child: [
       {
@@ -73,50 +74,50 @@ const routeLinks = [
         element: <Company />,
         state: "Administrative.Company",
         sidebarProps: {
-          displayText: "Company",
-        },
+          displayText: "Company"
+        }
       },
       {
         path: "/branches",
         element: <Branch />,
         state: "Administrative.Branch",
         sidebarProps: {
-          displayText: "Branch",
-        },
+          displayText: "Branch"
+        }
       },
       {
         path: "/roles",
         element: <Roles />,
         state: "Administrative.Roles",
         sidebarProps: {
-          displayText: "Roles",
-        },
+          displayText: "Roles"
+        }
       },
       {
         path: "/user/verification",
         element: <UserVerification />,
         state: "Administrative.UserVerification",
         sidebarProps: {
-          displayText: "User Verification",
-        },
+          displayText: "User Verification"
+        }
       },
       {
         path: "/user/status",
         element: <UserStatus />,
         state: "Administrative.UserStatus",
         sidebarProps: {
-          displayText: "User Status",
-        },
+          displayText: "User Status"
+        }
       },
       {
         path: "/games",
         element: <UserStatus />,
         state: "Administrative.UserGames",
         sidebarProps: {
-          displayText: "Games",
-        },
+          displayText: "Games"
+        }
       },
-    ],
+    ]
   },
 
   // User Accounts 2
@@ -126,7 +127,7 @@ const routeLinks = [
     state: "UserAccounts",
     sidebarProps: {
       displayText: "User Accounts",
-      icon: <GroupsIcon />,
+      icon: <GroupsIcon />
     },
     child: [
       {
@@ -134,42 +135,42 @@ const routeLinks = [
         element: <SystemUsers />,
         state: "UserAccounts.SystemUsers",
         sidebarProps: {
-          displayText: "System Users",
-        },
+          displayText: "System Users"
+        }
       },
       {
         path: "/master/agents",
         element: <MasterAgents />,
         state: "UserAccounts.MasterAgents",
         sidebarProps: {
-          displayText: "Master Agents",
-        },
+          displayText: "Master Agents"
+        }
       },
       {
         path: "/agents",
         element: <Agents />,
         state: "UserAccounts.Agents",
         sidebarProps: {
-          displayText: "Agents",
-        },
+          displayText: "Agents"
+        }
       },
       {
         path: "/players",
         element: <Players />,
         state: "UserAccounts.Players",
         sidebarProps: {
-          displayText: "Players",
-        },
+          displayText: "Players"
+        }
       },
       {
         path: "/user/approval",
         element: <Players />,
         state: "UserAccounts.UserApproval",
         sidebarProps: {
-          displayText: "User Approval",
-        },
-      },
-    ],
+          displayText: "User Approval"
+        }
+      }
+    ]
   },
 
   // Game 3
@@ -179,7 +180,7 @@ const routeLinks = [
     state: "Game",
     sidebarProps: {
       displayText: "Game",
-      icon: <VideogameAssetIcon />,
+      icon: <VideogameAssetIcon />
     },
     child: [
       {
@@ -187,58 +188,58 @@ const routeLinks = [
         element: <ScheduleSettings />,
         state: "Game.ScheduleSettings",
         sidebarProps: {
-          displayText: "Schedule Settings",
-        },
+          displayText: "Schedule Settings"
+        }
       },
       {
         path: "/mechanics/settings",
         element: <MechanicsSettings />,
         state: "Game.MechanicsSettings",
         sidebarProps: {
-          displayText: "Mechanics Settings",
-        },
+          displayText: "Mechanics Settings"
+        }
       },
       {
         path: "/store/settings",
         element: <StoreSettings />,
         state: "Game.StoreSettings",
         sidebarProps: {
-          displayText: "Store Settings",
-        },
+          displayText: "Store Settings"
+        }
       },
       {
         path: "/game/promotions",
         element: <Promotions />,
         state: "Game.Promotions",
         sidebarProps: {
-          displayText: "Promotions",
-        },
+          displayText: "Promotions"
+        }
       },
       {
         path: "/game/bets",
         element: <Bets />,
         state: "Game.Bets",
         sidebarProps: {
-          displayText: "Bets",
-        },
+          displayText: "Bets"
+        }
       },
       {
         path: "/game/results",
         element: <GameResults />,
         state: "Game.Results",
         sidebarProps: {
-          displayText: "Game Results",
-        },
+          displayText: "Game Results"
+        }
       },
       {
         path: "/game/prizes",
         element: <GamePrizes />,
         state: "Game.GamePrizes",
         sidebarProps: {
-          displayText: "Game Prizes",
-        },
+          displayText: "Game Prizes"
+        }
       },
-    ],
+    ]
   },
 
   // Posts 4
@@ -248,7 +249,7 @@ const routeLinks = [
     state: "Posts",
     sidebarProps: {
       displayText: "Posts",
-      icon: <TextSnippetIcon />,
+      icon: <TextSnippetIcon />
     },
     child: [
       {
@@ -256,26 +257,26 @@ const routeLinks = [
         element: <TextBlast />,
         state: "Posts.TextBlast",
         sidebarProps: {
-          displayText: "Text Blast",
-        },
+          displayText: "Text Blast"
+        }
       },
       {
         path: "/announcements",
         element: <Annoucements />,
         state: "Posts.Announcements",
         sidebarProps: {
-          displayText: "Announcements",
-        },
+          displayText: "Announcements"
+        }
       },
       {
         path: "/livestream",
         element: <Annoucements />,
         state: "Posts.Livestream",
         sidebarProps: {
-          displayText: "Livestream",
-        },
+          displayText: "Livestream"
+        }
       },
-    ],
+    ]
   },
 
   // Reports 5
@@ -285,7 +286,7 @@ const routeLinks = [
     state: "Reports",
     sidebarProps: {
       displayText: "Reports",
-      icon: <SettingsIcon />,
+      icon: <SettingsIcon />
     },
     child: [
       {
@@ -293,42 +294,42 @@ const routeLinks = [
         element: <Revenue />,
         state: "Reports.Revenue",
         sidebarProps: {
-          displayText: "Revenue",
-        },
+          displayText: "Revenue"
+        }
       },
       {
         path: "/reports/transactions",
         element: <TransactionReports />,
         state: "Reports.Transaction",
         sidebarProps: {
-          displayText: "Transactions",
-        },
+          displayText: "Transactions"
+        }
       },
       {
         path: "/reports/performance",
         element: <Performance />,
         state: "Reports.Performance",
         sidebarProps: {
-          displayText: "Performance",
-        },
+          displayText: "Performance"
+        }
       },
       {
         path: "/reports/ativities",
         element: <ActivityReports />,
         state: "Reports.Activity",
         sidebarProps: {
-          displayText: "Activity",
-        },
+          displayText: "Activity"
+        }
       },
       {
         path: "/reports/growth",
         element: <Growth />,
         state: "Reports.Growth",
         sidebarProps: {
-          displayText: "Growth",
-        },
+          displayText: "Growth"
+        }
       },
-    ],
+    ]
   },
 
   // System 6
@@ -338,7 +339,7 @@ const routeLinks = [
     state: "System",
     sidebarProps: {
       displayText: "System",
-      icon: <DesktopMacIcon />,
+      icon: <DesktopMacIcon />
     },
     child: [
       {
@@ -346,34 +347,34 @@ const routeLinks = [
         element: <ReportAnIssue />,
         state: "System.ReportAnIssue",
         sidebarProps: {
-          displayText: "Report An Issue",
-        },
+          displayText: "Report An Issue"
+        }
       },
       {
         path: "/system/terms",
         element: <Terms />,
         state: "System.TermsOfUse",
         sidebarProps: {
-          displayText: "Terms Of Use",
-        },
+          displayText: "Terms Of Use"
+        }
       },
       {
         path: "/system/privacy-policy",
         element: <PrivacyPolicy />,
         state: "System.PrivacyPolicy",
         sidebarProps: {
-          displayText: "Privacy Policy",
-        },
+          displayText: "Privacy Policy"
+        }
       },
       {
         path: "/system/aboutus",
         element: <AboutUs />,
         state: "System.AboutUs",
         sidebarProps: {
-          displayText: "About Us",
-        },
+          displayText: "About Us"
+        }
       },
-    ],
+    ]
   },
 
   // Accounting
@@ -383,7 +384,7 @@ const routeLinks = [
     state: "Accounting.Deposits",
     sidebarProps: {
       displayText: "Deposits",
-      icon: <MonetizationOnIcon />,
+      icon: <MonetizationOnIcon />
     },
   },
   {
@@ -392,7 +393,7 @@ const routeLinks = [
     state: "Accounting.Withdrawals",
     sidebarProps: {
       displayText: "Withdrawals",
-      icon: <CreditCardIcon />,
+      icon: <CreditCardIcon />
     },
   },
   {
@@ -401,7 +402,7 @@ const routeLinks = [
     state: "Accounting.Bets",
     sidebarProps: {
       displayText: "Bets",
-      icon: <VideogameAssetIcon />,
+      icon: <VideogameAssetIcon />
     },
   },
   {
@@ -410,7 +411,7 @@ const routeLinks = [
     state: "Accounting.Assets",
     sidebarProps: {
       displayText: "Assets",
-      icon: <EqualizerIcon />,
+      icon: <EqualizerIcon />
     },
   },
   {
@@ -419,7 +420,7 @@ const routeLinks = [
     state: "Accounting.WalletSettings",
     sidebarProps: {
       displayText: "Wallet Settings",
-      icon: <WalletIcon />,
+      icon: <WalletIcon />
     },
   },
   {
@@ -428,18 +429,18 @@ const routeLinks = [
     state: "Accounting.ReportAnIssue",
     sidebarProps: {
       displayText: "Report An Issue",
-      icon: <ReportProblemIcon />,
+      icon: <ReportProblemIcon />
     },
   },
 
   // Support
   {
     path: "/tickets",
-    element: <Home />,
+    element: <Tickets />,
     state: "Support.Tickets",
     sidebarProps: {
       displayText: "Tickets",
-      icon: <ConfirmationNumberIcon />,
+      icon: <ConfirmationNumberIcon />
     },
   },
   {
@@ -448,7 +449,7 @@ const routeLinks = [
     state: "Support.LiveChat",
     sidebarProps: {
       displayText: "Live Chat",
-      icon: <ChatIcon />,
+      icon: <ChatIcon />
     },
   },
   {
@@ -457,7 +458,7 @@ const routeLinks = [
     state: "Support.Behavior",
     sidebarProps: {
       displayText: "Behavior",
-      icon: <PsychologyIcon />,
+      icon: <PsychologyIcon />
     },
   },
   {
@@ -466,7 +467,7 @@ const routeLinks = [
     state: "Support.Users",
     sidebarProps: {
       displayText: "Users",
-      icon: <GroupsIcon />,
+      icon: <GroupsIcon />
     },
   },
   {
@@ -475,7 +476,7 @@ const routeLinks = [
     state: "Support.FAQs",
     sidebarProps: {
       displayText: "FAQs",
-      icon: <LiveHelpIcon />,
+      icon: <LiveHelpIcon />
     },
   },
 ];

@@ -7,7 +7,7 @@ let listMenuObj = GetStoreObject("menuList");
 let menus = [];
 if (listMenuObj !== null) {
   listMenuObj.forEach(item => {
-    if(item.enabled) {
+    if (item.enabled) {
       menus.push(item.menuCode);
     }
   });
