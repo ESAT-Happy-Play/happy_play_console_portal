@@ -33,6 +33,7 @@ const RegularSearchBar = ({ handleSearch, searchTitle }) => {
           variant="outlined"
           fullWidth
           onChange={handleSearchChange}
+          sx={{ width: '350px' }}
           InputProps={{
             startAdornment: (
               <InputAdornment onClick={handleSearchSubmit} position="end">

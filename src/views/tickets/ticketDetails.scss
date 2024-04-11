@@ -1,0 +1,39 @@
+@import "../../helper/colors.scss";
+
+.field-header {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: $dark-grey;
+    font-family: 'Inter';
+}
+
+.detail-attachments {
+    background: $background;
+    border-radius: 16px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 1px solid $violet-main;
+    margin-bottom: 5px;
+
+    p {
+        font-size: 14px;
+    }
+}
+
+.dropbox-area {
+    border: 2px dashed $violet-main;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    cursor: pointer;
+
+    p {
+        text-align: center;
+        margin: 0;
+    }
+}
