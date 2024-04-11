@@ -15,7 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
 
-const ReportDetail = ({ isOpen, handleClose, handleSubmition, isEditing, report }) => {
+const ReportDetail = ({ isOpen, handleClose, handleSubmission, isEditing, report }) => {
     const formReport = useForm({ defaultValues: report });
     const { register, handleSubmit, formState, reset } = formReport;
     const { errors } = formState;
@@ -23,7 +23,7 @@ const ReportDetail = ({ isOpen, handleClose, handleSubmition, isEditing, report 
     const [file, setFile] = useState(null);
 
     const finalStepHandler = async (data) => {
-        handleSubmition(data);
+        handleSubmission(data);
     };
 
     function handleOnChange(e) {

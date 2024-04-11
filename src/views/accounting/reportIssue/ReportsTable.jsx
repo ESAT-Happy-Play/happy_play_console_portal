@@ -82,7 +82,6 @@ const ReportsTable = ({ data }) => {
 
     const handleSubmit = (data) => {
         setOpenSuccess(true);
-        console.log(data);
         handleCloseEdit();
     }
 
@@ -101,7 +100,7 @@ const ReportsTable = ({ data }) => {
             <Box display="flex" alignItems="center" gap={1}>
                 <RegularSearchBar
                     handleSearch={handleSearch}
-                    searchTitle="Search Name, Asset#"
+                    searchTitle="Search Name, Ticket Title, or Priority Level"
                 />
                 <div className="buttons">
                     <FileExportIcon size={20} />

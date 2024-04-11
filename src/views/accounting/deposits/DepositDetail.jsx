@@ -19,7 +19,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
 
-const DepositDetail = ({ isOpen, handleClose, handleSubmition, deposit }) => {
+const DepositDetail = ({ isOpen, handleClose, handleSubmission, deposit }) => {
     const formDeposit = useForm({ defaultValues: deposit });
     const { register, handleSubmit, formState, reset } = formDeposit;
     const { errors } = formState;
@@ -28,7 +28,7 @@ const DepositDetail = ({ isOpen, handleClose, handleSubmition, deposit }) => {
     const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
-        handleSubmition(data);
+        handleSubmission(data);
     };
 
     const datePickerStyle = {

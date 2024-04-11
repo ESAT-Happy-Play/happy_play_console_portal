@@ -42,7 +42,7 @@ const BetTable = ({ data }) => {
         },
         {
             id: 3,
-            name: "Canelled"
+            name: "Cancelled"
         }
     ];
 
@@ -117,7 +117,7 @@ const BetTable = ({ data }) => {
             <Box display="flex" alignItems="center" gap={1}>
                 <RegularSearchBar
                     handleSearch={handleSearch}
-                    searchTitle="Search Name, Asset#"
+                    searchTitle="Search Name, Tax, Amount, or Bet#"
                 />
                 <div className="buttons">
                     <FileExportIcon size={20} />
@@ -149,7 +149,7 @@ const BetTable = ({ data }) => {
                         }
                     </Box>
                 </Box>
-            </Box>
+            </Box >
             <CustomTable
                 headers={["Bet Number", "Company / Branch", "Amount", "Claimed", "Status", "Tax", "Date"]}
                 pagination={
@@ -184,14 +184,17 @@ const BetTable = ({ data }) => {
                     <StyledTableRow ><StyledTableCell align="center" colSpan={9}>No available data</StyledTableCell></StyledTableRow>
                 }
             </CustomTable>
-            {openEdit &&
+            {
+                openEdit &&
                 <BetDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
                     handleSubmition={handleSubmit}
                     bet={selectedRow}
-                />}
-            {openSuccess &&
+                />
+            }
+            {
+                openSuccess &&
                 <Dialog
                     open={openSuccess}
                     onClose={() => setOpenSuccess(false)}

@@ -22,7 +22,6 @@ const Assets = () => {
 
     const handleSubmit = (data) => {
         setOpenSuccess(true);
-        console.log(data);
         handleClose();
     }
 

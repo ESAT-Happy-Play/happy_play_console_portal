@@ -17,7 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
 
-const BetDetail = ({ isOpen, handleClose, handleSubmition, bet }) => {
+const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
     const formBet = useForm({ defaultValues: bet });
     const { register, handleSubmit, formState, reset } = formBet;
     const { errors } = formState;
@@ -36,12 +36,12 @@ const BetDetail = ({ isOpen, handleClose, handleSubmition, bet }) => {
         },
         {
             id: 3,
-            name: "Canelled"
+            name: "Cancelled"
         }
     ];
 
     const finalStepHandler = async (data) => {
-        handleSubmition(data);
+        handleSubmission(data);
     };
 
     const datePickerStyle = {

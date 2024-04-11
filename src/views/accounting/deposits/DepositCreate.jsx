@@ -21,7 +21,7 @@ import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
 import dayjs from 'dayjs';
 
 
-const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
+const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmission }) => {
     const formDeposit = useForm({ defaultValues: deposit });
     const { register, handleSubmit, formState, reset } = formDeposit;
     const { errors } = formState;
@@ -30,7 +30,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmition }) => {
     const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
-        handleSubmition(data);
+        handleSubmission(data);
     };
 
     const handleSearch = (event, value) => {

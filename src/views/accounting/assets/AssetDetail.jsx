@@ -19,7 +19,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 
 
-const AssetDetail = ({ isOpen, handleClose, handleSubmition, isEditing, asset }) => {
+const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }) => {
     const formAsset = useForm({ defaultValues: asset });
     const { register, handleSubmit, formState, reset } = formAsset;
     const { errors } = formState;
@@ -27,7 +27,7 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmition, isEditing, asset })
     const [date, setDate] = useState(dayjs('2022-04-17'));
 
     const finalStepHandler = async (data) => {
-        handleSubmition(data);
+        handleSubmission(data);
     };
 
     const datePickerStyle = {

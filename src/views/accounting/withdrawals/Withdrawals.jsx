@@ -22,7 +22,6 @@ const Withdrawals = () => {
 
     const handleSubmit = (data) => {
         setOpenSuccess(true);
-        console.log(data);
         handleClose();
     }
 
