@@ -15,9 +15,11 @@ import BetsDetailModal from "./BetsDetailModal";
 import CustomFilterModal from "../../components/modals/CustomFilterModal";
 import ScanModal from "../../components/modals/ScanModal";
 import ExportModal from "../../components/modals/ExportModal";
+import { GameService } from "../../services";
 
-const BetsTable = ({ data, gameName, subTypeName }) => {
+const BetsTable = ({ data, gameName, subTypeName, subType }) => {
   const [displayList, setDisplayList] = useState(data);
+  const [gameItemData, setgameItemData] = useState(data);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchValue, setSearchValue] = useState("");
@@ -34,6 +36,27 @@ const BetsTable = ({ data, gameName, subTypeName }) => {
   const [dateInterval, setDateInterval] = useState("1D");
   const [timeSlot, setTimeSlot] = useState("ALL");
 
+
+  const getBetHistory = () => {
+    const requestData = {
+      data: {
+        companyGameId: subType.id,
+        start: 0,
+        size: 1000,
+        start_date: "2024-04-01",
+        end_date: "2024-04-10"
+      }
+    };
+
+    GameService.getBetsHistory(requestData).then((res) => {
+      if (!!res)
+      {
+        setDisplayList(res.data.data);
+        setgameItemData(res.data.data);
+      }
+    });
+  }
+
   useEffect(() => {
     var search = data.filter((row) => {
       return Object.values(row)
@@ -43,12 +66,17 @@ const BetsTable = ({ data, gameName, subTypeName }) => {
     });
 
     setPage(0);
+    getBetHistory();
     setDisplayList(search);
   }, [searchValue, data]);
 
   // On click search
   const handleSearch = (event, value) => {
     setSearchValue(value);
+
+    const filteredValues = gameItemData.filter(f => f.transactionNumber.includes(value));
+
+    setDisplayList(filteredValues);
     setPage(0);
   };
 
@@ -190,11 +218,11 @@ const BetsTable = ({ data, gameName, subTypeName }) => {
       <BetsDetailModal
         open={showModal}
         onClose={() => toggleModal(null)}
-        transactionId={selectedRowData?.transactionNumber}
         gameName={gameName}
         subTypeName={subTypeName}
         gameTime={selectedRowData?.gameTime}
         date={selectedRowData?.date}
+        data={selectedRowData}
       />
       <CustomFilterModal
         open={showFilterModal}

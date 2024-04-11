@@ -19,6 +19,7 @@ function Bets() {
   const [selectedGameId, setselectedGameId] = useState(null);
 
   const handleChangeGame = (newValue) => {
+
     console.log(newValue);
   }
 
@@ -55,6 +56,7 @@ function Bets() {
               data={[]}
               gameName={game.gameName}
               subTypeName={subType.gameName}
+              subType={subType}
             />
           ),
         });
@@ -62,7 +64,7 @@ function Bets() {
     }
     return {
       label: game.gameName,
-      itemId: game.id, 
+      itemId: game.id,
       Component: (
         <div className="tab-container">
           <div className="tab-header">
@@ -71,22 +73,22 @@ function Bets() {
           {game.child ? (
             <CustomVerticalTab changeEvent={handleVerticalChange} tabList={verticalTabs} />
           ) : (
-            <BetsTable data={mockBetsHistory} gameName={game.gameName} />
+            <BetsTable data={mockBetsHistory} gameName={game.gameName} subType={game} />
           )}
         </div>
       ),
     };
-  }) : <div style={{padding:'25px'}}>Loading...Please wait.</div>;
+  }) : <div style={{ padding: '25px' }}>Loading...Please wait.</div>;
 
   return (
     <div className="container">
       {
-        (companyGames !== null) 
-        ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
-        : <div style={{padding:'25px'}}>Loading...Please wait.</div>
+        (companyGames !== null)
+          ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
+          : <div style={{ padding: '25px' }}>Loading...Please wait.</div>
       }
 
-      <ContentLoader isLoadingPage={ pageLoader } />
+      <ContentLoader isLoadingPage={pageLoader} />
     </div>
   );
 }

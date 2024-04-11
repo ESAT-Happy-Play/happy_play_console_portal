@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./betsDetailModal.scss";
 import sampleTransactionQr from "../../assets/sample-transaction-qr.png";
 import { FormatFullDate, FormatAmount } from "../../helper/Helpers";
 import { getGameLogo } from "../../helper/logos";
+import { GameService } from "../../services";
 
 const BetsDetailModal = ({
   open,
@@ -11,23 +12,39 @@ const BetsDetailModal = ({
   width,
   gameName,
   subTypeName,
-  transactionId,
   gameTime,
   date,
+  data
 }) => {
-  const userData = {
-    firstName: "Full",
-    lastName: "Name",
-    userId: "#UserId",
-    mobileNumber: "Mobile Number",
-    email: "email@email.com",
-  };
+  const [betData, setBetData] = useState({});
+  const [transactionData, setTransactionData] = useState([]);
 
-  const transactionData = [
-    { id: 1, combination: "3-4-4-H-S-H", amount: 10.0, isWinning: false },
-    { id: 2, combination: "3-4-4-H-S-H", amount: 10.0, isWinning: true },
-    { id: 3, combination: "3-4-4-H-S-H", amount: 10.0, isWinning: false },
-  ];
+  const getBetTransaction = (betTransactionId) => {
+    console.log(data);
+    GameService.getBetTransactionById(betTransactionId).then((res) => {
+      if (!!res) {
+        const result = res.data;
+        const betData = {
+          fullName: result.fullName,
+          userId: result.userId,
+          mobileNumber: result.mobileNumber,
+          email: result.email,
+          transactionNumber: data.transactionNumber
+        }
+
+        console.log(res.data);
+
+        setBetData(betData);
+        setTransactionData(result.betItems);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (!!data) {
+      getBetTransaction(data.betTransactionId);
+    }
+  }, [data]);
 
   const calculateTotal = (data) => {
     return data.reduce((total, item) => total + item.amount, 0);
@@ -50,7 +67,7 @@ const BetsDetailModal = ({
                   alt={"sample-transaction-qr"}
                   width={70}
                 />
-                <div>{transactionId}</div>
+                <div>{betData.transactionNumber}</div>
               </div>
             </div>
             <div className="modal-container">
@@ -58,11 +75,11 @@ const BetsDetailModal = ({
                 <div className="dialog-info-container">
                   <div className="user-info">
                     <div className="user-full-name">
-                      {userData.firstName} {userData.lastName}
+                      {betData.fullName}
                     </div>
-                    <div>{userData.userId}</div>
-                    <div>{userData.mobileNumber}</div>
-                    <div>{userData.email}</div>
+                    <div>{betData.userId}</div>
+                    <div>{betData.mobileNumber}</div>
+                    <div>{betData.email}</div>
                   </div>
                   <div className="date-time-container">
                     <div className="time-container">{gameTime}</div>

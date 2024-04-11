@@ -173,4 +173,22 @@ export const GameService = {
             return res;
         })
     },
+    getBetsHistory: async (data) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/bets/history`, data)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res;
+        })
+    },
+    getBetTransactionById: async (id) => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/bets/transaction/${id}`)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res;
+        })
+    }
 }

@@ -3,7 +3,7 @@ import ApiService from './ApiService';
 
 export const AuthService = {
     authenticate: async (data) => {
-        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/account/auth`, data)
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/auth/account/login`, data)
             .then((res) => {
                 if (!res.status) {
                     toast.error("Sorry, we couldn't find an account with that username and password.");
