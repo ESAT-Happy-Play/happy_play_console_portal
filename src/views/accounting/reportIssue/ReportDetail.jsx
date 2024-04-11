@@ -1,5 +1,5 @@
 import './reportDetail.scss';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -13,24 +13,57 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import Dropzone from 'react-dropzone';
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import AttachmentIcon from '@mui/icons-material/Attachment';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
 const ReportDetail = ({ isOpen, handleClose, handleSubmission, isEditing, report }) => {
     const formReport = useForm({ defaultValues: report });
     const { register, handleSubmit, formState, reset } = formReport;
     const { errors } = formState;
-    const [date, setDate] = useState(dayjs('2022-04-17'));
-    const [file, setFile] = useState(null);
+    const [date, setDate] = useState(dayjs('2022-04-17')); //update this initialization, since im unsure of the date format returned
+    const [files, setFiles] = useState([]); //update this initialization, since im unsure of the format returned
 
     const finalStepHandler = async (data) => {
         handleSubmission(data);
     };
 
-    function handleOnChange(e) {
+    const handleOnChange = (e) => {
         const target = e.target
-        console.log(target.files[0], e)
-        setFile(target.files[0]);
+        setFiles(target.files);
     }
+
+    const handleDelete = (index) => {
+        var dt = new DataTransfer()
+        const input = document.getElementById('image');
+        for (let i = 0; i < files.length; i++) {
+            var file = files[i]
+            if (index !== i)
+                dt.items.add(file)
+        }
+
+        input.files = dt.files;
+        setFiles(dt.files);
+    }
+
+    const fileAttachments = useMemo(() => {
+        var attachments = [];
+        for (let i = 0; i < files.length; i++) {
+            attachments.push(
+                <div className='detail-attachments'>
+                    <AttachmentIcon sx={{ width: '18px', marginX: '8px' }} />
+                    <p>{files[i].name}</p>
+                    <DeleteOutlineIcon
+                        onClick={() => handleDelete(i)}
+                        sx={{ width: '18px', marginRight: '8px', marginLeft: 'auto' }}
+                    />
+                </div>
+            )
+        }
+        return attachments;
+    }, [files]);
 
 
     const datePickerStyle = {
@@ -56,7 +89,7 @@ const ReportDetail = ({ isOpen, handleClose, handleSubmission, isEditing, report
                     display='flex'
                     flexDirection='column'
                     alignItems='center'
-                    minWidth="400px"
+                    minWidth="500px"
                     gap='10px'
                     onSubmit={handleSubmit(finalStepHandler)}
                 >
@@ -99,11 +132,26 @@ const ReportDetail = ({ isOpen, handleClose, handleSubmission, isEditing, report
                                 }}
                             />
                         </Box>
-
-                        <input id="image" type="file" name="image"
-                            onChange={handleOnChange}
-                            accept="image/png, image/jpg"
-                        />
+                        <Box flex={1} display="flex" flexDirection="column">
+                            <h2 className='field-header'>Attachment</h2>
+                            {fileAttachments}
+                            <Dropzone onDrop={acceptedFiles => setFiles(acceptedFiles)}>
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} id="image" type="file" name="image"
+                                                onChange={handleOnChange}
+                                                accept="image/png, image/jpg"
+                                                multiple />
+                                            <div className='dropbox-area'>
+                                                <FileUploadOutlinedIcon />
+                                                <p>Drop here to attach or upload</p>
+                                            </div>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                        </Box>
                         <Box>
                             <h2 className='field-header'>Date</h2>
                             <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
