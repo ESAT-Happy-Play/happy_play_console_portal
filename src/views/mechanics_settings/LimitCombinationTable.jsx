@@ -15,7 +15,7 @@ const LimitCombinationTable = ({ data, type, settingId, subType }) => {
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchValue, setSearchValue] = useState("");
     const [totalCount, setTotalCount] = useState(0);
-    const [offset, setOffset] = useState(0);
+    const [pages, setPages] = useState([0]);
 
     //Update modal states
     const [selectedRow, setSelectedRow] = useState();
@@ -40,7 +40,6 @@ const LimitCombinationTable = ({ data, type, settingId, subType }) => {
             if (res) {
                 setTotalCount(res.data.totalCount);
                 setDisplayList(res.data.combinations);
-                setOffset(res.data.offset);
             }
         });
     }
@@ -74,11 +73,22 @@ const LimitCombinationTable = ({ data, type, settingId, subType }) => {
     };
 
     const handleChangePage = (event, newpage) => {
-        setPage(newpage - 1);
+        var newPage = newpage - 1;
+        // if (Array.includes(pages, newPage))
+        // {
+        //     pages[pages.length] = newPage;
+        //     setPages(pages);
+        // }
+
+        setPage(newPage - 1);
+
+        console.log(newpage - 1);
     };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
+
+        console.log(parseInt(event.target.value, 10));
         setPage(0);
     };
 

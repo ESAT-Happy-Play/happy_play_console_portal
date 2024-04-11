@@ -30,9 +30,10 @@ const MechanicsSettings = () => {
     setPageLoader(true);
     setselectedGameId(companySettingId);
     GameService.getBetLimits(companySettingId).then((res) => {
-      if (res) { setbetLimitConfig(res.data) 
+      if (res) {
+        setbetLimitConfig(res.data)
       } else {
-        setbetLimitConfig({ betEntryLimit : 0, betAmountLimit : 0, uniqueCombination : 0 });
+        setbetLimitConfig({ betEntryLimit: 0, betAmountLimit: 0, uniqueCombination: 0 });
       }
       setPageLoader(false);
     });
@@ -42,7 +43,8 @@ const MechanicsSettings = () => {
     setPageLoader(true);
     setselectedGameId(companySettingId);
     GameService.getPrizeCalculations(companySettingId).then((res) => {
-      if (res) { setprizeCalcDataConfig(res.data);
+      if (res) {
+        setprizeCalcDataConfig(res.data);
       } else {
         setprizeCalcDataConfig({
           pooling: { prizeFloor: 0, prizeCeiling: 0, incrementAmount: 0 },
@@ -59,7 +61,8 @@ const MechanicsSettings = () => {
     setPageLoader(true);
     setselectedGameId(companySettingId);
     GameService.getBetPrices(companySettingId).then((res) => {
-      if (res) { setbetPrizeConfig(res.data) 
+      if (res) {
+        setbetPrizeConfig(res.data)
       } else {
         setbetPrizeConfig({ amount: 0, isFixed: true });
       }
@@ -94,7 +97,7 @@ const MechanicsSettings = () => {
         setcompanyGames(res.gameList);
         // for new load default company
         setselectedGameId(res.gameList[0].id);
-        
+
         // init needed data
         getBetLimits(res.gameList[0].id);
       }
@@ -108,16 +111,20 @@ const MechanicsSettings = () => {
 
   const getSubTypeTabs = (subType) => {
     return [
-      { label: "Bet Limit", itemId: (subType.id + "90009"), 
+      {
+        label: "Bet Limit", itemId: (subType.id + "90009"),
         Component: (betLimitConfig !== null) ? <BetLimits bitLimitData={betLimitConfig} settingId={selectedGameId} subType={subType} /> : <>Loading...Please wait.</>
       },
-      { label: "Limit Per Combination", itemId: (subType.id + "90010"), 
+      {
+        label: "Limit Per Combination", itemId: (subType.id + "90010"),
         Component: <LimitCombinationTable data={[]} type={subType.gameName} settingId={selectedGameId} subType={subType} />
       },
-      { label: "Bet Price", itemId: (subType.id + "90011"),
+      {
+        label: "Bet Price", itemId: (subType.id + "90011"),
         Component: <BetPrice betPriceData={betPrizeConfig} settingId={selectedGameId} subType={subType} />
       },
-      { label: "Prize Calculations", itemId: (subType.id + "90012"),
+      {
+        label: "Prize Calculations", itemId: (subType.id + "90012"),
         Component: <PrizeCalculations prizeCalcData={prizeCalcDataConfig} settingId={selectedGameId} subType={subType} />
       }
     ]
@@ -153,11 +160,11 @@ const MechanicsSettings = () => {
   return (
     <div className='container'>
       {
-        (companyGames !== null) 
-        ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
-        : <div style={{ padding:'25px' }}>Loading...Please wait.</div>
+        (companyGames !== null)
+          ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
+          : <div style={{ padding: '25px' }}>Loading...Please wait.</div>
       }
-      <ContentLoader isLoadingPage={ pageLoader } />
+      <ContentLoader isLoadingPage={pageLoader} />
     </div>
   )
 }
