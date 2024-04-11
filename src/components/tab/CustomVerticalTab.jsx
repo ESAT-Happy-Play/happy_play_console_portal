@@ -18,7 +18,7 @@ Use to create Vertical tab, require the ff:
 */
 
 const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
-  let defaultVal = (tabList[0].itemId !== undefined) 
+  let defaultVal = (tabList[0].itemId !== undefined)
     ? tabList.filter(obj => !obj.isHeader)[0].itemId : 0;
 
   const [value, setValue] = React.useState(defaultVal);
@@ -26,7 +26,6 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     changeEvent(newValue);
-    // console.log(newValue);
   };
 
   return (
@@ -35,14 +34,14 @@ const CustomVerticalTab = ({ tabList, changeEvent = () => { } }) => {
         <TabsList>
           {tabList?.map((tabs, i) => (
             tabs.isHeader ?
-              <HeaderTab key={i} value={ (tabs.itemId !== undefined) ? tabs.itemId : i } disabled>{tabs.label}</HeaderTab>
+              <HeaderTab key={i} value={(tabs.itemId !== undefined) ? tabs.itemId : i} disabled>{tabs.label}</HeaderTab>
               :
-              <Tab key={i} value={ (tabs.itemId !== undefined) ? tabs.itemId : i }>{tabs.label}</Tab>
+              <Tab key={i} value={(tabs.itemId !== undefined) ? tabs.itemId : i}>{tabs.label}</Tab>
           ))}
         </TabsList>
       </Box>
       {tabList?.map(({ Component, itemId }, i) => (
-        <TabPanel key={i} value={ (itemId !== undefined) ? itemId : i }>
+        <TabPanel key={i} value={(itemId !== undefined) ? itemId : i}>
           {Component}
         </TabPanel>
       ))}

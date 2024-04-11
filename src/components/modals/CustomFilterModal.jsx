@@ -137,12 +137,10 @@ const CustomFilterModal = ({
         break;
     }
 
-    const formattedStartDate = `${
-      startDate.getMonth() + 1
-    }/${startDate.getDate()}/${startDate.getFullYear()}`;
-    const formattedEndDate = `${
-      endDate.getMonth() + 1
-    }/${endDate.getDate()}/${endDate.getFullYear()}`;
+    const formattedStartDate = `${startDate.getMonth() + 1
+      }/${startDate.getDate()}/${startDate.getFullYear()}`;
+    const formattedEndDate = `${endDate.getMonth() + 1
+      }/${endDate.getDate()}/${endDate.getFullYear()}`;
 
     return `${FormatFullDate(new Date(formattedStartDate))} - ${FormatFullDate(
       new Date(formattedEndDate)
@@ -275,10 +273,10 @@ const CustomFilterModal = ({
                   size="small"
                   variant="outlined"
                   fullWidth
-                  onChange={() => {}}
+                  onChange={() => { }}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment onClick={() => {}} position="end">
+                      <InputAdornment onClick={() => { }} position="end">
                         <TollIcon />
                       </InputAdornment>
                     ),
@@ -290,10 +288,10 @@ const CustomFilterModal = ({
                   size="small"
                   variant="outlined"
                   fullWidth
-                  onChange={() => {}}
+                  onChange={() => { }}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment onClick={() => {}} position="end">
+                      <InputAdornment onClick={() => { }} position="end">
                         <TollIcon />
                       </InputAdornment>
                     ),
@@ -305,7 +303,7 @@ const CustomFilterModal = ({
             <div className="radio-buttons">
               <CustomRadioButton
                 options={betsFilterOptions}
-                handleRadioChange={() => {}}
+                handleRadioChange={() => { }}
                 defaultValue={betsFilterOptions[0]}
                 size={"small"}
               />
