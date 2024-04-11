@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import "./drawResultDialog.scss";
 import EditIcon from "../../../assets/icons/EditIcon";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
+
+import { CircleSpinnerOverlay } from 'react-spinner-overlay';
+import { DateExt, StoreExt, ConstArrayExt } from "../../../utils/helpers";
+import { DrawService } from "../../../services";
 
 const DrawResultDialog = ({
   open,
@@ -11,12 +14,39 @@ const DrawResultDialog = ({
   width,
   gameName,
   theme,
+  pendingResultData,
+  newResult,
+  drawType = 0
 }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+  let loginObj = StoreExt.getStore("auth");
+  const [onSubmitLoading, setonSubmitLoading] = useState(false);
+  // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
+
+  const handleOnSubmitDrawResult = () => {
+    let drwTime = pendingResultData[0].drawTime.split(":")[0];
+    // let ampm = DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1];
+
+    let objPayload = {
+      resultDate: DateExt.formatDate(pendingResultData[0].date),
+      companyId: pendingResultData[0].companyId,
+      companyGameId: pendingResultData[0].companyGame,
+      drawScheduleId: pendingResultData[0].id,
+      drawSchedule: (parseInt(drwTime) === 0) ? "12 PM" : ConstArrayExt.getConvertToTime(parseInt(drwTime)),
+      drawResult: newResult.split("").join("-"),
+      drawResultType: drawType,
+      operatorName: loginObj.fullname
+    }
+
+    setonSubmitLoading(true);
+    DrawService.postDrawResult(objPayload).then((res) => {
+      if (res) { onSubmit(); }
+      setonSubmitLoading(false);
+    });
+  }
 
   return (
     <>
+      <CircleSpinnerOverlay loading={onSubmitLoading} overlayColor="rgba(0,153,255,0.2)" />
       {open && (
         <div className="custom-dialog-container">
           <div
@@ -40,10 +70,18 @@ const DrawResultDialog = ({
                   }
                 >
                   You are about to post the {gameName} games result for{" "}
-                  <b>
-                    {FormatFullDate(latestPrizeDate)} {"-"}
-                    {FormatTimeAmPm(latestPrizeDate)}
-                  </b>
+                  {
+                    (pendingResultData !== null) && (pendingResultData.length > 0) ? 
+                    <b>
+                      { DateExt.readableDateShort(pendingResultData[0].date) } {"-"}
+                      { 
+                        (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
+                        : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
+                      }
+                      {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
+                    </b>
+                    : <>Loading...</>
+                  }
                 </p>
               </div>
               <div className="combination-result">{combination}</div>
@@ -73,11 +111,13 @@ const DrawResultDialog = ({
               >
                 Cancel
               </button>
+
+
               <button
                 className={
                   theme === "light" ? "confirm-button-light" : "confirm-button"
                 }
-                onClick={onSubmit}
+                onClick={handleOnSubmitDrawResult}
               >
                 <div
                   className={

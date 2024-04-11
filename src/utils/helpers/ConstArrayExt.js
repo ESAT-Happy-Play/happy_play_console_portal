@@ -22,6 +22,9 @@ export const ConstArrayExt = {
     getBloodTypes: () => {
         return ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" ];
     },
+    getCivilStatuses: () => {
+        return ["Single", "Married", "Widowed", "Divorced"];
+    },
     getNatureOfWorkList: () => {
         return [
             "Lawyer",
@@ -72,6 +75,37 @@ export const ConstArrayExt = {
             "Proceeds from Loan",
             "Donations",
         ];
+    },
+    getConvertToTime: (number) => {
+        let returnVal = "";
+        switch(number) {
+            case 1: returnVal = "1 AM"; break;
+            case 2: returnVal = "2 AM"; break;
+            case 3: returnVal = "3 AM"; break;
+            case 4: returnVal = "4 AM"; break;
+            case 5: returnVal = "5 AM"; break;
+            case 6: returnVal = "6 AM"; break;
+            case 7: returnVal = "7 AM"; break;
+            case 8: returnVal = "8 AM"; break;
+            case 9: returnVal = "9 AM"; break;
+            case 10: returnVal = "10 AM"; break;
+            case 11: returnVal = "11 AM"; break;
+            case 12: returnVal = "12 PM"; break;
+            case 13: returnVal = "1 PM"; break;
+            case 14: returnVal = "2 PM"; break;
+            case 15: returnVal = "3 PM"; break;
+            case 16: returnVal = "4 PM"; break;
+            case 17: returnVal = "5 PM"; break;
+            case 18: returnVal = "6 PM"; break;
+            case 19: returnVal = "7 PM"; break;
+            case 20: returnVal = "8 PM"; break;
+            case 21: returnVal = "9 PM"; break;
+            case 22: returnVal = "10 PM"; break;
+            case 23: returnVal = "11 PM"; break;
+            case 24: returnVal = "12 AM"; break;
+            default: returnVal = "12 AM";
+        }
+        return returnVal;
     },
     getNationalityList: () => {
         return [

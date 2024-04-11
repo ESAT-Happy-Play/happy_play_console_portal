@@ -45,6 +45,12 @@
     font-size: 50px;
     font-weight: bold;
 
+    .div-lrtSpace1 { letter-spacing: 135px; }
+    .div-lrtSpace2 {
+      letter-spacing: 40px;
+      padding-left: 0px;
+    }
+
     div {
       width: 200px;
       padding: 8px 16px;
@@ -76,6 +82,7 @@
     margin-top: 10px;
 
     .magic-button-item {
+      cursor: pointer;
       width: 52px;
       padding: 10px 15px;
       font-size: 20px;

@@ -8,7 +8,7 @@ export const ImageService = {
             base64Image: base64image
         }).then((res) => {
             if (!res.status) { 
-                toast.error("Sorry, unsuccessfull gateway communication."); 
+                // toast.error("Sorry, unsuccessfull gateway communication."); 
                 return false; 
             }
             return res.data;
@@ -19,7 +19,7 @@ export const ImageService = {
         return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/Upload/${fileName}`)
         .then((res) => {
             if (!res.status) { 
-                toast.error("Sorry, unsuccessfull gateway communication."); 
+                // toast.error("Sorry, unsuccessfull gateway communication."); 
                 return false; 
             }
             return res.data;

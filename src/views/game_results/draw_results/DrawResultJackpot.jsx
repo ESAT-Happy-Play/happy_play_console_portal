@@ -1,21 +1,31 @@
 import React from "react";
 import "./drawResultJackpot.scss";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
 import { getGameLogo } from "../../../helper/logos";
 import CrownIcon from "../../../assets/icons/CrownIcon.png";
 
-const DrawResultJackpot = ({ drawResult, operatorName, gameName }) => {
-  const dateString = "February 24, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+import { DateExt } from "../../../utils/helpers";
+
+const DrawResultJackpot = ({ operatorName, gameName, lastDrawResult }) => {
+  // const dateString = "February 24, 2023 14:00:00";
+  const latestPrizeDate = new Date();
   return (
     <div className="draw-result-container">
       <div className="jackpot-results">
         <div className="result-game-header">
           <div className="result-date-container">
-            <p>{FormatFullDate(latestPrizeDate)}</p>
-            <div className="time-container">
-              {FormatTimeAmPm(latestPrizeDate).replace(/\s+/g, "")}
-            </div>
+            {
+            (lastDrawResult !== null) ?
+            <>
+              <p>{DateExt.readableDateShort(lastDrawResult.resultDate)}</p>
+              <div className="time-container">
+                {lastDrawResult.drawSchedule}
+              </div>
+            </>
+            : <>
+              <p>{DateExt.readableDateShort(latestPrizeDate)}</p>
+              <div className="time-container"></div>
+            </>
+            }
           </div>
           <div className="game-type-item">
             {getGameLogo(gameName, gameName, 100)}
@@ -26,10 +36,20 @@ const DrawResultJackpot = ({ drawResult, operatorName, gameName }) => {
           </div>
         </div>
         <div className="jackpot-reel">
-          <div>{drawResult}</div>
+          <div>
+            { 
+              (lastDrawResult !== null) 
+              ? lastDrawResult.drawResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
+              : ("7-7-7-A-A-A").split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
+            }
+          </div>
         </div>
         <div className="operator">
-          <p>Postedssxczxzasdz By: {operatorName}</p>
+          <p>Posted By: 
+            {
+              (lastDrawResult !== null) ? operatorName : ""
+            }
+          </p>
         </div>
       </div>
     </div>

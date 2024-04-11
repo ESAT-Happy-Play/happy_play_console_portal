@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import "./editRegularResult.scss";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
 import { getGameLogo } from "../../../helper/logos";
 import EditIcon from "../../../assets/icons/EditIcon";
 import DrawResultDialog from "../dialog/DrawResultDialog";
+import { DateExt, ConstArrayExt } from "../../../utils/helpers";
 
 const EditRegularResult = ({
   drawResult,
-  gameType,
   gameSubType,
   onClickPost,
   onClickCancel,
+  pendingResultData
 }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+
+  const [newResult, setnewResult] = useState(drawResult);
+  // const dateString = "May 08, 2023 14:00:00";
+  // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
     "A",
     "2",
@@ -33,21 +35,42 @@ const EditRegularResult = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const toggleDialog = () => {
-    setShowConfirmDialog((prev) => !prev);
+    if (newResult.length > 2) { setShowConfirmDialog((prev) => !prev); }
   };
+
+  const handleClickNumber = (resultNumber) => {
+    let nwResult = newResult;
+    if (newResult.length > 2) { nwResult = ""; }
+    setnewResult(nwResult + resultNumber);
+  }
 
   return (
     <>
       <div className="magic-result-container">
         <div className="results-side">
           <div className="result-date-container">
-            <p>{FormatFullDate(latestPrizeDate)}</p>
-            <div className="time-container">
-              {FormatTimeAmPm(latestPrizeDate).replace(/\s+/g, "")}
-            </div>
+            {
+              (pendingResultData !== null) && (pendingResultData.length > 0) ?
+              <>
+                <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
+                <div className="time-container">
+                  { 
+                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
+                    : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0]))
+                  }
+                </div>
+              </>
+              : <>Loading...</>
+            }
           </div>
           <div className="reel">
-            <div>{drawResult}</div>
+            <div className={ (newResult.length === 1) ? "div-lrtSpace1"
+              : (newResult.length === 2) ? 'div-lrtSpace2'
+              : (newResult.length === 3) ? '' : '' }>
+              {
+                (newResult !== "") ? newResult : drawResult
+              }
+            </div>
           </div>
           <div className="operator">
             {getGameLogo("Regular Game", gameSubType, 100)}
@@ -57,7 +80,7 @@ const EditRegularResult = ({
       <div className="coin-buttons-container">
         <div className="coin-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="button-item" key={index}>
+            <div className="button-item" onClick={e => handleClickNumber(button) } key={index}>
               {button}
             </div>
           ))}
@@ -74,8 +97,11 @@ const EditRegularResult = ({
           </div>
         </button>
       </div>
+
       <DrawResultDialog
         open={showConfirmDialog}
+        pendingResultData={pendingResultData}
+        newResult={newResult}
         onClose={toggleDialog}
         onSubmit={() => {
           onClickPost();
@@ -83,12 +109,13 @@ const EditRegularResult = ({
         }}
         combination={
           <div className="reel">
-            <div>{drawResult}</div>
+            <div>{newResult}</div>
           </div>
         }
         width={"400px"}
         gameName={gameSubType}
       />
+
     </>
   );
 };

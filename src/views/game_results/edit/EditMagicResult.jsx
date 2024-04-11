@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import "./editMagicResult.scss";
-import { FormatFullDate, FormatTimeAmPm } from "../../../helper/Helpers";
 import EditIcon from "../../../assets/icons/EditIcon";
 import DrawResultDialog from "../dialog/DrawResultDialog";
+
+import { DateExt, ConstArrayExt } from "../../../utils/helpers";
 
 const EditMagicResult = ({
   drawResult,
   operatorName,
   onClickPost,
   onClickCancel,
+  pendingResultData
 }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+
+  const [newResult, setnewResult] = useState(drawResult);
+  // const dateString = "May 08, 2023 14:00:00";
+  // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
     "A",
     "2",
@@ -31,21 +35,36 @@ const EditMagicResult = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const toggleDialog = () => {
-    setShowConfirmDialog((prev) => !prev);
+    if (newResult.length > 2) { setShowConfirmDialog((prev) => !prev); }
   };
+
+  const handleClickNumber = (resultNumber) => {
+    let nwResult = newResult;
+    if (newResult.length > 2) { nwResult = ""; }
+    setnewResult(nwResult + resultNumber);
+  }
 
   return (
     <>
       <div className="magic-result-container">
         <div className="results-side">
           <div className="magic-date-container">
-            <p>{FormatFullDate(latestPrizeDate)}</p>
-            <div className="magic-time-container">
-              {FormatTimeAmPm(latestPrizeDate).replace(/\s+/g, "")}
-            </div>
+            {
+              (pendingResultData !== null) && (pendingResultData.length > 0) ?
+              <>
+                <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
+                <div className="magic-time-container">
+                  { 
+                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
+                    : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0])) 
+                  }
+                </div>
+              </>
+              : <>Loading...</>
+            }
           </div>
           <div className="magic-reel">
-            {drawResult.split("").map((result, index) => (
+            {newResult.split("").map((result, index) => (
               <div className="magic-reel-item" key={index}>
                 {result}
               </div>
@@ -59,7 +78,7 @@ const EditMagicResult = ({
       <div className="magic-buttons-container">
         <div className="magic-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="magic-button-item" key={index}>
+            <div className="magic-button-item" onClick={e => handleClickNumber(button) } key={index}>
               {button}
             </div>
           ))}
@@ -78,6 +97,9 @@ const EditMagicResult = ({
       </div>
       <DrawResultDialog
         open={showConfirmDialog}
+        pendingResultData={pendingResultData}
+        newResult={newResult}
+        drawType={1}
         onClose={toggleDialog}
         onSubmit={() => {
           onClickPost();
@@ -85,7 +107,7 @@ const EditMagicResult = ({
         }}
         combination={
           <div className="magic-reel">
-            {drawResult.split("").map((result, index) => (
+            {newResult.split("").map((result, index) => (
               <div className="magic-reel-item" key={index}>
                 {result}
               </div>

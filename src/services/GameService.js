@@ -164,4 +164,13 @@ export const GameService = {
             return res;
         })
     },
+    getDrawBacklogs: async (companyGameId, count = 15) => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/game/company-game/${companyGameId}/draw/backlogs/${count}`)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res;
+        })
+    },
 }

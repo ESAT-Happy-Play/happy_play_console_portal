@@ -1,11 +1,13 @@
 import React from "react";
 import "./resultCard.scss";
 import EditIcon from "../../assets/icons/EditIcon";
-import { FormatFullDate } from "../../helper/Helpers";
-import { drawTypeList } from "../../helper/mocks";
+// import { FormatFullDate } from "../../helper/Helpers";
+// import { drawTypeList } from "../../helper/mocks";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import ResultHistory from "./ResultHistory";
 import FilterListIcon from "@mui/icons-material/FilterList";
+
+import { DateExt, ConstArrayExt } from "../../utils/helpers";
 
 const ResultCard = ({
   headerTitle,
@@ -23,9 +25,10 @@ const ResultCard = ({
   resultsHistoryTheme,
   isEditing,
   onClickPost,
+  pendingResultData
 }) => {
-  const dateString = "May 08, 2023 14:00:00";
-  const latestPrizeDate = new Date(dateString);
+  // const dateString = "May 08, 2023 14:00:00";
+  // const latestPrizeDate = new Date(dateString);
 
   return (
     <div
@@ -40,7 +43,10 @@ const ResultCard = ({
       >
         <p style={{ color: headerTitleColor }}>{headerTitle}</p>
         {postButtonLabel && !isEditing && (
-          <button
+          <button disabled={
+              (pendingResultData !== null) && (pendingResultData !== undefined)
+              ? (pendingResultData.length > 0) ? false : true : true 
+            }
             style={{
               color: postButtonLabelColor ?? "white",
               backgroundColor: postButtonColor,
@@ -56,26 +62,45 @@ const ResultCard = ({
       </div>
       {hasSubHeading && (
         <div className="subheading">
-          <div className="date">
-            <p>Pending: {FormatFullDate(latestPrizeDate)}</p>
-            <div className="divider"></div>
-          </div>
-          <div className="draw-time-row">
-            <div className="draw-time-list">
-              {drawTypeList.map((drawType, index) => (
-                <div
-                  key={drawType.gameTypeId}
-                  className={`draw-time-item ${
-                    index === 0 ? "first-item" : ""
-                  }`}
-                >
-                  <b>{drawType.name.split(" ")[0]}</b>
-                  <p>{drawType.name.split(" ")[1]}</p>
+          {
+            (pendingResultData !== null) && (pendingResultData !== undefined) && (pendingResultData.length > 0) ?
+            <>
+              <div className="date">
+                <p>Pending: {DateExt.readableDateShort(pendingResultData[0].date)}</p>
+                <div className="divider"></div>
+              </div>
+              <div className="draw-time-row">
+                <div className="draw-time-list">
+                  {pendingResultData.map((drawType, index) => (
+                    <div
+                      key={drawType.id}
+                      className={`draw-time-item ${
+                        index === 0 ? "first-item" : ""
+                      }`}
+                    >
+                      <b>{ (parseInt(drawType.drawTime.split(":")[0]) === 0) ? "12 PM" 
+                      : ConstArrayExt.getConvertToTime(parseInt(drawType.drawTime.split(":")[0])) }</b>
+                      {/* <p>{ DateExt.formatTime(drawType.endCutOff).split(" ")[1] }</p> */}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <OpenInFullIcon sx={{ color: "white" }} />
-          </div>
+                <OpenInFullIcon sx={{ color: "white" }} />
+              </div>
+            </> : <>
+                <div className="date">
+                  <p>Pending: {DateExt.readableDateShort(new Date())}</p>
+                  <div className="divider"></div>
+                </div>
+                <div className="draw-time-row">
+                <div className="draw-time-list">
+                    <div className={`draw-time-item first-item`}>
+                      <p>No pending draw found!</p>
+                    </div>
+                </div>
+                <OpenInFullIcon sx={{ color: "white" }} />
+              </div>
+            </>
+          }
         </div>
       )}
       {isEditing ? (
@@ -101,14 +126,18 @@ const ResultCard = ({
                 </div>
               </div>
             )}
-            {resultsHistory.map((result, index) => (
+            {
+            (resultsHistory !== null) ? resultsHistory.map((result, index) => (
               <ResultHistory
-                winners={76}
-                result={result}
+                winners={result.noOfWinners}
+                result={result.result}
+                drawTime={result.drawTime}
+                resultDate={result.drawDate}
                 key={index}
                 theme={resultsHistoryTheme}
               />
-            ))}
+            )) : <></>
+            }
           </>
         ) : (
           <></>
