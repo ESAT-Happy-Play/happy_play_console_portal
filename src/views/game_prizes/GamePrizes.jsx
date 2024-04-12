@@ -55,7 +55,7 @@ function GamePrizes() {
           verticalTabs.push({
             label: subType.gameName,
             itemId: subType.id,
-            Component: <Regular />,
+            Component: <Regular companyGameId={subType.id} />,
           });
         } else {
           verticalTabs.push({

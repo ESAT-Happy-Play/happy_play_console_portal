@@ -190,5 +190,14 @@ export const GameService = {
             }
             return res;
         })
-    }
+    },
+    getDrawResultWinners: async (data) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/draw/winners`, data)
+        .then((res) => {
+            if (!res.status) { 
+                return false; 
+            }
+            return res;
+        })
+    }    
 }
