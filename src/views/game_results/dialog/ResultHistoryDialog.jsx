@@ -67,7 +67,6 @@ const ResultHistoryDialog =({
           </div>
         </div>
       )}
-      ;
     </>
   )
 }
