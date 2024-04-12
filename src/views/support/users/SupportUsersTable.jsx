@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { styled } from "@mui/material/styles";
-import { TableRow, TableCell, Box } from "@mui/material";
+import { TableRow, TableCell, Box, Chip } from "@mui/material";
 import CustomTable, {
   StyledPagination,
 } from "../../../components/table/customTable/CustomTable";
@@ -9,6 +9,8 @@ import FileExportIcon from "../../../assets/icons/FileExportIcon";
 import ExportModal from "../../../components/modals/ExportModal";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { COLORS } from "../../../helper/colors";
+import CloseIcon from "@mui/icons-material/Close";
+import { SupportUsersFilterModal } from "./SupportUsersFilterModal";
 
 export const SupportUsersTable = ({ data, onClickUserRow }) => {
   const head = ["Name", "Type", "Status", "Registration Date"];
@@ -17,15 +19,24 @@ export const SupportUsersTable = ({ data, onClickUserRow }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showExportModal, setShowExportModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filters, setFilters] = useState([]);
+
+  const filterSummary = useMemo(() => {
+    var summary = {};
+    filters.forEach((filter) => {
+      summary[filter.key] = filter;
+    });
+    return summary;
+  }, [filters]);
 
   useEffect(() => {
     setDisplayList(data);
   }, [data]);
 
   useEffect(() => {
-    var statusData = [];
     if (searchValue.length > 0) {
-      var search = statusData.filter((row) => {
+      var search = data.filter((row) => {
         return Object.values(row)
           .join("")
           .toLowerCase()
@@ -44,9 +55,28 @@ export const SupportUsersTable = ({ data, onClickUserRow }) => {
     setShowExportModal((prev) => !prev);
   };
 
+  const toggleFilter = () => {
+    setShowFilterModal((prev) => !prev);
+  };
+
+  const handleFilter = (value) => {
+    setFilters(value);
+  };
+
+  const handleResetFilters = () => {
+    setFilters([]);
+  };
+
   const handleSearch = (event, value) => {
     setSearchValue(value);
     setPage(0);
+  };
+
+  const handleDelete = (chipToDelete) => () => {
+    setShowFilterModal(false);
+    setFilters((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
   };
 
   const handleChangePage = (event, newpage) => {
@@ -80,8 +110,48 @@ export const SupportUsersTable = ({ data, onClickUserRow }) => {
           </div>
         </div>
         <div className="filter-button">
-          Filters
-          <FilterListIcon />
+          <Box marginLeft="auto" display="flex" alignItems="center" gap="2px">
+            {filters.map((filter, index) => (
+              <Chip
+                sx={{
+                  color: COLORS.violetMain,
+                  height: "22px",
+                  background: COLORS.tableBackground,
+                }}
+                key={index}
+                color="primary"
+                label={filter.label}
+                onDelete={handleDelete(filter)}
+                deleteIcon={
+                  <CloseIcon
+                    sx={{
+                      color: `${COLORS.violetMain} !important`,
+                      width: "16px",
+                    }}
+                  />
+                }
+              />
+            ))}
+            <Box
+              position="relative"
+              display="flex"
+              alignItems="center"
+              sx={{ "&:hover": { cursor: "pointer" } }}
+              onClick={toggleFilter}
+            >
+              Filters
+              <FilterListIcon />
+              {showFilterModal && (
+                <SupportUsersFilterModal
+                  open={showFilterModal}
+                  onClose={() => toggleFilter(null)}
+                  onSubmit={handleFilter}
+                  initFilters={filterSummary}
+                  handleResetFilters={handleResetFilters}
+                />
+              )}
+            </Box>
+          </Box>
         </div>
       </Box>
       <CustomTable
