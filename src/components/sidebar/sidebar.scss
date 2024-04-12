@@ -8,8 +8,9 @@
     height: 100vh;
     background-color: $violet-main;
     color: white;
+    overflow-y: auto;
 
-    .sideIcon > svg {
+    .sideIcon>svg {
         color: #4845d2;
     }
 
@@ -134,7 +135,7 @@
                 color: $violet-main;
             }
         }
-        
+
         .trademark {
             display: flex;
             flex-direction: column;
