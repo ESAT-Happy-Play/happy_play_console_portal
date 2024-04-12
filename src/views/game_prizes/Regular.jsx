@@ -6,8 +6,9 @@ import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import FileExportIcon from "../../assets/icons/FileExportIcon";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import "./regular.scss";
+import { GameService } from "../../services";
 
-const Regular = () => {
+const Regular = (companyGame) => {
   let _PAGESIZE = 5;
   const [pageLoader, setPageLoader] = useState(false);
 
@@ -15,8 +16,26 @@ const Regular = () => {
   const [pageNumber, setpageNumber] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setpageSize] = useState(_PAGESIZE);
-  const [data, setData] = useState(regularData.data);
+  const [data, setData] = useState([]);
   const [clickCounter, setclickCounter] = useState(0);
+
+  const getDrawResultWinners = () => {
+    const requestData = {
+      data: {
+        companyGameId: companyGame.companyGameId,
+        start: 0,
+        size: 1000,
+        start_date: "2024-04-01",
+        end_date: "2024-04-10"
+      }
+    };
+
+    GameService.getDrawResultWinners(requestData).then((res) => {
+      if (!!res) {
+        setData(res.data.drawResultWinners);
+      }
+    });
+  }
 
   const handleLoadRegular = () => {
     const filteredData = regularData.data.filter(
@@ -35,6 +54,7 @@ const Regular = () => {
 
   useEffect(() => {
     handleLoadRegular();
+    getDrawResultWinners()
   }, [clickCounter]);
 
   // On click search
