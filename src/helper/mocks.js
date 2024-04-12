@@ -1031,6 +1031,30 @@ export const mockTicketList = [
   },
 ];
 
+export const mockFAQs = [
+  {
+    id: 1,
+    title: "Question 1",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lectus enim, pharetra ac euismod quis.",
+    date: "May 08, 2023 15:00:00",
+  },
+  {
+    id: 2,
+    title: "Question 2",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lectus enim, pharetra ac euismod quis.",
+    date: "May 08, 2023 15:00:00",
+  },
+  {
+    id: 3,
+    title: "Question 3",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lectus enim, pharetra ac euismod quis.",
+    date: "May 08, 2023 15:00:00",
+  },
+];
+
 export const mockCompanies = [
   {
     id: 1,
