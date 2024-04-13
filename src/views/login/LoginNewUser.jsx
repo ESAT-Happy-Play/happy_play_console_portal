@@ -1,21 +1,24 @@
 import "./login.scss";
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import VerifiedIcon from '@mui/icons-material/Verified';
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 import { Button } from "@mui/material";
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import { StoreExt } from "../../utils/helpers";
 
-import { MuiInput, MuiLoadingButton, ContentLoader } from "../../components/mui";
+import {
+  MuiInput,
+  MuiLoadingButton,
+  ContentLoader,
+} from "../../components/mui";
 import { OTPService } from "../../services";
 
 export const LoginNewUser = () => {
-
   const [pageLoader, setPageLoader] = useState(false);
   const [checkTerm, setCheckTerm] = useState(false);
   const [termError, settermError] = useState(false);
@@ -23,15 +26,17 @@ export const LoginNewUser = () => {
   const formVerify = useForm({ defaultValues: { mobileNumber: "" } });
   const { register, handleSubmit, formState } = formVerify;
   const { errors } = formState;
-  
+
   // Handle for login submit
   const loginVerify = async (data) => {
-    if(!checkTerm) { settermError(true); }
+    if (!checkTerm) {
+      settermError(true);
+    }
 
     if (checkTerm) {
       setPageLoader(true);
       OTPService.generateLoginOTP(data).then((resp) => {
-        if(resp) {
+        if (resp) {
           let param = StoreExt.getEncrypted({
             mobileNumber: data.mobileNumber,
             referenceId: resp.data.referenceId,
@@ -43,85 +48,104 @@ export const LoginNewUser = () => {
         setPageLoader(false);
       });
     }
-  }
+  };
 
   const handleBack = () => {
     setPageLoader(true);
     window.location.href = `/login`;
-  }
+  };
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
       <div className="login">
-        <div className='container'>
+        <div className="container">
           <div className="content">
             <div className="top">
-              <img src={require('../../assets/happy-play-logo.png')} className="logo" title="Esat Logo" />
+              <img
+                src={require("../../assets/happy-play-logo.png")}
+                className="logo"
+                title="Esat Logo"
+              />
             </div>
             <div className="div-login-new-title">
-                <Button variant="text" size="small" onClick={handleBack}>
-                    <KeyboardBackspaceIcon />
-                </Button>
+              <Button variant="text" size="small" onClick={handleBack}>
+                <KeyboardBackspaceIcon />
+              </Button>
               <h3>New User Login</h3>
             </div>
-            <form onSubmit={ handleSubmit(loginVerify) } noValidate>
+            <form onSubmit={handleSubmit(loginVerify)} noValidate>
               <div className="body">
-                  
-                  <div>
-                    <label>Enter Mobile Number</label>
-                    <MuiInput
+                <div>
+                  <label>Enter Mobile Number</label>
+                  <MuiInput
                     focused={true}
                     className="input-center"
                     name="mobileNumber"
                     type="number"
-                    validation= {{ required: "Mobile number is required.",
-                        minLength: { value: 11, message: "min length is 11" }
+                    validation={{
+                      required: "Mobile number is required.",
+                      minLength: { value: 11, message: "min length is 11" },
                     }}
-                    onInput= {(e) =>{ e.target.value = e.target.value.toString().slice(0,11) }}
+                    onInput={(e) => {
+                      e.target.value = e.target.value.toString().slice(0, 11);
+                    }}
                     size="small"
                     register={register}
-                    isError={ !!errors.mobileNumber }
-                    errorMsg={ errors.mobileNumber?.message }/>
-                  </div>
-                  
-                  <div className="form-button" style={{justifyContent:'center'}}>
-                    <MuiLoadingButton text="Verify" variant="contained" type="submit" 
-                      loading={ pageLoader } size="medium" color="primary"
-                      loadingPosition='end'
-                      icon={ <VerifiedIcon/> } />
-                  </div>
-                  
+                    isError={!!errors.mobileNumber}
+                    errorMsg={errors.mobileNumber?.message}
+                  />
+                </div>
+
+                <div
+                  className="form-button"
+                  style={{ justifyContent: "center" }}
+                >
+                  <MuiLoadingButton
+                    text="Verify"
+                    variant="contained"
+                    type="submit"
+                    loading={pageLoader}
+                    size="medium"
+                    color="primary"
+                    loadingPosition="end"
+                    icon={<VerifiedIcon />}
+                  />
+                </div>
               </div>
               <hr />
               <div className="div-privacy">
                 <div className="checkRequired">
-                  { (termError) ? <span>Required *</span> : '' }
+                  {termError ? <span>Required *</span> : ""}
                 </div>
-                
-                <FormControlLabel className={(!checkTerm) ? 'hasError' : ''}
+
+                <FormControlLabel
+                  className={!checkTerm ? "hasError" : ""}
                   control={
-                    <Checkbox onChange={e => (setCheckTerm(!checkTerm), settermError(!termError))} />
-                  } label={
+                    <Checkbox
+                      onChange={(e) => (
+                        setCheckTerm(!checkTerm), settermError(!termError)
+                      )}
+                    />
+                  }
+                  label={
                     <div className="div-agree">
-                        <div className="div1">
-                          <span>I agree to Happy Play's</span>
-                          <a href={'/privacy'}>Privacy Policy</a>
-                          <span> and </span>
-                        </div>
-                        <div className="div2">
-                          <a href={'/terms'}>Terms of Use</a>
-                        </div>
+                      <div className="agree-text">
+                        <span>
+                          I agree to Happy Play's{" "}
+                          <a href="/privacy">Privacy Policy</a> and{" "}
+                          <a href="/terms">Terms of Use</a>.
+                        </span>
+                      </div>
                     </div>
-                  } />
+                  }
+                />
               </div>
             </form>
           </div>
         </div>
-        <ContentLoader isLoadingPage={ pageLoader } />
+        <ContentLoader isLoadingPage={pageLoader} />
       </div>
     </>
   );
