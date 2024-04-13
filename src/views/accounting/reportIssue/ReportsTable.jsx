@@ -82,6 +82,7 @@ const ReportsTable = ({ data }) => {
 
     const handleSubmit = (data) => {
         setOpenSuccess(true);
+        console.log(data);
         handleCloseEdit();
     }
 
@@ -168,7 +169,7 @@ const ReportsTable = ({ data }) => {
                 <ReportDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     isEditing={true}
                     report={selectedRow}
                 />}

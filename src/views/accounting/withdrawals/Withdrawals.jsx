@@ -42,7 +42,7 @@ const Withdrawals = () => {
             {openCreate &&
                 <WithdrawalCreate
                     isOpen={openCreate}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     handleClose={handleClose}
                 />}
 

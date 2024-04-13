@@ -42,7 +42,7 @@ const Deposits = () => {
             {openCreate &&
                 <DepositCreate
                     isOpen={openCreate}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     handleClose={handleClose}
                 />}
 

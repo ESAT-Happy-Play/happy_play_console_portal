@@ -50,19 +50,19 @@ function GameResults() {
     // init results history
     let resultHistory = await handleResultHistory(newValue);
     setresultHistory(resultHistory.data.data);
-    
+
     setPageLoader(false);
   }
 
   const handlePendingDrawResult = (companyGameId) => {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       GameService.getDrawBacklogs(companyGameId).then((resp) => {
-        if(resp.status && resp.data.length > 0) {
+        if (resp.status && resp.data.length > 0) {
           let pendingDraws = [];
           let lastDate = resp.data[0].date;
           resp.data.filter(obj => obj.date === lastDate).map((item) => {
             pendingDraws.push({
-              id: item.id, 
+              id: item.id,
               companyId: item.companyId,
               companyGame: item.companyGame,
               date: item.date,
@@ -81,7 +81,7 @@ function GameResults() {
   }
 
   const handleLastDrawResult = (companyGameId, drawResultType = 0) => {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       DrawService.getLatestDraw(companyGameId, drawResultType).then((res) => {
         return resolve(res);
       })
@@ -89,12 +89,12 @@ function GameResults() {
   }
 
   const handleCurretBet = (companyGameId) => {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       DrawService.getCurrentBetSchedule(companyGameId).then((res) => {
         if (res.success) {
           let item = res.data;
           return resolve([{
-            id: item.id, 
+            id: item.id,
             companyId: item.companyId,
             companyGame: item.companyGame,
             date: item.date,
@@ -110,7 +110,7 @@ function GameResults() {
   }
 
   const handleResultHistory = (companyGameId, magicResult = false) => {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       DrawService.getDrawResultHistory(companyGameId, magicResult).then((res) => {
         return resolve(res);
       })
@@ -174,7 +174,7 @@ function GameResults() {
       setmagicResultHistory(allResults[3].data.data);
       setcurrentBetSchedule(allResults[4]);
     }
-    
+
     setPageLoader(false);
   }
 
@@ -287,12 +287,12 @@ function GameResults() {
   return (
     <div className="container">
       {
-        (companyGames !== null) 
-        ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
-        : <div style={{ padding:'25px' }}>Loading...Please wait.</div>
+        (companyGames !== null)
+          ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
+          : <div style={{ padding: '25px' }}>Loading...Please wait.</div>
       }
 
-      <ContentLoader isLoadingPage={ pageLoader } />
+      <ContentLoader isLoadingPage={pageLoader} />
     </div>
   );
 }

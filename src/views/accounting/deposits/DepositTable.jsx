@@ -175,7 +175,7 @@ const DepositsTable = ({ data }) => {
                 <DepositDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     deposit={selectedRow}
                 />}
             {openSuccess &&

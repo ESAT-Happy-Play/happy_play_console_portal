@@ -42,7 +42,7 @@ const SupportReport = () => {
             {openCreate &&
                 <ReportDetail
                     isOpen={openCreate}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     handleClose={handleClose}
                     isEditing={false}
                 />}

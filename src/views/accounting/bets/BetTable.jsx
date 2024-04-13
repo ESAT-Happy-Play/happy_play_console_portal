@@ -189,7 +189,7 @@ const BetTable = ({ data }) => {
                 <BetDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     bet={selectedRow}
                 />
             }
