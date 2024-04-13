@@ -6,29 +6,39 @@ import CrownIcon from "../../../assets/icons/CrownIcon.png";
 import { DateExt } from "../../../utils/helpers";
 
 const DrawResultRegular = ({ operatorName, lastDrawResult }) => {
+
+  const generateResultDigits = (result) => {
+    var digits = result.map((e, index) =>
+      <p className="reel-digit" key={index}>{e}</p>
+    );
+    return [<div className="reel-container" key={1}>
+      {digits}
+    </div>]
+
+  }
   return (
     <div className="draw-result-container">
       <div className="results-side">
         <div className="result-date-container">
           {
             (lastDrawResult !== null) ?
-            <>
-              <p>{DateExt.readableDateShort(lastDrawResult.resultDate)}</p>
-              <div className="time-container">
-                {lastDrawResult.drawSchedule}
-              </div>
-            </>
-            : <></>
+              <>
+                <p>{DateExt.readableDateShort(lastDrawResult.resultDate)}</p>
+                <div className="time-container">
+                  {lastDrawResult.drawSchedule}
+                </div>
+              </>
+              : <></>
           }
         </div>
         <div className="reel">
-          <div>
-            { 
-              (lastDrawResult !== null) 
-              ? lastDrawResult.drawResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
-              : ("0-0-0").split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')
-            }
-          </div>
+          {
+            (lastDrawResult !== null)
+              ?
+              generateResultDigits(lastDrawResult.drawResult.split("-"))
+              :
+              generateResultDigits(("7-7-7").split("-"))
+          }
         </div>
         <div className="operator">
           <p>Posted By: {operatorName}</p>

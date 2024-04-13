@@ -45,14 +45,18 @@
   .magic-reel {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 50px;
     font-weight: bold;
+    gap: 5px;
 
     .magic-reel-item {
-      width: 80px;
-      padding: 8px 19px;
+      width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 90px;
       color: white;
-      letter-spacing: 30px;
       background: url("../../../assets/magic-result-container.png");
       background-size: contain;
       background-repeat: no-repeat;

@@ -41,17 +41,28 @@
   }
 
   .reel {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
+    display: flex;
+    gap: 10px;
 
-    div {
-      width: 200px;
-      padding: 8px 16px;
+    .reel-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 240px;
+      height: 115px;
+      padding: 0px 8px;
+      text-align: center;
       color: $dark-grey;
-      letter-spacing: 30px;
       background: url("../../../assets/slot-container.png");
       background-size: contain;
       background-repeat: no-repeat;
+
+      .reel-digit {
+        flex: 1;
+        text-align: center;
+      }
     }
   }
 

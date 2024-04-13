@@ -216,7 +216,7 @@ function GameResults() {
             editDrawResult={
               game.gameName === "Regular" ? (
                 <EditRegularResult
-                  drawResult={"AAA"}
+                  drawResult={"A-A-A"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
                   pendingResultData={pendingDrawResults}
@@ -228,7 +228,7 @@ function GameResults() {
                 />
               ) : (
                 <EditJackpotResult
-                  drawResult={"7-7-7-A-A-A"}
+                  drawResult={game.gameName == "Jackpot 3.3" ? "10-7-7-S-H-S" : "10-7-7-S-H-S-C"}
                   gameType={game.gameName}
                   gameSubType={game.gameName}
                   pendingResultData={pendingDrawResults}
@@ -263,7 +263,7 @@ function GameResults() {
               }
               editDrawResult={
                 <EditMagicResult
-                  drawResult={"AAA"}
+                  drawResult={"A-A-A"}
                   operatorName={loginObj.fullname}
                   pendingResultData={currentBetSchedule}
                   onClickPost={() => {
