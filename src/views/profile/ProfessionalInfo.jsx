@@ -6,6 +6,7 @@ import { ContentLoader } from "../../components/mui";
 import ImageIcon from '@mui/icons-material/Image';
 import { DragDropProfileUpload, DragDropSelfieUpload } from "../../components/mui";
 import { ConstArrayExt } from "../../utils/helpers";
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { UserService, ImageService } from "../../services";
 
 function ProfessionalInfo({ dataObj }) {
@@ -46,6 +47,8 @@ function ProfessionalInfo({ dataObj }) {
                 dataObj["validId"] = data.validIdType;
                 dataObj["frontIdPath"] = data.frontIdPath;
                 dataObj["selfiePath"] = data.selfiePath;
+
+                UserProfileDetails.getInitAccount(dataObj).then();
             }
             setisEdit(false);
             setPageLoader(false);

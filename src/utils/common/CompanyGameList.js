@@ -13,10 +13,10 @@ export const CompanyGameList = {
         if (gameList !== null) {
             return gameList;
         } else {
-                let allGames = await GameService.getCompanyGameDetail(tokenObj.companyId).then((res) => {
-                    if (res.status) { return res.data; }
-                    else { return []; }
-                });
+            let allGames = await GameService.getCompanyGameDetail(tokenObj.companyId).then((res) => {
+                if (res.status) { return res.data.sort((a, b) => a.id - b.id); }
+                else { return []; }
+            });
 
             store.dispatch(setGameState({
                 companyId: tokenObj.companyId,

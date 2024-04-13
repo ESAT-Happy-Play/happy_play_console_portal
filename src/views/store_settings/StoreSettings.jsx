@@ -111,9 +111,11 @@ function StoreSettings() {
   return (
     <div className='container'>
       {
-        (companyGames !== null) 
+        (tokenObj.role !== "Super Admin")
+        ? (companyGames !== null)
         ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
         : <div style={{padding:'25px'}}>Loading...Please wait.</div>
+        : <div style={{padding:'25px'}}>No company linked to the account.</div>
       }
 
       <ContentLoader isLoadingPage={ pageLoader } />

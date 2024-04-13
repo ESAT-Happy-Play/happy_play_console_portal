@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import AddressPresent from './AddressPresent';
 import AddressPermanent from './AddressPermanent';
 
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { ContentLoader } from "../../components/mui";
 import { UserService } from '../../services';
 
@@ -34,6 +35,8 @@ function AddressInfo({ dataObj }) {
                 dataObj["permanentMunicipality"] = data.permanentMunicipality;
                 dataObj["permanentBarangay"] = data.permanentBarangay;
                 dataObj["permanentStreetOrPurok"] = data.permanentStreetOrPurok;
+
+                UserProfileDetails.getInitAccount(dataObj).then();
             }
             setisEdit(false);
             setPageLoader(false);

@@ -75,10 +75,9 @@ const DrawResultDialog = ({
                     <b>
                       { DateExt.readableDateShort(pendingResultData[0].date) } {"-"}
                       { 
-                        (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
-                        : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
+                        (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
+                        : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0])) 
                       }
-                      {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
                     </b>
                     : <>Loading...</>
                   }

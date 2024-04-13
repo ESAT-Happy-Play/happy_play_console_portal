@@ -18,8 +18,7 @@ import { GameService, DrawService } from '../../services'
 
 function GameResults() {
   let loginObj = StoreExt.getStore("auth");
-  // let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
-  // // tokenObj.companyId
+  let tokenObj = StoreExt.getDecodeJWT(loginObj.token);
 
   const [pageLoader, setPageLoader] = useState(true);
   const [companyGames, setcompanyGames] = useState(null);
@@ -152,12 +151,12 @@ function GameResults() {
   const handleListGames = async () => {
     setPageLoader(true);
     let companyGameList = await CompanyGameList.getGameList();
-
-    let allPendingDraw = await handlePendingDrawResult(companyGameList.gameList[0].id);
     setcompanyGames(companyGameList.gameList);
-    setpendingDrawResults(allPendingDraw);
+    
+    if (companyGameList.gameList.length > 0) {
+      let allPendingDraw = await handlePendingDrawResult(companyGameList.gameList[0].id);
+      setpendingDrawResults(allPendingDraw);
 
-    if (allPendingDraw.length > 0) {
       setselectedCompanyGameId(companyGameList.gameList[0].id);
       let allResults = await Promise.all([
         handleLastDrawResult(companyGameList.gameList[0].id),
@@ -287,9 +286,11 @@ function GameResults() {
   return (
     <div className="container">
       {
-        (companyGames !== null) 
+        (tokenObj.role !== "Super Admin")
+        ? (companyGames !== null)
         ? <CustomTab changeEvent={handleChangeGame} tabList={tabs} />
         : <div style={{ padding:'25px' }}>Loading...Please wait.</div>
+        : <div style={{padding:'25px'}}>No company linked to the account.</div>
       }
 
       <ContentLoader isLoadingPage={ pageLoader } />

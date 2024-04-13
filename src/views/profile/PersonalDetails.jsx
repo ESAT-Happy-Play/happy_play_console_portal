@@ -7,6 +7,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { ConstArrayExt, DateExt } from "../../utils/helpers";
 import { UserService } from '../../services';
 
@@ -39,6 +40,8 @@ function PersonalDetails({ dataObj }) {
                 dataObj["bloodType"] = data.bloodType;
                 dataObj["nationality"] = data.nationality;
                 dataObj["birthDate"] = data.birthDate;
+
+                UserProfileDetails.getInitAccount(dataObj).then();
             }
             setisEdit(false);
             setPageLoader(false);

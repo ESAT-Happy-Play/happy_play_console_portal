@@ -11,7 +11,8 @@ import NotificationSetting from "./NotificationSetting";
 import PasswordInfo from "./PasswordInfo";
 
 import { StoreExt } from "../../utils/helpers";
-import { UserService, ImageService } from "../../services";
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
+import { ImageService } from "../../services";
 
 export const Profile = () => {
     let authdata = StoreExt.getStore("auth");
@@ -25,22 +26,18 @@ export const Profile = () => {
         })
     }
 
-    const handleInitUserInfo = () => {
+    const handleInitUserInfo = async () => {
       setPageLoader(true);
-      UserService.systemUserInfo(authdata.id).then((resp) => {
-        if(resp) { 
-          setuserInfo(resp.data);
-          
-          if(resp.data.profilePath !== null) {
-            initImages(resp.data.profilePath);
-          }
-        }
-        setPageLoader(false);
-      })
+      let result = await UserProfileDetails.getInitAccount();
+      setuserInfo(result);
+      setPageLoader(false);
+      if(result.profilePath !== null) {
+        initImages(result.profilePath);
+      }
     }
 
     useEffect(() => {
-        handleInitUserInfo();
+      handleInitUserInfo();
     }, []);
 
     const tabComponents = () => { return [
