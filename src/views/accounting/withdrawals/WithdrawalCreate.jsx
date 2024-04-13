@@ -8,7 +8,7 @@ import { Close } from "@mui/icons-material";
 import { Box, Button, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { COLORS } from '../../../helper/colors';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { mockPaymentMethod, mockStatus } from '../../../helper/mocks';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -18,15 +18,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import CustomTab from '../../../components/tab/CustomTab';
 import RegularSearchBar from '../../../components/searchbar/RegularSearchBar';
-import dayjs from 'dayjs';
 
 
 const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }) => {
     const formWithdrawals = useForm({ defaultValues: withdrawals });
-    const { register, handleSubmit, formState, reset } = formWithdrawals;
+    const { register, handleSubmit, formState, reset, control } = formWithdrawals;
     const { errors } = formState;
     const [status, setStatus] = useState(withdrawals?.status ?? "");
-    const [date, setDate] = useState(dayjs('2022-04-17'));
     const [paymentMethod, setPaymentMethod] = useState(withdrawals?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
@@ -57,8 +55,9 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                     gap='10px'
                     onSubmit={handleSubmit(finalStepHandler)}
                 >
+
                     <Box display='flex' flexDirection='column' gap='10px'>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Display Name</h2>
                             <TextField
                                 size="small"
@@ -74,13 +73,25 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                         "&.MuiOutlinedInput-notchedOutline": { fontSize: "14px" },
                                     },
                                 }}
+                                error={!!errors.name}
                             />
+                            {!!errors.name && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Display Name must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
                                 size="small"
-                                placeholder="Example Withdrawals"
+                                placeholder="Example deposit"
                                 {
                                 ...register("amount", { required: true })
                                 }
@@ -92,9 +103,21 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                         "&.MuiOutlinedInput-notchedOutline": { fontSize: "14px" },
                                     },
                                 }}
+                                error={!!errors.amount}
                             />
+                            {!!errors.amount && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Amount must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box flex={1} width='250px'>
+                        <Box flex={1} width='250px' display='flex' flexDirection='column'>
                             <h2 className='field-header'>Status</h2>
                             <FormControl fullWidth size="small">
                                 <Select
@@ -114,6 +137,7 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                         }
                                         return mockStatus.find((e) => e.id == selected).name
                                     }}
+                                    error={!!errors.status}
                                 >
                                     {mockStatus.map((status, index) => (
                                         <MenuItem value={status.id} key={status.id}>
@@ -122,8 +146,19 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                     ))}
                                 </Select>
                             </FormControl>
+                            {!!errors.status && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Status
+                                </span>
+                            )}
                         </Box>
-                        <Box flex={1} width='250px'>
+                        <Box flex={1} width='250px' display='flex' flexDirection='column'>
                             <h2 className='field-header'>Payment Method</h2>
                             <FormControl fullWidth size="small">
                                 <Select
@@ -144,6 +179,7 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                         }
                                         return mockPaymentMethod.find((e) => e.id == selected).name
                                     }}
+                                    error={!!errors.paymentMethod}
                                 >
                                     {mockPaymentMethod.map((paymentMethod, index) => (
                                         <MenuItem value={paymentMethod.id} key={paymentMethod.id}>
@@ -152,19 +188,47 @@ const WithdrawalCreate = ({ isOpen, handleClose, withdrawals, handleSubmission }
                                     ))}
                                 </Select>
                             </FormControl>
+                            {!!errors.paymentMethod && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Payment Method
+                                </span>
+                            )}
                         </Box>
 
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Date</h2>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
-                                <DatePicker
-                                    value={date}
-                                    onChange={(newDate) => setDate(newDate)}
-                                    sx={datePickerStyle}
-                                    {
-                                    ...register("date", { required: true })
-                                    } />
-                            </LocalizationProvider>
+                            <Controller
+                                control={control}
+                                name='date'
+                                rules={{ required: true, valueAsDate: true }}
+                                render={({ field }) => (
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                                        <DatePicker
+                                            value={field}
+                                            onChange={field.onChange}
+                                            sx={datePickerStyle}
+                                            error={!!errors.date}
+                                        />
+                                    </LocalizationProvider>
+                                )}
+                            />
+                            {!!errors.paymentMethod && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Date
+                                </span>
+                            )}
                         </Box>
                     </Box>
                     <Box display="flex" justifyContent="space-evenly">

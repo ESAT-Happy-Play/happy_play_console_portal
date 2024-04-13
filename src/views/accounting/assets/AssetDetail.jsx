@@ -8,7 +8,7 @@ import { Close } from "@mui/icons-material";
 import { Box, Button, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { COLORS } from '../../../helper/colors';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { assetTypes, mockPaymentMethod, mockStatus } from '../../../helper/mocks';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -16,15 +16,13 @@ import MenuItem from "@mui/material/MenuItem";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs from 'dayjs';
 
 
 const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }) => {
     const formAsset = useForm({ defaultValues: asset });
-    const { register, handleSubmit, formState, reset } = formAsset;
+    const { register, handleSubmit, formState, reset, control } = formAsset;
     const { errors } = formState;
     const [type, setType] = useState(asset?.type ?? "");
-    const [date, setDate] = useState(dayjs('2022-04-17'));
 
     const finalStepHandler = async (data) => {
         handleSubmission(data);
@@ -58,7 +56,7 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                     onSubmit={handleSubmit(finalStepHandler)}
                 >
                     <Box display='flex' flexDirection='column' gap='10px'>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Company</h2>
                             <TextField
                                 size="small"
@@ -66,6 +64,7 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                 {
                                 ...register("name", { required: true })
                                 }
+                                error={!!errors.name}
                                 variant="outlined"
                                 InputProps={{
                                     sx: {
@@ -75,14 +74,26 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                     },
                                 }}
                             />
+                            {!!errors.name && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Company must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box flex={1} width='250px'>
+                        <Box flex={1} width='250px' display='flex' flexDirection='column'>
                             <h2 className='field-header'>Asset Type</h2>
                             <FormControl fullWidth size="small">
                                 <Select
                                     {
                                     ...register("type", { required: true })
                                     }
+                                    error={!!errors.type}
                                     displayEmpty
                                     onChange={(e) => { setType(e.target.value) }}
                                     value={type}
@@ -104,8 +115,19 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                     ))}
                                 </Select>
                             </FormControl>
+                            {!!errors.type && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Asset Type
+                                </span>
+                            )}
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
                                 size="small"
@@ -113,6 +135,7 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                 {
                                 ...register("amount", { required: true })
                                 }
+                                error={!!errors.amount}
                                 variant="outlined"
                                 InputProps={{
                                     sx: {
@@ -122,19 +145,46 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                     },
                                 }}
                             />
+                            {!!errors.amount && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Amount must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Date</h2>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
-                                <DatePicker
-                                    value={date}
-                                    onChange={(newDate) => setDate(newDate)}
-                                    sx={datePickerStyle}
-                                    {
-                                    ...register("date", { required: true })
-                                    }
-                                />
-                            </LocalizationProvider>
+                            <Controller
+                                control={control}
+                                name='date'
+                                rules={{ required: true, valueAsDate: true }}
+                                render={({ field }) => (
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                                        <DatePicker
+                                            value={field}
+                                            onChange={field.onChange}
+                                            sx={datePickerStyle}
+                                            error={!!errors.date}
+                                        />
+                                    </LocalizationProvider>
+                                )}
+                            />
+                            {!!errors.date && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Date
+                                </span>
+                            )}
                         </Box>
                     </Box>
                     <Box display="flex" justifyContent="space-evenly">

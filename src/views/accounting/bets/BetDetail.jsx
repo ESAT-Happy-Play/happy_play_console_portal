@@ -7,23 +7,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Close } from "@mui/icons-material";
 import { Box, Button, TextField } from '@mui/material';
 import { COLORS } from '../../../helper/colors';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs from 'dayjs';
 
 
 const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
     const formBet = useForm({ defaultValues: bet });
-    const { register, handleSubmit, formState, reset } = formBet;
+    const { register, handleSubmit, formState, reset, control } = formBet;
     const { errors } = formState;
     const [status, setStatus] = useState(bet?.status ?? "");
     const [isClaimed, setIsClaimed] = useState(bet?.isClaimed ?? "");
-    const [date, setDate] = useState(dayjs('2022-04-17'));
 
     const betStatus = [
         {
@@ -91,7 +89,7 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                 }}
                             />
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
                                 size="small"
@@ -99,6 +97,7 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                 {
                                 ...register("amount", { required: true })
                                 }
+                                error={!!errors.amount}
                                 variant="outlined"
                                 InputProps={{
                                     sx: {
@@ -108,14 +107,26 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                     },
                                 }}
                             />
+                            {!!errors.amount && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Amount must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box flex={1} width='250px'>
+                        <Box flex={1} width='250px' display='flex' flexDirection='column'>
                             <h2 className='field-header'>Claimed</h2>
                             <FormControl fullWidth size="small">
                                 <Select
                                     {
                                     ...register("isClaimed", { required: true })
                                     }
+                                    error={!!errors.isClaimed}
                                     displayEmpty
                                     onChange={(e) => { setIsClaimed(e.target.value) }}
                                     value={isClaimed}
@@ -138,14 +149,26 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                     </MenuItem>
                                 </Select>
                             </FormControl>
+                            {!!errors.isClaimed && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Claimed Status
+                                </span>
+                            )}
                         </Box>
-                        <Box flex={1} width='250px'>
+                        <Box flex={1} width='250px' display='flex' flexDirection='column'>
                             <h2 className='field-header'>Status</h2>
                             <FormControl fullWidth size="small">
                                 <Select
                                     {
                                     ...register("status", { required: true })
                                     }
+                                    error={!!errors.status}
                                     displayEmpty
                                     onChange={(e) => { setStatus(e.target.value) }}
                                     value={status}
@@ -167,8 +190,19 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            {!!errors.status && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Status
+                                </span>
+                            )}
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Tax</h2>
                             <TextField
                                 size="small"
@@ -176,6 +210,7 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                 {
                                 ...register("tax", { required: true })
                                 }
+                                error={!!errors.tax}
                                 variant="outlined"
                                 InputProps={{
                                     sx: {
@@ -185,19 +220,46 @@ const BetDetail = ({ isOpen, handleClose, handleSubmission, bet }) => {
                                     },
                                 }}
                             />
+                            {!!errors.tax && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Tax must be filled
+                                </span>
+                            )}
                         </Box>
-                        <Box>
+                        <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Date</h2>
-                            <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
-                                <DatePicker
-                                    value={date}
-                                    onChange={(newDate) => setDate(newDate)}
-                                    sx={datePickerStyle}
-                                    {
-                                    ...register("date", { required: true })
-                                    }
-                                />
-                            </LocalizationProvider>
+                            <Controller
+                                control={control}
+                                name='date'
+                                rules={{ required: true, valueAsDate: true }}
+                                render={({ field }) => (
+                                    <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                                        <DatePicker
+                                            value={field}
+                                            onChange={field.onChange}
+                                            sx={datePickerStyle}
+                                            error={!!errors.date}
+                                        />
+                                    </LocalizationProvider>
+                                )}
+                            />
+                            {!!errors.date && (
+                                <span
+                                    style={{
+                                        color: COLORS.redWarn,
+                                        marginLeft: "5px",
+                                        fontSize: "12px",
+                                    }}
+                                >
+                                    Select Date
+                                </span>
+                            )}
                         </Box>
                     </Box>
                     <Box display="flex" justifyContent="space-evenly">

@@ -173,7 +173,7 @@ const WithdrawalsTable = ({ data }) => {
                 <WithdrawalDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     withdrawal={selectedRow}
                 />}
             {openSuccess &&

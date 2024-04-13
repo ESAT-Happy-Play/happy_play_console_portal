@@ -42,24 +42,37 @@
   }
 
   .jackpot-reel {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
+    display: flex;
+    gap: 10px;
 
-    div {
+    .reel-container {
       display: flex;
-      width: 500px;
-      padding: 8px 16px;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 240px;
+      height: 115px;
+      padding: 0px 8px;
       text-align: center;
-      margin-left: 60px;
       color: $dark-grey;
-      letter-spacing: 30px;
-      background: url("../../../assets/slot-container.png"),
-        url("../../../assets/slot-container.png");
+      background: url("../../../assets/slot-container.png");
       background-size: contain;
       background-repeat: no-repeat;
-      background-position: 0 top, 230px top;
+
+      .reel-digit {
+        flex: 1;
+      }
+    }
+
+    .four-slot {
+      background: url("../../../assets/4-slot-container.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      padding: 0px 2px;
     }
   }
+
 
   .operator {
     font-size: 14px;

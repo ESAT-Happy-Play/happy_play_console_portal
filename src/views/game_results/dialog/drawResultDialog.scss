@@ -76,55 +76,79 @@
       margin-top: 20px;
 
       .reel {
-        font-size: 50px;
+        font-size: 40px;
         font-weight: bold;
-        text-align: center;
-        margin: 0 auto;
-        max-width: 65%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
 
-        div {
-          width: 200px;
-          padding: 8px 16px;
+        .reel-container {
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 240px;
+          height: 115px;
+          padding: 0px 8px;
+          text-align: center;
           color: $dark-grey;
-          letter-spacing: 30px;
           background: url("../../../assets/slot-container.png");
           background-size: contain;
           background-repeat: no-repeat;
+
+          .reel-digit {
+            flex: 1;
+            text-align: center;
+          }
         }
       }
 
       .jackpot-reel {
-        font-size: 50px;
+        font-size: 40px;
         font-weight: bold;
+        display: flex;
+        gap: 10px;
 
-        div {
+        .reel-container {
           display: flex;
-          width: 500px;
-          padding: 8px 16px;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 240px;
+          height: 115px;
+          padding: 0px 8px;
           text-align: center;
-          margin-left: 60px;
           color: $dark-grey;
-          letter-spacing: 30px;
-          background: url("../../../assets/slot-container.png"),
-            url("../../../assets/slot-container.png");
+          background: url("../../../assets/slot-container.png");
           background-size: contain;
           background-repeat: no-repeat;
-          background-position: 0 top, 230px top;
+
+          .reel-digit {
+            flex: 1;
+          }
+        }
+
+        .four-slot {
+          background: url("../../../assets/4-slot-container.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+          padding: 0px 2px;
         }
       }
 
       .magic-reel {
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         font-size: 50px;
         font-weight: bold;
+        gap: 5px;
 
         .magic-reel-item {
-          width: 80px;
-          padding: 8px 19px;
+          width: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 90px;
           color: white;
-          letter-spacing: 30px;
           background: url("../../../assets/magic-result-container.png");
           background-size: contain;
           background-repeat: no-repeat;
