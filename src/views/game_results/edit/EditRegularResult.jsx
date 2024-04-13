@@ -14,6 +14,7 @@ const EditRegularResult = ({
 }) => {
 
   const [newResult, setnewResult] = useState(drawResult);
+  const [index, setIndex] = useState(0);
   // const dateString = "May 08, 2023 14:00:00";
   // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
@@ -38,10 +39,24 @@ const EditRegularResult = ({
     if (newResult.length > 2) { setShowConfirmDialog((prev) => !prev); }
   };
 
+  const generateResultDigits = (result) => {
+    var digits = result.map((e) =>
+      <p className="reel-digit">{e}</p>
+    );
+    return [<div className={`reel-container ${result.length > 3 ? "four-slot" : null}`}>
+      {digits}
+    </div>]
+  }
+
+
   const handleClickNumber = (resultNumber) => {
-    let nwResult = newResult;
-    if (newResult.length > 2) { nwResult = ""; }
-    setnewResult(nwResult + resultNumber);
+    let tempResult = newResult.split('-');
+    tempResult[index] = resultNumber;
+    setnewResult(tempResult.join('-'));
+    if (index == 2)
+      setIndex(0);
+    else
+      setIndex(index + 1);
   }
 
   return (
@@ -51,26 +66,26 @@ const EditRegularResult = ({
           <div className="result-date-container">
             {
               (pendingResultData !== null) && (pendingResultData.length > 0) ?
-              <>
-                <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
-                <div className="time-container">
-                  { 
-                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
-                    : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0]))
-                  }
-                </div>
-              </>
-              : <>Loading...</>
+                <>
+                  <p>{DateExt.readableDateShort(pendingResultData[0].date)}</p>
+                  <div className="time-container">
+                    {
+                      (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM"
+                        : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0]))
+                    }
+                  </div>
+                </>
+                : <>Loading...</>
             }
           </div>
           <div className="reel">
-            <div className={ (newResult.length === 1) ? "div-lrtSpace1"
-              : (newResult.length === 2) ? 'div-lrtSpace2'
-              : (newResult.length === 3) ? '' : '' }>
-              {
-                (newResult !== "") ? newResult : drawResult
-              }
-            </div>
+            {
+              (newResult !== "")
+                ?
+                generateResultDigits(newResult.split("-"))
+                :
+                generateResultDigits((" - - ").split("-"))
+            }
           </div>
           <div className="operator">
             {getGameLogo("Regular Game", gameSubType, 100)}
@@ -80,7 +95,7 @@ const EditRegularResult = ({
       <div className="coin-buttons-container">
         <div className="coin-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="button-item" onClick={e => handleClickNumber(button) } key={index}>
+            <div className="button-item" onClick={e => handleClickNumber(button)} key={index}>
               {button}
             </div>
           ))}
@@ -109,7 +124,13 @@ const EditRegularResult = ({
         }}
         combination={
           <div className="reel">
-            <div>{newResult}</div>
+            {
+              (newResult !== "")
+                ?
+                generateResultDigits(newResult.split("-"))
+                :
+                generateResultDigits((" - - ").split("-"))
+            }
           </div>
         }
         width={"400px"}

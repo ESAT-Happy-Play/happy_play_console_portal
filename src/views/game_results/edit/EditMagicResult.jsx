@@ -14,6 +14,7 @@ const EditMagicResult = ({
 }) => {
 
   const [newResult, setnewResult] = useState(drawResult);
+  const [index, setIndex] = useState(0);
   // const dateString = "May 08, 2023 14:00:00";
   // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
@@ -38,10 +39,21 @@ const EditMagicResult = ({
     if (newResult.length > 2) { setShowConfirmDialog((prev) => !prev); }
   };
 
+  const generateResultDigits = (result) => {
+    var digits = result.map((e, index) =>
+      <p className="magic-reel-item" key={index}>{e}</p>
+    );
+    return digits;
+  }
+
   const handleClickNumber = (resultNumber) => {
-    let nwResult = newResult;
-    if (newResult.length > 2) { nwResult = ""; }
-    setnewResult(nwResult + resultNumber);
+    let tempResult = newResult.split('-');
+    tempResult[index] = resultNumber;
+    setnewResult(tempResult.join('-'));
+    if (index == 2)
+      setIndex(0);
+    else
+      setIndex(index + 1);
   }
 
   return (
@@ -51,24 +63,28 @@ const EditMagicResult = ({
           <div className="magic-date-container">
             {
               (pendingResultData !== null) && (pendingResultData.length > 0) ?
-              <>
-                <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
-                <div className="magic-time-container">
-                  { 
-                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
-                    : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0])) 
-                  }
-                </div>
-              </>
-              : <>Loading...</>
+                <>
+                  <p>{DateExt.readableDateShort(pendingResultData[0].date)}</p>
+                  <div className="magic-time-container">
+                    {
+                      (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM"
+                        : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0]))
+                    }
+                  </div>
+                </>
+                : <>Loading...</>
             }
           </div>
           <div className="magic-reel">
-            {newResult.split("").map((result, index) => (
-              <div className="magic-reel-item" key={index}>
-                {result}
-              </div>
-            ))}
+            <div className="magic-reel">
+              {
+                (newResult !== "")
+                  ?
+                  generateResultDigits(newResult.split("-"))
+                  :
+                  generateResultDigits((" - - ").split("-"))
+              }
+            </div>
           </div>
           <div className="magic-operator">
             <p>Postedzz By: {operatorName}</p>
@@ -78,7 +94,7 @@ const EditMagicResult = ({
       <div className="magic-buttons-container">
         <div className="magic-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="magic-button-item" onClick={e => handleClickNumber(button) } key={index}>
+            <div className="magic-button-item" onClick={e => handleClickNumber(button)} key={index}>
               {button}
             </div>
           ))}
@@ -107,11 +123,13 @@ const EditMagicResult = ({
         }}
         combination={
           <div className="magic-reel">
-            {newResult.split("").map((result, index) => (
-              <div className="magic-reel-item" key={index}>
-                {result}
-              </div>
-            ))}
+            {
+              (newResult !== "")
+                ?
+                generateResultDigits(newResult.split("-"))
+                :
+                generateResultDigits((" - - ").split("-"))
+            }
           </div>
         }
         width={"400px"}

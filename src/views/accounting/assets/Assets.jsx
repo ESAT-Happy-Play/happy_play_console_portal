@@ -42,7 +42,7 @@ const Assets = () => {
             {openCreate &&
                 <AssetDetail
                     isOpen={openCreate}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     handleClose={handleClose}
                     isEditing={false}
                 />}

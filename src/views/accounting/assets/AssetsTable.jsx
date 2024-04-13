@@ -171,7 +171,7 @@ const AssetsTable = ({ data }) => {
                 <AssetDetail
                     isOpen={openEdit}
                     handleClose={handleCloseEdit}
-                    handleSubmition={handleSubmit}
+                    handleSubmission={handleSubmit}
                     isEditing={true}
                     asset={selectedRow}
                 />}

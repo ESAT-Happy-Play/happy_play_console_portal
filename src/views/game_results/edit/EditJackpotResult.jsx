@@ -17,6 +17,8 @@ const EditJackpotResult = ({
 }) => {
 
   const [newResult, setnewResult] = useState(drawResult);
+  const [cardIndex, setCardIndex] = useState(0);
+  const [suiteIndex, setSuiteIndex] = useState(3);
   // const dateString = "May 08, 2023 14:00:00";
   // const latestPrizeDate = new Date(dateString);
   const buttonLabels = [
@@ -45,17 +47,35 @@ const EditJackpotResult = ({
     if (newResult.length > 6) { setShowConfirmDialog((prev) => !prev); }
   };
 
-  const handleClickNumber = (resultNumber) => {
-    let nwResult = newResult;
-    console.log((nwResult.match(/-/g) || []).length);
-    if ((nwResult.match(/-/g) || []).length === 5) { nwResult = ""; }
+  const generateResultDigits = (result) => {
+    var digits = result.map((e) =>
+      <p className="reel-digit">{e}</p>
+    );
+    return [<div className={`reel-container ${result.length > 3 ? "four-slot" : null}`}>
+      {digits}
+    </div>]
+  }
 
-    if (nwResult === "") {
-      setnewResult(resultNumber);
-    } else {
-      setnewResult(nwResult + "-" + resultNumber);
+  const handleClickNumber = (resultNumber, index) => {
+    let tempResult = newResult.split('-');
+    if (index < 12) {
+      tempResult[cardIndex] = resultNumber;
+      setnewResult(tempResult.join('-'));
+      if (cardIndex == 2)
+        setCardIndex(0);
+      else
+        setCardIndex(cardIndex + 1);
     }
-    
+    else {
+      tempResult[suiteIndex] = resultNumber;
+      setnewResult(tempResult.join('-'));
+      if ((suiteIndex == 5 && gameType == "Jackpot 3.3") || (suiteIndex == 6 && gameType == "Jackpot 3.4"))
+        setSuiteIndex(3);
+
+      else
+        setSuiteIndex(suiteIndex + 1);
+    }
+
   }
 
   return (
@@ -65,21 +85,29 @@ const EditJackpotResult = ({
           <div className="result-date-container">
             {
               (pendingResultData !== null) && (pendingResultData.length > 0) ?
-              <>
-                <p>{ DateExt.readableDateShort(pendingResultData[0].date) }</p>
-                <div className="time-container">
-                  { 
-                    (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12 
-                    : parseInt(pendingResultData[0].drawTime.split(":")[0]) 
-                  }
-                  {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
-                </div>
-              </>
-              : <>Loading...</>
+                <>
+                  <p>{DateExt.readableDateShort(pendingResultData[0].date)}</p>
+                  <div className="time-container">
+                    {
+                      (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? 12
+                        : parseInt(pendingResultData[0].drawTime.split(":")[0])
+                    }
+                    {DateExt.formatTime(pendingResultData[0].endCutOff).split(" ")[1]}
+                  </div>
+                </>
+                : <>Loading...</>
             }
           </div>
           <div className="jackpot-reel">
-            <div>{newResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')}</div>
+            {
+              (newResult !== "")
+                ?
+                [generateResultDigits(newResult.split("-").splice(0, 3)),
+                generateResultDigits(newResult.split("-").splice(3))]
+                :
+                [generateResultDigits(("10-7-7-A-A-A").split("-").splice(0, 3)),
+                generateResultDigits(("10-7-7-A-A-A").split("-").splice(3))]
+            }
           </div>
           <div className="operator">
             {getGameLogo(gameType, gameSubType, 100)}
@@ -89,7 +117,7 @@ const EditJackpotResult = ({
       <div className="coin-buttons-container">
         <div className="coin-buttons">
           {buttonLabels.map((button, index) => (
-            <div className="jackpot-button-item" onClick={e => handleClickNumber(button) } key={index}>
+            <div className="jackpot-button-item" onClick={e => handleClickNumber(button, index)} key={index}>
               {button}
             </div>
           ))}
@@ -117,13 +145,21 @@ const EditJackpotResult = ({
         }}
         combination={
           <div className="jackpot-reel">
-            <div>{newResult.split("-").join("").toString().replace(/\d{3}(?=.)/g, '$& ')}</div>
+            {
+              (newResult !== "")
+                ?
+                [generateResultDigits(newResult.split("-").splice(0, 3)),
+                generateResultDigits(newResult.split("-").splice(3))]
+                :
+                [generateResultDigits(("10-7-7-A-A-A").split("-").splice(0, 3)),
+                generateResultDigits(("10-7-7-A-A-A").split("-").splice(3))]
+            }
           </div>
         }
         gameName={gameType}
       />
     </>
-  );  
+  );
 };
 
 export default EditJackpotResult;

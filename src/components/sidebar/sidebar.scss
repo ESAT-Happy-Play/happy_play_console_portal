@@ -1,158 +1,163 @@
 @import './../../helper/colors';
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
     width: 300px;
     min-width: 250px;
     height: 100vh;
     background-color: $violet-main;
     color: white;
+    overflow-y: auto;
 
-    .sideIcon > svg {
-        color: #4845d2;
-    }
-
-    svg {
-        color: white;
-    }
-
-    .top {
-        width: 100%;
+    .menu-container {
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
 
-        .logo {
-            width: 70%;
-            padding: 0px 10px;
-        }
-    }
-
-    .foot {
-        width: 100%;
-        margin-top: auto;
-        display: flex;
-        padding: 10px 0px;
-        flex-direction: column;
-
-        .notifications {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 0px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
-
-            &:hover {
-                background-color: $yellow;
-                color: $violet-main;
-                cursor: pointer;
-
-                & .icon {
-                    color: $violet-main;
-                }
-            }
-
-            p {
-                font-size: 14px;
-            }
-
-            .icon {
-                width: 16px;
-            }
-
-            .notif-count {
-                background-color: $red-warn;
-                width: 16px;
-                height: 16px;
-                border-radius: 8px;
-                font-size: 12px;
-                margin: 0;
-                text-align: center;
-                line-height: 16px;
-                color: white;
-
-            }
+        .sideIcon>svg {
+            color: #4845d2;
         }
 
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 10px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.50);
-
-            &:hover {
-                background-color: $yellow;
-                color: $violet-main;
-                cursor: pointer;
-
-                & .icon {
-                    color: $violet-main;
-                }
-            }
-
-            h2 {
-                font-size: 14px;
-                margin: 0;
-            }
-
-            p {
-                font-size: 12px;
-                margin: 0;
-                font-weight: 200;
-            }
-
-            .icon {
-                width: 16px;
-
-                &:last-child {
-                    margin-left: auto;
-                }
-            }
-
-            .notif-count {
-                background-color: $red-warn;
-                width: 16px;
-                height: 16px;
-                border-radius: 8px;
-                font-size: 12px;
-                margin: 0;
-                text-align: center;
-                line-height: 16px;
-
-            }
+        svg {
+            color: white;
         }
 
-        .foot-active {
-            background-color: $yellow;
-            color: $violet-main;
-            cursor: pointer;
-
-            & .icon {
-                color: $violet-main;
-            }
-        }
-        
-        .trademark {
+        .top {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px 0px;
 
-            h2 {
-                font-size: 16px;
-                opacity: 0.75;
-                font-weight: 200;
-                margin: 0;
+            .logo {
+                width: 70%;
+                padding: 0px 10px;
+            }
+        }
+
+        .foot {
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            padding: 10px 0px;
+            flex-direction: column;
+
+            .notifications {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                padding: 0px 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+                &:hover {
+                    background-color: $yellow;
+                    color: $violet-main;
+                    cursor: pointer;
+
+                    & .icon {
+                        color: $violet-main;
+                    }
+                }
+
+                p {
+                    font-size: 14px;
+                }
+
+                .icon {
+                    width: 16px;
+                }
+
+                .notif-count {
+                    background-color: $red-warn;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    margin: 0;
+                    text-align: center;
+                    line-height: 16px;
+                    color: white;
+
+                }
             }
 
-            p {
-                font-size: 12px;
-                opacity: 0.50;
-                margin: 0;
+            .profile {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                padding: 10px 16px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+
+                &:hover {
+                    background-color: $yellow;
+                    color: $violet-main;
+                    cursor: pointer;
+
+                    & .icon {
+                        color: $violet-main;
+                    }
+                }
+
+                h2 {
+                    font-size: 14px;
+                    margin: 0;
+                }
+
+                p {
+                    font-size: 12px;
+                    margin: 0;
+                    font-weight: 200;
+                }
+
+                .icon {
+                    width: 16px;
+
+                    &:last-child {
+                        margin-left: auto;
+                    }
+                }
+
+                .notif-count {
+                    background-color: $red-warn;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    margin: 0;
+                    text-align: center;
+                    line-height: 16px;
+
+                }
+            }
+
+            .foot-active {
+                background-color: $yellow;
+                color: $violet-main;
+                cursor: pointer;
+
+                & .icon {
+                    color: $violet-main;
+                }
+            }
+
+            .trademark {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 0px;
+
+                h2 {
+                    font-size: 16px;
+                    opacity: 0.75;
+                    font-weight: 200;
+                    margin: 0;
+                }
+
+                p {
+                    font-size: 12px;
+                    opacity: 0.50;
+                    margin: 0;
+                }
             }
         }
     }
