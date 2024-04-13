@@ -1,0 +1,35 @@
+@import "../../helper/colors.scss";
+
+.field-header {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: $dark-grey;
+  font-family: "Inter";
+}
+
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+.ql-snow.ql-toolbar {
+  display: block;
+  background: $background;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.ql-editor {
+  min-height: 18em;
+}
+
+.ql-error {
+  .ql-snow.ql-toolbar {
+    border: 1px solid red;
+  }
+  .ql-container.ql-snow {
+    border: 1px solid red;
+  }
+}
