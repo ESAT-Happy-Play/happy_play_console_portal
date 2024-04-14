@@ -10,8 +10,8 @@ import { UserService } from "../../services";
 const UserVerification = () => {
   const [pageLoader, setPageLoader] = useState(false);
   const [verificationData, setverificationData] = useState(null);
-
   const [header, setheader] = useState(1);
+
   const tabComponents = () => { return [
     { label: "Verification", itemId: 0, isHeader: true },
     { label: "Verification List", itemId: 1, Component: (verificationData !== null) 
