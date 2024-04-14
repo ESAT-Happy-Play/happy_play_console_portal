@@ -1,0 +1,60 @@
+.MuiDialog-root {
+    button {
+        text-transform: capitalize;
+    }
+    .MuiTextField-root {
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    form {
+        .divInput {
+            .MuiTextField-root {
+                margin-top: 5px;
+            }
+            .divAttachments {
+                display: flex;
+                justify-content: space-between;
+                background: #e3e3e3;
+                border-radius: 25px;
+                padding: 0px 0px 0px 15px;
+                margin-bottom: 15px;
+                font-size: 14px;
+                .attachIcondata {
+                    display: flex;
+                    gap: 5px;
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+.MuiDialogContent-root{
+    .divVerification {
+        display: flex;
+        gap: 15px;
+        .divrecruiter {
+            min-width: 300px;
+            padding: 15px;
+        }
+        .div-r-content {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+
+            span,
+            b {
+                flex: 1;
+            }
+        }
+        .divuserinfo {
+            border-left: 1px solid #ccc;
+            padding: 15px;
+        }
+        .divHeader {
+            margin: 0px;
+            color: rgb(59, 56, 164);
+        }
+    }
+}

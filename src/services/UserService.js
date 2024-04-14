@@ -332,4 +332,51 @@ export const UserService = {
             return res.data;
         })
     },
+
+    getForVerificationData: async (data) => {
+        // {
+        //     "companyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        //     "dateFrom": "2024-04-13T18:32:17.521Z",
+        //     "dateTo": "2024-04-13T18:32:17.521Z",
+        //     "pagedQuery": {
+        //         "search": "string",
+        //         "pageNumber": 0,
+        //         "pageSize": 0,
+        //         "sortOrder": true
+        //     }
+        // }
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/user/request/for-verifcation`, data)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
+
+    approvedVerification: async (accountObjectId) => {
+        return await ApiService.patch(`${process.env.REACT_APP_GATEWAY_URL}/api/user/verified/${accountObjectId}`)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
 }
