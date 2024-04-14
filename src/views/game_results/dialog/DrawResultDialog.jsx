@@ -32,7 +32,7 @@ const DrawResultDialog = ({
       companyGameId: pendingResultData[0].companyGame,
       drawScheduleId: pendingResultData[0].id,
       drawSchedule: (parseInt(drwTime) === 0) ? "12 PM" : ConstArrayExt.getConvertToTime(parseInt(drwTime)),
-      drawResult: newResult.split("").join("-"),
+      drawResult: newResult,
       drawResultType: drawType,
       operatorName: loginObj.fullname
     }
@@ -71,15 +71,15 @@ const DrawResultDialog = ({
                 >
                   You are about to post the {gameName} games result for{" "}
                   {
-                    (pendingResultData !== null) && (pendingResultData.length > 0) ? 
-                    <b>
-                      { DateExt.readableDateShort(pendingResultData[0].date) } {"-"}
-                      { 
-                        (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM" 
-                        : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0])) 
-                      }
-                    </b>
-                    : <>Loading...</>
+                    (pendingResultData !== null) && (pendingResultData.length > 0) ?
+                      <b>
+                        {DateExt.readableDateShort(pendingResultData[0].date)} {"-"}
+                        {
+                          (parseInt(pendingResultData[0].drawTime.split(":")[0]) === 0) ? "12 PM"
+                            : ConstArrayExt.getConvertToTime(parseInt(pendingResultData[0].drawTime.split(":")[0]))
+                        }
+                      </b>
+                      : <>Loading...</>
                   }
                 </p>
               </div>
