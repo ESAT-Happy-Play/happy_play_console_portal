@@ -26,11 +26,13 @@ RUN chmod -R 755 /usr/share/nginx/html
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Set correct MIME type for CSS file
+RUN sed -i 's|application/octet-stream|text/css|g' /etc/nginx/mime.types
+
 # Expose port 80
 EXPOSE 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
-
 
 
