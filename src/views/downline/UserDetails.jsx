@@ -156,14 +156,14 @@ const UserDetails = ({objData, selfieImage, validIdImage}) => {
                 <div className='divInput'>
                     <p>Front ID Picture</p>
                     {
-                        (validIdImage !== null) ? <img src={validIdImage} style={{width:'100%', borderRadius:'25px'}} alt="frontId" />
+                        (validIdImage !== null && validIdImage !== undefined) ? <img src={validIdImage} style={{width:'100%', borderRadius:'25px'}} alt="frontId" />
                         : <ImageIcon sx={{fontSize:'130px'}} />
                     }
                 </div>
                 <div className='divInput'>
                     <p>Selfie</p>
                     {
-                        (selfieImage !== null) ? <img src={selfieImage} style={{width:'100%', borderRadius:'25px'}} alt="selfie" />
+                        (selfieImage !== null && selfieImage !== undefined) ? <img src={selfieImage} style={{width:'100%', borderRadius:'25px'}} alt="selfie" />
                         : <ImageIcon sx={{fontSize:'130px'}} />
                     }
                     

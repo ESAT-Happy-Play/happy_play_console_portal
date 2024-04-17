@@ -33,8 +33,8 @@ export const AuthOTP = () => {
   const [otpErrorMsg, setotpErrorMsg] = useState(null);
   const [newOtpRef, setnewOtpRef] = useState(null);
 
-  const _MINUTE = 4;
-  const _SECONDS = 59;
+  const _MINUTE = 0;
+  const _SECONDS = 30;
 
   const [otp, setOtp] = useState('');
   const [minutes, setMinutes] = useState(_MINUTE);

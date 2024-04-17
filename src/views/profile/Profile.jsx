@@ -11,6 +11,7 @@ import NotificationSetting from "./NotificationSetting";
 import PasswordInfo from "./PasswordInfo";
 
 import { StoreExt } from "../../utils/helpers";
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { UserService, ImageService } from "../../services";
 
 export const Profile = () => {
@@ -25,27 +26,22 @@ export const Profile = () => {
         })
     }
 
-    const handleInitUserInfo = () => {
+    const handleInitUserInfo = async () => {
       setPageLoader(true);
-      UserService.systemUserInfo(authdata.id).then((resp) => {
-        if(resp) { 
-          setuserInfo(resp.data);
-          
-          if(resp.data.profilePath !== null) {
-            console.log("Im here");
-            initImages(resp.data.profilePath);
-          }
-        }
-        setPageLoader(false);
-      })
+      let result = await UserProfileDetails.getInitAccount();
+      setuserInfo(result);
+      setPageLoader(false);
+      if(result.profilePath !== null) {
+        initImages(result.profilePath);
+      }
     }
 
     useEffect(() => {
-        handleInitUserInfo();
+      handleInitUserInfo();
     }, []);
 
     const tabComponents = () => { return [
-        { label: (profileImage !== null) ? <img src={profileImage} style={{width:'180px', height:'180px', borderRadius:'50%', objectFit:'cover', padding:'15px'}} />
+        { label: (profileImage !== null && profileImage !== undefined) ? <img src={profileImage} style={{width:'180px', height:'180px', borderRadius:'50%', objectFit:'cover', padding:'15px'}} />
           : <img src="/no-image.jpg" style={{width:'180px', height:'180px', borderRadius:'50%', objectFit:'cover', padding:'15px'}} />
         , itemId: 0, isHeader: true },
         { label: "About You", itemId: 1, isHeader: true },

@@ -26,11 +26,11 @@ function GameInfo ({ dataObj, profileImage }) {
     <div className='div-profile-conainer'>
       <div className='div-profilecontent'>
         {
-          (profileImg !== null) ? 
+          (profileImg !== null && profileImg !== undefined) ? 
             <div>
               <img src={profileImg} alt="profile" />
             </div>
-          : (profileImage !== null) ? 
+          : (profileImage !== null && profileImage !== undefined) ? 
             <div>
               <img src={profileImage} alt="profile" />
             </div>

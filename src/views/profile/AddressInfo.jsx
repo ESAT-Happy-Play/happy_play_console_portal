@@ -5,6 +5,7 @@ import AddressPresent from './AddressPresent';
 import AddressPermanent from './AddressPermanent';
 
 import { ContentLoader } from "../../components/mui";
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { UserService } from '../../services';
 
 function AddressInfo({ dataObj }) {
@@ -34,6 +35,8 @@ function AddressInfo({ dataObj }) {
                 dataObj["permanentMunicipality"] = data.permanentMunicipality;
                 dataObj["permanentBarangay"] = data.permanentBarangay;
                 dataObj["permanentStreetOrPurok"] = data.permanentStreetOrPurok;
+
+                UserProfileDetails.getInitAccount(dataObj).then();
             }
             setisEdit(false);
             setPageLoader(false);

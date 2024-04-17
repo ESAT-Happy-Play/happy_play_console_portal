@@ -10,26 +10,16 @@ export const FirstStep = ({btnBack, handleSubmit, formSubmit, register, errors})
     const [message, setHelperText] = useState("");
     const [ageError,setAgeError] = useState("");
 
-    const ageVerify = (value) => {
-        let age = new Date().getFullYear() - new Date(value).getFullYear();
-        if( age <= 21){
-            setAgeError(true);
-            setHelperText("Must be at least 21 years old");
-        }
-        setAgeError(false);
-        setHelperText("");
-    }
-
-    const nextStep = (e) => {
-        
-        console.log();
+    const validateDate = (value) => {
+        const selected = new Date(value).getFullYear();
+        const now = new Date().getFullYear();
+        return now - selected >= 17;
     };
-
-
+    
     return (
     <>
         <div className="body">
-            <form onSubmit={handleSubmit(formSubmit)} onChange={nextStep}>
+            <form onSubmit={handleSubmit(formSubmit)}>
                 <div className="form-input">
                     <div className="form-title">
                         <label>First Name</label>
@@ -71,10 +61,9 @@ export const FirstStep = ({btnBack, handleSubmit, formSubmit, register, errors})
                         <span className="required">*</span>
                     </div>
                     <TextField type="date" size="small" 
-                    {  ...register("birthDate", { required: true} ) }
-                    onChange={ageVerify}
-                    error={ageError}
-                    helperText={message}
+                    {  ...register("birthDate", { required: true, validate: validateDate } ) }
+                    error={ !!errors.birthDate }
+                    helperText={ errors.birthDate?.message || (errors?.birthDate?.type === "validate") && "You must be 18 years old or over to register Happy Play." }
                     fullWidth/>
                 </div>
 

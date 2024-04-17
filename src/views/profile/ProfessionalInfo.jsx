@@ -6,6 +6,7 @@ import { ContentLoader } from "../../components/mui";
 import ImageIcon from '@mui/icons-material/Image';
 import { DragDropProfileUpload, DragDropSelfieUpload } from "../../components/mui";
 import { ConstArrayExt } from "../../utils/helpers";
+import { UserProfileDetails } from "../../utils/common/UserProfileDetails";
 import { UserService, ImageService } from "../../services";
 
 function ProfessionalInfo({ dataObj }) {
@@ -46,6 +47,8 @@ function ProfessionalInfo({ dataObj }) {
                 dataObj["validId"] = data.validIdType;
                 dataObj["frontIdPath"] = data.frontIdPath;
                 dataObj["selfiePath"] = data.selfiePath;
+
+                UserProfileDetails.getInitAccount(dataObj).then();
             }
             setisEdit(false);
             setPageLoader(false);
@@ -145,7 +148,7 @@ function ProfessionalInfo({ dataObj }) {
                         </div>
                         <div className='profile-form-image'>
                             {
-                                (frontImg !== null) ? <img className='img-display' src={ frontImg } alt="frontId" />
+                                (frontImg !== null && frontImg !== undefined) ? <img className='img-display' src={ frontImg } alt="frontId" />
                                 : <ImageIcon sx={{fontSize:'130px'}} />
                             }
                             <DragDropProfileUpload onView={uploadIdView} callBack={uploadIdImageCallback} />
@@ -156,7 +159,7 @@ function ProfessionalInfo({ dataObj }) {
                         </div>
                         <div className='profile-form-image'>
                             {
-                                (selfieImg !== null) ? <img className='img-display' src={ selfieImg } alt="frontId" />
+                                (selfieImg !== null && selfieImg !== undefined) ? <img className='img-display' src={ selfieImg } alt="frontId" />
                                 : <ImageIcon sx={{fontSize:'130px'}} />
                             }
                             <DragDropSelfieUpload onView={uploadSelfieView} callBack={uploadSelfieImageCallback} />
@@ -193,7 +196,7 @@ function ProfessionalInfo({ dataObj }) {
                     </div>
                     <div className='profile-form-image'>
                         {
-                            (frontImg !== null) ? <img className='img-display' src={ frontImg } alt="frontId" />
+                            (frontImg !== null && frontImg !== undefined) ? <img className='img-display' src={ frontImg } alt="frontId" />
                             : <ImageIcon sx={{fontSize:'130px'}} />
                         }
                     </div>
@@ -203,7 +206,7 @@ function ProfessionalInfo({ dataObj }) {
                     </div>
                     <div className='profile-form-image'>
                         {
-                            (selfieImg !== null) ? <img className='img-display' src={ selfieImg } alt="frontId" />
+                            (selfieImg !== null && selfieImg !== undefined) ? <img className='img-display' src={ selfieImg } alt="frontId" />
                             : <ImageIcon sx={{fontSize:'130px'}} />
                         }
                     </div>
