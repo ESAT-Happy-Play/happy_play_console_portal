@@ -21,6 +21,7 @@ import { SupportService } from '../../../services'
 
 export const AddTicketDialog = ({ title, isOpen,  onClose, modalWidth = 400 }) => {
     let authdata = StoreExt.getStore("auth");
+    let tokenObj = StoreExt.getDecodeJWT(authdata.token);
 
     const [submitLoading, setsubmitLoading] = useState(false);
     const [isSubmitSuccess, setisSubmitSuccess] = useState(false);
@@ -60,9 +61,18 @@ export const AddTicketDialog = ({ title, isOpen,  onClose, modalWidth = 400 }) =
         let payload = {
             title: data.title, description: data.description,
             owner: {
-                userId: authdata.id, mobileNumber: "", firstName: "", 
-                lastName: "", middleName: "", email: ""
-            }, attachments: attachmentList
+                userId: authdata.id, mobileNumber: "", firstName: authdata.fullname.split(" ")[0], 
+                lastName: authdata.fullname.split(" ")[1], middleName: "", email: ""
+            }, attachments: attachmentList,
+            assignTo: null,
+            categoryId: null,
+            organizationId: null,
+            ticketStatus: 1,
+            companyId: tokenObj.companyId,
+            branchId: authdata.branchId,
+            priorityLevel: 0,
+            ticketDate: data.ticketDate,
+            comment: null
         }
 
         setFormData(payload);
@@ -73,7 +83,6 @@ export const AddTicketDialog = ({ title, isOpen,  onClose, modalWidth = 400 }) =
         setsubmitLoading(true);
         SupportService.createTicket(formData).then((resp) => {
             if (resp) { setisSubmitSuccess(true); }
-            // window.location.reload(false);
             setsubmitLoading(false);
         });
     }

@@ -12,10 +12,12 @@ const AuthReducer = createSlice({
         clientId: null,
         expirationDate: null,
         status: null,
+        fullname: null,
+        branchId: null
     },
     reducers: {
         setCredentials: (state, action) => {
-            const { id, accountObjectId, idNumber, userName, token, clientId, expirationDate, status} = action.payload;
+            const { id, accountObjectId, idNumber, userName, token, clientId, expirationDate, status, fullname, branchId } = action.payload;
 
             state.id = id;
             state.accountObjectId = accountObjectId;
@@ -25,6 +27,8 @@ const AuthReducer = createSlice({
             state.clientId = clientId;
             state.expirationDate = expirationDate;
             state.status = status;
+            state.fullname = fullname;
+            state.branchId = branchId;
 
             const authdata = CryptoJS.AES.encrypt(JSON.stringify(action.payload), process.env.REACT_APP_SECRET_PASS).toString();
             localStorage.setItem("auth", authdata)
@@ -38,6 +42,8 @@ const AuthReducer = createSlice({
             state.clientId = null;
             state.expirationDate = null;
             state.status = null;
+            state.fullname = null;
+            state.branchId = null;
 
             localStorage.removeItem("auth")
         }

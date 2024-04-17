@@ -21,7 +21,7 @@ export const Profile = () => {
 
     const initImages = (fileName) => {
         ImageService.getImage(fileName).then((res) => {
-            if(res) { setprofileImage(res.data); }
+            if(res.success) { setprofileImage(res.data); }
         })
     }
 

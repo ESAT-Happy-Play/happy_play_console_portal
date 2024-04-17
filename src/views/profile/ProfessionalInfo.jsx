@@ -60,7 +60,7 @@ function ProfessionalInfo({ dataObj }) {
 
     const initImages = (fileName, intType = 0) => {
         ImageService.getImage(fileName).then((res) => {
-            if(res) { 
+            if(res.success) { 
                if(intType === 0) { setfrontImg(res.data); }
                if(intType === 1) { setselfieImg(res.data); } 
             }
