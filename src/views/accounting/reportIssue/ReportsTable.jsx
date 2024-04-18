@@ -20,7 +20,7 @@ import ReportDetail from './ReportDetail';
 import { DateExt, StoreExt } from '../../../utils/helpers';
 import { SupportService } from '../../../services';
 
-const ReportsTable = ({ data }) => {
+const ReportsTable = ({ loaderCallback }) => {
     let authdata = StoreExt.getStore("auth");
     let tokenObj = StoreExt.getDecodeJWT(authdata.token);
 
@@ -28,7 +28,7 @@ const ReportsTable = ({ data }) => {
     
     const [maxpage, setmaxpage] = useState(0);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalCounts, settotalCounts] = useState(0);
 
     
@@ -50,6 +50,7 @@ const ReportsTable = ({ data }) => {
     }, [filters]);
 
     const handleInitTickets = (pageNum = null, perPageNum = null) => {
+        loaderCallback(true);
         let filterData = {
             caseId: "", title: "", owner: "",
             userId: tokenObj.user_id, status: null,
@@ -63,6 +64,7 @@ const ReportsTable = ({ data }) => {
 
         return new Promise((resolve, reject) => {
             SupportService.searchTicket(filterData).then((res) => {
+                loaderCallback(false);
                 return resolve(res);
             })
         });
@@ -143,6 +145,15 @@ const ReportsTable = ({ data }) => {
         setFilters((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
 
+    const handleSuccessClose = async () => {
+        setSelectedRow(null);
+        setOpenEdit(false);
+
+        let result = await handleInitTickets();
+        settotalCounts(result.total);
+        setDisplayList(result.cases);
+    }
+
     const handleEdit = (value) => {
         setSelectedRow(value);
         setOpenEdit(true);
@@ -222,6 +233,7 @@ const ReportsTable = ({ data }) => {
                     handleClose={handleCloseEdit}
                     handleSubmission={handleSubmit}
                     isEditing={true}
+                    succesCallback={handleSuccessClose}
                     report={selectedRow}
                 />}
             {openSuccess &&
