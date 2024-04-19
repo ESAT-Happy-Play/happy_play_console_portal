@@ -28,12 +28,22 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmission }) => {
     const [paymentMethod, setPaymentMethod] = useState(deposit?.paymentMethod ?? "");
 
     const finalStepHandler = async (data) => {
-        handleSubmission(data);
+        if (data.amount < 1) {
+
+            errors.amount = true;
+            console.log("Asdasdasd");
+        }
+        else
+            handleSubmission(data);
     };
 
     const handleSearch = (event, value) => {
         console.log(value);
     };
+
+    const onChangeAmount = (value) => {
+
+    }
 
     const datePickerStyle = {
         width: '250px',
@@ -89,11 +99,13 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmission }) => {
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
+                                type='number'
                                 size="small"
-                                placeholder="Example deposit"
+                                placeholder="Place amount"
                                 {
-                                ...register("amount", { required: true })
+                                ...register("amount", { required: true, min: 1 })
                                 }
+                                onChange={(value) => { if (value <= 0) console.log("error") }}
                                 variant="outlined"
                                 InputProps={{
                                     sx: {
@@ -112,7 +124,7 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmission }) => {
                                         fontSize: "12px",
                                     }}
                                 >
-                                    Amount must be filled
+                                    {errors.amount?.type == "required" ? "Amount is required" : "Amount must be greater than 0"}
                                 </span>
                             )}
                         </Box>

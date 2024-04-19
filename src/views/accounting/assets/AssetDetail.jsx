@@ -130,10 +130,11 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
+                                type='number'
                                 size="small"
-                                placeholder="Input amount"
+                                placeholder="Place amount"
                                 {
-                                ...register("amount", { required: true })
+                                ...register("amount", { required: true, min: 1 })
                                 }
                                 error={!!errors.amount}
                                 variant="outlined"
@@ -153,7 +154,7 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                         fontSize: "12px",
                                     }}
                                 >
-                                    Amount must be filled
+                                    {errors.amount?.type == "required" ? "Amount is required" : "Amount must be greater than 0"}
                                 </span>
                             )}
                         </Box>

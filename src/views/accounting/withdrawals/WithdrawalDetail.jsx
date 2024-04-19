@@ -90,10 +90,11 @@ const WithdrawalDetail = ({ isOpen, handleClose, handleSubmission, withdrawal })
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
+                                type='number'
                                 size="small"
-                                placeholder="Example deposit"
+                                placeholder="Place amount"
                                 {
-                                ...register("amount", { required: true })
+                                ...register("amount", { required: true, min: 1 })
                                 }
                                 variant="outlined"
                                 InputProps={{
@@ -113,7 +114,7 @@ const WithdrawalDetail = ({ isOpen, handleClose, handleSubmission, withdrawal })
                                         fontSize: "12px",
                                     }}
                                 >
-                                    Amount must be filled
+                                    {errors.amount?.type == "required" ? "Amount is required" : "Amount must be greater than 0"}
                                 </span>
                             )}
                         </Box>
