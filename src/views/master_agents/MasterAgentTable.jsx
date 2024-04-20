@@ -20,7 +20,7 @@ const MasterAgentTable = ({ companyObjId, companyId, loadingCallback}) => {
   const [maxpage, setmaxpage] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [pageSize, setpageSize] = useState(10);
+  const [pageSize, setpageSize] = useState(0);
 
   const [compObjId, setcompObjId] = useState(companyObjId);
   const [isUserDetails, setisUserDetails] = useState(false);
@@ -161,7 +161,7 @@ const MasterAgentTable = ({ companyObjId, companyId, loadingCallback}) => {
               </Box>
               <CustomTable
                   // headAlign="left"
-                  headers={["Name", "Agents", "Players", "Status", "Regisration Date", ""]}
+                  headers={["Name", "Agents", "Status", "Regisration Date", ""]}
                   pagination={
                       <StyledPagination
                           rowsPerPageOptions={[5, 10, 25]}
@@ -179,7 +179,6 @@ const MasterAgentTable = ({ companyObjId, companyId, loadingCallback}) => {
                               <StyledTableRow key={i} >
                                   <StyledTableCell align="center" >{row.fullname}</StyledTableCell>
                                   <StyledTableCell align="center" >{row.agentsCount}</StyledTableCell>
-                                  <StyledTableCell align="center" >{row.playersCount}</StyledTableCell>
                                   <StyledTableCell align="center" >
                                       {
                                           (row.status === 1) ? <span style={{color:'green',background:'#bbf3bd', padding:'1px', borderRadius:'3px'}}>Active</span>

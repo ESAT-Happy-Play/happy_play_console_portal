@@ -6,6 +6,7 @@ import MenuStateReducer from "./reducers/MenuStateReducer";
 import AccountStateReducer from "./reducers/AccountStateReducer";
 import CompanyStateReducer from "./reducers/CompanyStateReducer";
 import GamesStateReducer from "./reducers/GamesStateReducer";
+import CompanyListReducer from "./reducers/CompanyListReducer";
 
 import { ApiRequestBuilder } from "../api/ApiRequestBuilder";
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     accountState: AccountStateReducer,
     companyState: CompanyStateReducer,
     gameState: GamesStateReducer,
+    companiesState: CompanyListReducer,
     [ApiRequestBuilder.reducerPath]: ApiRequestBuilder.reducer,
     authState: AuthReducer
   },

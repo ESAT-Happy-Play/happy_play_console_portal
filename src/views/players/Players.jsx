@@ -18,7 +18,7 @@ const Players = () => {
     <>
       {
         (loginObj.companyId === -1)
-        ? <AdminPlayersTable /> 
+        ? <AdminPlayersTable loadingCallback={loadingCallback} /> 
         : <PlayersTable companyObjId={tokenObj.companyId} companyId={loginObj.companyId} loadingCallback={loadingCallback} />
       }
 
