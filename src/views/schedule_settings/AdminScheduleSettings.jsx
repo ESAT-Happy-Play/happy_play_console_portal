@@ -30,8 +30,10 @@ const AdminScheduleSettings = () => {
   const handleFilterByCompany = async event => {
     let companyObjId = event.target.getAttribute('data-value');
     if (companyObjId !== null) {
+      setPageLoader(true);
       setcompObjId(companyObjId);
       await handleListGames(companyObjId);
+      setPageLoader(false);
     }
   }
 
@@ -45,13 +47,14 @@ const AdminScheduleSettings = () => {
     getCloseDates(newValue);
   }
 
-  const getDrawTypeList = (gameId) => {
-    DrawTypeService.getDrawTypes(companyGuid, gameId).then((res) => {
+  const getDrawTypeList = (gameId, compObjId = null) => {
+    let comObjId = (compObjId !== null) ? compObjId : companyGuid;
+    DrawTypeService.getDrawTypes(comObjId, gameId).then((res) => {
       if(res) { setDrawTypes(res.data); }
     });
   }
 
-  const getCloseDates = (gameId, startDate = null, endDate = null) => {
+  const getCloseDates = (gameId, startDate = null, endDate = null, compObjId = null) => {
     setPageLoader(true);
     setselectedGameId(gameId);
     let startD = startDate; let endD = endDate;
@@ -60,7 +63,8 @@ const AdminScheduleSettings = () => {
       endD = DateExt.todaysDate();
     }
 
-    CloseDateService.getClosedDateByCompany(companyGuid, gameId, startD, endD).then((res) => {
+    let comObjId = (compObjId !== null) ? compObjId : companyGuid;
+    CloseDateService.getClosedDateByCompany(comObjId, gameId, startD, endD).then((res) => {
       if(res) { 
         setClosingDates(res.data.filter(obj => obj.game === gameId));
       }
@@ -100,8 +104,10 @@ const AdminScheduleSettings = () => {
         setselectedGameId(res.gameList[0].id);
         
         // init needed data
-        getDrawTypeList(res.gameList[0].id);
-        getCloseDates(res.gameList[0].id);
+        getDrawTypeList(res.gameList[0].id, compObjId);
+        getCloseDates(res.gameList[0].id, null, null, compObjId);
+      } else {
+        setcompanyGames([]);
       }
       setPageLoader(false);
     });
