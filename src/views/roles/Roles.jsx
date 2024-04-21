@@ -11,7 +11,7 @@ export const Roles = () => {
   return (
     <>
       {
-        (loginObj.companyId)
+        (loginObj.companyId === -1)
         ? <AdminRoleContent /> 
         : <RoleContent paramCompanyObjId={tokenObj.companyId} paramCompanyId={loginObj.companyId} />
       }

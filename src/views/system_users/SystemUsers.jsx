@@ -11,7 +11,7 @@ export const SystemUsers = () => {
   return (
     <>
       {
-        (loginObj.companyId)
+        (loginObj.companyId === -1)
         ? <AdminSysUserPage /> 
         : <SysUserPage paramCompanyObjId={tokenObj.companyId} paramCompanyId={loginObj.companyId} />
       }
