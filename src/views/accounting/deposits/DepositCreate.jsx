@@ -214,22 +214,29 @@ const DepositCreate = ({ isOpen, handleClose, deposit, handleSubmission }) => {
 
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Date</h2>
-                            <Controller
-                                control={control}
-                                name='date'
-                                rules={{ required: true, valueAsDate: true }}
-                                render={({ field }) => (
-                                    <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                                <Controller
+                                    control={control}
+                                    {
+                                    ...register("date", { required: true })
+                                    }
+                                    render={({ field }) => (
                                         <DatePicker
-                                            value={field}
-                                            onChange={field.onChange}
+                                            displayEmpty
                                             sx={datePickerStyle}
-                                            error={!!errors.date}
+                                            onChange={field.onChange}
+                                            slotProps={{
+                                                textField: {
+                                                    variant: 'outlined',
+                                                    error: !!errors.date,
+                                                },
+                                            }}
+
                                         />
-                                    </LocalizationProvider>
-                                )}
-                            />
-                            {!!errors.paymentMethod && (
+                                    )}
+                                />
+                            </LocalizationProvider>
+                            {!!errors.date && (
                                 <span
                                     style={{
                                         color: COLORS.redWarn,

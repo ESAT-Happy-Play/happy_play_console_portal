@@ -81,6 +81,7 @@ const WithdrawTab = ({ settingsData }) => {
                     {selectedCard?.description}
                 </p>
                 <TextField
+                    type='number'
                     size="small"
                     defaultValue={selectedValue}
                     variant="outlined"

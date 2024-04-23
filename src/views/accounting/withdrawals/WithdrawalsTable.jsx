@@ -84,6 +84,7 @@ const WithdrawalsTable = ({ data }) => {
     }
 
     const handleSubmit = (data) => {
+        console.log(data);
         setOpenSuccess(true);
         handleCloseEdit();
     }

@@ -14,7 +14,7 @@
     .header {
         display: flex;
         margin: 0;
-        padding: 10px 24px;
+        padding: 10px 24px !important;
         border-bottom: 1px solid $violet-border;
 
         h2 {
