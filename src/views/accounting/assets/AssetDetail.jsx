@@ -130,10 +130,11 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Amount</h2>
                             <TextField
+                                type='number'
                                 size="small"
-                                placeholder="Input amount"
+                                placeholder="Place amount"
                                 {
-                                ...register("amount", { required: true })
+                                ...register("amount", { required: true, min: 1 })
                                 }
                                 error={!!errors.amount}
                                 variant="outlined"
@@ -153,27 +154,34 @@ const AssetDetail = ({ isOpen, handleClose, handleSubmission, isEditing, asset }
                                         fontSize: "12px",
                                     }}
                                 >
-                                    Amount must be filled
+                                    {errors.amount?.type == "required" ? "Amount is required" : "Amount must be greater than 0"}
                                 </span>
                             )}
                         </Box>
                         <Box display='flex' flexDirection='column'>
                             <h2 className='field-header'>Date</h2>
-                            <Controller
-                                control={control}
-                                name='date'
-                                rules={{ required: true, valueAsDate: true }}
-                                render={({ field }) => (
-                                    <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ height: '50px', borderRadius: '50px' }}>
+                                <Controller
+                                    control={control}
+                                    {
+                                    ...register("date", { required: true })
+                                    }
+                                    render={({ field }) => (
                                         <DatePicker
-                                            value={field}
-                                            onChange={field.onChange}
+                                            displayEmpty
                                             sx={datePickerStyle}
-                                            error={!!errors.date}
+                                            onChange={field.onChange}
+                                            slotProps={{
+                                                textField: {
+                                                    variant: 'outlined',
+                                                    error: !!errors.date,
+                                                },
+                                            }}
+
                                         />
-                                    </LocalizationProvider>
-                                )}
-                            />
+                                    )}
+                                />
+                            </LocalizationProvider>
                             {!!errors.date && (
                                 <span
                                     style={{
