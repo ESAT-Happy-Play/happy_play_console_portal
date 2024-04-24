@@ -379,4 +379,43 @@ export const UserService = {
             return res.data;
         })
     },
+
+    declinedVerification: async (data) => {
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/user/verification/declined`, data)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
+
+    getAgentPlayerList: async (data) => {
+        // Player = 0 or other 
+        // Master Agent = 1
+        // Agent = 2
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/user/list/search`, data)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                }
+                else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
 }

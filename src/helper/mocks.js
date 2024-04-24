@@ -1156,15 +1156,15 @@ export const mockUserType = [
 
 export const mockPriority = [
   {
-    id: 1,
+    id: 0,
     name: "Low",
   },
   {
-    id: 2,
+    id: 1,
     name: "High",
   },
   {
-    id: 3,
+    id: 2,
     name: "Critical",
   },
 ];

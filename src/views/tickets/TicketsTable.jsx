@@ -4,7 +4,7 @@ import CustomTable, { StyledPagination, StyledTableCell } from '../../components
 import { styled } from '@mui/material/styles';
 import { COLORS } from '../../helper/colors';
 import { Box, Chip, IconButton, TableRow, TextField } from '@mui/material';
-import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+// import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import InfoIcon from '@mui/icons-material/Info';
 import FileExportIcon from "../../assets/icons/FileExportIcon";
 import RegularSearchBar from '../../components/searchbar/RegularSearchBar';
@@ -13,10 +13,20 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import TicketDetail from './TicketDetail';
 import TicketsFilterModal from '../../components/modals/TicketsFilterModal';
 
-const TicketsTable = ({ data, type }) => {
-    const [displayList, setDisplayList] = useState(data);
+import { DateExt } from '../../utils/helpers';
+import { SupportService } from '../../services';
+
+const TicketsTable = ({ data, type, loaderCallback }) => {
+
+    const [displayList, setDisplayList] = useState([]);
+    const [caseStatuses, setcaseStatuses] = useState([]);
+    const [caseOrganizations, setcaseOrganizations] = useState([]);
+
+    const [maxpage, setmaxpage] = useState(0);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalCounts, settotalCounts] = useState(0);
+
     const [filters, setFilters] = useState([]);
     const [searchValue, setSearchValue] = useState("");
 
@@ -32,19 +42,62 @@ const TicketsTable = ({ data, type }) => {
             summary[filter.key] = filter;
         })
         return summary;
-    }, [filters])
+    }, [filters]);
+
+    const handleInitTickets = (pageNum = null, perPageNum = null) => {
+        let filterData = {
+            caseId: "", title: "", owner: "",
+            userId: "", status: null,
+            importance: null, organizationId: null,
+            startDate: null, endDate: null,
+            pagedQuery: { 
+                index: (pageNum !== null) ? pageNum : page, 
+                size: (perPageNum !== null) ? perPageNum : rowsPerPage 
+            }
+        };
+
+        return new Promise((resolve, reject) => {
+            SupportService.searchTicket(filterData).then((res) => {
+                return resolve(res);
+            })
+        });
+    }
+
+    const initCaseStatuses = () => {
+        return new Promise((resolve, reject) => {
+            SupportService.getStatuses().then((res) => {
+                return resolve(res);
+            })
+        });
+    }
+
+    const initCaseOrganzations = () => {
+        return new Promise((resolve, reject) => {
+            SupportService.getOrganizations().then((res) => {
+                return resolve(res);
+            })
+        });
+    }
+
+    const initAll = async () => {
+        loaderCallback(true);
+        let allResults = await Promise.all([
+            handleInitTickets(),
+            initCaseStatuses(),
+            initCaseOrganzations()
+        ]);
+
+        setDisplayList(allResults[0].cases);
+        settotalCounts(allResults[0].total);
+
+        setcaseStatuses(allResults[1].caseStatuses);
+        setcaseOrganizations(allResults[2].organizations);
+        loaderCallback(false, allResults[1].caseStatuses, allResults[2].organizations);
+    }
 
     useEffect(() => {
-        var search = data.filter((row) => {
-            return Object.values(row).join('').toLowerCase().includes(searchValue.toLowerCase());
-        });
-
-        setPage(0);
-        setDisplayList(search);
-    }, [searchValue, filters]);
-
-
-
+        initAll();
+    }, []);
 
     // On click search
     const handleSearch = (event, value) => {
@@ -52,11 +105,29 @@ const TicketsTable = ({ data, type }) => {
         setPage(0);
     };
 
-    const handleChangePage = (event, newpage) => {
-        setPage(newpage - 1);
+    const handleChangePage = async (event, newpage) => {
+        let newVal = newpage - 1;
+        
+        if (maxpage < newVal) {
+            let result = await handleInitTickets(newVal);
+        
+            let oldData = displayList;
+            result.cases.map((item) => {
+                oldData.push(item);
+            });
+            settotalCounts(result.total);
+            setDisplayList(oldData);
+            setmaxpage(newVal);
+        }
+
+        setPage(newVal);
     };
 
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = async (event) => {
+        let result = await handleInitTickets(0, parseInt(event.target.value, 10));
+        setDisplayList(result.cases);
+        settotalCounts(result.total);
+
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
@@ -73,9 +144,16 @@ const TicketsTable = ({ data, type }) => {
         setFilters([]);
     };
 
-    const handleCloseEdit = () => {
+    const handleCloseEdit = async () => {
         setSelectedRow(null);
         setOpenEdit(false);
+    }
+
+    const handleSuccessClose = async () => {
+        setSelectedRow(null);
+        setOpenEdit(false);
+
+        await initAll();
     }
 
     const handleDelete = (chipToDelete) => () => {
@@ -89,85 +167,92 @@ const TicketsTable = ({ data, type }) => {
     }
 
     return (
-        <div style={{ paddingLeft: 20, paddingRight: 20 }}>
-            <Box display="flex" alignItems="center" gap={1}>
-                <RegularSearchBar
-                    handleSearch={handleSearch}
-                    searchTitle="Search Name, Ticket Title, or Priority Level"
-                />
+        <>
+            <div style={{ paddingLeft: 20, paddingRight: 20 }}>
+                <Box display="flex" alignItems="center" gap={1}>
+                    <RegularSearchBar
+                        handleSearch={handleSearch}
+                        searchTitle="Search Name, Ticket Title, or Priority Level"
+                    />
 
-                <div className="buttons">
-                    <FileExportIcon size={20} />
-                    Export
-                </div>
-                <Box marginLeft="auto" display="flex" alignItems="center" gap='2px'>
-                    {filters.map((filter, index) =>
-                        <Chip
-                            sx={{ color: COLORS.violetMain, height: '22px', background: COLORS.tableBackground }}
-                            key={index}
-                            color='primary'
-                            label={filter.label}
-                            onDelete={handleDelete(filter)}
-                            deleteIcon={<CloseIcon sx={{ color: `${COLORS.violetMain} !important`, width: '16px' }} />}
-                        />
-                    )}
-                    <Box position='relative' display='flex' alignItems='center' sx={{ '&:hover': { cursor: 'pointer' } }} onClick={toggleFilter}>
-                        Filters
-                        <FilterListIcon />
-                        {
-                            showFilterModal &&
-                            <TicketsFilterModal
-                                open={showFilterModal}
-                                onClose={() => toggleFilter(null)}
-                                onSubmit={handleFilter}
-                                initFilters={filterSummary}
-                                handleResetFilters={handleResetFilters}
+                    <div className="buttons">
+                        <FileExportIcon size={20} />
+                        Export
+                    </div>
+                    <Box marginLeft="auto" display="flex" alignItems="center" gap='2px'>
+                        {filters.map((filter, index) =>
+                            <Chip
+                                sx={{ color: COLORS.violetMain, height: '22px', background: COLORS.tableBackground }}
+                                key={index}
+                                color='primary'
+                                label={filter.label}
+                                onDelete={handleDelete(filter)}
+                                deleteIcon={<CloseIcon sx={{ color: `${COLORS.violetMain} !important`, width: '16px' }} />}
                             />
-                        }
+                        )}
+                        <Box position='relative' display='flex' alignItems='center' sx={{ '&:hover': { cursor: 'pointer' } }} onClick={toggleFilter}>
+                            Filters
+                            <FilterListIcon />
+                            {
+                                showFilterModal &&
+                                <TicketsFilterModal
+                                    open={showFilterModal}
+                                    onClose={() => toggleFilter(null)}
+                                    onSubmit={handleFilter}
+                                    initFilters={filterSummary}
+                                    handleResetFilters={handleResetFilters}
+                                />
+                            }
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-            <CustomTable
-                headers={["Full Name", "Ticket Title", "Ticket Description", "Attachment ct.", "Priority Level", "Date"]}
-                pagination={
-                    <StyledPagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={displayList.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />}
-            >
-                {displayList?.length >= 1 ?
+                <CustomTable
+                    headers={["Full Name", "Ticket Title", "Ticket Description", "Attachment ct.", "Priority Level", "Date"]}
+                    pagination={
+                        <StyledPagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={ totalCounts }
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />}
+                >
+                    {displayList?.length >= 1 ?
 
-                    displayList.slice(page * rowsPerPage, page *
-                        rowsPerPage + rowsPerPage).map((row, i) => (
-                            <StyledTableRow key={i} sx={{ background: `${row.priority == 3 ? COLORS.transparentRed : null} !important` }} onClick={() => handleEdit(row)}>
-                                <StyledTableCell align="center" >{row.fullName}</StyledTableCell>
-                                <StyledTableCell align="center" >{row.title}</StyledTableCell>
-                                <StyledTableCell align="center" >{row.description}</StyledTableCell>
-                                <StyledTableCell align="center" >{row.attachment}</StyledTableCell>
-                                <StyledTableCell align="center" sx={{ color: row.priority == 2 ? COLORS.yellow : row.priority == 3 ? COLORS.redWarn : null }}>{priorityLevel[row.priority - 1]}</StyledTableCell>
-                                <StyledTableCell align="center" >{row.date}</StyledTableCell>
-                                <StyledTableCell align="center" sx={{ width: 20 }}>
-                                    <IconButton><InfoIcon className='icon-show' sx={{ color: row.priority == 3 ? COLORS.redWarn : COLORS.violetMain, opacity: 0 }} /></IconButton>
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        )
-                        ) :
-                    <StyledTableRow ><StyledTableCell align="center" colSpan={9}>No available data</StyledTableCell></StyledTableRow>
-                }
-            </CustomTable>
-            {openEdit &&
-                <TicketDetail
-                    isOpen={openEdit}
-                    handleClose={handleCloseEdit}
-                    ticket={selectedRow}
-                    isEditing={true}
-                />}
-        </div >
+                        displayList.slice(page * rowsPerPage, page *
+                            rowsPerPage + rowsPerPage).map((row, i) => (
+                                <StyledTableRow key={i} sx={{ background: `${row.priority == 2 ? COLORS.transparentRed : null} !important` }} onClick={() => handleEdit(row)}>
+                                    <StyledTableCell width={150} >{row.fullname}</StyledTableCell>
+                                    <StyledTableCell width={200} >{row.title}</StyledTableCell>
+                                    <StyledTableCell>{`${row.description.substring(0, 150)}...`}</StyledTableCell>
+                                    <StyledTableCell align="center" >{row.attachmentCount}</StyledTableCell>
+                                    <StyledTableCell align="center" sx={{ color: row.importance == 1 ? COLORS.yellow : row.importance == 2 ? COLORS.redWarn : COLORS.skyBlue }}>
+                                        {priorityLevel[row.importance]}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="center" >{ DateExt.readableDate(row.ticketDate) }</StyledTableCell>
+                                    <StyledTableCell align="center" sx={{ width: 20 }}>
+                                        <IconButton><InfoIcon className='icon-show' sx={{ color: row.importance == 3 ? COLORS.redWarn : COLORS.violetMain, opacity: 0 }} /></IconButton>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            )
+                            ) :
+                        <StyledTableRow ><StyledTableCell align="center" colSpan={8}>No available data</StyledTableCell></StyledTableRow>
+                    }
+                </CustomTable>
+                {openEdit &&
+                    <TicketDetail
+                        isOpen={openEdit}
+                        caseStatuses={caseStatuses}
+                        caseOrganizations={caseOrganizations}
+                        handleClose={handleCloseEdit}
+                        succesCallback={handleSuccessClose}
+                        ticket={selectedRow}
+                        isEditing={true}
+                    />}
+            </div >
+        </>
     );
 }
 const StyledTableRow = styled(TableRow)(`

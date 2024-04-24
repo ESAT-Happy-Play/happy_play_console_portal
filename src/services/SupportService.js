@@ -48,14 +48,47 @@ export const SupportService = {
             return res.data;
         })
     },
-    searchTicket: async (userId) => {
-        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/case/search`, {
-            caseId: "", title: "", owner: "",
-            userId: userId, status: null,
-            importance: null, organizationId: null,
-            startDate: null, endDate: null,
-            pagedQuery: { index: 0, size: 1000 }
+    searchTicket: async (data) => {
+        // {
+        //     caseId: "", title: "", owner: "",
+        //     userId: "", status: null,
+        //     importance: null, organizationId: null,
+        //     startDate: null, endDate: null,
+        //     pagedQuery: { index: 0, size: 1000 }
+        // }
+        return await ApiService.post(`${process.env.REACT_APP_GATEWAY_URL}/api/case/search`, data)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                } else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
         })
+    },
+    getStatuses: async () => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/case/statuses`)
+        .then((res) => {
+            if (!res.status) { 
+                if(res.data.message === "Network Error") {
+                    toast.error("Network Error - CONNECTION REFUSED"); 
+                } else if (res.data.response.status === 400) {
+                    toast.error(res.data.response.data.errorMessage); 
+                } else {
+                    toast.error("Sorry, unsuccessfull gateway communication."); 
+                }
+                return false; 
+            }
+            return res.data;
+        })
+    },
+    getOrganizations: async () => {
+        return await ApiService.get(`${process.env.REACT_APP_GATEWAY_URL}/api/case/organizations`)
         .then((res) => {
             if (!res.status) { 
                 if(res.data.message === "Network Error") {

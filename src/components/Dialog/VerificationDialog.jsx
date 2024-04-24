@@ -56,7 +56,7 @@ const VerificationDialog = ({
     const handleDeclineConfirm = () => {
         if(declineRemarks !== "") {
             setsubmitLoading(true);
-            UserService.declinedUser({
+            UserService.declinedVerification({
                     "accountObjectId": objData.accountObjectId,
                     "remarks": declineRemarks
                 }).then((resp) => {
