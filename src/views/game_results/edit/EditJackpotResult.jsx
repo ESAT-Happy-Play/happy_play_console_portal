@@ -48,8 +48,8 @@ const EditJackpotResult = ({
   };
 
   const generateResultDigits = (result) => {
-    var digits = result.map((e) =>
-      <p className="reel-digit">{e}</p>
+    var digits = result.map((e, index) =>
+      <p className="reel-digit" key={index}>{e}</p>
     );
     return [<div className={`reel-container ${result.length > 3 ? "four-slot" : null}`}>
       {digits}
@@ -61,7 +61,7 @@ const EditJackpotResult = ({
     if (index < 12) {
       tempResult[cardIndex] = resultNumber;
       setnewResult(tempResult.join('-'));
-      if (cardIndex == 2)
+      if ((cardIndex == 5 && gameType == "Jackpot 3.3") || (cardIndex == 6 && gameType == "Jackpot 3.4"))
         setCardIndex(0);
       else
         setCardIndex(cardIndex + 1);

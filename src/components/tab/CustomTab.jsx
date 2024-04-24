@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
 import { Box } from '@mui/material';
 import { Tabs, TabPanel as BaseTabPanel, TabsList as BaseTabsList, Tab as BaseTab, tabClasses } from '@mui/base';
@@ -6,15 +6,24 @@ import { buttonClasses } from '@mui/base/Button';
 import { COLORS } from '../../helper/colors';
 
 const CustomTab = ({ tabList, changeEvent = () => { } }) => {
-  const [value, setValue] = React.useState((tabList[0].itemId !== undefined) ? tabList[0].itemId : 0);
+  // const [value, setValue] = React.useState((tabList[0].itemId !== undefined) ? tabList[0].itemId : 0);
+  let defaultVal = (tabList[0].itemId !== undefined) ? tabList[0].itemId : 0;
+  const [value, setValue] = React.useState(null);
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     changeEvent(newValue);
   };
 
+  useEffect(() => {
+    if (tabList.findIndex(m => m.itemId === value) < 0) {
+      setValue(null);
+    }
+  }, [tabList]);
+
   return (
-    <Tabs value={value} onChange={handleChange} >
+    <Tabs value={(value !== null) ? value : defaultVal} onChange={handleChange} >
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <TabsList>
           {tabList?.map(({ label, itemId }, i) => (

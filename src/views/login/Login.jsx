@@ -79,7 +79,7 @@ export const Login = () => {
             setPageLoader(false);
           } else {
             // get current user and menu
-            MenuService.getSecrityGroupeMenu(tokenObj.RoleId).then(
+            MenuService.getSecrityGroupeMenu(tokenObj.RoleId, authResp.data.companyId).then(
               (menuResp) => {
                 if (menuResp) {
                   dispatch(setMenuState(menuResp.data));

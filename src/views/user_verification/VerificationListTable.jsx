@@ -7,48 +7,64 @@ import VerificationDialog from '../../components/Dialog/VerificationDialog';
 import { DateExt } from "../../utils/helpers";
 import { ContentLoader } from "../../components/mui";
 
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import FileExportIcon from "../../assets/icons/FileExportIcon";
+import FilterListIcon from "@mui/icons-material/FilterList";
+
 import InfoIcon from '@mui/icons-material/Info';
 import { UserService, ImageService } from "../../services";
 import UserDetails from './UserDetails';
+import ExportModal from '../../components/modals/ExportModal';
 
-const VerificationListTable = ({ data }) => {
+const VerificationListTable = ({ data, page, rowsPerPage, pageSize, triggerCallback }) => {
     
     const [selfieImage, setselfieImage] = React.useState(null);
     const [validIdImage, setvalidIdImage] = React.useState(null);
 
     const [pageLoader, setPageLoader] = useState(false);
     const [displayList, setDisplayList] = useState(null);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const [maxpage, setmaxpage] = useState(0);
+    const [pageT, setPageT] = useState(null);
+    const [rowsPerPageT, setRowsPerPageT] = useState(null);
+    const [pageSizeT, setpageSizeT] = useState(null);
+   
     const [searchValue, setSearchValue] = useState("");
     const [selectedUser, setselectedUser] = useState(null);
     const [selectedUserRecruiter, setselectedUserRecruiter] = useState(null);
 
     const [isOpenApproval, setisOpenApproval] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [showExportModal, setShowExportModal] = useState(false);
     
     useEffect(() => {
-        var statusData = data;
-        var search = statusData.filter((row) => {
-            return Object.values(row).join('').toLowerCase().includes(searchValue.toLowerCase());
-        });
+        setDisplayList(data);
         
-        setPage(0);
-        setDisplayList(search);
-    }, [searchValue]);
+        setPageT(page);
+        setRowsPerPageT(rowsPerPage);
+        setpageSizeT(pageSize);
+    }, [data, page, rowsPerPage, pageSize]);
 
     // On click search
     const handleSearch = (event, value) => {
         setSearchValue(value);
-        setPage(0);
+        triggerCallback(value, 2);
+        setPageT(0);
     };
 
     const handleChangePage = (event, newpage) => {
-        setPage(newpage - 1);
+        let newVal = newpage - 1;
+        // if (newVal > maxpage) {
+        //     setmaxpage(newVal);
+        // }
+        triggerCallback(newVal);
+        setPageT(newVal);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
+        triggerCallback(parseInt(event.target.value, 10), 1);
+        setmaxpage(0);
+        setPageT(0);
     };
 
     const initImages = (fileName, requestType = 0) => {
@@ -96,13 +112,47 @@ const VerificationListTable = ({ data }) => {
         window.location.reload(false);
     }
 
+    const toggleFilter = () => {
+        setShowFilterModal((prev) => !prev);
+    };
+
+    // const toggleScanModal = () => {
+    //     setShowScanNowModal((prev) => !prev);
+    // };
+
+    const toggleExportModal = () => {
+        setShowExportModal((prev) => !prev);
+    };
+
     return (
         <div style={{ paddingLeft: 20, paddingRight: 20 }}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" marginBottom={2}>
+                <div style={{ display: "flex", gap: 20 }}>
                 <RegularSearchBar
                     handleSearch={handleSearch}
-                    searchTitle="Search"
+                    searchTitle="Search name"
                 />
+                <div
+                    style={{
+                    display: "flex",
+                    justifyContent: "left",
+                    alignItems: "center",
+                    }}
+                >
+                    {/* <div className="buttons" onClick={toggleScanModal}>
+                    <QrCodeScannerIcon />
+                    Scan Ticket QR
+                    </div> */}
+                    <div className="buttons" onClick={toggleExportModal}>
+                    <FileExportIcon size={20} />
+                    Export
+                    </div>
+                </div>
+                </div>
+                <div className="filter-button" onClick={toggleFilter}>
+                Filters
+                <FilterListIcon />
+                </div>
             </Box>
             <CustomTable
                 // headAlign="left"
@@ -111,15 +161,15 @@ const VerificationListTable = ({ data }) => {
                     <StyledPagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={(displayList !== null) ? displayList.length : 0}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
+                        count={(pageSizeT !== null && pageSizeT !== undefined) ? pageSizeT : 5}
+                        rowsPerPage={(rowsPerPageT !== null && rowsPerPageT !== undefined) ? rowsPerPageT : 5}
+                        page={(pageT !== null && pageT !== undefined) ? pageT : 0}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />}
             >
                 { 
-                    (displayList !== null) ?
+                    (displayList !== null && displayList !== undefined) ?
                         (displayList.length > 0) ?
                         displayList.slice(page * rowsPerPage, page *
                             rowsPerPage + rowsPerPage).map((row, i) => (
@@ -149,6 +199,13 @@ const VerificationListTable = ({ data }) => {
                 objData={selectedUser} onTriggerClick={handleDialogCallback}>
                 <UserDetails objData={selectedUser} recruiterData={selectedUserRecruiter} selfieImage={selfieImage} validIdImage={validIdImage} />
             </VerificationDialog>
+
+            <ExportModal
+                open={showExportModal}
+                onClose={toggleExportModal}
+                handleToCsv={() => {}}
+                handleToPdf={() => {}}
+            />
 
             <ContentLoader isLoadingPage={ pageLoader } />
         </div>

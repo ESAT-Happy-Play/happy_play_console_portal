@@ -40,8 +40,8 @@ const EditRegularResult = ({
   };
 
   const generateResultDigits = (result) => {
-    var digits = result.map((e) =>
-      <p className="reel-digit">{e}</p>
+    var digits = result.map((e, index) =>
+      <p className="reel-digit" key={index}>{e}</p>
     );
     return [<div className={`reel-container ${result.length > 3 ? "four-slot" : null}`}>
       {digits}

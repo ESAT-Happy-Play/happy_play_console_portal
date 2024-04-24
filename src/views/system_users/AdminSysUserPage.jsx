@@ -158,7 +158,7 @@ export const AdminSysUserPage = () => {
                 <div className="btn-new-role">
                   <Button color="success" variant="text" onClick={e => (setisCreateNew(true), setisCreateInfo(false))}>New User <AddOutlinedIcon /></Button>
                 </div>
-                <ul>
+                <ul style={{overflow:'auto', height:'500px'}}>
                   {
                     (systemUsers !== null) ?
                       systemUsers.map((item, index) =>

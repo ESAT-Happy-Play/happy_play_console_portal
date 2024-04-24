@@ -7,12 +7,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DialogContentText } from '@mui/material';
-import { mockReports } from '../../../helper/mocks';
+// import { mockReports } from '../../../helper/mocks';
 import ReportDetail from './ReportDetail';
 import ReportsTable from './ReportsTable';
 
+import { ContentLoader } from '../../../components/mui';
 
 const SupportReport = () => {
+    const [isloading, setisloading] = useState(false);
+
     const [openCreate, setOpenCreate] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
 
@@ -20,49 +23,62 @@ const SupportReport = () => {
         setOpenCreate(false);
     }
 
+    const handleLoaderCallback = (val) => {
+        setisloading(val);
+    }
+
     const handleSubmit = (data) => {
         setOpenSuccess(true);
         handleClose();
     }
 
+    const handleSuccessClose = async () => {
+        setOpenCreate(false);
+        window.location.reload(false);
+    }
+
     return (
-        <div className="home">
-            <div className="header">
-                <h1>Report an Issue</h1>
-                <Button
-                    onClick={() => setOpenCreate(true)}
-                    size="small"
-                    variant="outlined"
-                    sx={{ margin: 0, height: 30 }}
-                >New Report <AddIcon /></Button>
-            </div>
+        <>
+            <div className="home">
+                <div className="header">
+                    <h1>Report an Issue</h1>
+                    <Button
+                        onClick={() => setOpenCreate(true)}
+                        size="small"
+                        variant="outlined"
+                        sx={{ margin: 0, height: 30 }}
+                    >New Report <AddIcon /></Button>
+                </div>
 
-            <ReportsTable data={mockReports} />
+                <ReportsTable loaderCallback={ handleLoaderCallback } />
 
-            {openCreate &&
-                <ReportDetail
-                    isOpen={openCreate}
-                    handleSubmission={handleSubmit}
-                    handleClose={handleClose}
-                    isEditing={false}
-                />}
+                {openCreate &&
+                    <ReportDetail
+                        isOpen={openCreate}
+                        handleSubmission={handleSubmit}
+                        handleClose={handleClose}
+                        succesCallback={handleSuccessClose}
+                        isEditing={false}
+                    />}
 
-            {openSuccess &&
-                <Dialog
-                    open={openSuccess}
-                    onClose={() => setOpenSuccess(false)}
-                >
-                    <DialogTitle style={{ color: '#38A169', fontWeight: 'bold' }}>Success</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>Successfully created report!</DialogContentText>
-                    </DialogContent>
-                    <DialogActions sx={{ justifyContent: "center" }}>
-                        <Button onClick={() => setOpenSuccess(false)} className="cancel-button">Close</Button>
-                    </DialogActions>
-                </Dialog>
-            }
-        </div >
-
+                {openSuccess &&
+                    <Dialog
+                        open={openSuccess}
+                        onClose={() => setOpenSuccess(false)}
+                    >
+                        <DialogTitle style={{ color: '#38A169', fontWeight: 'bold' }}>Success</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>Successfully created report!</DialogContentText>
+                        </DialogContent>
+                        <DialogActions sx={{ justifyContent: "center" }}>
+                            <Button onClick={() => setOpenSuccess(false)} className="cancel-button">Close</Button>
+                        </DialogActions>
+                    </Dialog>
+                }
+            </div >
+            
+            <ContentLoader isLoadingPage={isloading} />
+        </>
     )
 }
 

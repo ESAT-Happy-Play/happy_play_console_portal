@@ -6,12 +6,30 @@ import { Button } from '@mui/material';
 import TicketsTable from './TicketsTable';
 import TicketDetail from './TicketDetail';
 
+import { ContentLoader } from "../../components/mui";
 
 const Tickets = () => {
+    const [isloading, setisloading] = useState(false);
     const [openCreate, setOpenCreate] = useState(false);
+
+    const [caseStatuses, setcaseStatuses] = useState([]);
+    const [caseOrganizations, setcaseOrganizations] = useState([]);
+
+    const handleLoaderCallback = (val, csstatuses = null, csorgans = null) => {
+        setisloading(val);
+        if (csstatuses !== null) { setcaseStatuses(csstatuses) }
+        if (csorgans !== null) { setcaseOrganizations(csorgans) }
+    }
+
     const handleClose = () => {
         setOpenCreate(false);
     }
+
+    const handleSuccessClose = () => {
+        setOpenCreate(false);
+        window.location.reload(false);
+    }
+
     return (
         <div className="home">
             <div className="header">
@@ -24,16 +42,20 @@ const Tickets = () => {
                 >New Ticket <AddIcon /></Button>
             </div>
 
-            <TicketsTable data={mockTicketList} type={"Regular"} />
+            <TicketsTable loaderCallback={ handleLoaderCallback } data={mockTicketList} type={"Regular"} />
 
             {openCreate &&
                 <TicketDetail
                     isOpen={openCreate}
+                    caseStatuses={caseStatuses}
+                    caseOrganizations={caseOrganizations}
                     handleClose={handleClose}
+                    succesCallback={handleSuccessClose}
                     isEditing={false}
                 />}
-        </div >
 
+            <ContentLoader isLoadingPage={isloading} />
+        </div >
     )
 }
 
